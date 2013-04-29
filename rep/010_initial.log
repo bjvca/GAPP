@@ -1,0 +1,79 @@
+-------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/rep/010_initial.log
+  log type:  text
+ opened on:  29 Apr 2013, 13:16:46
+
+. clear
+
+. set more off
+
+. #delimit ;
+delimiter now ;
+. ******************************************************************************
+> * 010_initial.do                (start)
+> ******************************************************************************;
+. ******************************************************************************
+> * Purpose: Set some globals
+> ******************************************************************************;
+. ******************************************************************************
+> * TPI basket
+> ******************************************************************************;
+. * Number of items;
+. global product_tpi_n "15";
+
+. * Code choose $product_tpi_n ;
+. global product_tpi   "product_tpi==1";
+
+. * Initial (arbitrary) quantile defining poor for price index calculations.
+> * Mozambique: bottom 60%. Vietnam: bottom 20%. Tanzania: bottom 40% . Uganda: headcount 2
+> 009 24.5% ;
+. global tpi_bottom "50";
+
+.  * Set the number of regions in the TPI calc;
+. global n_tpi "2";
+
+. * To reproduce the mozambique 10 numbers, the following global should be commented out. I
+> t controls a line in 140_iterate.do 
+> * where observations not measured in kg are dropped. For all other datasets, all observat
+> ions should be converted to kg's before
+> * the toolkit is run. For all other datasets, this line should therefore be included.
+> global MZ "*";
+. ******************************************************************************
+> * Initial (arbitrary) quantile defining the (relatively) poor.
+> ******************************************************************************;
+. global bottom "50";
+
+. ******************************************************************************
+> * Number of iterations in 140_iterate.do
+> ******************************************************************************;
+. global it_n "5";
+
+. ******************************************************************************
+> * Set the number of regions in the spatial domain;
+. ******************************************************************************;
+. global n_spdom "5";
+
+. ******************* we deleted East urban, North urban and West urban because too few obs
+> ervations were in those spatial domains;
+.  ******************************************************************************
+> * Revealed preferences choices
+> ******************************************************************************;
+. * Activate GAMS program according to number of regions in spatial domain;
+. *global revpref "190_revpref13_m1.bat";
+. *global no_temp_rev " ";
+. * k spatial regions and no intertemporal revealed preference condition:
+>   Activate the next two lines below;
+. global no_temp_rev "*";
+
+. global revpref "190_revpref13_r.bat";
+
+.  **************************************************************************
+> * 010_initial.do                (end)
+> **************************************************************************;
+. log close;
+      name:  <unnamed>
+       log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/rep/010_initial.log
+  log type:  text
+ closed on:  29 Apr 2013, 13:16:46
+-------------------------------------------------------------------------------------------

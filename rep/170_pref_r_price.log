@@ -1,0 +1,366 @@
+-------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/rep/170_pref_r_price.log
+  log type:  text
+ opened on:  29 Apr 2013, 13:17:18
+
+. clear
+
+. set more off
+
+. #delimit ;
+delimiter now ;
+. **************************************************************************
+> * 170_pref_r_price.do           (start)
+> *
+> * This file conducts revealed preference comparisons so that
+> * we can check the quality of the regional baskets.
+> * It also exports the price and quantity data for work in GAMS
+> * Rather than make up for missing prices with shares, we estimate
+> * a missing price in this case
+> **************************************************************************;
+. *global n_spdom "13";
+. *global it_n "5";
+. /*
+> This file uses:
+>         work\quan_flex_it$it_n.dta
+>         work\povline_food_flex_it$it_n.dta
+>         work\price_unit_flex_it$it_n.dta
+>                 
+> This file creates:
+>         work\pref_r_price.dta
+>         work\revpref_price_`i'.dta
+>         work\product_flex.inc
+>         work\price_unit_flex.inc
+>         work\quan_flex.inc
+> */
+> 
+> 
+> 
+> ***************************************************************************;
+. * Export price, codes and quantity data to text
+> ***************************************************************************;
+. use "$path\work\price_unit_flex_it$it_n.dta";
+
+. gen reg=spdomain ;
+
+. gen crap=1;
+
+.  lab def crap
+>          1  ".";
+
+.  lab val crap crap;
+
+. outsheet product crap reg bswt price_uw$it_n using "$path\work\price_unit_flex.inc",  noq
+> uote noname replace ;
+(note: file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\price_unit_flex.inc not
+>  found)
+
+. collapse (min) spdomain, by(product);
+
+. outsheet product  using "$path\work\product_flex.inc", noname replace;
+(note: file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\product_flex.inc not fo
+> und)
+
+. use "$path\work\quan_flex_it$it_n.dta", clear;
+
+. gen reg=spdomain;
+
+. gen crap=1;
+
+.  lab def crap
+>          1  ".";
+
+.  lab val crap crap;
+
+. format calperg quan$it_n calpp %14.9e;
+
+. outsheet  product crap reg calperg quan$it_n  calpp povline_f_flex90_$it_n using "$path\w
+> ork\quan_flex.inc", noname noquote replace;
+(note: file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\quan_flex.inc not found
+> )
+
+. clear;
+
+. **************************************************************************;
+. * Revealed preference calculations
+> * get the basket for the region we want to test
+> **************************************************************************;
+. tempfile quanreg;
+
+. tempfile getmiss;
+
+. tempfile codmiss;
+
+. gen crap=0;
+
+. save "$path\work\pref_r_price.dta", replace;
+(note: dataset contains 0 observations)
+(note: file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\pref_r_price.dta not fo
+> und)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\pref_r_price.dta saved
+
+. forvalues i=1/$n_spdom {                ;
+  2.         clear;
+  3.         gen crap=0;
+  4.         save "$path\work\revpref_price_`i'.dta", replace;
+  5.         clear;
+  6.                 use "$path\work\quan_flex_it$it_n.dta", clear;
+  7.                 keep product spdomain quan$it_n price_uw$it_n val_ir$it_n povline_f_fl
+> ex90_$it_n calpp;
+  8.         gen share=val_ir$it_n/povline_f_flex90_$it_n;
+  9.         rename price_uw$it_n pquanreg;
+ 10.         rename spdomain spdomainq;
+ 11.         drop if spdomainq~= `i';
+ 12.         sort product;
+ 13.                                 *rescale quantities to hit constant calorie target;
+.                 gen ratquan=2150/calpp;
+ 14.             gen quan_s=quan$it_n*ratquan;
+ 15.             lab var quan_s "quantities rescaled to hit 2150 calories pp";
+ 16.         save `quanreg', replace;
+ 17. **************************************************************************;
+. * Now get the prices in other regions so that you can use them 
+> * to build  a new poverty line
+> **************************************************************************;
+.         forvalues j= 1/$n_spdom {               ;
+ 18.                 use "$path\work\price_unit_flex_it$it_n.dta";
+ 19.                                 keep product spdomain price_uw$it_n descript count bsw
+> t;
+ 20.                         sort product;
+ 21.                 keep if spdomain==`j';
+ 22.                 sort product;
+ 23.                 merge product using `quanreg';
+ 24.                     *here we have to deal with the fact that not all commodities are c
+> onsumed in every region;
+.                 *so we might have a quantity from region i but no price in region j;
+.                 *these will have _merge value=2;
+.                 *alternatively the number of observations might be too small;
+.                 *deal with these problems by TAKING THE MAX PRICE OBSERVED ELSEWHERE (exc
+> luding Maputo)
+>                         
+>                 tab _m;
+.                 drop if _m==1;
+ 25.                                 *CA modified to handle the counting of bswt instead of
+>  count
+>                   replace price_uw$it_n=. if round(bswt)<5;
+.                         gen pricemiss=0;
+ 26.                   replace spdomain=`j' if _m==2 ;
+ 27.                   replace pricemiss=1 if _m==2 | round(bswt)<5;
+ 28.                         lab var pricemiss "identify those items with no price observat
+> ion";
+ 29.                   drop _m;
+ 30.                         sort product;
+ 31. *browse;
+.                *this is the tempfile containing observed quans and prices;
+.              save `getmiss', replace;
+ 32.                         keep if pricemiss==1;
+ 33.                         if _N>0 {
+>                             keep product;
+ 34.                                             sort product;
+ 35.                                             *this file contains the price codes that a
+> re missing for the region in question;
+.                             save `codmiss', replace;
+ 36. *browse;
+.                                   use "$path\work\price_unit_flex_it$it_n.dta", clear;
+ 37.                         sort product;
+ 38. *browse;
+.                         merge product using `codmiss';
+ 39.                                                 tab _m;
+ 40.                         keep if _m==3 ;
+ 41.                                 *exclude Maputo province and city from other price cal
+> culation;
+.                                 drop if spdomain>10;
+ 42.                         collapse (max) price_uw$it_n, by(product);
+ 43.                   *this file contains the code and the max price;
+.                   save `codmiss', replace;
+ 44. *browse;
+.                         use `getmiss';
+ 45.                               merge product using `codmiss';
+ 46. *browse;
+.                         tab _m;
+ 47.                         drop _m;
+ 48.                         *end if;
+.                  };
+ 49.                                                             else use `getmiss', clear;
+ 50.                         gen val_q=quan_s*price_uw$it_n;
+ 51.                                                 collapse (sum) val_q pricemiss (mean) 
+> spdomainq ratquan, by(spdomain);
+ 52.                   gen linf_q=val_q/.9;
+ 53.                   drop val_q;
+ 54.                         append using "$path\work\revpref_price_`i'.dta";
+ 55.                         sort spdomain;
+ 56.                 save "$path\work\revpref_price_`i'.dta", replace;
+ 57.    *browse;
+.         *close j loop;
+.         };
+ 58.         *aggregate into a big data set;
+.         append using "$path\work\pref_r_price.dta";
+ 59.       sort spdomain spdomainq;
+ 60.       save "$path\work\pref_r_price.dta", replace;
+ 61.  *close i loop;
+. };
+(note: dataset contains 0 observations)
+(note: file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\revpref_price_1.dta not
+>  found)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\revpref_price_1.dta saved
+(2 missing values generated)
+(58 observations deleted)
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000001.tmp not found)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000001.tmp saved
+(82 observations deleted)
+(label spdomain_original already defined)
+(15 observations deleted)
+(0 real changes made)
+(0 real changes made)
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000002.tmp not found)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000002.tmp saved
+(24 observations deleted)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\revpref_price_1.dta saved
+(121 observations deleted)
+(label spdomain_original already defined)
+(0 observations deleted)
+(24 real changes made)
+(24 real changes made)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000002.tmp saved
+(0 observations deleted)
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000003.tmp not found)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000003.tmp saved
+variable product does not uniquely identify observations in the master data
+(label spdomain_original already defined)
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |         49       40.50       40.50
+          3 |         72       59.50      100.00
+------------+-----------------------------------
+      Total |        121      100.00
+(49 observations deleted)
+(0 observations deleted)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000003.tmp saved
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          3 |         24      100.00      100.00
+------------+-----------------------------------
+      Total |         24      100.00
+(24 missing values generated)
+(label spdomain_original already defined)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\revpref_price_1.dta saved
+(121 observations deleted)
+(label spdomain_original already defined)
+(0 observations deleted)
+(24 real changes made)
+(24 real changes made)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000002.tmp saved
+(0 observations deleted)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000003.tmp saved
+variable product does not uniquely identify observations in the master data
+(label spdomain_original already defined)
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |         49       40.50       40.50
+          3 |         72       59.50      100.00
+------------+-----------------------------------
+      Total |        121      100.00
+(49 observations deleted)
+(0 observations deleted)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000003.tmp saved
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          3 |         24      100.00      100.00
+------------+-----------------------------------
+      Total |         24      100.00
+(24 missing values generated)
+(label spdomain_original already defined)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\revpref_price_1.dta saved
+(80 observations deleted)
+(label spdomain_original already defined)
+(17 observations deleted)
+(0 real changes made)
+(0 real changes made)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000002.tmp saved
+(24 observations deleted)
+(label spdomain_original already defined)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\revpref_price_1.dta saved
+(80 observations deleted)
+(label spdomain_original already defined)
+(17 observations deleted)
+(0 real changes made)
+(0 real changes made)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000002.tmp saved
+(24 observations deleted)
+(label spdomain_original already defined)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\revpref_price_1.dta saved
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\pref_r_price.dta saved
+(note: dataset contains 0 observations)
+(note: file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\revpref_price_2.dta not
+>  found)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\revpref_price_2.dta saved
+(2 missing values generated)
+(81 observations deleted)
+(1 missing value generated)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000001.tmp saved
+(82 observations deleted)
+(label spdomain_original already defined)
+(39 observations deleted)
+(1 real change made)
+(1 real change made)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000002.tmp saved
+(0 observations deleted)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000003.tmp saved
+variable product does not uniquely identify observations in the master data
+(label spdomain_original already defined)
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |        121       99.18       99.18
+          2 |          1        0.82      100.00
+------------+-----------------------------------
+      Total |        122      100.00
+(122 observations deleted)
+(0 observations deleted)
+no observations
+r(2000);
+
+end of do-file
+r(2000);
+
+end of do-file
+
+r(2000);
+
+. do "C:\Users\TEMPLE~1\AppData\Local\Temp\STD0f000000.tmp"
+
+. *****************************************************************************************
+> ************************
+. **     PROGRAMME: PREPARARTION OF STANDARD TABLE 4: CONS_COD_TRANS
+. **     AUTHOR: HARUNA SEKABIRA
+. **     DATA IN: HSEC10A_CLN.dta
+. **              Coversionfactors.dta
+. **
+. **
+. **     DATA OUT: Cons_Cod_trans.dta
+. **
+. **
+. **
+. **    NOTES: Food consumption values and quantities have been excluded from the calculati
+> ons of daily food consumption per household because it is the requirement
+. **            of GAPP. a few Food conversion factors that were not available from the sta
+> tistics body for instance the kilograms in a crate of bear have been
+. **            calculated related on the available conversion factors for a bottle then co
+> unting how many bottles there are in a crate. Futher still some units
+. **            like heaps that were not available have been estimated using the town marke
+> t experiences of these heaps in relation to related measurements 
+. **            given by UBOS
+. **
+. **
+. *****************************************************************************************
+> ********************************************
+. 
+. clear
+
+. set logtype text
+
+. capture log close
