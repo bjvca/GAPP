@@ -2,7 +2,7 @@
       name:  <unnamed>
        log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/rep/170_pref_r_price.log
   log type:  text
- opened on:  29 Apr 2013, 13:17:18
+ opened on:  30 Apr 2013, 09:16:39
 
 . clear
 
@@ -53,14 +53,10 @@ delimiter now ;
 
 . outsheet product crap reg bswt price_uw$it_n using "$path\work\price_unit_flex.inc",  noq
 > uote noname replace ;
-(note: file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\price_unit_flex.inc not
->  found)
 
 . collapse (min) spdomain, by(product);
 
 . outsheet product  using "$path\work\product_flex.inc", noname replace;
-(note: file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\product_flex.inc not fo
-> und)
 
 . use "$path\work\quan_flex_it$it_n.dta", clear;
 
@@ -77,8 +73,6 @@ delimiter now ;
 
 . outsheet  product crap reg calperg quan$it_n  calpp povline_f_flex90_$it_n using "$path\w
 > ork\quan_flex.inc", noname noquote replace;
-(note: file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\quan_flex.inc not found
-> )
 
 . clear;
 
@@ -96,8 +90,6 @@ delimiter now ;
 
 . save "$path\work\pref_r_price.dta", replace;
 (note: dataset contains 0 observations)
-(note: file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\pref_r_price.dta not fo
-> und)
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\pref_r_price.dta saved
 
 . forvalues i=1/$n_spdom {                ;
@@ -200,167 +192,669 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\pref_r_price.dta sa
  61.  *close i loop;
 . };
 (note: dataset contains 0 observations)
-(note: file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\revpref_price_1.dta not
->  found)
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\revpref_price_1.dta saved
-(2 missing values generated)
-(58 observations deleted)
+(101 observations deleted)
 (note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000001.tmp not found)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000001.tmp saved
-(82 observations deleted)
+(169 observations deleted)
 (label spdomain_original already defined)
-(15 observations deleted)
+(17 observations deleted)
 (0 real changes made)
 (0 real changes made)
 (note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000002.tmp not found)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000002.tmp saved
-(24 observations deleted)
+(27 observations deleted)
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\revpref_price_1.dta saved
-(121 observations deleted)
+(175 observations deleted)
 (label spdomain_original already defined)
-(0 observations deleted)
-(24 real changes made)
-(24 real changes made)
+(12 observations deleted)
+(1 real change made)
+(4 real changes made)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000002.tmp saved
-(0 observations deleted)
+(23 observations deleted)
 (note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000003.tmp not found)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000003.tmp saved
 variable product does not uniquely identify observations in the master data
+(label descrip already defined)
 (label spdomain_original already defined)
+(label HS10A2 already defined)
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          1 |         49       40.50       40.50
-          3 |         72       59.50      100.00
+          1 |        194       91.08       91.08
+          3 |         19        8.92      100.00
 ------------+-----------------------------------
-      Total |        121      100.00
-(49 observations deleted)
+      Total |        213      100.00
+(194 observations deleted)
 (0 observations deleted)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000003.tmp saved
+(label HS10A2 already defined)
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          3 |         24      100.00      100.00
+          1 |         23       85.19       85.19
+          3 |          4       14.81      100.00
 ------------+-----------------------------------
-      Total |         24      100.00
-(24 missing values generated)
+      Total |         27      100.00
+(1 missing value generated)
 (label spdomain_original already defined)
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\revpref_price_1.dta saved
-(121 observations deleted)
+(169 observations deleted)
 (label spdomain_original already defined)
-(0 observations deleted)
-(24 real changes made)
-(24 real changes made)
+(17 observations deleted)
+(0 real changes made)
+(0 real changes made)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000002.tmp saved
-(0 observations deleted)
+(27 observations deleted)
+(label spdomain_original already defined)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\revpref_price_1.dta saved
+(170 observations deleted)
+(label spdomain_original already defined)
+(16 observations deleted)
+(0 real changes made)
+(1 real change made)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000002.tmp saved
+(26 observations deleted)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000003.tmp saved
 variable product does not uniquely identify observations in the master data
+(label descrip already defined)
 (label spdomain_original already defined)
+(label HS10A2 already defined)
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          1 |         49       40.50       40.50
-          3 |         72       59.50      100.00
+          1 |        208       97.65       97.65
+          3 |          5        2.35      100.00
 ------------+-----------------------------------
-      Total |        121      100.00
-(49 observations deleted)
+      Total |        213      100.00
+(208 observations deleted)
 (0 observations deleted)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000003.tmp saved
+(label HS10A2 already defined)
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          3 |         24      100.00      100.00
+          1 |         26       96.30       96.30
+          3 |          1        3.70      100.00
 ------------+-----------------------------------
-      Total |         24      100.00
-(24 missing values generated)
+      Total |         27      100.00
 (label spdomain_original already defined)
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\revpref_price_1.dta saved
-(80 observations deleted)
+(169 observations deleted)
 (label spdomain_original already defined)
 (17 observations deleted)
 (0 real changes made)
 (0 real changes made)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000002.tmp saved
-(24 observations deleted)
-(label spdomain_original already defined)
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\revpref_price_1.dta saved
-(80 observations deleted)
-(label spdomain_original already defined)
-(17 observations deleted)
-(0 real changes made)
-(0 real changes made)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000002.tmp saved
-(24 observations deleted)
+(27 observations deleted)
 (label spdomain_original already defined)
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\revpref_price_1.dta saved
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\pref_r_price.dta saved
 (note: dataset contains 0 observations)
-(note: file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\revpref_price_2.dta not
->  found)
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\revpref_price_2.dta saved
-(2 missing values generated)
-(81 observations deleted)
-(1 missing value generated)
+(108 observations deleted)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000001.tmp saved
-(82 observations deleted)
+(169 observations deleted)
 (label spdomain_original already defined)
-(39 observations deleted)
-(1 real change made)
+(24 observations deleted)
+(0 real changes made)
+(0 real changes made)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000002.tmp saved
+(20 observations deleted)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\revpref_price_2.dta saved
+(175 observations deleted)
+(label spdomain_original already defined)
+(18 observations deleted)
+(0 real changes made)
+(0 real changes made)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000002.tmp saved
+(20 observations deleted)
+(label spdomain_original already defined)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\revpref_price_2.dta saved
+(169 observations deleted)
+(label spdomain_original already defined)
+(24 observations deleted)
+(0 real changes made)
+(0 real changes made)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000002.tmp saved
+(20 observations deleted)
+(label spdomain_original already defined)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\revpref_price_2.dta saved
+(170 observations deleted)
+(label spdomain_original already defined)
+(23 observations deleted)
+(0 real changes made)
+(0 real changes made)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000002.tmp saved
+(20 observations deleted)
+(label spdomain_original already defined)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\revpref_price_2.dta saved
+(169 observations deleted)
+(label spdomain_original already defined)
+(24 observations deleted)
+(0 real changes made)
+(0 real changes made)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000002.tmp saved
+(20 observations deleted)
+(label spdomain_original already defined)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\revpref_price_2.dta saved
+(label spdomain_original already defined)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\pref_r_price.dta saved
+(note: dataset contains 0 observations)
+(note: file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\revpref_price_3.dta not
+>  found)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\revpref_price_3.dta saved
+(101 observations deleted)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000001.tmp saved
+(169 observations deleted)
+(label spdomain_original already defined)
+(17 observations deleted)
+(0 real changes made)
 (1 real change made)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000002.tmp saved
-(0 observations deleted)
+(26 observations deleted)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000003.tmp saved
 variable product does not uniquely identify observations in the master data
+(label descrip already defined)
 (label spdomain_original already defined)
+(label HS10A2 already defined)
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          1 |        121       99.18       99.18
-          2 |          1        0.82      100.00
+          1 |        208       97.65       97.65
+          3 |          5        2.35      100.00
 ------------+-----------------------------------
-      Total |        122      100.00
-(122 observations deleted)
+      Total |        213      100.00
+(208 observations deleted)
 (0 observations deleted)
-no observations
-r(2000);
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000003.tmp saved
+(label HS10A2 already defined)
 
-end of do-file
-r(2000);
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |         26       96.30       96.30
+          3 |          1        3.70      100.00
+------------+-----------------------------------
+      Total |         27      100.00
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\revpref_price_3.dta saved
+(175 observations deleted)
+(label spdomain_original already defined)
+(13 observations deleted)
+(2 real changes made)
+(6 real changes made)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000002.tmp saved
+(21 observations deleted)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000003.tmp saved
+variable product does not uniquely identify observations in the master data
+(label descrip already defined)
+(label spdomain_original already defined)
+(label HS10A2 already defined)
 
-end of do-file
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |        185       86.85       86.85
+          3 |         28       13.15      100.00
+------------+-----------------------------------
+      Total |        213      100.00
+(185 observations deleted)
+(0 observations deleted)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000003.tmp saved
+(label HS10A2 already defined)
 
-r(2000);
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |         21       77.78       77.78
+          3 |          6       22.22      100.00
+------------+-----------------------------------
+      Total |         27      100.00
+(2 missing values generated)
+(label spdomain_original already defined)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\revpref_price_3.dta saved
+(169 observations deleted)
+(label spdomain_original already defined)
+(17 observations deleted)
+(0 real changes made)
+(0 real changes made)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000002.tmp saved
+(27 observations deleted)
+(label spdomain_original already defined)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\revpref_price_3.dta saved
+(170 observations deleted)
+(label spdomain_original already defined)
+(16 observations deleted)
+(0 real changes made)
+(0 real changes made)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000002.tmp saved
+(27 observations deleted)
+(label spdomain_original already defined)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\revpref_price_3.dta saved
+(169 observations deleted)
+(label spdomain_original already defined)
+(17 observations deleted)
+(0 real changes made)
+(0 real changes made)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000002.tmp saved
+(27 observations deleted)
+(label spdomain_original already defined)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\revpref_price_3.dta saved
+(label spdomain_original already defined)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\pref_r_price.dta saved
+(note: dataset contains 0 observations)
+(note: file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\revpref_price_4.dta not
+>  found)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\revpref_price_4.dta saved
+(102 observations deleted)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000001.tmp saved
+(169 observations deleted)
+(label spdomain_original already defined)
+(18 observations deleted)
+(0 real changes made)
+(4 real changes made)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000002.tmp saved
+(22 observations deleted)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000003.tmp saved
+variable product does not uniquely identify observations in the master data
+(label descrip already defined)
+(label spdomain_original already defined)
+(label HS10A2 already defined)
 
-. do "C:\Users\TEMPLE~1\AppData\Local\Temp\STD0f000000.tmp"
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |        194       91.08       91.08
+          3 |         19        8.92      100.00
+------------+-----------------------------------
+      Total |        213      100.00
+(194 observations deleted)
+(0 observations deleted)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000003.tmp saved
+(label HS10A2 already defined)
 
-. *****************************************************************************************
-> ************************
-. **     PROGRAMME: PREPARARTION OF STANDARD TABLE 4: CONS_COD_TRANS
-. **     AUTHOR: HARUNA SEKABIRA
-. **     DATA IN: HSEC10A_CLN.dta
-. **              Coversionfactors.dta
-. **
-. **
-. **     DATA OUT: Cons_Cod_trans.dta
-. **
-. **
-. **
-. **    NOTES: Food consumption values and quantities have been excluded from the calculati
-> ons of daily food consumption per household because it is the requirement
-. **            of GAPP. a few Food conversion factors that were not available from the sta
-> tistics body for instance the kilograms in a crate of bear have been
-. **            calculated related on the available conversion factors for a bottle then co
-> unting how many bottles there are in a crate. Futher still some units
-. **            like heaps that were not available have been estimated using the town marke
-> t experiences of these heaps in relation to related measurements 
-. **            given by UBOS
-. **
-. **
-. *****************************************************************************************
-> ********************************************
-. 
-. clear
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |         22       84.62       84.62
+          3 |          4       15.38      100.00
+------------+-----------------------------------
+      Total |         26      100.00
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\revpref_price_4.dta saved
+(175 observations deleted)
+(label spdomain_original already defined)
+(15 observations deleted)
+(3 real changes made)
+(8 real changes made)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000002.tmp saved
+(18 observations deleted)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000003.tmp saved
+variable product does not uniquely identify observations in the master data
+(label descrip already defined)
+(label spdomain_original already defined)
+(label HS10A2 already defined)
 
-. set logtype text
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |        176       82.63       82.63
+          3 |         37       17.37      100.00
+------------+-----------------------------------
+      Total |        213      100.00
+(176 observations deleted)
+(0 observations deleted)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000003.tmp saved
+(label HS10A2 already defined)
 
-. capture log close
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |         18       69.23       69.23
+          3 |          8       30.77      100.00
+------------+-----------------------------------
+      Total |         26      100.00
+(3 missing values generated)
+(label spdomain_original already defined)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\revpref_price_4.dta saved
+(169 observations deleted)
+(label spdomain_original already defined)
+(18 observations deleted)
+(0 real changes made)
+(0 real changes made)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000002.tmp saved
+(26 observations deleted)
+(label spdomain_original already defined)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\revpref_price_4.dta saved
+(170 observations deleted)
+(label spdomain_original already defined)
+(17 observations deleted)
+(0 real changes made)
+(0 real changes made)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000002.tmp saved
+(26 observations deleted)
+(label spdomain_original already defined)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\revpref_price_4.dta saved
+(169 observations deleted)
+(label spdomain_original already defined)
+(18 observations deleted)
+(0 real changes made)
+(1 real change made)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000002.tmp saved
+(25 observations deleted)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000003.tmp saved
+variable product does not uniquely identify observations in the master data
+(label descrip already defined)
+(label spdomain_original already defined)
+(label HS10A2 already defined)
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |        209       98.12       98.12
+          3 |          4        1.88      100.00
+------------+-----------------------------------
+      Total |        213      100.00
+(209 observations deleted)
+(0 observations deleted)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000003.tmp saved
+(label HS10A2 already defined)
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |         25       96.15       96.15
+          3 |          1        3.85      100.00
+------------+-----------------------------------
+      Total |         26      100.00
+(label spdomain_original already defined)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\revpref_price_4.dta saved
+(label spdomain_original already defined)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\pref_r_price.dta saved
+(note: dataset contains 0 observations)
+(note: file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\revpref_price_5.dta not
+>  found)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\revpref_price_5.dta saved
+(100 observations deleted)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000001.tmp saved
+(169 observations deleted)
+(label spdomain_original already defined)
+(16 observations deleted)
+(0 real changes made)
+(1 real change made)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000002.tmp saved
+(27 observations deleted)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000003.tmp saved
+variable product does not uniquely identify observations in the master data
+(label descrip already defined)
+(label spdomain_original already defined)
+(label HS10A2 already defined)
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |        209       98.12       98.12
+          3 |          4        1.88      100.00
+------------+-----------------------------------
+      Total |        213      100.00
+(209 observations deleted)
+(0 observations deleted)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000003.tmp saved
+(label HS10A2 already defined)
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |         27       96.43       96.43
+          3 |          1        3.57      100.00
+------------+-----------------------------------
+      Total |         28      100.00
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\revpref_price_5.dta saved
+(175 observations deleted)
+(label spdomain_original already defined)
+(12 observations deleted)
+(2 real changes made)
+(7 real changes made)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000002.tmp saved
+(21 observations deleted)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000003.tmp saved
+variable product does not uniquely identify observations in the master data
+(label descrip already defined)
+(label spdomain_original already defined)
+(label HS10A2 already defined)
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |        180       84.51       84.51
+          3 |         33       15.49      100.00
+------------+-----------------------------------
+      Total |        213      100.00
+(180 observations deleted)
+(0 observations deleted)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000003.tmp saved
+(label HS10A2 already defined)
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |         21       75.00       75.00
+          3 |          7       25.00      100.00
+------------+-----------------------------------
+      Total |         28      100.00
+(2 missing values generated)
+(label spdomain_original already defined)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\revpref_price_5.dta saved
+(169 observations deleted)
+(label spdomain_original already defined)
+(16 observations deleted)
+(0 real changes made)
+(0 real changes made)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000002.tmp saved
+(28 observations deleted)
+(label spdomain_original already defined)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\revpref_price_5.dta saved
+(170 observations deleted)
+(label spdomain_original already defined)
+(15 observations deleted)
+(0 real changes made)
+(1 real change made)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000002.tmp saved
+(27 observations deleted)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000003.tmp saved
+variable product does not uniquely identify observations in the master data
+(label descrip already defined)
+(label spdomain_original already defined)
+(label HS10A2 already defined)
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |        208       97.65       97.65
+          3 |          5        2.35      100.00
+------------+-----------------------------------
+      Total |        213      100.00
+(208 observations deleted)
+(0 observations deleted)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000003.tmp saved
+(label HS10A2 already defined)
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |         27       96.43       96.43
+          3 |          1        3.57      100.00
+------------+-----------------------------------
+      Total |         28      100.00
+(label spdomain_original already defined)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\revpref_price_5.dta saved
+(169 observations deleted)
+(label spdomain_original already defined)
+(16 observations deleted)
+(0 real changes made)
+(0 real changes made)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000002.tmp saved
+(28 observations deleted)
+(label spdomain_original already defined)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\revpref_price_5.dta saved
+(label spdomain_original already defined)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\pref_r_price.dta saved
+
+. *bring in actual flexible bundle numbers;
+. use "$path\work\povline_food_flex_it$it_n.dta", clear;
+
+.         merge spdomain using "$path\work\pref_r_price.dta";
+variable spdomain does not uniquely identify observations in
+    C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\pref_r_price.dta
+(label spdomain_original already defined)
+
+.         tab _m;
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          3 |         25      100.00      100.00
+------------+-----------------------------------
+      Total |         25      100.00
+
+.          drop crap;
+
+.         drop _m;
+
+.         order spdomainq spdomain;
+
+.       sort spdomainq spdomain;
+
+.         *rescale expenditures to hit a constant calorie target;
+.         gen povline_f5_s=ratquan*povline_f_flex90_$it_n;
+
+.       compress;
+spdomainq was float now byte
+spdomain was float now byte
+pricemiss was double now byte
+
+. *browse;
+.         *categorize revealed preference performance;
+.       gen pref_r=0;
+
+.       replace pref_r=1 if float(linf_q)>float(povline_f5_s);
+(12 real changes made)
+
+.       replace pref_r=2 if float(linf_q)<float(povline_f5_s);
+(9 real changes made)
+
+.       lab var pref_r "Fails or passes revealed preference test";
+
+.       lab def pref_r
+>                         0 "comparison of the same region with itself"
+>                         1 "passes revealed preference test"
+>                         2 "fails revealed preference test" ;
+
+.         lab val pref_r pref_r;
+
+.       drop if spdomainq==spdomain;
+(5 observations deleted)
+
+.         tab pref_r;
+
+    Fails or passes revealed preference |
+                                   test |      Freq.     Percent        Cum.
+----------------------------------------+-----------------------------------
+        passes revealed preference test |         12       60.00       60.00
+         fails revealed preference test |          8       40.00      100.00
+----------------------------------------+-----------------------------------
+                                  Total |         20      100.00
+
+.              sort spdomainq ;
+
+.       by spdomainq: tab pref_r;
+
+-------------------------------------------------------------------------------------------
+-> spdomainq = 1
+
+    Fails or passes revealed preference |
+                                   test |      Freq.     Percent        Cum.
+----------------------------------------+-----------------------------------
+        passes revealed preference test |          2       50.00       50.00
+         fails revealed preference test |          2       50.00      100.00
+----------------------------------------+-----------------------------------
+                                  Total |          4      100.00
+
+-------------------------------------------------------------------------------------------
+-> spdomainq = 2
+
+    Fails or passes revealed preference |
+                                   test |      Freq.     Percent        Cum.
+----------------------------------------+-----------------------------------
+        passes revealed preference test |          4      100.00      100.00
+----------------------------------------+-----------------------------------
+                                  Total |          4      100.00
+
+-------------------------------------------------------------------------------------------
+-> spdomainq = 3
+
+    Fails or passes revealed preference |
+                                   test |      Freq.     Percent        Cum.
+----------------------------------------+-----------------------------------
+        passes revealed preference test |          2       50.00       50.00
+         fails revealed preference test |          2       50.00      100.00
+----------------------------------------+-----------------------------------
+                                  Total |          4      100.00
+
+-------------------------------------------------------------------------------------------
+-> spdomainq = 4
+
+    Fails or passes revealed preference |
+                                   test |      Freq.     Percent        Cum.
+----------------------------------------+-----------------------------------
+        passes revealed preference test |          1       25.00       25.00
+         fails revealed preference test |          3       75.00      100.00
+----------------------------------------+-----------------------------------
+                                  Total |          4      100.00
+
+-------------------------------------------------------------------------------------------
+-> spdomainq = 5
+
+    Fails or passes revealed preference |
+                                   test |      Freq.     Percent        Cum.
+----------------------------------------+-----------------------------------
+        passes revealed preference test |          3       75.00       75.00
+         fails revealed preference test |          1       25.00      100.00
+----------------------------------------+-----------------------------------
+                                  Total |          4      100.00
+
+
+. save "$path\work\pref_r_price.dta", replace;
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\pref_r_price.dta saved
+
+. *drop comparisons with Maputo ;
+. drop if spdomain>=11;
+(0 observations deleted)
+
+. drop if spdomainq>=11;
+(0 observations deleted)
+
+. display "this is with maputo dropped";
+this is with maputo dropped
+
+. tab pref_r;
+
+    Fails or passes revealed preference |
+                                   test |      Freq.     Percent        Cum.
+----------------------------------------+-----------------------------------
+        passes revealed preference test |         12       60.00       60.00
+         fails revealed preference test |          8       40.00      100.00
+----------------------------------------+-----------------------------------
+                                  Total |         20      100.00
+
+. *further drop Nampula rural and urban;
+. drop if spdomain==3 | spdomain==4;
+(8 observations deleted)
+
+. display "this is with maputo and nampula dropped (MAH: Actually not - experimenting with 
+> 6 spatial domains)";
+this is with maputo and nampula dropped (MAH: Actually not - experimenting with 6 spatial d
+> omains)
+
+. tab pref_r;
+
+    Fails or passes revealed preference |
+                                   test |      Freq.     Percent        Cum.
+----------------------------------------+-----------------------------------
+        passes revealed preference test |          5       41.67       41.67
+         fails revealed preference test |          7       58.33      100.00
+----------------------------------------+-----------------------------------
+                                  Total |         12      100.00
+
+. **************************************************************************
+> * 170_pref_r_price.do           (end)
+> **************************************************************************;
+. log close;
+      name:  <unnamed>
+       log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/rep/170_pref_r_price.log
+  log type:  text
+ closed on:  30 Apr 2013, 09:16:40
+-------------------------------------------------------------------------------------------

@@ -83,6 +83,7 @@ rename quantity quantityz
 rename value valuez
 drop cfactor
 sort hhid
+destring hhid, replace
 save "C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\out\cons_cod_trans.dta", replace
 
 ***************************************************************************************************
@@ -198,7 +199,81 @@ clear
 **
 **********************************************************************************************
 
+use "C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\out\hhdeducationexp.dta"
+append using "C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\out\hhdmedicalexp.dta"
 
+save "C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\out\hhdeduc&medicex.dta", replace
+clear
+
+use "C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\out\hhdeduc&medicex.dta"
+append using "C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\out\hhddurablesexp.dta"
+
+save "C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\out\hhdeduc&medic&durabex.dta", replace
+append using "C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\out\hhdnondurablesexp.dta"
+
+save "C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\out\hhdeduc&medic&durab&nondurabex.dta", replace
+
+clear
+
+use "C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\out\hhdeduc&medic&durab&nondurabex.dta"
+append using "C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\out\hhdfrequentsexp.dta"
+
+save "C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\out\hhdeduc&medic&durab&nondurab&freqsex.dta", replace
+
+append using "C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\out\hhdsemidurablesexp.dta"
+
+save "C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\out\hhdeduc&medic&durab&nondurab&freqs&semidurabex.dta", replace
+append using "C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\out\hhdnonconsumpexp.dta"
+
+save "C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\out\hhdeduc&medic&durab&nondurab&freqs&semidurab&nonconsmpex.dta", replace
+
+egen hhnonfoodexp = rowtotal ( educationd medicalexpd dassetvalue dnondurables dhhfrequents hhdsemidurs hhdnonconsumpexp)
+la var hhnonfoodexp "household total non food expenditure"
+keep hhid hhnonfoodexp
+gen product = 0
+la var product "product code equal to 1 for food and 0 for non food"
+gen food_cat = 0
+la var food_cat "food product or not equals 1 for foods and 0 for non foods"
+gen prod_cat = 2
+la var prod_cat "COICOP product categories, 2 for all non food"
+replace product = 2 if product==0
+replace food_cat = 2 if food_cat==0
+gen descript = 2
+la var descript "product description including product code but equals 2 for all non-foods"
+save "C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\out\hhtotalnonfoodexp.dta", replace
+label define descrip 2 " non food", add
+label values descript descrip
+label define descrip 1 " food", add
+replace descript = 1 in 6
+replace descript = 2 in 6
+sort hhid
+destring hhid, replace
+save "C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\out\hhtotalnonfoodexp.dta", replace
+
+append using  "C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\out\cons_cod_trans.dta"
+
+
+rename quantityz quantityd
+egen cod_hh_nom = rowtotal ( hhnonfoodexp valuez)
+la var cod_hh_nom "total household daily expenditure"
+gen cod_hh_nom2 = cod_hh_nom
+la var cod_hh_nom2 "total household expenditure where quantity
+gen cod_hh_nom3= cod_hh_nom if ~inlist( cod_hh_nom,0,.& product,157,160,161)
+drop cod_hh_nom2
+rename cod_hh_nom3 cod_hh_nom2
+la var cod_hh_nom2 "total hh expenditure only when quantity is reported, observations without quantity set missing"
+rename valuez cod_hh_nom3
+la var cod_hh_nom2 "total household daily expenditure only when quantity is reported without quantity set to missing"
+la var cod_hh_nom3 "total household daily food expenditure, excluding receipts in kind"
+la var quantityd "housedhold daily quantity of food consumed in Kgs"
+drop unit
+drop hhnonfoodexp
+sort hhid
+replace product = 999 if product==2
+la var product "product code is 999, if product is non food"
+replace prod_cat = 1 if prod_cat==.
+
+save "C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\out\cons_cod.dta", replace
 
 
 

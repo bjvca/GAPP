@@ -3,7 +3,7 @@
        log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/rep/100_food_basket_flex.lo
 > g
   log type:  text
- opened on:  29 Apr 2013, 13:16:55
+ opened on:  30 Apr 2013, 09:16:12
 
 . clear
 
@@ -158,8 +158,8 @@ variable one does not uniquely identify observations in the master data
 bottom_bask |
          et |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          0 | 3,388.8815       50.02       50.02
-          1 | 3,386.1185       49.98      100.00
+          0 | 3,388.1941       50.01       50.01
+          1 | 3,386.8059       49.99      100.00
 ------------+-----------------------------------
       Total |      6,775      100.00
 
@@ -196,7 +196,7 @@ hhid                                                                         Hou
                   type:  numeric (double)
 
                  range:  [1.013e+09,4.193e+09]        units:  1
-         unique values:  6775                     missing .:  0/96371
+         unique values:  6775                     missing .:  0/412045
 
                   mean:   2.5e+09
               std. dev:   1.1e+09
@@ -217,9 +217,9 @@ variable hhid does not uniquely identify observations in the master data
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          3 |     96,371      100.00      100.00
+          3 |    412,045      100.00      100.00
 ------------+-----------------------------------
-      Total |     96,371      100.00
+      Total |    412,045      100.00
 
 .         keep if _merge==3;
 (0 observations deleted)
@@ -227,33 +227,33 @@ variable hhid does not uniquely identify observations in the master data
 .         drop _merge;
 
 .         keep if bottom_basket==1;
-(58825 observations deleted)
+(238025 observations deleted)
 
 .      **************************************************************************;
 . * Calculate food shares. Since we're only doing shares here, we can
 > * work with the expenditures without doing temporal adjustment.
 > **************************************************************************;
 .           gen  food_expenditure= cod_hh_nom3;
-(3085 missing values generated)
+(139545 missing values generated)
 
 .                             *gen  food_expenditure= own_valued + daily_valued + monthly_v
 > alued + educ_valued;
 .           egen tot_food_expen= sum (food_expen), by (hhid) ;
 
 .           count if food_expenditure==.;
- 3085
+139545
 
 .           count if tot_food_expen==.;
     0
 
 .                     gen food_share= food_expenditure/tot_food_expen;
-(3178 missing values generated)
+(139638 missing values generated)
 
 .           count if food_share==.;
- 3178
+139638
 
 .           drop if food_share==.;
-(3178 observations deleted)
+(139638 observations deleted)
 
 .           sort hhid product;
 
@@ -294,13 +294,13 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000005.tmp saved
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          2 |      3,715       54.83       54.83
-          3 |      3,060       45.17      100.00
+          2 |      3,714       54.82       54.82
+          3 |      3,061       45.18      100.00
 ------------+-----------------------------------
       Total |      6,775      100.00
 
 .            drop if _m==2;
-(3715 observations deleted)
+(3714 observations deleted)
 
 .            drop _merge;
 
@@ -324,15 +324,15 @@ variable hhid does not uniquely identify observations in the master data
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          2 |      3,715        9.76        9.76
-          3 |     34,368       90.24      100.00
+          2 |      3,714        9.75        9.75
+          3 |     34,382       90.25      100.00
 ------------+-----------------------------------
-      Total |     38,083      100.00
+      Total |     38,096      100.00
 
 .           sort _m;
 
 .           drop if _m==2;
-(3715 observations deleted)
+(3714 observations deleted)
 
 .           drop _m;
 
@@ -346,9 +346,9 @@ variable spdomain does not uniquely identify observations in the master data
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          3 |     34,368      100.00      100.00
+          3 |     34,382      100.00      100.00
 ------------+-----------------------------------
-      Total |     34,368      100.00
+      Total |     34,382      100.00
 
 .           drop _merge;
 
@@ -373,8 +373,6 @@ variable spdomain does not uniquely identify observations in the master data
 .             lab var f_share_w "average food share for the 13 regions";
 
 . save "$path\work\food_basket_flex.dta", replace;
-(note: file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\food_basket_flex.dta no
-> t found)
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\food_basket_flex.dta saved
 
 . * List first spatial region to get an idea about contents;
@@ -446,8 +444,6 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\food_basket_flex.dt
 45
 
 .   save "$path/work\codes_food_basket_flex.dta", replace;
-(note: file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work\codes_food_basket_flex.
-> dta not found)
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work\codes_food_basket_flex.dta sav
 > ed
 

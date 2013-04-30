@@ -71,8 +71,8 @@ gen value = valuez* 1
 ************************************************************************************************************
 *** valuez is multiplied by 1 because it had been erroneously multiplied by the unit conversion factors meant for only quantities
 *********************************************************************************************
-la var quantity "daily quantity consumed in Kgs per person"
-la var value  "daily value of consumption in UGX per person"
+la var quantity "daily quantity consumed in Kgs per household"
+la var value  "daily value of consumption in UGX per per household"
 drop quantityz valuez
 rename quantity quantityz
 rename value valuez
@@ -80,7 +80,7 @@ drop cfactor
 sort hhid
 collapse (sum) quantityz valuez, by (hhid)
 sort hhid
-save "C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\out\table4_with_consumption_per_person.dta", replace
+save "C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\out\table4_with_consumption_per_household.dta", replace
 merge m:1 hhid using "C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\out\hhdata_gen_hhsize.dta"
 tab _m
 drop _m
@@ -134,7 +134,7 @@ gen educationd = h4q13f/365
 la var educationd "dail household expense on education"
 drop h4q13f
 save "C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\out\hhdeducationexp.dta", replace
-
+clear
 use "C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\in\HSEC5.dta"
 
 des

@@ -2,7 +2,7 @@
       name:  <unnamed>
        log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\rep\070_calpp.log
   log type:  text
- opened on:  29 Apr 2013, 13:16:46
+ opened on:  30 Apr 2013, 09:15:57
 
 . clear
 
@@ -453,7 +453,6 @@ hhid                                                                           H
 . sort spdomain;
 
 . save "$path\work\calpp.dta",replace;
-(note: file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\calpp.dta not found)
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\calpp.dta saved
 
 . ***********************************************************************
@@ -463,5 +462,5 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\calpp.dta saved
       name:  <unnamed>
        log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\rep\070_calpp.log
   log type:  text
- closed on:  29 Apr 2013, 13:16:47
+ closed on:  30 Apr 2013, 09:15:58
 -------------------------------------------------------------------------------------------
