@@ -2,7 +2,7 @@
       name:  <unnamed>
        log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\rep\070_calpp.log
   log type:  text
- opened on:  30 Apr 2013, 09:15:57
+ opened on:   6 May 2013, 13:52:59
 
 . clear
 
@@ -42,7 +42,7 @@ delimiter now ;
 . tempfile fert_rate;
 
 . save `fert_rate';
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000001.tmp saved
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h000001.tmp saved
 
 . list;
 
@@ -462,5 +462,5 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\calpp.dta saved
       name:  <unnamed>
        log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\rep\070_calpp.log
   log type:  text
- closed on:  30 Apr 2013, 09:15:58
+ closed on:   6 May 2013, 13:53:00
 -------------------------------------------------------------------------------------------

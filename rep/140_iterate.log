@@ -2,7 +2,7 @@
       name:  <unnamed>
        log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/rep/140_iterate.log
   log type:  text
- opened on:  30 Apr 2013, 09:16:19
+ opened on:   6 May 2013, 13:53:25
 
 . clear
 
@@ -110,8 +110,8 @@ variables reg_tpi survquar do not uniquely identify observations in the master d
 .         sort hhid;
 
 . save `contpi', replace;
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000001.tmp not found)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000001.tmp saved
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h000001.tmp not found)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h000001.tmp saved
 
 . *use "$path\in\povlines_first_iterate.dta", clear;
 . *save "$path/work/povlines_first.dta", replace;
@@ -683,8 +683,8 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000001.tmp saved
 285.         local lastpass = `pass';
 286.         local pass = `pass' + 1;
 287.         };
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000002.tmp not found)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000002.tmp saved
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h000002.tmp not found)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h000002.tmp saved
 variable one does not uniquely identify observations in the master data
 
      _merge |      Freq.     Percent        Cum.
@@ -722,10 +722,10 @@ variable hhid does not uniquely identify observations in the master data
 (138637 missing values generated)
 138637
 (138637 observations deleted)
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000003.tmp not found)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000003.tmp saved
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000004.tmp not found)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000004.tmp saved
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h000003.tmp not found)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h000003.tmp saved
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h000004.tmp not found)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h000004.tmp saved
 variable spdomain does not uniquely identify observations in the master data
 
      _merge |      Freq.     Percent        Cum.
@@ -735,14 +735,14 @@ variable spdomain does not uniquely identify observations in the master data
       Total |     33,959      100.00
   149
 (149 observations deleted)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000003.tmp saved
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h000003.tmp saved
 44
 44
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\codes_food_basket_flex_it1.dta
 >  saved
 (4392 observations deleted)
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000005.tmp not found)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000005.tmp saved
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h000005.tmp not found)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h000005.tmp saved
 variable hhid does not uniquely identify observations in the master data
 
      _merge |      Freq.     Percent        Cum.
@@ -752,7 +752,7 @@ variable hhid does not uniquely identify observations in the master data
 ------------+-----------------------------------
       Total |     85,218      100.00
 (14 observations deleted)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000005.tmp saved
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h000005.tmp saved
 variable product does not uniquely identify observations in the master data
 
      _merge |      Freq.     Percent        Cum.
@@ -763,8 +763,8 @@ variable product does not uniquely identify observations in the master data
       Total |     85,204      100.00
 (10946 observations deleted)
 (0 observations deleted)
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000007.tmp not found)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000007.tmp saved
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h000007.tmp not found)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h000007.tmp saved
 product was float now int
 unit was float now byte
 food_cat was float now byte
@@ -914,8 +914,8 @@ variable spdomain does not uniquely identify observations in the master data
 ------------+-----------------------------------
       Total |      6,775      100.00
 (341 real changes made)
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000009.tmp not found)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000009.tmp saved
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h000009.tmp not found)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h000009.tmp saved
 variable spdomain does not uniquely identify observations in the master data
 (label spdomain_original already defined)
 
@@ -1203,7 +1203,7 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/cons_real_it1.dta s
 -------------+-----------------------------------------------------------------
      h_flex1 |    6775   200636622    11.44893   31.84281          0        100
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/foodshares_it1.dta saved
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000002.tmp saved
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h000002.tmp saved
 variable one does not uniquely identify observations in the master data
 
      _merge |      Freq.     Percent        Cum.
@@ -1241,10 +1241,10 @@ variable hhid does not uniquely identify observations in the master data
 (138035 missing values generated)
 138035
 (138035 observations deleted)
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f00000a.tmp not found)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f00000a.tmp saved
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f00000b.tmp not found)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f00000b.tmp saved
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h00000a.tmp not found)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h00000a.tmp saved
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h00000b.tmp not found)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h00000b.tmp saved
 variable spdomain does not uniquely identify observations in the master data
 
      _merge |      Freq.     Percent        Cum.
@@ -1254,14 +1254,14 @@ variable spdomain does not uniquely identify observations in the master data
       Total |     33,826      100.00
   148
 (148 observations deleted)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f00000a.tmp saved
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h00000a.tmp saved
 45
 45
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\codes_food_basket_flex_it2.dta
 >  saved
 (4392 observations deleted)
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f00000c.tmp not found)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f00000c.tmp saved
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h00000c.tmp not found)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h00000c.tmp saved
 variable hhid does not uniquely identify observations in the master data
 
      _merge |      Freq.     Percent        Cum.
@@ -1271,7 +1271,7 @@ variable hhid does not uniquely identify observations in the master data
 ------------+-----------------------------------
       Total |     85,218      100.00
 (14 observations deleted)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f00000c.tmp saved
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h00000c.tmp saved
 variable product does not uniquely identify observations in the master data
 
      _merge |      Freq.     Percent        Cum.
@@ -1282,8 +1282,8 @@ variable product does not uniquely identify observations in the master data
       Total |     85,204      100.00
 (10396 observations deleted)
 (0 observations deleted)
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f00000e.tmp not found)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f00000e.tmp saved
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h00000e.tmp not found)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h00000e.tmp saved
 product was float now int
 unit was float now byte
 food_cat was float now byte
@@ -1433,8 +1433,8 @@ variable spdomain does not uniquely identify observations in the master data
 ------------+-----------------------------------
       Total |      6,775      100.00
 (341 real changes made)
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f00000g.tmp not found)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f00000g.tmp saved
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h00000g.tmp not found)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h00000g.tmp saved
 variable spdomain does not uniquely identify observations in the master data
 (label spdomain_original already defined)
 
@@ -1722,7 +1722,7 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/cons_real_it2.dta s
 -------------+-----------------------------------------------------------------
      h_flex2 |    6775   200636622    11.35634   31.73036          0        100
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/foodshares_it2.dta saved
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000002.tmp saved
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h000002.tmp saved
 variable one does not uniquely identify observations in the master data
 
      _merge |      Freq.     Percent        Cum.
@@ -1760,10 +1760,10 @@ variable hhid does not uniquely identify observations in the master data
 (138162 missing values generated)
 138162
 (138162 observations deleted)
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f00000h.tmp not found)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f00000h.tmp saved
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f00000i.tmp not found)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f00000i.tmp saved
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h00000h.tmp not found)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h00000h.tmp saved
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h00000i.tmp not found)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h00000i.tmp saved
 variable spdomain does not uniquely identify observations in the master data
 
      _merge |      Freq.     Percent        Cum.
@@ -1773,14 +1773,14 @@ variable spdomain does not uniquely identify observations in the master data
       Total |     33,860      100.00
   148
 (148 observations deleted)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f00000h.tmp saved
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h00000h.tmp saved
 45
 45
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\codes_food_basket_flex_it3.dta
 >  saved
 (4392 observations deleted)
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f00000j.tmp not found)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f00000j.tmp saved
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h00000j.tmp not found)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h00000j.tmp saved
 variable hhid does not uniquely identify observations in the master data
 
      _merge |      Freq.     Percent        Cum.
@@ -1790,7 +1790,7 @@ variable hhid does not uniquely identify observations in the master data
 ------------+-----------------------------------
       Total |     85,218      100.00
 (14 observations deleted)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f00000j.tmp saved
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h00000j.tmp saved
 variable product does not uniquely identify observations in the master data
 
      _merge |      Freq.     Percent        Cum.
@@ -1801,8 +1801,8 @@ variable product does not uniquely identify observations in the master data
       Total |     85,204      100.00
 (10396 observations deleted)
 (0 observations deleted)
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f00000l.tmp not found)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f00000l.tmp saved
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h00000l.tmp not found)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h00000l.tmp saved
 product was float now int
 unit was float now byte
 food_cat was float now byte
@@ -1952,8 +1952,8 @@ variable spdomain does not uniquely identify observations in the master data
 ------------+-----------------------------------
       Total |      6,775      100.00
 (342 real changes made)
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f00000n.tmp not found)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f00000n.tmp saved
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h00000n.tmp not found)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h00000n.tmp saved
 variable spdomain does not uniquely identify observations in the master data
 (label spdomain_original already defined)
 
@@ -2241,7 +2241,7 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/cons_real_it3.dta s
 -------------+-----------------------------------------------------------------
      h_flex3 |    6775   200636622    11.32592   31.69327          0        100
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/foodshares_it3.dta saved
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000002.tmp saved
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h000002.tmp saved
 variable one does not uniquely identify observations in the master data
 
      _merge |      Freq.     Percent        Cum.
@@ -2279,10 +2279,10 @@ variable hhid does not uniquely identify observations in the master data
 (137933 missing values generated)
 137933
 (137933 observations deleted)
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f00000o.tmp not found)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f00000o.tmp saved
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f00000p.tmp not found)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f00000p.tmp saved
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h00000o.tmp not found)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h00000o.tmp saved
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h00000p.tmp not found)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h00000p.tmp saved
 variable spdomain does not uniquely identify observations in the master data
 
      _merge |      Freq.     Percent        Cum.
@@ -2292,14 +2292,14 @@ variable spdomain does not uniquely identify observations in the master data
       Total |     33,813      100.00
   147
 (147 observations deleted)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f00000o.tmp saved
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h00000o.tmp saved
 45
 45
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\codes_food_basket_flex_it4.dta
 >  saved
 (4392 observations deleted)
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f00000q.tmp not found)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f00000q.tmp saved
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h00000q.tmp not found)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h00000q.tmp saved
 variable hhid does not uniquely identify observations in the master data
 
      _merge |      Freq.     Percent        Cum.
@@ -2309,7 +2309,7 @@ variable hhid does not uniquely identify observations in the master data
 ------------+-----------------------------------
       Total |     85,218      100.00
 (14 observations deleted)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f00000q.tmp saved
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h00000q.tmp saved
 variable product does not uniquely identify observations in the master data
 
      _merge |      Freq.     Percent        Cum.
@@ -2320,8 +2320,8 @@ variable product does not uniquely identify observations in the master data
       Total |     85,204      100.00
 (10807 observations deleted)
 (0 observations deleted)
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f00000s.tmp not found)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f00000s.tmp saved
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h00000s.tmp not found)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h00000s.tmp saved
 product was float now int
 unit was float now byte
 food_cat was float now byte
@@ -2473,8 +2473,8 @@ variable spdomain does not uniquely identify observations in the master data
 ------------+-----------------------------------
       Total |      6,775      100.00
 (342 real changes made)
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f00000u.tmp not found)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f00000u.tmp saved
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h00000u.tmp not found)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h00000u.tmp saved
 variable spdomain does not uniquely identify observations in the master data
 (label spdomain_original already defined)
 
@@ -2762,7 +2762,7 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/cons_real_it4.dta s
 -------------+-----------------------------------------------------------------
      h_flex4 |    6775   200636622    11.18359   31.51877          0        100
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/foodshares_it4.dta saved
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000002.tmp saved
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h000002.tmp saved
 variable one does not uniquely identify observations in the master data
 
      _merge |      Freq.     Percent        Cum.
@@ -2800,10 +2800,10 @@ variable hhid does not uniquely identify observations in the master data
 (137849 missing values generated)
 137849
 (137849 observations deleted)
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f00000v.tmp not found)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f00000v.tmp saved
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f00000w.tmp not found)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f00000w.tmp saved
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h00000v.tmp not found)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h00000v.tmp saved
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h00000w.tmp not found)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h00000w.tmp saved
 variable spdomain does not uniquely identify observations in the master data
 
      _merge |      Freq.     Percent        Cum.
@@ -2813,14 +2813,14 @@ variable spdomain does not uniquely identify observations in the master data
       Total |     33,791      100.00
   148
 (148 observations deleted)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f00000v.tmp saved
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h00000v.tmp saved
 44
 44
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\codes_food_basket_flex_it5.dta
 >  saved
 (4392 observations deleted)
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f00000x.tmp not found)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f00000x.tmp saved
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h00000x.tmp not found)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h00000x.tmp saved
 variable hhid does not uniquely identify observations in the master data
 
      _merge |      Freq.     Percent        Cum.
@@ -2830,7 +2830,7 @@ variable hhid does not uniquely identify observations in the master data
 ------------+-----------------------------------
       Total |     85,218      100.00
 (14 observations deleted)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f00000x.tmp saved
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h00000x.tmp saved
 variable product does not uniquely identify observations in the master data
 
      _merge |      Freq.     Percent        Cum.
@@ -2841,8 +2841,8 @@ variable product does not uniquely identify observations in the master data
       Total |     85,204      100.00
 (10946 observations deleted)
 (0 observations deleted)
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000011.tmp not found)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000011.tmp saved
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h000011.tmp not found)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h000011.tmp saved
 product was float now int
 unit was float now byte
 food_cat was float now byte
@@ -2992,8 +2992,8 @@ variable spdomain does not uniquely identify observations in the master data
 ------------+-----------------------------------
       Total |      6,775      100.00
 (342 real changes made)
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000013.tmp not found)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000013.tmp saved
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h000013.tmp not found)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h000013.tmp saved
 variable spdomain does not uniquely identify observations in the master data
 (label spdomain_original already defined)
 
@@ -3299,7 +3299,7 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/foodshares_it5.dta 
 . tempfile nat;
 
 . save `nat';
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000014.tmp saved
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h000014.tmp saved
 
 .         use "$path/work/cons_real_it`lastpass'.dta", clear ;
 
@@ -3313,7 +3313,7 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000014.tmp saved
 . tempfile rur;
 
 . save `rur';
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000015.tmp saved
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h000015.tmp saved
 
 . use "$path/work/cons_real_it`lastpass'.dta", clear ;
 
@@ -3327,7 +3327,7 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000015.tmp saved
 . tempfile new;
 
 . save `new';
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000016.tmp saved
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h000016.tmp saved
 
 . use "$path/work/cons_real_it`lastpass'.dta", clear ;
 
@@ -3341,7 +3341,7 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000016.tmp saved
 . tempfile rtp;
 
 . save `rtp';
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000017.tmp saved
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h000017.tmp saved
 
 . use "$path/work/cons_real_it`lastpass'.dta", clear ;
 
@@ -3355,7 +3355,7 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000017.tmp saved
 . tempfile str;
 
 . save `str';
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000018.tmp saved
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h000018.tmp saved
 
 . use "$path/work/cons_real_it`lastpass'.dta", clear ;
 
@@ -3369,7 +3369,7 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000018.tmp saved
 . tempfile r13;
 
 . save `r13';
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000019.tmp saved
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h000019.tmp saved
 
 . clear;
 
@@ -3381,7 +3381,7 @@ obs was 0, now 1
 . tempfile one;
 
 . save `one';
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f00001a.tmp saved
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h00001a.tmp saved
 
 . use          `nat';
 
@@ -3427,7 +3427,7 @@ obs was 0, now 1
 . tempfile converg
 
 . save `converg'
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f00001b.tmp saved
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h00001b.tmp saved
 
 . 
 . forvalues X = 1/5 {
@@ -3444,15 +3444,15 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f00001b.tmp saved
  11.                         }
  12.         save `converg', replace
  13.         }
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f00001b.tmp saved
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h00001b.tmp saved
 (label STRA already defined)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f00001b.tmp saved
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h00001b.tmp saved
 (label STRA already defined)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f00001b.tmp saved
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h00001b.tmp saved
 (label STRA already defined)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f00001b.tmp saved
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h00001b.tmp saved
 (label STRA already defined)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f00001b.tmp saved
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h00001b.tmp saved
 
 . 
 . use `converg', clear

@@ -2,7 +2,7 @@
       name:  <unnamed>
        log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\rep\110_price_unit_flex.log
   log type:  text
- opened on:  30 Apr 2013, 09:16:14
+ opened on:   6 May 2013, 13:53:19
 
 . clear
 
@@ -64,8 +64,8 @@ delimiter now ;
 .                 tempfile dd_acsort;
 
 . save `dd_acsort', replace;
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000001.tmp not found)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000001.tmp saved
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h000001.tmp not found)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h000001.tmp saved
 
 . /*
 > use "$path\work\daily.dta";
@@ -187,8 +187,8 @@ hhid                                                                           h
 .                         tempfile spdomainreg_tpi;
 
 .                 save `spdomainreg_tpi', replace;
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000003.tmp not found)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000003.tmp saved
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h000003.tmp not found)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h000003.tmp saved
 
 .                                 codebook hhid;
 
@@ -440,8 +440,8 @@ variables reg_tpi survquar do not uniquely identify observations in the master d
 .                                 tempfile contpi;
 
 .                                 save `contpi', replace;
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000005.tmp not found)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000005.tmp saved
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h000005.tmp not found)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h000005.tmp saved
 
 .                                 collapse (p$bottom) one cons_pc_tpi [aw=hhsize*hhweight],
 >  by(spdomain) ;
@@ -453,8 +453,8 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000005.tmp saved
 .                                 sort spdomain;
 
 .                                 save `60pct', replace;
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000006.tmp not found)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000006.tmp saved
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h000006.tmp not found)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h000006.tmp saved
 
 .                                 use `contpi';
 
@@ -626,9 +626,9 @@ bottom_bas~t |     29213           1           0          1          1
 
 . describe;
 
-Contains data from C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0f000001.tmp
+Contains data from C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h000001.tmp
   obs:        29,213                          
- vars:            28                          30 Apr 2013 09:16
+ vars:            28                          6 May 2013 13:53
  size:     3,739,264                          
 -------------------------------------------------------------------------------------------
               storage  display     value
