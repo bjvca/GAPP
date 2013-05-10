@@ -1,0 +1,187 @@
+-------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/rep/080_conpc.log
+  log type:  text
+ opened on:   6 May 2013, 13:53:00
+
+. set more off
+
+. #delimit ;
+delimiter now ;
+. ***************************************************************************
+> * 080_conpc.do          (start)
+> *
+> * Creates a file with per capita nominal consumption divided between food
+> * and non-food categories based on the calorie definition of food
+> * rather than the COICOP (INE) definition of food. ready for 
+> * temporal deflation when necessary
+> ****************************************************************************;
+. /*
+> This file uses:
+>         work\hhdata.dta
+>         work\consump_nom.dta
+>       
+> This file creates:
+>         work\conpc.dta
+> */
+> 
+> 
+> 
+> ***************************************************************************
+> * Food expenditure
+> ****************************************************************************;
+. *use "$path\in\cons_cod.dta";
+. use "$path\work\cons_cod.dta";
+
+.             *sort product;
+.             *merge product using "$path\work\food_cat.dta";
+.             *tab _m;
+.             *drop _m;
+.             keep if food_cat==1;
+(322449 observations deleted)
+
+.             collapse (sum) cod_hh_nom, by(hhid);
+
+.             rename cod_hh_nom food_hh_nom;
+
+.                 sort hhid;
+
+.             keep hhid food_hh_nom;
+
+.             tempfile foodexp;
+
+. save `foodexp';
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h000001.tmp saved
+
+. ***************************************************************************
+> * Food expenditure merged with all expenditure
+> ****************************************************************************;
+. use "$path\work\cons_cod.dta";
+
+. *use "$path\in\cons_cod.dta";
+. *use "$path\in\cons_cat.dta";
+. sum;
+
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+        hhid |    412045    2.48e+09    1.13e+09   1.01e+09   4.19e+09
+     product |    412045    810.2635    358.1243        100        999
+    food_cat |    412045    1.782558    .4125064          1          2
+    prod_cat |    412045    1.782558    .4125064          1          2
+    descript |    322449           2           0          2          2
+-------------+--------------------------------------------------------
+       untcd |     88138    44.41037    30.53397          1         85
+   quantityd |     89596     .779464    3.170331          0   364.2857
+ cod_hh_nom3 |     89596     383.356    648.4919          0      18500
+  cod_hh_nom |    412045    1602.923    615777.4          0   3.95e+08
+ cod_hh_nom2 |    252585    2614.436    786487.2   .0027397   3.95e+08
+
+. collapse (sum) cod_hh_nom, by(hhid);
+
+. *gen cons_pc_nom = cons_hh_nom/hhsize;
+. rename cod_hh_nom cons_hh_nom;
+
+. *keep  hhid cons_pc_nom cons_hh_nom ;
+. *keep hhid cod_hh_nom;
+. *use "$path\in\cons_cod.dta";
+. *use "$path\in\consump_nom.dta";
+. *use "$path\work\consump_nom.dta";
+. *            keep  hhid cons_hh_nom ;
+.             display _N;
+6775
+
+.             keep  hhid cons_hh_nom ;
+
+.             sort hhid;
+
+.             merge hhid using "$path\work\hhdata.dta";
+
+.             tab _m;
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          3 |      6,775      100.00      100.00
+------------+-----------------------------------
+      Total |      6,775      100.00
+
+.             drop _m;
+
+. gen cons_pc_nom = cons_hh_nom/hhsize;
+
+.             sort hhid;
+
+.             merge hhid using `foodexp';
+
+.             tab _m;
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          3 |      6,775      100.00      100.00
+------------+-----------------------------------
+      Total |      6,775      100.00
+
+.                 drop if _merge==2;
+(0 observations deleted)
+
+.             replace food_hh_nom=0 if _merge==1 & food_hh_nom==.;
+(0 real changes made)
+
+.             drop _m;
+
+.                 gen food_pc_nom=food_hh_nom/hhsize;
+
+.                 gen nf_hh_nom=cons_hh_nom-food_hh_nom;
+
+.             gen nf_pc_nom=nf_hh_nom/hhsize;
+
+.              keep hhid cons_hh_nom food_pc_nom nf_pc_nom cons_pc_nom survquar spdomain ne
+> ws reg_tpi rural hhweight hhsize;
+
+.             lab var food_pc_nom "nominal food consumption per capita";
+
+.             lab var nf_pc_nom "nominal non-food consumption per capita";
+
+. keep hhid cons_hh_nom cons_pc_nom food_pc_nom nf_pc_nom;
+
+.             sort hhid;
+
+. * MAH ;
+.  sum;
+
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+        hhid |      6775    2.51e+09    1.13e+09   1.01e+09   4.19e+09
+ cons_hh_nom |      6775    97487.28     4938495   232.1918   4.06e+08
+ cons_pc_nom |      6775    20773.97    987396.4   78.55931   8.12e+07
+ food_pc_nom |      6775    1257.269    1252.965          0   17857.14
+   nf_pc_nom |      6775     19516.7    987342.9   23.11263   8.12e+07
+
+.  codebook hhid;
+
+-------------------------------------------------------------------------------------------
+hhid                                                                         Household Code
+-------------------------------------------------------------------------------------------
+
+                  type:  numeric (double)
+
+                 range:  [1.013e+09,4.193e+09]        units:  1
+         unique values:  6775                     missing .:  0/6775
+
+                  mean:   2.5e+09
+              std. dev:   1.1e+09
+
+           percentiles:        10%       25%       50%       75%       90%
+                           1.0e+09   1.1e+09   2.2e+09   3.2e+09   4.1e+09
+
+. save "$path\work\conpc.dta", replace;
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\conpc.dta saved
+
+. ***************************************************************************
+> * 080_conpc.do          (end)
+> ****************************************************************************;
+. log close;
+      name:  <unnamed>
+       log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/rep/080_conpc.log
+  log type:  text
+ closed on:   6 May 2013, 13:53:01
+-------------------------------------------------------------------------------------------

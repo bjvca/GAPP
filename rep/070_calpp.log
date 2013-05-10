@@ -1,0 +1,466 @@
+-------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\rep\070_calpp.log
+  log type:  text
+ opened on:   6 May 2013, 13:52:59
+
+. clear
+
+. set more off
+
+. #delimit ;
+delimiter now ;
+. *global fert_rate "fert_rate";
+. ***********************************************************************
+> * 070_calpp.do          (start)
+> *
+> * Purpose: Determine calories required for each person per domain per day.
+> ***********************************************************************;
+. /*
+> This file uses:
+>         work\indata.dta
+>         work\hhdata.dta
+> 
+> This file creates:
+>         work\calpp.dta
+> */
+> 
+> *-------------------------------------------------------------------------*
+> * Include fertility rates from csv-file
+> *-------------------------------------------------------------------------*;
+. clear;
+
+. insheet sex rural age fert_rate using "$path/in/fert_rate_mozambique.csv";
+(4 vars, 96 obs)
+
+. ***************************************** check for Ugandan fertility rates *************
+> ************************
+> *****************************************************************************************
+> ********************;
+. sort sex rural age;
+
+. tempfile fert_rate;
+
+. save `fert_rate';
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h000001.tmp saved
+
+. list;
+
+     +------------------------------+
+     | sex   rural   age   fert_r~e |
+     |------------------------------|
+  1. |   2       0    12       .003 |
+  2. |   2       0    13       .003 |
+  3. |   2       0    14       .093 |
+  4. |   2       0    15       .093 |
+  5. |   2       0    16       .093 |
+     |------------------------------|
+  6. |   2       0    17       .093 |
+  7. |   2       0    18       .207 |
+  8. |   2       0    19       .207 |
+  9. |   2       0    20       .207 |
+ 10. |   2       0    21       .207 |
+     |------------------------------|
+ 11. |   2       0    22       .207 |
+ 12. |   2       0    23       .207 |
+ 13. |   2       0    24       .207 |
+ 14. |   2       0    25       .207 |
+ 15. |   2       0    26       .207 |
+     |------------------------------|
+ 16. |   2       0    27       .207 |
+ 17. |   2       0    28       .207 |
+ 18. |   2       0    29       .207 |
+ 19. |   2       0    30       .144 |
+ 20. |   2       0    31       .144 |
+     |------------------------------|
+ 21. |   2       0    32       .144 |
+ 22. |   2       0    33       .144 |
+ 23. |   2       0    34       .144 |
+ 24. |   2       0    35       .144 |
+ 25. |   2       0    36       .144 |
+     |------------------------------|
+ 26. |   2       0    37       .144 |
+ 27. |   2       0    38       .144 |
+ 28. |   2       0    39       .144 |
+ 29. |   2       0    40       .144 |
+ 30. |   2       0    41       .144 |
+     |------------------------------|
+ 31. |   2       0    42       .144 |
+ 32. |   2       0    43       .144 |
+ 33. |   2       0    44       .144 |
+ 34. |   2       0    45       .144 |
+ 35. |   2       0    46       .144 |
+     |------------------------------|
+ 36. |   2       0    47       .144 |
+ 37. |   2       0    48       .144 |
+ 38. |   2       0    49       .144 |
+ 39. |   2       0    50       .144 |
+ 40. |   2       0    51       .144 |
+     |------------------------------|
+ 41. |   2       0    52       .144 |
+ 42. |   2       0    53       .144 |
+ 43. |   2       0    54       .144 |
+ 44. |   2       0    55       .144 |
+ 45. |   2       0    56       .144 |
+     |------------------------------|
+ 46. |   2       0    57       .144 |
+ 47. |   2       0    58       .144 |
+ 48. |   2       0    59       .144 |
+ 49. |   2       1    12       .009 |
+ 50. |   2       1    13       .009 |
+     |------------------------------|
+ 51. |   2       1    14        .11 |
+ 52. |   2       1    15        .11 |
+ 53. |   2       1    16        .11 |
+ 54. |   2       1    17        .11 |
+ 55. |   2       1    18        .28 |
+     |------------------------------|
+ 56. |   2       1    19        .28 |
+ 57. |   2       1    20        .28 |
+ 58. |   2       1    21        .28 |
+ 59. |   2       1    22        .28 |
+ 60. |   2       1    23        .28 |
+     |------------------------------|
+ 61. |   2       1    24        .28 |
+ 62. |   2       1    25        .28 |
+ 63. |   2       1    26        .28 |
+ 64. |   2       1    27        .28 |
+ 65. |   2       1    28        .28 |
+     |------------------------------|
+ 66. |   2       1    29        .28 |
+ 67. |   2       1    30       .212 |
+ 68. |   2       1    31       .212 |
+ 69. |   2       1    32       .212 |
+ 70. |   2       1    33       .212 |
+     |------------------------------|
+ 71. |   2       1    34       .212 |
+ 72. |   2       1    35       .212 |
+ 73. |   2       1    36       .212 |
+ 74. |   2       1    37       .212 |
+ 75. |   2       1    38       .212 |
+     |------------------------------|
+ 76. |   2       1    39       .212 |
+ 77. |   2       1    40       .212 |
+ 78. |   2       1    41       .212 |
+ 79. |   2       1    42       .212 |
+ 80. |   2       1    43       .212 |
+     |------------------------------|
+ 81. |   2       1    44       .212 |
+ 82. |   2       1    45       .212 |
+ 83. |   2       1    46       .212 |
+ 84. |   2       1    47       .212 |
+ 85. |   2       1    48       .212 |
+     |------------------------------|
+ 86. |   2       1    49       .212 |
+ 87. |   2       1    50       .212 |
+ 88. |   2       1    51       .212 |
+ 89. |   2       1    52       .212 |
+ 90. |   2       1    53       .212 |
+     |------------------------------|
+ 91. |   2       1    54       .212 |
+ 92. |   2       1    55       .212 |
+ 93. |   2       1    56       .212 |
+ 94. |   2       1    57       .212 |
+ 95. |   2       1    58       .212 |
+     |------------------------------|
+ 96. |   2       1    59       .212 |
+     +------------------------------+
+
+. *-------------------------------------------------------------------------*
+> * Now do the calorie needs for individuals
+> *-------------------------------------------------------------------------*;
+. use "$path\work\indata.dta";
+
+. * CA bootstrap modification;
+. sort hhid;
+
+. merge hhid using "$path\work\hhdata.dta";
+variable hhid does not uniquely identify observations in the master data
+
+. tab _m;
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          3 |     35,945      100.00      100.00
+------------+-----------------------------------
+      Total |     35,945      100.00
+
+.  drop _m;
+
+. sum;
+
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+       indid |     35945    2.57e+11    1.10e+11   1.01e+11   4.19e+11
+    motherhh |     20045    .7825892    .4124947          0          1
+        hhid |     35945    2.57e+09    1.10e+09   1.01e+09   4.19e+09
+         sex |     35945     1.50861    .4999328          1          2
+         age |     34840    19.51099    17.41519          0         98
+-------------+--------------------------------------------------------
+      strata |     35945    5.710586    2.766681          1         10
+        mult |     35945    917.2863    619.3906   26.67222   10279.15
+      region |     35945    2.480234    1.085821          1          4
+       urban |     35945    .1471693    .3542795          0          1
+    district |     35945    257.0191    109.5067        101        419
+-------------+--------------------------------------------------------
+       rmult |     35945    917.2973    619.3847         27      10279
+      hhsize |     35945    6.416497    2.935303          1         24
+     welfare |     35945    62735.83     78270.9   2034.431    1932420
+    hhweight |     35945     5917.96    5136.521         54      92511
+      poor09 |     35945    .2781472    .4480925          0          1
+-------------+--------------------------------------------------------
+         day |     35945     14.0508    7.502636          1         31
+       month |     35945     6.71398    3.387719          1         12
+        Year |     35945    2009.329    .4700192       2009       2010
+       h1bq8 |     35945     1.00498     .070393          1          2
+         psu |     35945    377.7054    193.8014          1        712
+-------------+--------------------------------------------------------
+    survquar |     35945    2.484852    1.142574          1          4
+     survmon |     35945    6.667353    3.350374          1         12
+       rural |     35945    .8528307    .3542795          0          1
+        news |     35945    2.480234    1.085821          1          4
+     reg_tpi |     35945    1.147169    .3542795          1          2
+-------------+--------------------------------------------------------
+        bswt |     35945           1           0          1          1
+    spdomain |     35945    3.321575    1.334996          1          5
+
+. * Include fertility rates;
+. sort sex rural age;
+
+. merge sex rural age using `fert_rate';
+variables sex rural age do not uniquely identify observations in the master data
+
+. sum;
+
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+       indid |     35945    2.57e+11    1.10e+11   1.01e+11   4.19e+11
+    motherhh |     20045    .7825892    .4124947          0          1
+        hhid |     35945    2.57e+09    1.10e+09   1.01e+09   4.19e+09
+         sex |     35945     1.50861    .4999328          1          2
+         age |     34840    19.51099    17.41519          0         98
+-------------+--------------------------------------------------------
+      strata |     35945    5.710586    2.766681          1         10
+        mult |     35945    917.2863    619.3906   26.67222   10279.15
+      region |     35945    2.480234    1.085821          1          4
+       urban |     35945    .1471693    .3542795          0          1
+    district |     35945    257.0191    109.5067        101        419
+-------------+--------------------------------------------------------
+       rmult |     35945    917.2973    619.3847         27      10279
+      hhsize |     35945    6.416497    2.935303          1         24
+     welfare |     35945    62735.83     78270.9   2034.431    1932420
+    hhweight |     35945     5917.96    5136.521         54      92511
+      poor09 |     35945    .2781472    .4480925          0          1
+-------------+--------------------------------------------------------
+         day |     35945     14.0508    7.502636          1         31
+       month |     35945     6.71398    3.387719          1         12
+        Year |     35945    2009.329    .4700192       2009       2010
+       h1bq8 |     35945     1.00498     .070393          1          2
+         psu |     35945    377.7054    193.8014          1        712
+-------------+--------------------------------------------------------
+    survquar |     35945    2.484852    1.142574          1          4
+     survmon |     35945    6.667353    3.350374          1         12
+       rural |     35945    .8528307    .3542795          0          1
+        news |     35945    2.480234    1.085821          1          4
+     reg_tpi |     35945    1.147169    .3542795          1          2
+-------------+--------------------------------------------------------
+        bswt |     35945           1           0          1          1
+    spdomain |     35945    3.321575    1.334996          1          5
+   fert_rate |      9790    .1876158    .0860403       .003        .28
+      _merge |     35945    1.544721    .8903613          1          3
+
+. * Do calorie calculations ;
+.     gen num=1;
+
+.     gen cal = .;
+(35945 missing values generated)
+
+. * Same assumptions about sex/age specific calories need in IAF 1997, IAF 2003 and IOF 200
+> 9;
+. * Children (no difference between boys and girls)   ;
+.      replace cal =  820 if age < 1;
+(1196 real changes made)
+
+. * Add 500 cal per day for mothers in first six months of breast feeding
+> * We assume that 60% of children under 1 are under six months old
+> * And that all of them breast feed
+> * We add these mother requirements of 300 on average to each child under 1 whose mother i
+> s alive;
+.     replace cal = 1120 if age <  1 & motherhh==1;
+(1168 real changes made)
+
+.     replace cal = 1150 if age >= 1 & age <2;
+(1213 real changes made)
+
+.     replace cal = 1350 if age >= 2 & age <3;
+(1288 real changes made)
+
+.     replace cal = 1550 if age >= 3 & age <5;
+(2746 real changes made)
+
+. * Males ;
+.     replace cal = 1850 if age >=  5 & age <7  & sex==1;
+(1272 real changes made)
+
+.     replace cal = 2100 if age >=  7 & age <10 & sex==1;
+(1776 real changes made)
+
+.     replace cal = 2200 if age >= 10 & age <12 & sex==1;
+(1048 real changes made)
+
+.     replace cal = 2400 if age >= 12 & age <14 & sex==1;
+(1122 real changes made)
+
+.     replace cal = 2650 if age >= 14 & age <16 & sex==1;
+(932 real changes made)
+
+.     replace cal = 2850 if age >= 16 & age <18 & sex==1;
+(792 real changes made)
+
+.     replace cal = 3000 if age >= 18 & age <30 & sex==1;
+(3012 real changes made)
+
+.     replace cal = 2900 if age >= 30 & age <60 & sex==1;
+(3276 real changes made)
+
+.     replace cal = 2450 if age>=60 & age~=. & sex==1;
+(669 real changes made)
+
+. * Girls 5-12 years (probability of pregnancy assumed = 0) ;
+.     replace cal = 1750 if age >=  5 & age < 7 & sex==2;
+(1202 real changes made)
+
+.     replace cal = 1800 if age >=  7 & age <10 & sex==2;
+(1698 real changes made)
+
+.     replace cal = 1950 if age >= 10 & age <12 & sex==2;
+(1025 real changes made)
+
+. * Women with a correction for pregnancy. We add 285 calories per for the final trimester.
+> * To do this we find the probability that rural and urban women are pregnant from
+> * live births data in the 1997 census over the past 12 months (no correction for still bi
+> rths).
+> * 3/4*probability of birth gives probability of preganancy. Probability of final trimeste
+> r is one
+> * third of that of that or 1/4 of the probability of birth
+> 
+> * Women urban;
+.     replace cal = 2100 + (fert_rate*285)/4 if age >= 12 & age <14 & sex==2 & rural==0;
+(135 real changes made)
+
+.     replace cal = 2150 + (fert_rate*285)/4 if age >= 14 & age <18 & sex==2 & rural==0;
+(267 real changes made)
+
+.     replace cal = 2100 + (fert_rate*285)/4 if age >= 18 & age <30 & sex==2 & rural==0;
+(874 real changes made)
+
+.     replace cal = 2150 + (fert_rate*285)/4 if age >= 30 & age <60 & sex==2 & rural==0;
+(491 real changes made)
+
+. * Women rural;
+.     replace cal = 2100 + (fert_rate*285)/4 if age >= 12 & age <14 & sex==2 & rural==1;
+(941 real changes made)
+
+.     replace cal = 2150 + (fert_rate*285)/4 if age >= 14 & age <18 & sex==2 & rural==1;
+(1392 real changes made)
+
+.     replace cal = 2100 + (fert_rate*285)/4 if age >= 18 & age <30 & sex==2 & rural==1;
+(2824 real changes made)
+
+.     replace cal = 2150 + (fert_rate*285)/4 if age >= 30 & age <60 & sex==2 & rural==1;
+(2866 real changes made)
+
+. * Women 60+ are not pregnant ;
+.     replace cal = 1950 if age>=60 & age~=. & sex==2;
+(783 real changes made)
+
+.     count if cal ==.;
+ 1105
+
+.     *Fill in these two observations for IAF 2002/03:;
+.     * 1) this one is a child;
+.     *replace cal = 1500 if cal ==. & age==.;
+.     * 2) this one is 21 years old;
+.     *replace cal = 2500 if cal ==. & b2==.;
+.     collapse (sum) cal num (max) psu hhsize hhweight strata rural spdomain, by (hhid);
+
+.     gen chk=hhsize - num;
+
+.     sum chk;
+
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+         chk |      6775   -.3455351    .8928498        -11          0
+
+.     drop chk;
+
+.     gen calpp = cal / hhsize;
+
+.     sort spdomain;
+
+. sum;
+
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+        hhid |      6775    2.51e+09    1.13e+09   1.01e+09   4.19e+09
+         cal |      6775    10971.36    6146.367       1950   50725.15
+         num |      6775    5.305535    2.940196          1         24
+         psu |      6775     365.894     201.698          1        712
+      hhsize |      6775        4.96     2.75857          1         24
+-------------+--------------------------------------------------------
+    hhweight |      6775    4533.332    4304.242         54      92511
+      strata |      6775    5.551734    2.873672          1         10
+       rural |      6775    .8199262    .3842773          0          1
+    spdomain |      6775      3.2431    1.373578          1          5
+       calpp |      6775    2288.939     620.148   1463.317   24170.68
+
+. * MAH ;
+.  sum;
+
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+        hhid |      6775    2.51e+09    1.13e+09   1.01e+09   4.19e+09
+         cal |      6775    10971.36    6146.367       1950   50725.15
+         num |      6775    5.305535    2.940196          1         24
+         psu |      6775     365.894     201.698          1        712
+      hhsize |      6775        4.96     2.75857          1         24
+-------------+--------------------------------------------------------
+    hhweight |      6775    4533.332    4304.242         54      92511
+      strata |      6775    5.551734    2.873672          1         10
+       rural |      6775    .8199262    .3842773          0          1
+    spdomain |      6775      3.2431    1.373578          1          5
+       calpp |      6775    2288.939     620.148   1463.317   24170.68
+
+.  codebook hhid;
+
+-------------------------------------------------------------------------------------------
+hhid                                                                           Household ID
+-------------------------------------------------------------------------------------------
+
+                  type:  numeric (double)
+
+                 range:  [1.013e+09,4.193e+09]        units:  1
+         unique values:  6775                     missing .:  0/6775
+
+                  mean:   2.5e+09
+              std. dev:   1.1e+09
+
+           percentiles:        10%       25%       50%       75%       90%
+                           1.0e+09   1.1e+09   2.2e+09   3.2e+09   4.1e+09
+
+. collapse (mean) calpp[aw=hhsize*hhweight], by (spdomain);
+
+. sort spdomain;
+
+. save "$path\work\calpp.dta",replace;
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\calpp.dta saved
+
+. ***********************************************************************
+> * 070_calpp.do          (end)
+> ***********************************************************************;
+. log close;
+      name:  <unnamed>
+       log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\rep\070_calpp.log
+  log type:  text
+ closed on:   6 May 2013, 13:53:00
+-------------------------------------------------------------------------------------------

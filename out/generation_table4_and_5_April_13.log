@@ -1,0 +1,213 @@
+------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\out\generation_table4_and_
+> 5_April_13.log
+  log type:  text
+ opened on:  11 Apr 2013, 11:05:39
+
+. use "C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\ww-ug\UNHS 2009_10 DATASET\SOCIO
+> \HSEC10A_CLN.dta", clear
+
+. br
+
+. sort hh
+
+. rename hh hhid
+
+. la var hhid household id
+invalid syntax
+r(198);
+
+. la var hhid "household id"
+
+. br
+
+. duplicates report  hh h10aq4
+
+Duplicates in terms of hhid h10aq4
+
+--------------------------------------
+   copies | observations       surplus
+----------+---------------------------
+        1 |        22115             0
+        2 |        14636          7318
+        3 |        11100          7400
+        4 |         9396          7047
+        5 |         7985          6388
+        6 |         6348          5290
+        7 |         5068          4344
+        8 |         3976          3479
+        9 |         3051          2712
+       10 |         2280          2052
+       11 |         1298          1180
+       12 |          888           814
+       13 |          559           516
+       14 |          378           351
+       15 |          225           210
+       16 |          160           150
+       17 |           51            48
+       19 |           19            18
+       20 |           40            38
+       24 |           24            23
+--------------------------------------
+
+. codebook hhid
+
+---------------------------------------------------------------------------------
+hhid                                                                 household id
+---------------------------------------------------------------------------------
+
+                  type:  numeric (double)
+
+                 range:  [1.013e+09,4.193e+09]        units:  1
+         unique values:  6775                     missing .:  0/89597
+
+                  mean:   2.4e+09
+              std. dev:   1.1e+09
+
+           percentiles:        10%       25%       50%       75%       90%
+                           1.0e+09   1.1e+09   2.2e+09   3.2e+09   4.1e+09
+
+. egen quantity=rowtotal( h10aq4 h10aq6 h10aq8 h10aq10 )
+
+. la var quantity "quantity of food consumed by the household including purchases
+> , home, away from hm & kind"
+note: label truncated to 80 characters
+
+. gen quantityd = quantity/7
+
+. drop quantity h10aq10 h10aq8 h10aq6 h10aq4
+
+. la var quantityd "daily household food consumption"
+
+. egen value=rowtotal ( h10aq5 h10aq7 h10aq9 h10aq11)
+
+. la var value "household food consumption in seven days"
+
+. gen valuez = value/7
+
+. la var valuez "daily value of food consumed by the household"
+
+. rename quantityd quantityz
+
+. drop value value h10aq11 h10aq11 h10aq9 h10aq7 h10aq5 h10aq13 h10aq12
+
+. gen unit = 1
+
+. la var unit "set equal to one since all observations are converted into kg"
+
+. br
+
+. br
+
+. gen food_cat = 1
+
+. la var food_cat "food category equals 1, if product is food and 0 if non food"
+
+. br
+
+. des itm
+
+              storage  display     value
+variable name   type   format      label      variable label
+---------------------------------------------------------------------------------
+itmcd           float  %16.0g      HS10A2     code
+
+. des hhid
+
+              storage  display     value
+variable name   type   format      label      variable label
+---------------------------------------------------------------------------------
+hhid            double %13.0f                 household id
+
+. des food_cat
+
+              storage  display     value
+variable name   type   format      label      variable label
+---------------------------------------------------------------------------------
+food_cat        float  %9.0g                  food category equals 1, if product
+                                                is food and 0 if non food
+
+. des valuez
+
+              storage  display     value
+variable name   type   format      label      variable label
+---------------------------------------------------------------------------------
+valuez          float  %9.0g                  daily value of food consumed by the
+                                                household
+
+. rename itmcd product
+
+. format %10.0g product
+
+. recast float hhid, force
+hhid:  89134 values changed
+
+. format %9.0g hhid
+
+. recast double product
+
+. recast byte unit
+
+. format %10.0g unit
+
+. la var product "Food product code: numerical"
+
+. save "C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\out\household_table4.d
+> ta"
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\out\household_table4.dta 
+> saved
+
+. collapse (sum) product untcd quantityz valuez unit food_cat ,by (hhid)
+
+. codebook hhid
+
+---------------------------------------------------------------------------------
+hhid                                                                 household id
+---------------------------------------------------------------------------------
+
+                  type:  numeric (float)
+
+                 range:  [1.013e+09,4.193e+09]        units:  10
+         unique values:  521                      missing .:  0/521
+
+                  mean:   2.1e+09
+              std. dev:   1.1e+09
+
+           percentiles:        10%       25%       50%       75%       90%
+                           1.0e+09   1.1e+09   2.0e+09   3.1e+09   4.1e+09
+
+. des hhid
+
+              storage  display     value
+variable name   type   format      label      variable label
+---------------------------------------------------------------------------------
+hhid            float  %9.0g                  household id
+
+. clear
+
+. save "C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\out\household_table4.d
+> ta"
+no variables defined
+r(111);
+
+. clear
+
+. do "C:\Users\TEMPLE~1\AppData\Local\Temp\STD0d000000.tmp"
+
+. log using "C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\out\generation_ta
+> ble4_and_5_April_13.log"
+log file already open
+r(604);
+
+end of do-file
+
+r(604);
+
+. log close
+      name:  <unnamed>
+       log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\out\generation_ta
+> ble4_and_5_April_13.log
+  log type:  text
+ closed on:  11 Apr 2013, 12:08:43
+---------------------------------------------------------------------------------
