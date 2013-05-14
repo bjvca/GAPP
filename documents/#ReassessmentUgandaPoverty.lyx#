@@ -95,14 +95,7 @@ Uganda has been using the same CBN basket for over two decades now.
  population.
  While price heterogeneity has been incorporated in poverty measurement
  from the start, consensus is building that specificity also requires different
- bundles for different spatial or temporal domains 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "RePEc:ucp:ecdecc:v:51:y:2002:i:1:p:77-108"
-
-\end_inset
-
-.
+ bundles for different spatial or temporal domains .
  
 \end_layout
 
@@ -123,13 +116,6 @@ Conclusion
 \end_layout
 
 \begin_layout Standard
-\begin_inset CommandInset bibtex
-LatexCommand bibtex
-bibfiles "poverty"
-options "plain"
-
-\end_inset
-
 
 \end_layout
 
