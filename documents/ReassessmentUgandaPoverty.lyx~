@@ -24,7 +24,8 @@
 \output_sync 0
 \bibtex_command default
 \index_command default
-\paperfontsize default
+\paperfontsize 12
+\spacing single
 \use_hyperref false
 \papersize default
 \use_geometry false
@@ -32,7 +33,7 @@
 \use_esint 1
 \use_mhchem 1
 \use_mathdots 1
-\cite_engine basic
+\cite_engine jurabib
 \use_bibtopic false
 \use_indices false
 \paperorientation portrait
@@ -95,12 +96,28 @@ Uganda has been using the same CBN basket for over two decades now.
  population.
  While price heterogeneity has been incorporated in poverty measurement
  from the start, consensus is building that specificity also requires different
- bundles for different spatial or temporal domains .
- 
+ bundles for different spatial or temporal domains 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "RePEc:eee:wdevel:v:31:y:2003:i:2:p:339-358,RePEc:ucp:ecdecc:v:51:y:2002:i:1:p:77-108"
+
+\end_inset
+
+.
+ Explain why this is going to be the case especially in Uganda.
 \end_layout
 
 \begin_layout Section*
 Poverty in Uganda - Recent Trends and Controversies
+\end_layout
+
+\begin_layout Standard
+Put here some tables with recent trends.
+\end_layout
+
+\begin_layout Standard
+Refer to the World Bank paper on poverty estimates.
+ Also refer to Lisa Daniels her paper.
 \end_layout
 
 \begin_layout Section*
@@ -113,6 +130,17 @@ A Reassesment of Poverty in Uganda
 
 \begin_layout Section*
 Conclusion
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset bibtex
+LatexCommand bibtex
+bibfiles "poverty"
+options "jurabib"
+
+\end_inset
+
+
 \end_layout
 
 \end_body

@@ -24,7 +24,8 @@
 \output_sync 0
 \bibtex_command default
 \index_command default
-\paperfontsize default
+\paperfontsize 12
+\spacing single
 \use_hyperref false
 \papersize default
 \use_geometry false
@@ -32,7 +33,7 @@
 \use_esint 1
 \use_mhchem 1
 \use_mathdots 1
-\cite_engine basic
+\cite_engine jurabib
 \use_bibtopic false
 \use_indices false
 \paperorientation portrait
@@ -116,6 +117,13 @@ Conclusion
 \end_layout
 
 \begin_layout Standard
+\begin_inset CommandInset bibtex
+LatexCommand bibtex
+bibfiles "poverty"
+options "jurabib"
+
+\end_inset
+
 
 \end_layout
 

@@ -1,0 +1,18 @@
+@comment{x-kbibtex-personnameformatting=<%l><, %f>}
+
+@article{diffev,
+	author = "Storn, Rainer and Price, Kenneth",
+	doi = "10.1023/A:1008202821328",
+	issn = "0925-5001",
+	issue = "4",
+	journal = "Journal of Global Optimization",
+	keywords = "Stochastic optimization; nonlinear optimization; global optimization; genetic algorithm; evolution strategy",
+	language = "English",
+	pages = "341--359",
+	publisher = "Kluwer Academic Publishers",
+	title = "{Differential Evolution -- A Simple and Efficient Heuristic for global Optimization over Continuous Spaces}",
+	url = "http://dx.doi.org/10.1023/A:1008202821328",
+	volume = "11",
+	year = "1997"
+}
+
