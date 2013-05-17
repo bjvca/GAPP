@@ -28,8 +28,8 @@ global product_tpi   "product_tpi==1";
 * Mozambique: bottom 60%. Vietnam: bottom 20%. Tanzania: bottom 40% . Uganda: headcount 2009 24.5% ;
 global tpi_bottom "50"; 
 
-* Set the number of regions in the TPI calc;
-global n_tpi "2";
+* Set the number of regions in the TPI calc for Uganda are set to east central north and east;
+global n_tpi "4";
 
 * To reproduce the mozambique 10 numbers, the following global should be commented out. It controls a line in 140_iterate.do 
 * where observations not measured in kg are dropped. For all other datasets, all observations should be converted to kg's before

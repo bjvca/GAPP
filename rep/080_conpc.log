@@ -2,7 +2,7 @@
       name:  <unnamed>
        log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/rep/080_conpc.log
   log type:  text
- opened on:   6 May 2013, 13:53:00
+ opened on:  17 May 2013, 09:52:35
 
 . set more off
 
@@ -51,7 +51,7 @@ delimiter now ;
 .             tempfile foodexp;
 
 . save `foodexp';
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h000001.tmp saved
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000001.tmp saved
 
 . ***************************************************************************
 > * Food expenditure merged with all expenditure
@@ -68,9 +68,8 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h000001.tmp saved
      product |    412045    810.2635    358.1243        100        999
     food_cat |    412045    1.782558    .4125064          1          2
     prod_cat |    412045    1.782558    .4125064          1          2
-    descript |    322449           2           0          2          2
+    descript |    412045    1.782558    .4125064          1          2
 -------------+--------------------------------------------------------
-       untcd |     88138    44.41037    30.53397          1         85
    quantityd |     89596     .779464    3.170331          0   364.2857
  cod_hh_nom3 |     89596     383.356    648.4919          0      18500
   cod_hh_nom |    412045    1602.923    615777.4          0   3.95e+08
@@ -183,5 +182,5 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\conpc.dta saved
       name:  <unnamed>
        log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/rep/080_conpc.log
   log type:  text
- closed on:   6 May 2013, 13:53:01
+ closed on:  17 May 2013, 09:52:36
 -------------------------------------------------------------------------------------------

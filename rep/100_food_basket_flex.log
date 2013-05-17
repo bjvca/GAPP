@@ -3,7 +3,7 @@
        log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/rep/100_food_basket_flex.lo
 > g
   log type:  text
- opened on:   6 May 2013, 13:53:17
+ opened on:  17 May 2013, 09:52:44
 
 . clear
 
@@ -79,6 +79,7 @@ delimiter now ;
 .         merge reg_tpi survquar using "$path/work/temp_index_reg_tpi.dta";
 variables reg_tpi survquar do not uniquely identify observations in the master data
 (label lsurvquar already defined)
+(label REG_TPI already defined)
 
 .         tab _merge;
 
@@ -117,8 +118,8 @@ variables reg_tpi survquar do not uniquely identify observations in the master d
 .         tempfile contpi;
 
 .         save `contpi', replace;
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h000001.tmp not found)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h000001.tmp saved
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000001.tmp not found)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000001.tmp saved
 
 .         collapse (p$bottom) one cons_pc_tpi [aw=hhsize*hhweight] ;
 
@@ -129,8 +130,8 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h000001.tmp saved
 .         sort one;
 
 .         save `60pct', replace;
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h000002.tmp not found)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h000002.tmp saved
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000002.tmp not found)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000002.tmp saved
 
 .                 use `contpi';
 
@@ -158,8 +159,8 @@ variable one does not uniquely identify observations in the master data
 bottom_bask |
          et |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          0 | 3,388.1941       50.01       50.01
-          1 | 3,386.8059       49.99      100.00
+          0 | 3,389.1978       50.03       50.03
+          1 | 3,385.8022       49.97      100.00
 ------------+-----------------------------------
       Total |      6,775      100.00
 
@@ -168,7 +169,7 @@ bottom_bask |
 .                                 sort hhid;
 
 . save `contpi' , replace;
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h000001.tmp saved
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000001.tmp saved
 
 . **************************************************************************;
 . * Next, need to keep only the food products in order to calculate the 
@@ -227,41 +228,41 @@ variable hhid does not uniquely identify observations in the master data
 .         drop _merge;
 
 .         keep if bottom_basket==1;
-(238025 observations deleted)
+(239580 observations deleted)
 
 .      **************************************************************************;
 . * Calculate food shares. Since we're only doing shares here, we can
 > * work with the expenditures without doing temporal adjustment.
 > **************************************************************************;
 .           gen  food_expenditure= cod_hh_nom3;
-(139545 missing values generated)
+(138430 missing values generated)
 
 .                             *gen  food_expenditure= own_valued + daily_valued + monthly_v
 > alued + educ_valued;
 .           egen tot_food_expen= sum (food_expen), by (hhid) ;
 
 .           count if food_expenditure==.;
-139545
+138430
 
 .           count if tot_food_expen==.;
     0
 
 .                     gen food_share= food_expenditure/tot_food_expen;
-(139638 missing values generated)
+(138523 missing values generated)
 
 .           count if food_share==.;
-139638
+138523
 
 .           drop if food_share==.;
-(139638 observations deleted)
+(138523 observations deleted)
 
 .           sort hhid product;
 
 .                         tempfile food_basket_flex;
 
 . save `food_basket_flex', replace;
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h000003.tmp not found)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h000003.tmp saved
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000003.tmp not found)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000003.tmp saved
 
 . ********************************************************************************;
 . * Now prepare to get the variable spdomain to the using dataset, and then find the 
@@ -279,8 +280,8 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h000003.tmp saved
 .                         tempfile spdomain;
 
 .                 save `spdomain' , replace;
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h000005.tmp not found)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h000005.tmp saved
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000005.tmp not found)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000005.tmp saved
 
 .                 restore;
 
@@ -294,13 +295,13 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h000005.tmp saved
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          2 |      3,714       54.82       54.82
-          3 |      3,061       45.18      100.00
+          2 |      3,740       55.20       55.20
+          3 |      3,035       44.80      100.00
 ------------+-----------------------------------
       Total |      6,775      100.00
 
 .            drop if _m==2;
-(3714 observations deleted)
+(3740 observations deleted)
 
 .            drop _merge;
 
@@ -311,7 +312,7 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h000005.tmp saved
 .            tempfile tothhweight;
 
 . save `tothhweight';
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h000006.tmp saved
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000006.tmp saved
 
 . use `food_basket_flex';
 
@@ -324,15 +325,15 @@ variable hhid does not uniquely identify observations in the master data
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          2 |      3,714        9.75        9.75
-          3 |     34,382       90.25      100.00
+          2 |      3,740        9.93        9.93
+          3 |     33,942       90.07      100.00
 ------------+-----------------------------------
-      Total |     38,096      100.00
+      Total |     37,682      100.00
 
 .           sort _m;
 
 .           drop if _m==2;
-(3714 observations deleted)
+(3740 observations deleted)
 
 .           drop _m;
 
@@ -346,9 +347,9 @@ variable spdomain does not uniquely identify observations in the master data
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          3 |     34,382      100.00      100.00
+          3 |     33,942      100.00      100.00
 ------------+-----------------------------------
-      Total |     34,382      100.00
+      Total |     33,942      100.00
 
 .           drop _merge;
 
@@ -365,10 +366,10 @@ variable spdomain does not uniquely identify observations in the master data
 .           by spdomain: gen cumshr= sum(f_share_w);
 
 .                     count if cumshr<=.075;
-  149
+  147
 
 .           drop if cumshr<=.075;
-(149 observations deleted)
+(147 observations deleted)
 
 .             lab var f_share_w "average food share for the 13 regions";
 
@@ -381,43 +382,43 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\food_basket_flex.dt
      +-----------------------------------------------+
      | product        spdomain   f_shar~w     cumshr |
      |-----------------------------------------------|
-  1. |     121   Central rural   .0061484   .0777951 |
-  2. |     161   Central rural   .0066571   .0844522 |
-  3. |     110   Central rural   .0069588   .0914109 |
-  4. |     118   Central rural   .0074261    .098837 |
-  5. |     153   Central rural   .0079808   .1068178 |
+  1. |     121   Central rural   .0064068   .0767725 |
+  2. |     161   Central rural   .0066762   .0834487 |
+  3. |     118   Central rural   .0073465   .0907952 |
+  4. |     153   Central rural   .0075225   .0983177 |
+  5. |     101   Central rural   .0076074   .1059251 |
      |-----------------------------------------------|
-  6. |     139   Central rural   .0080552    .114873 |
-  7. |     101   Central rural   .0082561    .123129 |
-  8. |     157   Central rural   .0089017   .1320308 |
-  9. |     132   Central rural   .0096797   .1417104 |
- 10. |     135   Central rural   .0102585   .1519689 |
+  6. |     139   Central rural   .0078916   .1138167 |
+  7. |     110   Central rural   .0080346   .1218513 |
+  8. |     132   Central rural   .0100711   .1319225 |
+  9. |     135   Central rural   .0101237   .1420462 |
+ 10. |     102   Central rural   .0104644   .1525106 |
      |-----------------------------------------------|
- 11. |     102   Central rural   .0113567   .1633256 |
- 12. |     150   Central rural   .0116706   .1749962 |
- 13. |     122   Central rural   .0125007   .1874969 |
- 14. |     134   Central rural   .0157725   .2032695 |
- 15. |     123   Central rural   .0180752   .2213447 |
+ 11. |     150   Central rural   .0112384    .163749 |
+ 12. |     157   Central rural   .0116523   .1754013 |
+ 13. |     122   Central rural    .013191   .1885923 |
+ 14. |     134   Central rural   .0159155   .2045079 |
+ 15. |     127   Central rural   .0175163   .2220242 |
      |-----------------------------------------------|
- 16. |     127   Central rural   .0180986   .2394433 |
- 17. |     125   Central rural   .0193422   .2587855 |
- 18. |     144   Central rural   .0201379   .2789234 |
- 19. |     136   Central rural   .0206209   .2995443 |
- 20. |     108   Central rural   .0240242   .3235685 |
+ 16. |     123   Central rural   .0189618    .240986 |
+ 17. |     144   Central rural   .0194784   .2604644 |
+ 18. |     136   Central rural   .0202216   .2806861 |
+ 19. |     125   Central rural   .0210586   .3017446 |
+ 20. |     108   Central rural   .0225817   .3243264 |
      |-----------------------------------------------|
- 21. |     117   Central rural   .0242783   .3478468 |
- 22. |     140   Central rural   .0246058   .3724526 |
- 23. |     138   Central rural   .0257133   .3981659 |
- 24. |     112   Central rural   .0285765   .4267424 |
- 25. |     147   Central rural   .0486852   .4754276 |
+ 21. |     138   Central rural   .0247066   .3490329 |
+ 22. |     117   Central rural    .024848   .3738809 |
+ 23. |     140   Central rural   .0260197   .3999006 |
+ 24. |     112   Central rural   .0295591   .4294597 |
+ 25. |     147   Central rural   .0478787   .4773384 |
      |-----------------------------------------------|
- 26. |     103   Central rural   .0509293   .5263569 |
- 27. |     104   Central rural   .0513826   .5777395 |
- 28. |     141   Central rural   .0696057   .6473452 |
- 29. |     107   Central rural   .0711269   .7184721 |
- 30. |     113   Central rural   .1342877   .8527598 |
+ 26. |     103   Central rural   .0517283   .5290666 |
+ 27. |     104   Central rural   .0519577   .5810243 |
+ 28. |     141   Central rural    .069258   .6502824 |
+ 29. |     107   Central rural   .0755683   .7258507 |
+ 30. |     113   Central rural   .1306667   .8565174 |
      |-----------------------------------------------|
- 31. |     105   Central rural   .1472402          1 |
+ 31. |     105   Central rural   .1434826          1 |
      +-----------------------------------------------+
 
 .                     gen numreg=1;
@@ -427,7 +428,7 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\food_basket_flex.dt
 .                           keep product descript numreg;
 
 .           display _N;
-45
+46
 
 .                     lab var numreg "number of goods in the basket";
 
@@ -441,7 +442,7 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\food_basket_flex.dt
 .             sort product;
 
 .                display _N;
-45
+46
 
 .   save "$path/work\codes_food_basket_flex.dta", replace;
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work\codes_food_basket_flex.dta sav

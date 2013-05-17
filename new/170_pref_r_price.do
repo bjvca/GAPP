@@ -51,10 +51,10 @@ gen crap=1;
          1  ".";
  lab val crap crap;
 
-outsheet product crap reg bswt price_uw$it_n using "$path\work\price_unit_flex.inc",  noquote noname replace ;
+outsheet product crap reg bswt price_uw$it_n using "$path\work\price_unit_flex.inc",  noname replace ;
 
 collapse (min) spdomain, by(product);
-outsheet product  using "$path\work\product_flex.inc", noname replace;
+outsheet product  using "$path\work\product_flex.inc", noquote noname replace;
 
 use "$path\work\quan_flex_it$it_n.dta", clear;
 gen reg=spdomain;
@@ -232,14 +232,14 @@ use "$path\work\povline_food_flex_it$it_n.dta", clear;
 
 save "$path\work\pref_r_price.dta", replace;
 
-*drop comparisons with Maputo ;
+*drop comparisons with Maputo this does not matter since in the case of Uganda, we have only 5 spatial domains****
 drop if spdomain>=11;
 drop if spdomainq>=11;
 display "this is with maputo dropped";
 tab pref_r;
 
-*further drop Nampula rural and urban;
-drop if spdomain==3 | spdomain==4;
+*further drop Nampula rural and urban I set these to missing becuase they were deleting maputo and yet we have none missing for Uganda***
+drop if spdomain==. | spdomain==.;
 display "this is with maputo and nampula dropped (MAH: Actually not - experimenting with 6 spatial domains)";
 tab pref_r;
 

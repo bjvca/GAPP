@@ -2,7 +2,7 @@
       name:  <unnamed>
        log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/rep/130_povmeas_flex.log
   log type:  text
- opened on:   6 May 2013, 13:53:22
+ opened on:  17 May 2013, 09:52:49
 
 . clear
 
@@ -46,8 +46,10 @@ delimiter now ;
 
     reg_tpi |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          1 |      5,555       81.99       81.99
-          2 |      1,220       18.01      100.00
+    central |      1,986       29.31       29.31
+    eastern |      1,406       20.75       50.07
+   northern |      1,956       28.87       78.94
+    western |      1,427       21.06      100.00
 ------------+-----------------------------------
       Total |      6,775      100.00
 
@@ -73,8 +75,8 @@ Nov09-Jan10 |      1,458       21.52       72.89
 .         tempfile spdomainreg_tpi;
 
 . save `spdomainreg_tpi', replace;
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h000001.tmp not found)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h000001.tmp saved
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000001.tmp not found)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000001.tmp saved
 
 . use "$path/work/conpc.dta", clear;
 
@@ -99,6 +101,7 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h000001.tmp saved
 .         sort hhid;
 
 .         merge hhid using `spdomainreg_tpi';
+(label REG_TPI already defined)
 (label spdomain_original already defined)
 (label lsurvquar already defined)
 
@@ -117,6 +120,7 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h000001.tmp saved
 .         merge reg_tpi survquar using "$path/work/temp_index_reg_tpi.dta";
 variables reg_tpi survquar do not uniquely identify observations in the master data
 (label lsurvquar already defined)
+(label REG_TPI already defined)
 
 .         tab _merge;
 
@@ -156,8 +160,8 @@ variables reg_tpi survquar do not uniquely identify observations in the master d
 .         tempfile contpi;
 
 . save `contpi', replace;
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h000002.tmp not found)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h000002.tmp saved
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000002.tmp not found)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000002.tmp saved
 
 . **************************************************************************
 > * Calculate non-food expenditure for HH around the food poverty line
@@ -190,7 +194,7 @@ variable spdomain does not uniquely identify observations in the master data
 
 . replace triwt = 11 - round(50*abs(cons_pc_tpi/povline_f_flex-1)+0.5)
 >                 if abs(cons_pc_tpi/povline_f_flex-1)<=0.2;
-(317 real changes made)
+(321 real changes made)
 
 .                                         * Nearness to poverty line and population weights
 >  ;
@@ -210,8 +214,8 @@ variable spdomain does not uniquely identify observations in the master data
 .                 sort spdomain;
 
 .                 save `znf', replace;
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h000004.tmp not found)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h000004.tmp saved
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000004.tmp not found)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000004.tmp saved
 
 .                 tab spdomain;
 
@@ -270,6 +274,7 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\povlines.dta saved
 variable spdomain does not uniquely identify observations in the master data
 variable spdomain does not uniquely identify observations in
     C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\povlines.dta
+(label REG_TPI already defined)
 (label spdomain_original already defined)
 (label lsurvquar already defined)
 
@@ -320,10 +325,10 @@ variable spdomain does not uniquely identify observations in
 
     Variable |     Obs      Weight        Mean   Std. Dev.       Min        Max
 -------------+-----------------------------------------------------------------
-          cr |    6775   200636622    9371.093     395668   79.72159   8.12e+07
-         cr2 |    6775   200636622    9371.093     365289   77.60468   7.49e+07
-      linpob |    6775   200636622    921.6452   113.0929   761.5579   1090.216
-     linpobr |    6775   200636622    1005.847   .0000305   1005.847   1005.847
+          cr |    6775   200636622    9416.597   395671.8   82.64046   8.12e+07
+         cr2 |    6775   200636622    9416.597   306967.6   84.18735   6.28e+07
+      linpob |    6775   200636622    960.1737   200.4131   758.2903   1481.339
+     linpobr |    6775   200636622    1145.778   .0000451   1145.777   1145.778
 
 .         lab var cr      "Temporally-adjusted cons pc";
 
@@ -339,20 +344,20 @@ variable spdomain does not uniquely identify observations in
 > * calculate poverty measures with the flexible food bundle
 > **************************************************************************;
 .         gen h = 100     if cr <=(linpob);
-(5975 missing values generated)
+(5955 missing values generated)
 
 .         replace  h = 0 if cr > (linpob);
-(5975 real changes made)
+(5955 real changes made)
 
 .                         gen             pg      = ((linpob - cr )/linpob) *100;
 
 .         replace         pg      = 0             if h==0;
-(5975 real changes made)
+(5955 real changes made)
 
 .         gen             spg     = ((( linpob - cr )/ linpob )^2)*100;
 
 .         replace         spg     = 0             if h==0;
-(5975 real changes made)
+(5955 real changes made)
 
 .         gen h_flex=h;
 
@@ -371,6 +376,7 @@ variable spdomain does not uniquely identify observations in
 .         merge hhid using "$path\work\hhdata.dta";
 (label lsurvquar already defined)
 (label spdomain_original already defined)
+(label REG_TPI already defined)
 
 .         tab _merge;
 
@@ -412,9 +418,9 @@ Number of PSUs   =     711       Population size  =  200636622
              |             Linearized
              |       Mean   Std. Err.     [95% Conf. Interval]
 -------------+------------------------------------------------
-      h_flex |   10.17521   .7028314      8.795308    11.55512
-     pg_flex |   2.706894   .2228696      2.269322    3.144466
-    spg_flex |   1.095398   .1200751      .8596477    1.331148
+      h_flex |   10.42968   .7119093      9.031951    11.82741
+     pg_flex |   2.750531   .2257856      2.307234    3.193828
+    spg_flex |   1.119029   .1214004      .8806774    1.357381
 --------------------------------------------------------------
 
 .         svy: mean h_flex pg_flex spg_flex , over(rural);
@@ -434,16 +440,16 @@ Number of PSUs   =     711       Population size  =  200636622
         Over |       Mean   Std. Err.     [95% Conf. Interval]
 -------------+------------------------------------------------
 h_flex       |
-       Urban |   4.021768   1.206682      1.652626    6.390911
-       Rural |   11.11512   .7778461      9.587934    12.64231
+       Urban |   3.415127   1.014682      1.422946    5.407308
+       Rural |   11.50112   .7905976      9.948893    13.05334
 -------------+------------------------------------------------
 pg_flex      |
-       Urban |   .8161022   .2476209      .3299348     1.30227
-       Rural |   2.995703   .2521938      2.500557    3.490848
+       Urban |   .7526381   .2220265      .3167215    1.188555
+       Rural |   3.055698   .2557257      2.553618    3.557778
 -------------+------------------------------------------------
 spg_flex     |
-       Urban |   .2204604    .070983      .0810958    .3598251
-       Rural |    1.22904   .1374535      .9591697     1.49891
+       Urban |   .2294405   .0699235      .0921559     .366725
+       Rural |   1.254909   .1389486       .982104    1.527715
 --------------------------------------------------------------
 
 .         svy: mean h_flex pg_flex spg_flex , over(news);
@@ -465,22 +471,22 @@ Number of PSUs   =     711       Population size  =  200636622
         Over |       Mean   Std. Err.     [95% Conf. Interval]
 -------------+------------------------------------------------
 h_flex       |
-           1 |    5.63089    1.05313      3.563223    7.698557
-           2 |   7.293532   1.288217      4.764305    9.822758
-           3 |   19.72936    1.76053      16.27282     23.1859
-           4 |   10.76172   1.461113      7.893042    13.63041
+           1 |    5.70916    1.05167      3.644359    7.773961
+           2 |   7.564058   1.320862      4.970739    10.15738
+           3 |   19.57422    1.77695      16.08544    23.06301
+           4 |   11.52681   1.469106      8.642435    14.41118
 -------------+------------------------------------------------
 pg_flex      |
-           1 |    1.15483   .2549589      .6542553    1.655404
-           2 |   1.315702   .1985937      .9257922    1.705612
-           3 |   6.895253   .8468851      5.232518    8.557988
-           4 |   2.685102      .4735      1.755454     3.61475
+           1 |   1.190919   .2562877      .6877357    1.694103
+           2 |   1.288145   .1995211      .8964142    1.679875
+           3 |   6.850458   .8519829      5.177714    8.523202
+           4 |   2.911518   .4946526       1.94034    3.882696
 -------------+------------------------------------------------
 spg_flex     |
-           1 |   .3451009     .09904      .1506504    .5395515
-           2 |   .3381457   .0552177      .2297338    .4465575
-           3 |   3.304925   .4807934      2.360957    4.248893
-           4 |   1.045301   .2758282      .5037529     1.58685
+           1 |   .3699599   .0961232      .1812361    .5586837
+           2 |   .3231182    .054356      .2163981    .4298383
+           3 |   3.309993   .4812525      2.365124    4.254862
+           4 |   1.137488   .2875278       .572969    1.702007
 --------------------------------------------------------------
 
 .         svy: mean h_flex pg_flex spg_flex , over(reg_tpi);
@@ -492,24 +498,32 @@ Number of strata =      10       Number of obs    =       6775
 Number of PSUs   =     711       Population size  =  200636622
                                  Design df        =        701
 
-            1: reg_tpi = 1
-            2: reg_tpi = 2
+      central: reg_tpi = central
+      eastern: reg_tpi = eastern
+     northern: reg_tpi = northern
+      western: reg_tpi = western
 
 --------------------------------------------------------------
              |             Linearized
         Over |       Mean   Std. Err.     [95% Conf. Interval]
 -------------+------------------------------------------------
 h_flex       |
-           1 |   11.11512   .7778461      9.587934    12.64231
-           2 |   4.021768   1.206682      1.652626    6.390911
+     central |    5.70916    1.05167      3.644359    7.773961
+     eastern |   7.564058   1.320862      4.970739    10.15738
+    northern |   19.57422    1.77695      16.08544    23.06301
+     western |   11.52681   1.469106      8.642435    14.41118
 -------------+------------------------------------------------
 pg_flex      |
-           1 |   2.995703   .2521938      2.500557    3.490848
-           2 |   .8161022   .2476209      .3299348     1.30227
+     central |   1.190919   .2562877      .6877357    1.694103
+     eastern |   1.288145   .1995211      .8964142    1.679875
+    northern |   6.850458   .8519829      5.177714    8.523202
+     western |   2.911518   .4946526       1.94034    3.882696
 -------------+------------------------------------------------
 spg_flex     |
-           1 |    1.22904   .1374535      .9591697     1.49891
-           2 |   .2204604    .070983      .0810958    .3598251
+     central |   .3699599   .0961232      .1812361    .5586837
+     eastern |   .3231182    .054356      .2163981    .4298383
+    northern |   3.309993   .4812525      2.365124    4.254862
+     western |   1.137488   .2875278       .572969    1.702007
 --------------------------------------------------------------
 
 .         svy: mean h_flex pg_flex spg_flex , over(strata);
@@ -537,40 +551,40 @@ Number of PSUs   =     711       Population size  =  200636622
         Over |       Mean   Std. Err.     [95% Conf. Interval]
 -------------+------------------------------------------------
 h_flex       |
-     KAMPALA |   3.989593    2.38974     -.7023125    8.681498
-   _subpop_2 |   4.571793   1.414053      1.795507    7.348078
-   _subpop_3 |   7.411211   1.868854      3.741991    11.08043
-   _subpop_4 |   5.398209   1.171782      3.097587    7.698831
-     EASTERN |    8.84028   2.088303      4.740203    12.94036
-   _subpop_6 |   10.95511   1.986172      7.055549    14.85467
-   _subpop_7 |   67.13084   6.112161       55.1305    79.13117
-   _subpop_8 |   10.02044    1.68785      6.706596    13.33429
-   _subpop_9 |   14.77021   2.505799      9.850437    19.68998
-  _subpop_10 |   6.512956   1.147582      4.259846    8.766067
+     KAMPALA |   4.874973   2.339743        .28123    9.468715
+   _subpop_2 |   4.790162   1.423751      1.994836    7.585489
+   _subpop_3 |   7.004536   1.856453      3.359662    10.64941
+   _subpop_4 |   5.450948   1.171204       3.15146    7.750436
+     EASTERN |    9.28854   2.149875      5.067575     13.5095
+   _subpop_6 |   10.98032   2.045831      6.963628    14.99701
+   _subpop_7 |   67.39871   6.147208      55.32957    79.46786
+   _subpop_8 |   9.395116   1.618714      6.217008    12.57322
+   _subpop_9 |   14.90944   2.500695      9.999689    19.81919
+  _subpop_10 |   7.941413   1.250905      5.485444    10.39738
 -------------+------------------------------------------------
 pg_flex      |
-     KAMPALA |   .7244982   .4195737     -.0992733     1.54827
-   _subpop_2 |   1.016563   .4210806      .1898326    1.843293
-   _subpop_3 |   1.478599   .4168029      .6602675    2.296931
-   _subpop_4 |   1.017157   .2248286      .5757391    1.458575
-     EASTERN |    1.55934   .3042369      .9620156    2.156665
-   _subpop_6 |   3.568287   .8665268      1.866988    5.269585
-   _subpop_7 |   27.64351   3.472548      20.82567    34.46135
-   _subpop_8 |   1.883858   .4195762      1.060082    2.707635
-   _subpop_9 |   4.045896   .8273611      2.421494    5.670299
-  _subpop_10 |   1.242736   .2984751      .6567239    1.828748
+     KAMPALA |    1.08992   .5067121       .095065    2.084775
+   _subpop_2 |   1.013974   .4058058      .2172337    1.810714
+   _subpop_3 |   1.415128   .4150918      .6001555      2.2301
+   _subpop_4 |   1.011129   .2235726      .5721771    1.450082
+     EASTERN |   1.514213   .3069562      .9115496    2.116877
+   _subpop_6 |   3.663975   .8739137      1.948173    5.379777
+   _subpop_7 |   27.55661   3.499263      20.68631     34.4269
+   _subpop_8 |   1.650925   .4013769      .8628804     2.43897
+   _subpop_9 |   4.222382   .8653908      2.523313     5.92145
+  _subpop_10 |   1.522076   .3174569      .8987963    2.145357
 -------------+------------------------------------------------
 spg_flex     |
-     KAMPALA |   .1360915   .0761466     -.0134113    .2855943
-   _subpop_2 |   .3325931   .1882884     -.0370836    .7022698
-   _subpop_3 |    .446297   .1441454      .1632884    .7293055
-   _subpop_4 |   .3037133   .0845491      .1377134    .4697131
-     EASTERN |   .3662455   .0724607      .2239796    .5085115
-   _subpop_6 |   1.541033   .4691451      .6199346     2.46213
-   _subpop_7 |   14.45787   2.138596      10.25905    18.65669
-   _subpop_8 |   .5748251   .1771487      .2270194    .9226307
-   _subpop_9 |   1.670945   .4941851      .7006849    2.641205
-  _subpop_10 |   .3821537     .13021      .1265053    .6378021
+     KAMPALA |   .2975867   .1379834      .0266765    .5684969
+   _subpop_2 |   .3285483   .1722542     -.0096477    .6667442
+   _subpop_3 |   .4430376   .1440657      .1601855    .7258896
+   _subpop_4 |   .2955999   .0822422      .1341294    .4570704
+     EASTERN |   .3455755   .0720795      .2040579    .4870932
+   _subpop_6 |   1.612247   .4728971      .6837828    2.540712
+   _subpop_7 |   14.39401   2.145383      10.18186    18.60615
+   _subpop_8 |   .5148456   .1700931      .1808927    .8487986
+   _subpop_9 |   1.777184   .5152973      .7654726    2.788895
+  _subpop_10 |   .4594462   .1375009      .1894832    .7294092
 --------------------------------------------------------------
 
 .         svy: mean h_flex pg_flex spg_flex , over(spdomain);
@@ -593,31 +607,31 @@ Number of PSUs   =     711       Population size  =  200636622
         Over |       Mean   Std. Err.     [95% Conf. Interval]
 -------------+------------------------------------------------
 h_flex       |
-   _subpop_1 |   6.828463    1.38225      4.114618    9.542309
-   _subpop_2 |   3.175608   1.450995      .3267912    6.024426
-     Eastern |   7.293532   1.288217      4.764305    9.822758
-    Northern |   19.72936    1.76053      16.27282     23.1859
-     Western |   10.76172   1.461113      7.893042    13.63041
+   _subpop_1 |   6.581367   1.376393       3.87902    9.283714
+   _subpop_2 |   3.920949   1.470722      1.033401    6.808497
+     Eastern |   7.564058   1.320862      4.970739    10.15738
+    Northern |   19.57422    1.77695      16.08544    23.06301
+     Western |   11.52681   1.469106      8.642435    14.41118
 -------------+------------------------------------------------
 pg_flex      |
-   _subpop_1 |   1.427114   .3533332       .733396    2.120832
-   _subpop_2 |   .5965885   .2645772      .0771299    1.116047
-     Eastern |   1.315702   .1985937      .9257922    1.705612
-    Northern |   6.895253   .8468851      5.232518    8.557988
-     Western |   2.685102      .4735      1.755454     3.61475
+   _subpop_1 |    1.30957   .3419335      .6382338    1.980907
+   _subpop_2 |   .9476586   .3401444      .2798348    1.615482
+     Eastern |   1.288145   .1995211      .8964142    1.679875
+    Northern |   6.850458   .8519829      5.177714    8.523202
+     Western |   2.911518   .4946526       1.94034    3.882696
 -------------+------------------------------------------------
 spg_flex     |
-   _subpop_1 |   .4499643   .1435022      .1682188    .7317099
-   _subpop_2 |   .1301085   .0545708      .0229667    .2372502
-     Eastern |   .3381457   .0552177      .2297338    .4465575
-    Northern |   3.304925   .4807934      2.360957    4.248893
-     Western |   1.045301   .2758282      .5037529     1.58685
+   _subpop_1 |   .4140012   .1338224      .1512604     .676742
+   _subpop_2 |   .2796657    .100253      .0828337    .4764977
+     Eastern |   .3231182    .054356      .2163981    .4298383
+    Northern |   3.309993   .4812525      2.365124    4.254862
+     Western |   1.137488   .2875278       .572969    1.702007
 --------------------------------------------------------------
 
 .         compress;
 survquar was float now byte
-reg_tpi was float now byte
 spdomain was float now byte
+reg_tpi was float now byte
 one was float now byte
 triwt was float now byte
 h was float now byte
@@ -647,5 +661,5 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\povmeas.dta saved
       name:  <unnamed>
        log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/rep/130_povmeas_flex.log
   log type:  text
- closed on:   6 May 2013, 13:53:25
+ closed on:  17 May 2013, 09:52:49
 -------------------------------------------------------------------------------------------

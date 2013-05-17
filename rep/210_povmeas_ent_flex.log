@@ -3,7 +3,7 @@
        log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/rep/210_povmeas_ent_flex.lo
 > g
   log type:  text
- opened on:   6 May 2013, 17:08:31
+ opened on:  17 May 2013, 09:53:10
 
 . clear
 
@@ -60,6 +60,7 @@ delimiter now ;
 .         merge reg_tpi survquar using "$path/work/temp_index_reg_tpi.dta";
 variables reg_tpi survquar do not uniquely identify observations in the master data
 (label lsurvquar already defined)
+(label REG_TPI already defined)
 
 .         tab _merge;
 
@@ -98,8 +99,8 @@ variables reg_tpi survquar do not uniquely identify observations in the master d
 .         tempfile contpi;
 
 . save `contpi', replace;
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h000001.tmp not found)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h000001.tmp saved
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000001.tmp not found)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000001.tmp saved
 
 . **************************************************************************;
 . * Calculate the food shares for people near the food poverty line
@@ -119,4 +120,3 @@ end of do-file
 
 r(601);
 
-. exit, clear

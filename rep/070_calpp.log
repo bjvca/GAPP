@@ -2,7 +2,7 @@
       name:  <unnamed>
        log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\rep\070_calpp.log
   log type:  text
- opened on:   6 May 2013, 13:52:59
+ opened on:  17 May 2013, 09:52:34
 
 . clear
 
@@ -42,7 +42,7 @@ delimiter now ;
 . tempfile fert_rate;
 
 . save `fert_rate';
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0h000001.tmp saved
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000001.tmp saved
 
 . list;
 
@@ -219,10 +219,10 @@ variable hhid does not uniquely identify observations in the master data
      survmon |     35945    6.667353    3.350374          1         12
        rural |     35945    .8528307    .3542795          0          1
         news |     35945    2.480234    1.085821          1          4
-     reg_tpi |     35945    1.147169    .3542795          1          2
--------------+--------------------------------------------------------
         bswt |     35945           1           0          1          1
+-------------+--------------------------------------------------------
     spdomain |     35945    3.321575    1.334996          1          5
+     reg_tpi |     35945    2.480234    1.085821          1          4
 
 . * Include fertility rates;
 . sort sex rural age;
@@ -262,10 +262,10 @@ variables sex rural age do not uniquely identify observations in the master data
      survmon |     35945    6.667353    3.350374          1         12
        rural |     35945    .8528307    .3542795          0          1
         news |     35945    2.480234    1.085821          1          4
-     reg_tpi |     35945    1.147169    .3542795          1          2
--------------+--------------------------------------------------------
         bswt |     35945           1           0          1          1
+-------------+--------------------------------------------------------
     spdomain |     35945    3.321575    1.334996          1          5
+     reg_tpi |     35945    2.480234    1.085821          1          4
    fert_rate |      9790    .1876158    .0860403       .003        .28
       _merge |     35945    1.544721    .8903613          1          3
 
@@ -462,5 +462,5 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\calpp.dta saved
       name:  <unnamed>
        log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\rep\070_calpp.log
   log type:  text
- closed on:   6 May 2013, 13:53:00
+ closed on:  17 May 2013, 09:52:35
 -------------------------------------------------------------------------------------------

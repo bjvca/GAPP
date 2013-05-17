@@ -1,4 +1,4 @@
-GAMS Rev 240  WEX-VS8 24.0.2 x86/MS Windows                                                                                                                                                                                            05/06/13 13:53:49 Page 1
+GAMS Rev 240  WEX-VS8 24.0.2 x86/MS Windows                                                                                                                                                                                            05/17/13 09:53:10 Page 1
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 C o m p i l a t i o n
 
@@ -20,516 +20,758 @@ C o m p i l a t i o n
   17   cod        2002 codes for products used in basket
   18  /
 INCLUDE    C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\product_flex.inc
-  20  "Matooke (Big Bunch)"
-  21  "Matooke (Medium Bunch)"
-  22  "Matooke (Small Bunch)"
-  23  "Matooke (Heap)"
-  24  "Sweet Potatoes (Fresh)"
-  25  "Sweet Potatoes (Dry)"
-  26  "Cassava (Fresh)"
-  27  "Cassava (Dry/ Flour)"
-  28  "Irish Potatoes"
-  29  "Rice"
-  30  "Maize (grains)"
-  31  "Maize (cobs)"
-  32  "Maize (flour)"
-  33  "Bread"
-  34  "Millet"
-  35  "Sorghum"
-  36  "Beef"
-  37  "Pork"
-  38  "Goat Meat"
-  39  "Chicken"
-  40  "Fresh Fish"
-  41  "Dry/ Smoked fish"
-  42  "Fresh Milk"
-  43  "Cooking oil"
-  44  "Sweet Bananas"
-  45  "Mangos"
-  46  "Other Fruits"
-  47  "Onions"
-  48  "Tomatoes"
-  49  "Cabbages"
-  50  "Dodo"
-  51  "Other vegetables"
-  52  "Beans fresh)"
-  53  "Beans (dry)"
-  54  "Ground nuts (pounded)"
-  55  "Peas"
-GAMS Rev 240  WEX-VS8 24.0.2 x86/MS Windows                                                                                                                                                                                            05/06/13 13:53:49 Page 2
+  20  101
+  21  102
+  22  103
+  23  104
+  24  105
+  25  106
+  26  107
+  27  108
+  28  109
+  29  110
+  30  111
+  31  112
+  32  113
+  33  114
+  34  115
+  35  116
+  36  117
+  37  118
+  38  119
+  39  121
+  40  122
+  41  123
+  42  125
+  43  127
+  44  131
+  45  132
+  46  134
+  47  135
+  48  136
+  49  137
+  50  138
+  51  139
+  52  140
+  53  141
+  54  143
+  55  144
+GAMS Rev 240  WEX-VS8 24.0.2 x86/MS Windows                                                                                                                                                                                            05/17/13 09:53:10 Page 2
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 C o m p i l a t i o n
 
 
-  56  "Sim sim"
-  57  "Sugar"
-  58  "Salt"
-  59  "Other Alcoholic drinks"
-  60  "Other drinks"
-  61  "Other Tobacco"
-  62  "Food"
-  63  "Other foods"
-  64  /
-  65   
-  66   reg        13 spatial domains /1*13/
-  67   r(reg)     non maputo spatial regions /1*13/
-  68   
-  69   ptit       price table titles
-  70  /
-  71    count      number of observations making up the price average
-  72    price_uw5  average price
-  73  /
-  74   
-  75   qtit       quantity table titles
-  76  /
-  77    calperg          calories per gram
-  78    quan5            quantities in grams
-  79    calpp            calories per person by region
-  80    povline_a_flex5    value of flexible food bundle
-  81  /
-  82   
+  56  145
+  57  146
+  58  147
+  59  150
+  60  153
+  61  154
+  62  156
+  63  157
+  64  161
+  65  /
+  66   
+  67   reg        13 spatial domains /1*13/
+  68   r(reg)     non maputo spatial regions /1*13/
+  69   
+  70   ptit       price table titles
+  71  /
+  72    count      number of observations making up the price average
+  73    price_uw5  average price
+  74  /
+  75   
+  76   qtit       quantity table titles
+  77  /
+  78    calperg          calories per gram
+  79    quan5            quantities in grams
+  80    calpp            calories per person by region
+  81    povline_a_flex5    value of flexible food bundle
+  82  /
   83   
-  84    posquan(cod,reg)  mark positive quantities in each region
-  85    posprice(cod,reg) mark the existence of acceptable price info in each region
-  86    chkprice(cod,reg) ensure that prices exist once all estimated
-  87  ;
-  88   
-  89  alias(reg,regq);
-  90  alias(r,rq);
-  91   
-  92  SCALAR
-  93     caltarg single level of calories to target across regions / 2150 /
-  94   ;
-  95   
-  96  PARAMETERS
-  97   
-  98    shr(cod,reg)         shares in each basket by region
-  99    chkshr(reg)          check that the calculated shares sum to .9
- 100    shrmiss(regq,reg)    shares missing in each region pair
- 101    povline_ali(reg)       food poverty line
- 102    perc_chng(reg)       percent change in line
- 103    finmiss(reg)         final missing shares post optimization procedure
- 104   ;
- 105   
- 106  Table  price(cod,reg,ptit)  price and related information
- 107                          count   price_uw5
-INCLUDE    C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\price_unit_flex.inc
-GAMS Rev 240  WEX-VS8 24.0.2 x86/MS Windows                                                                                                                                                                                            05/06/13 13:53:49 Page 3
+  84   
+  85    posquan(cod,reg)  mark positive quantities in each region
+  86    posprice(cod,reg) mark the existence of acceptable price info in each region
+  87    chkprice(cod,reg) ensure that prices exist once all estimated
+  88  ;
+  89   
+  90  alias(reg,regq);
+  91  alias(r,rq);
+  92   
+  93  SCALAR
+  94     caltarg single level of calories to target across regions / 2150 /
+  95   ;
+  96   
+  97  PARAMETERS
+  98   
+  99    shr(cod,reg)         shares in each basket by region
+ 100    chkshr(reg)          check that the calculated shares sum to .9
+ 101    shrmiss(regq,reg)    shares missing in each region pair
+ 102    povline_ali(reg)       food poverty line
+ 103    perc_chng(reg)       percent change in line
+ 104    finmiss(reg)         final missing shares post optimization procedure
+ 105   ;
+ 106   
+ 107  Table  price(cod,reg,ptit)  price and related information
+ 108                          count   price_uw5
+GAMS Rev 240  WEX-VS8 24.0.2 x86/MS Windows                                                                                                                                                                                            05/17/13 09:53:10 Page 3
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 C o m p i l a t i o n
 
 
- 109  Matooke (Big Bunch)     .       1       3       .3767767
-****        $170,222,338              $338
+INCLUDE    C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\price_unit_flex.inc
+ 110  101     "."     1       3       .3376035
+****    $222  $409
 **** LINE      1 INCLUDE     C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\price_unit_flex.inc
 **** LINE     64 INPUT       C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\new\190a_revpref13_r.gms
- 110  Matooke (Big Bunch)     .       3       2       .3960126
-****             $338                 $338
-**** LINE      2 INCLUDE     C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\price_unit_flex.inc
-**** LINE     64 INPUT       C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\new\190a_revpref13_r.gms
- 111  Matooke (Big Bunch)     .       5       3       .3766216
-****             $338                 $338
-**** LINE      3 INCLUDE     C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\price_unit_flex.inc
-**** LINE     64 INPUT       C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\new\190a_revpref13_r.gms
- 112  Matooke (Medium Bunch)  .       1       12      .3193358
-****                $338              $338
-**** LINE      4 INCLUDE     C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\price_unit_flex.inc
-**** LINE     64 INPUT       C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\new\190a_revpref13_r.gms
- 113  Matooke (Medium Bunch)  .       2       2       .1787962
-****                $338              $338
-**** LINE      5 INCLUDE     C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\price_unit_flex.inc
-**** LINE     64 INPUT       C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\new\190a_revpref13_r.gms
- 114  Matooke (Medium Bunch)  .       3       8       .316971
-****                $338              $338
-**** LINE      6 INCLUDE     C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\price_unit_flex.inc
-**** LINE     64 INPUT       C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\new\190a_revpref13_r.gms
- 115  Matooke (Medium Bunch)  .       4       3       .3565594
-****                $338              $338
-**** LINE      7 INCLUDE     C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\price_unit_flex.inc
-**** LINE     64 INPUT       C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\new\190a_revpref13_r.gms
- 116  Matooke (Medium Bunch)  .       5       22      .3090174
-****                $338              $338
-**** LINE      8 INCLUDE     C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\price_unit_flex.inc
-**** LINE     64 INPUT       C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\new\190a_revpref13_r.gms
- 117  Matooke (Small Bunch)   .       1       58      .3337881
-****               $338               $338
-**** LINE      9 INCLUDE     C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\price_unit_flex.inc
-**** LINE     64 INPUT       C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\new\190a_revpref13_r.gms
- 118  Matooke (Small Bunch)   .       3       34      .344171
-****               $338               $338
-**** LINE     10 INCLUDE     C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\price_unit_flex.inc
-**** LINE     64 INPUT       C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\new\190a_revpref13_r.gms
- 119  Matooke (Small Bunch)   .       4       6       .3459402
-****               $338               $338
-**** LINE     11 INCLUDE     C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\price_unit_flex.inc
-**** LINE     64 INPUT       C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\new\190a_revpref13_r.gms
- 120  Matooke (Small Bunch)   .       5       120     .3029219
-****               $338               $338
-**** LINE     12 INCLUDE     C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\price_unit_flex.inc
-**** LINE     64 INPUT       C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\new\190a_revpref13_r.gms
- 121  Matooke (Heap)  .       1       96      .7974824
-****              $338        $338
-**** LINE     13 INCLUDE     C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\price_unit_flex.inc
-**** LINE     64 INPUT       C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\new\190a_revpref13_r.gms
-GAMS Rev 240  WEX-VS8 24.0.2 x86/MS Windows                                                                                                                                                                                            05/06/13 13:53:49 Page 4
+ 111  101     "."     3       2       .3880891
+ 112  101     "."     5       3       .415144
+ 113  102     "."     1       10      .3191299
+ 114  102     "."     2       3       .2798093
+ 115  102     "."     3       9       .3214242
+ 116  102     "."     4       3       .366226
+ 117  102     "."     5       21      .335901
+ 118  103     "."     1       58      .3071336
+ 119  103     "."     3       34      .3384376
+ 120  103     "."     4       6       .3453003
+ 121  103     "."     5       126     .3290277
+ 122  104     "."     1       90      .7314126
+ 123  104     "."     2       45      .3596203
+ 124  104     "."     3       26      .7418204
+ 125  104     "."     4       14      .7853787
+ 126  104     "."     5       283     .9524019
+ 127  105     "."     1       196     .2309529
+ 128  105     "."     2       40      .4511755
+ 129  105     "."     3       261     .2858019
+ 130  105     "."     4       320     .5473372
+ 131  105     "."     5       345     .2702242
+ 132  106     "."     1       2       .140151
+ 133  106     "."     2       2       .6329972
+ 134  106     "."     3       24      .1076413
+ 135  106     "."     4       12      .183337
+ 136  106     "."     5       12      .1814732
+ 137  107     "."     1       164     .1074033
+ 138  107     "."     2       29      .0648079
+ 139  107     "."     3       243     .0839343
+ 140  107     "."     4       309     .0620501
+ 141  107     "."     5       323     .1101321
+ 142  108     "."     1       47      .5430112
+ 143  108     "."     2       17      .9171904
+ 144  108     "."     3       302     .7985377
+ 145  108     "."     4       283     .6734608
+ 146  108     "."     5       199     .6158273
+ 147  109     "."     1       18      .1665213
+ 148  109     "."     2       14      .0774021
+ 149  109     "."     3       13      .1255376
+ 150  109     "."     4       7       .1028695
+ 151  109     "."     5       115     .238722
+ 152  110     "."     1       27      1.980935
+ 153  110     "."     2       39      2.128375
+ 154  110     "."     3       102     1.779044
+ 155  110     "."     4       59      1.610913
+ 156  110     "."     5       57      2.343286
+ 157  111     "."     1       12      .235323
+ 158  111     "."     2       2       .4824753
+GAMS Rev 240  WEX-VS8 24.0.2 x86/MS Windows                                                                                                                                                                                            05/17/13 09:53:10 Page 4
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 C o m p i l a t i o n
 
 
- 122  Matooke (Heap)  .       2       34      .2324702
-****              $338        $338
-**** LINE     14 INCLUDE     C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\price_unit_flex.inc
-**** LINE     64 INPUT       C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\new\190a_revpref13_r.gms
- 123  Matooke (Heap)  .       3       29      .5525199
-****              $338        $338
-**** LINE     15 INCLUDE     C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\price_unit_flex.inc
-**** LINE     64 INPUT       C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\new\190a_revpref13_r.gms
- 124  Matooke (Heap)  .       4       14      .7645426
-****              $338        $338
-**** LINE     16 INCLUDE     C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\price_unit_flex.inc
-**** LINE     64 INPUT       C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\new\190a_revpref13_r.gms
- 125  Matooke (Heap)  .       5       282     .8881739
-****              $338        $338
-**** LINE     17 INCLUDE     C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\price_unit_flex.inc
-**** LINE     64 INPUT       C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\new\190a_revpref13_r.gms
- 126  Sweet Potatoes (Fresh)  .       1       223     .2469527
-****                      $338        $338
-**** LINE     18 INCLUDE     C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\price_unit_flex.inc
-**** LINE     64 INPUT       C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\new\190a_revpref13_r.gms
- 127  Sweet Potatoes (Fresh)  .       2       28      .2925624
-****                      $338        $338
-**** LINE     19 INCLUDE     C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\price_unit_flex.inc
-**** LINE     64 INPUT       C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\new\190a_revpref13_r.gms
- 128  Sweet Potatoes (Fresh)  .       3       271     .2873442
-****                      $338        $338
-**** LINE     20 INCLUDE     C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\price_unit_flex.inc
-**** LINE     64 INPUT       C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\new\190a_revpref13_r.gms
- 129  Sweet Potatoes (Fresh)  .       4       320     .5492282
-****                      $338        $338
-**** LINE     21 INCLUDE     C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\price_unit_flex.inc
-**** LINE     64 INPUT       C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\new\190a_revpref13_r.gms
- 130  Sweet Potatoes (Fresh)  .       5       331     .2461897
-****                      $338        $338
-**** LINE     22 INCLUDE     C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\price_unit_flex.inc
-**** LINE     64 INPUT       C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\new\190a_revpref13_r.gms
- 131  Sweet Potatoes (Dry)    .       1       2       .1409515
-****                    $338          $338
-**** LINE     23 INCLUDE     C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\price_unit_flex.inc
-**** LINE     64 INPUT       C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\new\190a_revpref13_r.gms
- 132  Sweet Potatoes (Dry)    .       2       1       .1946577
-****                    $338          $338
-**** LINE     24 INCLUDE     C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\price_unit_flex.inc
-**** LINE     64 INPUT       C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\new\190a_revpref13_r.gms
- 133  Sweet Potatoes (Dry)    .       3       23      .122732
-****                    $338          $338
-**** LINE     25 INCLUDE     C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\price_unit_flex.inc
-**** LINE     64 INPUT       C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\new\190a_revpref13_r.gms
- 134  Sweet Potatoes (Dry)    .       4       13      .1888353
-****                    $338          $338
-**** LINE     26 INCLUDE     C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\price_unit_flex.inc
-**** LINE     64 INPUT       C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\new\190a_revpref13_r.gms
-GAMS Rev 240  WEX-VS8 24.0.2 x86/MS Windows                                                                                                                                                                                            05/06/13 13:53:49 Page 5
+ 159  111     "."     3       19      .5071905
+ 160  111     "."     4       131     .4753533
+ 161  111     "."     5       25      .4426088
+ 162  112     "."     1       64      .4469623
+ 163  112     "."     2       16      .5236983
+ 164  112     "."     3       120     .3886771
+ 165  112     "."     4       90      .3231402
+ 166  112     "."     5       91      .403178
+ 167  113     "."     1       200     1.131242
+ 168  113     "."     2       49      1.257495
+ 169  113     "."     3       284     1.04357
+ 170  113     "."     4       249     .9247355
+ 171  113     "."     5       284     1.1357
+ 172  114     "."     1       31      1.916218
+ 173  114     "."     2       26      1.978429
+ 174  114     "."     3       77      1.54612
+ 175  114     "."     4       111     1.512783
+ 176  114     "."     5       59      1.830113
+ 177  115     "."     1       13      .9996004
+ 178  115     "."     2       6       1.65914
+ 179  115     "."     3       103     .9352785
+ 180  115     "."     4       61      .7419845
+ 181  115     "."     5       130     1.006406
+ 182  116     "."     1       4       .8018025
+ 183  116     "."     2       2       1.751001
+ 184  116     "."     3       133     .5084203
+ 185  116     "."     4       490     .5391184
+ 186  116     "."     5       25      .8047817
+ 187  117     "."     1       52      3.965716
+ 188  117     "."     2       25      4.266469
+ 189  117     "."     3       150     4.105856
+ 190  117     "."     4       200     3.965987
+ 191  117     "."     5       132     4.367661
+ 192  118     "."     1       21      3.245589
+ 193  118     "."     2       5       3.667643
+ 194  118     "."     3       41      3.447755
+ 195  118     "."     4       24      3.562665
+ 196  118     "."     5       56      4.26572
+ 197  119     "."     1       3       3.750886
+ 198  119     "."     3       38      4.111296
+ 199  119     "."     4       59      3.978243
+ 200  119     "."     5       39      5.121143
+ 201  121     "."     1       10      3.662566
+ 202  121     "."     3       54      3.784068
+ 203  121     "."     4       66      3.555456
+ 204  121     "."     5       19      5.095651
+ 205  122     "."     1       48      .8756889
+ 206  122     "."     2       11      .4486699
+ 207  122     "."     3       132     .6579986
+ 208  122     "."     4       67      1.492606
+ 209  122     "."     5       58      1.153018
+ 210  123     "."     1       82      .3660326
+ 211  123     "."     2       29      .1428554
+GAMS Rev 240  WEX-VS8 24.0.2 x86/MS Windows                                                                                                                                                                                            05/17/13 09:53:10 Page 5
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 C o m p i l a t i o n
 
 
- 135  Sweet Potatoes (Dry)    .       5       12      .1692627
-****                    $338          $338
-**** LINE     27 INCLUDE     C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\price_unit_flex.inc
-**** LINE     64 INPUT       C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\new\190a_revpref13_r.gms
- 136  Cassava (Fresh) .       1       172     .1155276
-****               $338       $338
-**** LINE     28 INCLUDE     C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\price_unit_flex.inc
-**** LINE     64 INPUT       C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\new\190a_revpref13_r.gms
- 137  Cassava (Fresh) .       2       20      .0396428
-****               $338       $338
-**** LINE     29 INCLUDE     C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\price_unit_flex.inc
-**** LINE     64 INPUT       C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\new\190a_revpref13_r.gms
- 138  Cassava (Fresh) .       3       247     .0823676
-****               $338       $338
-**** LINE     30 INCLUDE     C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\price_unit_flex.inc
-**** LINE     64 INPUT       C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\new\190a_revpref13_r.gms
- 139  Cassava (Fresh) .       4       323     .0615662
-****               $338       $338
-**** LINE     31 INCLUDE     C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\price_unit_flex.inc
-**** LINE     64 INPUT       C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\new\190a_revpref13_r.gms
- 140  Cassava (Fresh) .       5       330     .0978781
-****               $338       $338
-**** LINE     32 INCLUDE     C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\price_unit_flex.inc
-**** LINE     64 INPUT       C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\new\190a_revpref13_r.gms
- 141  Cassava (Dry/ Flour)    .       1       49      .5511494
-****             $338                 $338
-**** LINE     33 INCLUDE     C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\price_unit_flex.inc
-**** LINE     64 INPUT       C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\new\190a_revpref13_r.gms
- 142  Cassava (Dry/ Flour)    .       2       10      .5679948
-****             $338                 $338
-**** LINE     34 INCLUDE     C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\price_unit_flex.inc
-**** LINE     64 INPUT       C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\new\190a_revpref13_r.gms
- 143  Cassava (Dry/ Flour)    .       3       302     .8150141
-****             $338                 $338
-**** LINE     35 INCLUDE     C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\price_unit_flex.inc
-**** LINE     64 INPUT       C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\new\190a_revpref13_r.gms
- 144  Cassava (Dry/ Flour)    .       4       289     .6620767
-****             $338                 $338
-**** LINE     36 INCLUDE     C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\price_unit_flex.inc
-**** LINE     64 INPUT       C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\new\190a_revpref13_r.gms
- 145  Cassava (Dry/ Flour)    .       5       202     .5585041
-****             $338                 $338
-**** LINE     37 INCLUDE     C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\price_unit_flex.inc
-**** LINE     64 INPUT       C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\new\190a_revpref13_r.gms
- 146  Irish Potatoes  .       1       18      .1652141
- 147  Irish Potatoes  .       2       12      .0500986
- 148  Irish Potatoes  .       3       17      .1270361
- 149  Irish Potatoes  .       4       9       .098572
- 150  Irish Potatoes  .       5       114     .2117021
- 151  Rice    .       1       31      2.179518
- 152  Rice    .       2       24      1.463948
- 153  Rice    .       3       109     1.674266
- 154  Rice    .       4       64      1.628859
-GAMS Rev 240  WEX-VS8 24.0.2 x86/MS Windows                                                                                                                                                                                            05/06/13 13:53:49 Page 6
+ 212  123     "."     3       220     .570753
+ 213  123     "."     4       304     .940825
+ 214  123     "."     5       67      .6614375
+ 215  125     "."     1       84      .0794596
+ 216  125     "."     2       26      .1388306
+ 217  125     "."     3       148     .0806324
+ 218  125     "."     4       172     .0757745
+ 219  125     "."     5       142     .0897283
+ 220  127     "."     1       170     .7733017
+ 221  127     "."     2       60      .9752822
+ 222  127     "."     3       347     .8342179
+ 223  127     "."     4       544     1.545788
+ 224  127     "."     5       131     1.56696
+ 225  131     "."     1       56      .3586694
+ 226  131     "."     2       17      .4487683
+ 227  131     "."     3       42      .5962924
+ 228  131     "."     4       44      .6973926
+ 229  131     "."     5       124     .4544259
+ 230  132     "."     1       35      .2717057
+ 231  132     "."     2       18      .4490861
+ 232  132     "."     3       137     .2678175
+ 233  132     "."     4       125     .2825959
+ 234  132     "."     5       62      .2678435
+ 235  134     "."     1       78      1.118121
+ 236  134     "."     2       7       .6138245
+ 237  134     "."     3       124     1.386653
+ 238  134     "."     4       35      .7334464
+ 239  134     "."     5       118     .5027204
+ 240  135     "."     1       208     .9178949
+ 241  135     "."     2       76      .8929397
+ 242  135     "."     3       386     1.112805
+ 243  135     "."     4       632     1.152785
+ 244  135     "."     5       375     1.062761
+ 245  136     "."     1       241     1.17343
+ 246  136     "."     2       75      1.363214
+ 247  136     "."     3       386     1.312099
+ 248  136     "."     4       392     1.506208
+ 249  136     "."     5       396     1.015844
+ 250  137     "."     1       48      .4059716
+ 251  137     "."     2       20      .4578823
+ 252  137     "."     3       146     .508338
+ 253  137     "."     4       166     .6914039
+ 254  137     "."     5       115     .472257
+ 255  138     "."     1       130     .4464386
+ 256  138     "."     2       19      .664218
+ 257  138     "."     3       273     .383039
+ 258  138     "."     4       223     .2964806
+ 259  138     "."     5       352     .3601745
+ 260  139     "."     1       77      .6963204
+ 261  139     "."     2       13      1.054007
+ 262  139     "."     3       225     .5956037
+ 263  139     "."     4       515     .4021318
+ 264  139     "."     5       80      .5564747
+GAMS Rev 240  WEX-VS8 24.0.2 x86/MS Windows                                                                                                                                                                                            05/17/13 09:53:10 Page 6
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 C o m p i l a t i o n
 
 
- 155  Rice    .       5       56      2.092386
- 156  Maize (grains)  .       1       12      .2649443
-****              $338        $338
-**** LINE     48 INCLUDE     C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\price_unit_flex.inc
-**** LINE     64 INPUT       C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\new\190a_revpref13_r.gms
- 157  Maize (grains)  .       2       2       .4081268
-****              $338        $338
-**** LINE     49 INCLUDE     C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\price_unit_flex.inc
-**** LINE     64 INPUT       C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\new\190a_revpref13_r.gms
- 158  Maize (grains)  .       3       20      .5209069
-****              $338        $338
-**** LINE     50 INCLUDE     C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\price_unit_flex.inc
-**** LINE     64 INPUT       C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\new\190a_revpref13_r.gms
- 159  Maize (grains)  .       4       136     .4733869
-****              $338        $338
-**** LINE     51 INCLUDE     C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\price_unit_flex.inc
-**** LINE     64 INPUT       C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\new\190a_revpref13_r.gms
- 160  Maize (grains)  .       5       24      .3930244
-****              $338        $338
-**** LINE     52 INCLUDE     C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\price_unit_flex.inc
-**** LINE     64 INPUT       C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\new\190a_revpref13_r.gms
- 161  Maize (cobs)    .       1       65      .4976214
-****            $338          $338
-**** LINE     53 INCLUDE     C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\price_unit_flex.inc
-**** LINE     64 INPUT       C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\new\190a_revpref13_r.gms
- 162  Maize (cobs)    .       2       14      .3511608
-****            $338          $338
-**** LINE     54 INCLUDE     C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\price_unit_flex.inc
-**** LINE     64 INPUT       C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\new\190a_revpref13_r.gms
- 163  Maize (cobs)    .       3       117     .3893676
-****            $338          $338
-**** LINE     55 INCLUDE     C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\price_unit_flex.inc
-**** LINE     64 INPUT       C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\new\190a_revpref13_r.gms
- 164  Maize (cobs)    .       4       96      .3928249
-****            $338          $338
-**** LINE     56 INCLUDE     C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\price_unit_flex.inc
-**** LINE     64 INPUT       C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\new\190a_revpref13_r.gms
- 165  Maize (cobs)    .       5       91      .3677167
-****            $338          $338
-**** LINE     57 INCLUDE     C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\price_unit_flex.inc
-**** LINE     64 INPUT       C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\new\190a_revpref13_r.gms
- 166  Maize (flour)   .       1       210     1.192061
-****             $338         $338
-**** LINE     58 INCLUDE     C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\price_unit_flex.inc
-**** LINE     64 INPUT       C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\new\190a_revpref13_r.gms
- 167  Maize (flour)   .       2       34      .7889462
-****             $338         $338
-**** LINE     59 INCLUDE     C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\price_unit_flex.inc
-**** LINE     64 INPUT       C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\new\190a_revpref13_r.gms
- 168  Maize (flour)   .       3       289     1.028476
-****             $338         $338
-**** LINE     60 INCLUDE     C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\price_unit_flex.inc
-**** LINE     64 INPUT       C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\new\190a_revpref13_r.gms
-GAMS Rev 240  WEX-VS8 24.0.2 x86/MS Windows                                                                                                                                                                                            05/06/13 13:53:49 Page 7
+ 265  140     "."     1       61      .9185889
+ 266  140     "."     2       10      2.440323
+ 267  140     "."     3       92      1.666684
+ 268  140     "."     4       86      1.485713
+ 269  140     "."     5       160     1.397704
+ 270  141     "."     1       173     1.46571
+ 271  141     "."     2       45      1.530213
+ 272  141     "."     3       227     1.679416
+ 273  141     "."     4       605     2.231159
+ 274  141     "."     5       448     1.874076
+ 275  143     "."     1       19      3.872145
+ 276  143     "."     2       2       33.31981
+ 277  143     "."     3       41      2.569694
+ 278  143     "."     4       55      6.090357
+ 279  143     "."     5       49      4.33026
+ 280  144     "."     1       111     1.841395
+ 281  144     "."     2       43      2.158514
+ 282  144     "."     3       115     1.456956
+ 283  144     "."     4       10      1.329049
+ 284  144     "."     5       152     2.258773
+ 285  145     "."     1       2       1.891142
+ 286  145     "."     2       3       2.743696
+ 287  145     "."     3       35      2.07769
+ 288  145     "."     4       127     1.856208
+ 289  145     "."     5       14      2.440607
+ 290  146     "."     1       1       3
+ 291  146     "."     3       19      2.58724
+ 292  146     "."     4       301     1.85959
+ 293  146     "."     5       3       2.180138
+ 294  147     "."     1       184     2.163179
+ 295  147     "."     2       71      2.126079
+ 296  147     "."     3       386     2.227231
+ 297  147     "."     4       313     2.303432
+ 298  147     "."     5       236     2.53046
+ 299  150     "."     1       298     .8450459
+ 300  150     "."     2       72      .8313311
+ 301  150     "."     3       562     .8378724
+ 302  150     "."     4       1019    .7765883
+ 303  150     "."     5       596     1.048488
+ 304  153     "."     1       36      1.268359
+ 305  153     "."     2       5       2.373174
+ 306  153     "."     3       99      .6578875
+ 307  153     "."     4       319     .6783652
+ 308  153     "."     5       71      1.31113
+ 309  154     "."     1       3       1.082929
+ 310  154     "."     2       4       .4320549
+ 311  154     "."     3       7       .7697541
+ 312  154     "."     4       164     .348989
+ 313  154     "."     5       30      .3954247
+ 314  156     "."     1       29      1.093761
+ 315  156     "."     3       10      1.306185
+ 316  156     "."     4       451     1.490449
+ 317  156     "."     5       72      1.180503
+GAMS Rev 240  WEX-VS8 24.0.2 x86/MS Windows                                                                                                                                                                                            05/17/13 09:53:10 Page 7
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 C o m p i l a t i o n
 
 
- 169  Maize (flour)   .       4       254     .8989651
-****             $338         $338
-**** LINE     61 INCLUDE     C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\price_unit_flex.inc
-**** LINE     64 INPUT       C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\new\190a_revpref13_r.gms
- 170  Maize (flour)   .       5       283     1.026032
-****             $338         $338
-**** LINE     62 INCLUDE     C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\price_unit_flex.inc
-**** LINE     64 INPUT       C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\new\190a_revpref13_r.gms
- 171  Bread   .       1       33      2.069313
- 172  Bread   .       2       22      1.832159
- 173  Bread   .       3       76      1.52449
- 174  Bread   .       4       112     1.458717
- 175  Bread   .       5       58      1.629467
- 176  Millet  .       1       16      1.116133
- 177  Millet  .       2       3       1.123914
- 178  Millet  .       3       105     .9318959
- 179  Millet  .       4       61      .7827522
- 180  Millet  .       5       129     .9614788
- 181  Sorghum .       1       4       .8228506
- 182  Sorghum .       2       1       1.6
- 183  Sorghum .       3       132     .5062653
- 184  Sorghum .       4       488     .5531772
- 185  Sorghum .       5       23      .7321597
- 186  Beef    .       1       57      4.28351
- 187  Beef    .       2       16      2.801072
- 188  Beef    .       3       150     4.078514
- 189  Beef    .       4       210     3.901601
- 190  Beef    .       5       133     4.003965
- 191  Pork    .       1       21      3.476077
- 192  Pork    .       2       3       2.603735
- 193  Pork    .       3       39      3.430539
- 194  Pork    .       4       22      3.636991
- 195  Pork    .       5       54      3.94884
- 196  Goat Meat       .       1       3       4.126432
- 197  Goat Meat       .       3       39      4.054574
- 198  Goat Meat       .       4       63      3.940496
- 199  Goat Meat       .       5       40      4.619205
- 200  Chicken .       1       9       3.912647
- 201  Chicken .       3       54      3.861619
- 202  Chicken .       4       65      3.827872
- 203  Chicken .       5       18      4.31197
- 204  Fresh Fish      .       1       49      .8293929
- 205  Fresh Fish      .       2       6       .9206342
- 206  Fresh Fish      .       3       131     .6631449
- 207  Fresh Fish      .       4       72      1.464541
- 208  Fresh Fish      .       5       56      .9674097
- 209  Dry/ Smoked fish        .       1       88      .3941103
- 210  Dry/ Smoked fish        .       2       18      .2558341
- 211  Dry/ Smoked fish        .       3       226     .5586819
- 212  Dry/ Smoked fish        .       4       307     1.002531
- 213  Dry/ Smoked fish        .       5       67      .5965487
- 214  Fresh Milk      .       1       90      .0893784
- 215  Fresh Milk      .       2       16      .0911989
-GAMS Rev 240  WEX-VS8 24.0.2 x86/MS Windows                                                                                                                                                                                            05/06/13 13:53:49 Page 8
+ 318  157     "."     1       18      .7664121
+ 319  157     "."     2       14      .5887289
+ 320  157     "."     3       70      .2915177
+ 321  157     "."     4       23      .2937123
+ 322  157     "."     5       39      .3687837
+ 323  161     "."     1       17      1.629602
+ 324  161     "."     2       7       1.641486
+ 325  161     "."     3       31      .1428961
+ 326  161     "."     4       142     .3724664
+ 327  161     "."     5       25      .7660508
+ 328  ;
+ 329   
+ 330  Table   quan(cod,reg,qtit)   quantity and related information
+ 331                             calperg          quan5           calpp      povline_a_flex5
+INCLUDE    C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\quan_flex.inc
+ 333  102     .       1       6.8900000e-01   2.0435732e+01   2.1909478e+03   619.878
+ 334  103     .       1       6.8900000e-01   1.0348698e+02   2.1909478e+03   619.878
+ 335  104     .       1       6.8900000e-01   4.4049854e+01   2.1909478e+03   619.878
+ 336  105     .       1       1.0164000e+00   3.8550961e+02   2.1909478e+03   619.878
+ 337  107     .       1       1.3440000e+00   4.3355823e+02   2.1909478e+03   619.878
+ 338  108     .       1       3.1400000e+00   2.5917383e+01   2.1909478e+03   619.878
+ 339  110     .       1       3.6100000e+00   2.5277801e+00   2.1909478e+03   619.878
+ 340  112     .       1       9.4600000e-01   4.0307846e+01   2.1909478e+03   619.878
+ 341  113     .       1       3.6500000e+00   7.1906433e+01   2.1909478e+03   619.878
+ 342  117     .       1       1.7982000e+00   3.8763072e+00   2.1909478e+03   619.878
+ 343  122     .       1       6.1610000e-01   9.2023191e+00   2.1909478e+03   619.878
+ 344  123     .       1       3.7500000e+00   3.1730783e+01   2.1909478e+03   619.878
+ 345  125     .       1       6.0000000e-01   1.6492950e+02   2.1909478e+03   619.878
+ 346  127     .       1       8.8400000e+00   1.4102792e+01   2.1909478e+03   619.878
+ 347  132     .       1       4.3310000e-01   2.2602751e+01   2.1909478e+03   619.878
+ 348  134     .       1       4.9075000e-01   8.8105659e+00   2.1909478e+03   619.878
+ 349  135     .       1       3.6400000e-01   6.8044515e+00   2.1909478e+03   619.878
+ 350  136     .       1       1.6380000e-01   1.0678106e+01   2.1909478e+03   619.878
+ 351  138     .       1       2.0160000e-01   3.4429409e+01   2.1909478e+03   619.878
+ 352  139     .       1       2.6491112e-01   7.0631166e+00   2.1909478e+03   619.878
+ 353  140     .       1       1.0300000e+00   1.7579588e+01   2.1909478e+03   619.878
+ 354  141     .       1       3.1300000e+00   2.9415045e+01   2.1909478e+03   619.878
+ 355  144     .       1       5.8800000e+00   6.3880615e+00   2.1909478e+03   619.878
+ 356  147     .       1       3.8700000e+00   1.3528866e+01   2.1909478e+03   619.878
+ 357  150     .       1       0.0000000e+00   8.2490931e+00   2.1909478e+03   619.878
+ 358  153     .       1       1.5300000e+00   3.6962616e+00   2.1909478e+03   619.878
+ 359  157     .       1       1.2537871e+00   9.4752932e+00   2.1909478e+03   619.878
+ 360  104     .       2       6.8900000e-01   1.7417380e+02   2.2740835e+03   695.0354
+ 361  105     .       2       1.0164000e+00   1.0124797e+02   2.2740835e+03   695.0354
+ 362  107     .       2       1.3440000e+00   2.8491031e+02   2.2740835e+03   695.0354
+ 363  108     .       2       3.1400000e+00   3.9048378e+01   2.2740835e+03   695.0354
+ 364  109     .       2       6.4680000e-01   6.5902649e+01   2.2740835e+03   695.0354
+ 365  110     .       2       3.6100000e+00   2.1305088e+01   2.2740835e+03   695.0354
+ 366  112     .       2       9.4600000e-01   2.3293980e+01   2.2740835e+03   695.0354
+ 367  113     .       2       3.6500000e+00   5.6643711e+01   2.2740835e+03   695.0354
+ 368  114     .       2       2.6600000e+00   2.3614546e+01   2.2740835e+03   695.0354
+ 369  117     .       2       1.7982000e+00   4.7548265e+00   2.2740835e+03   695.0354
+ 370  122     .       2       6.1610000e-01   1.8155230e+01   2.2740835e+03   695.0354
+GAMS Rev 240  WEX-VS8 24.0.2 x86/MS Windows                                                                                                                                                                                            05/17/13 09:53:10 Page 8
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 C o m p i l a t i o n
 
 
- 216  Fresh Milk      .       3       152     .0802798
- 217  Fresh Milk      .       4       175     .0764993
- 218  Fresh Milk      .       5       140     .0808601
- 219  Cooking oil     .       1       179     .8286387
- 220  Cooking oil     .       2       39      .8013185
- 221  Cooking oil     .       3       353     .817768
- 222  Cooking oil     .       4       547     1.547609
- 223  Cooking oil     .       5       136     1.362171
- 224  Sweet Bananas   .       1       60      .3935834
- 225  Sweet Bananas   .       2       9       .2686354
- 226  Sweet Bananas   .       3       44      .5603358
- 227  Sweet Bananas   .       4       45      .6902652
- 228  Sweet Bananas   .       5       124     .4404165
- 229  Mangos  .       1       34      .364659
- 230  Mangos  .       2       14      .2879896
- 231  Mangos  .       3       136     .2685895
- 232  Mangos  .       4       121     .331438
- 233  Mangos  .       5       63      .2388753
- 234  Other Fruits    .       1       84      1.214898
- 235  Other Fruits    .       2       4       .8208162
- 236  Other Fruits    .       3       120     1.44957
- 237  Other Fruits    .       4       37      .7868423
- 238  Other Fruits    .       5       113     .4210848
- 239  Onions  .       1       219     1.001302
- 240  Onions  .       2       54      .5828542
- 241  Onions  .       3       386     1.07948
- 242  Onions  .       4       650     1.191719
- 243  Onions  .       5       384     .9302185
- 244  Tomatoes        .       1       245     1.284735
- 245  Tomatoes        .       2       52      .8439046
- 246  Tomatoes        .       3       400     1.263219
- 247  Tomatoes        .       4       399     1.576084
- 248  Tomatoes        .       5       387     .9537703
- 249  Cabbages        .       1       50      .4378624
- 250  Cabbages        .       2       11      .2725326
- 251  Cabbages        .       3       150     .5128226
- 252  Cabbages        .       4       170     .7021126
- 253  Cabbages        .       5       112     .4176017
- 254  Dodo    .       1       135     .4856839
- 255  Dodo    .       2       12      .3916174
- 256  Dodo    .       3       269     .3826284
- 257  Dodo    .       4       217     .2921741
- 258  Dodo    .       5       348     .3376532
- 259  Other vegetables        .       1       83      .7713554
- 260  Other vegetables        .       2       6       .7000274
- 261  Other vegetables        .       3       221     .5828759
- 262  Other vegetables        .       4       518     .404897
- 263  Other vegetables        .       5       79      .5168673
- 264  Beans fresh)    .       1       60      .9948032
-****                          $338
-**** LINE    156 INCLUDE     C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\price_unit_flex.inc
-**** LINE     64 INPUT       C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\new\190a_revpref13_r.gms
-GAMS Rev 240  WEX-VS8 24.0.2 x86/MS Windows                                                                                                                                                                                            05/06/13 13:53:49 Page 9
+ 371  123     .       2       3.7500000e+00   1.0799017e+02   2.2740835e+03   695.0354
+ 372  125     .       2       6.0000000e-01   1.3991513e+02   2.2740835e+03   695.0354
+ 373  127     .       2       8.8400000e+00   2.2109137e+01   2.2740835e+03   695.0354
+ 374  132     .       2       4.3310000e-01   1.2810792e+01   2.2740835e+03   695.0354
+ 375  135     .       2       3.6400000e-01   1.3155490e+01   2.2740835e+03   695.0354
+ 376  136     .       2       1.6380000e-01   1.6533594e+01   2.2740835e+03   695.0354
+ 377  140     .       2       1.0300000e+00   2.1142230e+00   2.2740835e+03   695.0354
+ 378  141     .       2       3.1300000e+00   2.9440191e+01   2.2740835e+03   695.0354
+ 379  144     .       2       5.8800000e+00   1.0465639e+01   2.2740835e+03   695.0354
+ 380  147     .       2       3.8700000e+00   3.0842930e+01   2.2740835e+03   695.0354
+ 381  150     .       2       0.0000000e+00   6.8942032e+00   2.2740835e+03   695.0354
+ 382  157     .       2       1.2537871e+00   2.2677752e+01   2.2740835e+03   695.0354
+ 383  103     .       3       6.8900000e-01   1.6328024e+01   2.1588210e+03   552.9629
+ 384  105     .       3       1.0164000e+00   1.7493742e+02   2.1588210e+03   552.9629
+ 385  106     .       3       3.4300000e+00   4.6905785e+01   2.1588210e+03   552.9629
+ 386  107     .       3       1.3440000e+00   3.2650784e+02   2.1588210e+03   552.9629
+ 387  108     .       3       3.1400000e+00   1.1200626e+02   2.1588210e+03   552.9629
+ 388  110     .       3       3.6100000e+00   5.7143712e+00   2.1588210e+03   552.9629
+ 389  112     .       3       9.4600000e-01   2.3176453e+01   2.1588210e+03   552.9629
+ 390  113     .       3       3.6500000e+00   5.6812359e+01   2.1588210e+03   552.9629
+ 391  115     .       3       3.7800000e+00   1.5571619e+01   2.1588210e+03   552.9629
+ 392  116     .       3       3.3900000e+00   3.6870827e+01   2.1588210e+03   552.9629
+ 393  117     .       3       1.7982000e+00   4.7215700e+00   2.1588210e+03   552.9629
+ 394  121     .       3       1.4835000e+00   2.5438910e+00   2.1588210e+03   552.9629
+ 395  122     .       3       6.1610000e-01   2.3865202e+01   2.1588210e+03   552.9629
+ 396  123     .       3       3.7500000e+00   2.8689735e+01   2.1588210e+03   552.9629
+ 397  125     .       3       6.0000000e-01   1.1625489e+02   2.1588210e+03   552.9629
+ 398  127     .       3       8.8400000e+00   1.2394036e+01   2.1588210e+03   552.9629
+ 399  132     .       3       4.3310000e-01   3.8345905e+01   2.1588210e+03   552.9629
+ 400  134     .       3       4.9075000e-01   4.4566031e+00   2.1588210e+03   552.9629
+ 401  136     .       3       1.6380000e-01   7.2234540e+00   2.1588210e+03   552.9629
+ 402  138     .       3       2.0160000e-01   3.5986370e+01   2.1588210e+03   552.9629
+ 403  139     .       3       2.6491112e-01   2.0376680e+01   2.1588210e+03   552.9629
+ 404  140     .       3       1.0300000e+00   5.4168329e+00   2.1588210e+03   552.9629
+ 405  141     .       3       3.1300000e+00   1.1901160e+01   2.1588210e+03   552.9629
+ 406  147     .       3       3.8700000e+00   1.1834420e+01   2.1588210e+03   552.9629
+ 407  150     .       3       0.0000000e+00   8.1480703e+00   2.1588210e+03   552.9629
+ 408  153     .       3       1.5300000e+00   1.3149837e+01   2.1588210e+03   552.9629
+ 409  157     .       3       1.2537871e+00   1.7059813e+01   2.1588210e+03   552.9629
+ 410  105     .       4       1.0164000e+00   5.4144302e+01   2.1720432e+03   513.1528
+ 411  107     .       4       1.3440000e+00   5.1765637e+02   2.1720432e+03   513.1528
+ 412  108     .       4       3.1400000e+00   7.0699104e+01   2.1720432e+03   513.1528
+ 413  111     .       4       3.6500000e+00   2.5582733e+01   2.1720432e+03   513.1528
+ 414  112     .       4       9.4600000e-01   1.9272232e+01   2.1720432e+03   513.1528
+ 415  113     .       4       3.6500000e+00   2.6837553e+01   2.1720432e+03   513.1528
+ 416  116     .       4       3.3900000e+00   1.1474615e+02   2.1720432e+03   513.1528
+ 417  117     .       4       1.7982000e+00   3.0212529e+00   2.1720432e+03   513.1528
+ 418  121     .       4       1.4835000e+00   2.4069750e+00   2.1720432e+03   513.1528
+ 419  122     .       4       6.1610000e-01   4.6002440e+00   2.1720432e+03   513.1528
+ 420  123     .       4       3.7500000e+00   1.3652317e+01   2.1720432e+03   513.1528
+ 421  125     .       4       6.0000000e-01   1.3889899e+02   2.1720432e+03   513.1528
+ 422  127     .       4       8.8400000e+00   1.0574622e+01   2.1720432e+03   513.1528
+ 423  135     .       4       3.6400000e-01   5.7087221e+00   2.1720432e+03   513.1528
+GAMS Rev 240  WEX-VS8 24.0.2 x86/MS Windows                                                                                                                                                                                            05/17/13 09:53:10 Page 9
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 C o m p i l a t i o n
 
 
- 265  Beans fresh)    .       2       7       1.476317
-****                          $338
-**** LINE    157 INCLUDE     C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\price_unit_flex.inc
-**** LINE     64 INPUT       C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\new\190a_revpref13_r.gms
- 266  Beans fresh)    .       3       90      1.712017
-****                          $338
-**** LINE    158 INCLUDE     C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\price_unit_flex.inc
-**** LINE     64 INPUT       C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\new\190a_revpref13_r.gms
- 267  Beans fresh)    .       4       85      1.463778
-****                          $338
-**** LINE    159 INCLUDE     C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\price_unit_flex.inc
-**** LINE     64 INPUT       C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\new\190a_revpref13_r.gms
- 268  Beans fresh)    .       5       161     1.237111
-****                          $338
-**** LINE    160 INCLUDE     C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\price_unit_flex.inc
-**** LINE     64 INPUT       C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\new\190a_revpref13_r.gms
- 269  Beans (dry)     .       1       183     1.576005
-****           $338           $338
-**** LINE    161 INCLUDE     C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\price_unit_flex.inc
-**** LINE     64 INPUT       C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\new\190a_revpref13_r.gms
- 270  Beans (dry)     .       2       33      .9712892
-****           $338           $338
-**** LINE    162 INCLUDE     C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\price_unit_flex.inc
-**** LINE     64 INPUT       C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\new\190a_revpref13_r.gms
- 271  Beans (dry)     .       3       230     1.647595
-****           $338           $338
-**** LINE    163 INCLUDE     C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\price_unit_flex.inc
-**** LINE     64 INPUT       C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\new\190a_revpref13_r.gms
- 272  Beans (dry)     .       4       613     2.247068
-****           $338           $338
-**** LINE    164 INCLUDE     C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\price_unit_flex.inc
-**** LINE     64 INPUT       C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\new\190a_revpref13_r.gms
- 273  Beans (dry)     .       5       442     1.708336
-****           $338           $338
-**** LINE    165 INCLUDE     C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\price_unit_flex.inc
-**** LINE     64 INPUT       C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\new\190a_revpref13_r.gms
- 274  Ground nuts (pounded)   .       1       118     1.987042
-****                     $338         $338
-**** LINE    166 INCLUDE     C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\price_unit_flex.inc
-**** LINE     64 INPUT       C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\new\190a_revpref13_r.gms
- 275  Ground nuts (pounded)   .       2       30      1.482472
-****                     $338         $338
-**** LINE    167 INCLUDE     C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\price_unit_flex.inc
-**** LINE     64 INPUT       C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\new\190a_revpref13_r.gms
- 276  Ground nuts (pounded)   .       3       116     1.320936
-****                     $338         $338
-**** LINE    168 INCLUDE     C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\price_unit_flex.inc
-**** LINE     64 INPUT       C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\new\190a_revpref13_r.gms
- 277  Ground nuts (pounded)   .       4       12      1.059712
-****                     $338         $338
-**** LINE    169 INCLUDE     C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\price_unit_flex.inc
-**** LINE     64 INPUT       C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\new\190a_revpref13_r.gms
-GAMS Rev 240  WEX-VS8 24.0.2 x86/MS Windows                                                                                                                                                                                           05/06/13 13:53:49 Page 10
+ 424  136     .       4       1.6380000e-01   4.8028193e+00   2.1720432e+03   513.1528
+ 425  139     .       4       2.6491112e-01   5.6304516e+01   2.1720432e+03   513.1528
+ 426  140     .       4       1.0300000e+00   3.9425700e+00   2.1720432e+03   513.1528
+ 427  141     .       4       3.1300000e+00   2.2969183e+01   2.1720432e+03   513.1528
+ 428  145     .       4       8.1000000e-01   3.4025159e+00   2.1720432e+03   513.1528
+ 429  146     .       4       5.7300000e+00   7.6732802e+00   2.1720432e+03   513.1528
+ 430  147     .       4       3.8700000e+00   5.5493917e+00   2.1720432e+03   513.1528
+ 431  150     .       4       0.0000000e+00   1.1528011e+01   2.1720432e+03   513.1528
+ 432  153     .       4       1.5300000e+00   2.7924173e+01   2.1720432e+03   513.1528
+ 433  154     .       4       8.1333336e-01   2.8678112e+01   2.1720432e+03   513.1528
+ 434  156     .       4       0.0000000e+00   5.5210452e+00   2.1720432e+03   513.1528
+ 435  161     .       4       1.2537871e+00   1.9374657e+01   2.1720432e+03   513.1528
+ 436  102     .       5       6.8900000e-01   2.5685814e+01   2.2123733e+03   787.9817
+ 437  103     .       5       6.8900000e-01   1.6054462e+02   2.2123733e+03   787.9817
+ 438  104     .       5       6.8900000e-01   9.2708672e+01   2.2123733e+03   787.9817
+ 439  105     .       5       1.0164000e+00   2.8879257e+02   2.2123733e+03   787.9817
+ 440  107     .       5       1.3440000e+00   4.7984293e+02   2.2123733e+03   787.9817
+ 441  108     .       5       3.1400000e+00   5.6789738e+01   2.2123733e+03   787.9817
+ 442  109     .       5       6.4680000e-01   1.0611240e+02   2.2123733e+03   787.9817
+ 443  110     .       5       3.6100000e+00   2.7169423e+00   2.2123733e+03   787.9817
+ 444  112     .       5       9.4600000e-01   2.6821867e+01   2.2123733e+03   787.9817
+ 445  113     .       5       3.6500000e+00   4.7334785e+01   2.2123733e+03   787.9817
+ 446  115     .       5       3.7800000e+00   2.0510767e+01   2.2123733e+03   787.9817
+ 447  117     .       5       1.7982000e+00   4.9829521e+00   2.2123733e+03   787.9817
+ 448  118     .       5       2.3534000e+00   2.1828349e+00   2.2123733e+03   787.9817
+ 449  119     .       5       1.2210000e+00   1.3446646e+00   2.2123733e+03   787.9817
+ 450  122     .       5       6.1610000e-01   8.6447163e+00   2.2123733e+03   787.9817
+ 451  123     .       5       3.7500000e+00   1.1574539e+01   2.2123733e+03   787.9817
+ 452  125     .       5       6.0000000e-01   1.6421848e+02   2.2123733e+03   787.9817
+ 453  127     .       5       8.8400000e+00   4.0337229e+00   2.2123733e+03   787.9817
+ 454  134     .       5       4.9075000e-01   1.3993022e+01   2.2123733e+03   787.9817
+ 455  135     .       5       3.6400000e-01   6.5302992e+00   2.2123733e+03   787.9817
+ 456  136     .       5       1.6380000e-01   1.3048203e+01   2.2123733e+03   787.9817
+ 457  138     .       5       2.0160000e-01   3.5203983e+01   2.2123733e+03   787.9817
+ 458  140     .       5       1.0300000e+00   2.4356958e+01   2.2123733e+03   787.9817
+ 459  141     .       5       3.1300000e+00   4.2228710e+01   2.2123733e+03   787.9817
+ 460  144     .       5       5.8800000e+00   5.3771367e+00   2.2123733e+03   787.9817
+ 461  147     .       5       3.8700000e+00   6.4530897e+00   2.2123733e+03   787.9817
+ 462  150     .       5       0.0000000e+00   1.1312398e+01   2.2123733e+03   787.9817
+ 463  153     .       5       1.5300000e+00   5.0315604e+00   2.2123733e+03   787.9817
+ 464  ;
+ 465   
+ 466    shr(cod,reg)$quan(cod,reg,'povline_a_flex5')
+ 467                        =price(cod,reg,'price_uw5')*quan(cod,reg,'quan5')/
+ 468                         quan(cod,reg,'povline_a_flex5');
+ 469   
+ 470    chkshr(reg)=sum(cod,shr(cod,reg));
+ 471   
+ 472  loop(reg,
+ 473    abort$(abs(chkshr(reg)-.9) gt .0001) "share does not sum to .9", chkshr ;
+ 474  );
+ 475   
+ 476   
+GAMS Rev 240  WEX-VS8 24.0.2 x86/MS Windows                                                                                                                                                                                           05/17/13 09:53:10 Page 10
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 C o m p i l a t i o n
 
 
- 278  Ground nuts (pounded)   .       5       151     2.086115
-****                     $338         $338
-**** LINE    170 INCLUDE     C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\price_unit_flex.inc
-**** LINE     64 INPUT       C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\new\190a_revpref13_r.gms
- 279  Peas    .       1       2       1.891142
- 280  Peas    .       2       2       1.883498
- 281  Peas    .       3       33      2.06859
- 282  Peas    .       4       129     1.869384
- 283  Peas    .       5       13      2.023263
- 284  Sim sim .       1       1       3
- 285  Sim sim .       3       21      2.578559
- 286  Sim sim .       4       299     1
+ 477  *turn on dynamic sets to indicate positive quantities and existence of
+ 478  *price info for each region
+ 479   
+ 480   posprice(cod,reg)$(price(cod,reg,'price_uw5')
+ 481                        AND price(cod,reg,'count') gt 4) = yes;
+ 482   
+ 483   posquan(cod,reg)$quan(cod,reg,'quan5')=yes;
+ 484   
+ 485   shrmiss(regq,reg)=sum(cod$(NOT posprice(cod,reg)), shr(cod,regq));
+ 486   display shrmiss;
+ 487   
+ 488    povline_ali(reg)=sum(cod$posquan(cod,reg),price(cod,reg,'price_uw5')*
+ 489                                             quan(cod,reg,'quan5'))/.9;
+ 490   
+ 491    display povline_ali;
+ 492   
+ 493   
+ 494  *boost values so shares sum to one;
+ 495  shr(cod,reg)=shr(cod,reg)/chkshr(reg);
+ 496   
+ 497  *fill out price matrix with maximum observed price outside of Maputo
+ 498   
+ 499  loop((cod,reg)$(NOT posprice(cod,reg) AND posquan(cod,reg)),
+ 500           loop(r,
+ 501                   price(cod,reg,'price_uw5')=max(price(cod,reg,'price_uw5'),
+ 502                                                price(cod,r,'price_uw5'));
+ 503           );
+ 504  );
+ 505   
+ 506  chkprice(cod,reg)$(NOT price(cod,reg,'price_uw5') AND posquan(cod,reg))=yes;
+ 507   
+ 508  display 'should be an empty set', chkprice;
+ 509   
+ 510   
+ 511   
+ 512   
+ 513  Variables
+ 514     z                objective value
+ 515     q(cod,reg)       revised maximum entropy quanties in grams
+ 516     s(cod,reg)       derived maximum entropy shares
+ 517     povline(regq,reg)  estimated revealed preference matrix
+ 518  ;
+ 519   
+ 520   
+ 521  Equations
+ 522     obj              objective equation
+ 523     rev(regq,reg)    revealed preference tests
+ 524     deflin(regq,reg) define revealed preference matrix
+ 525     defshr(cod,regq) define the endogenous budget shares
+ 526     cals(regq)       ensure that each bundle hits the calorie
+ 527   
+ 528  ;
+ 529   
+GAMS Rev 240  WEX-VS8 24.0.2 x86/MS Windows                                                                                                                                                                                           05/17/13 09:53:10 Page 11
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+ 530     obj ..  z=e= sum((cod,rq)$posquan(cod,rq),
+ 531                     s(cod,rq)*log(s(cod,rq)/shr(cod,rq)));
+ 532   
+ 533     deflin(rq,r) .. povline(rq,r) =e= sum(cod$posquan(cod,rq),
+ 534                            q(cod,rq)*price(cod,r,'price_uw5'));
+ 535   
+ 536     rev(rq,r) ..    povline(r,rq)=g=povline(rq,rq);
+ 537   
+ 538     defshr(cod,rq)$posquan(cod,rq) ..
+ 539               povline(rq,rq)*s(cod,rq)=e= q(cod,rq)*price(cod,rq,'price_uw5');
+ 540   
+ 541     cals(rq) .. sum(cod$posquan(cod,rq),
+ 542                      q(cod,rq)*quan(cod,rq,'calperg'))=e=.95*caltarg;
+ 543   
+ 544  *set bounds and starting values for variables
+ 545   
+ 546    q.lo(cod,reg)=.00001;
+ 547    q.up(cod,reg)=inf;
+ 548    q.l(cod,reg)=quan(cod,reg,'quan5');
+ 549    q.fx(cod,reg)$(NOT posquan(cod,reg))=0;
+ 550   
+ 551    povline.l(regq,reg)= sum(cod$posquan(cod,regq),
+ 552                            q.l(cod,regq)*price(cod,reg,'price_uw5'));
+ 553   
+ 554   
+ 555    display povline.l;
+ 556   
+ 557  *print the revealed preference matrix prior to optimisation;
+ 558  file povline_rp C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\povline_rp_inout.csv/;
+ 559  put povline_rp;
+****  $183
+**** LINE    165 INPUT       C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\new\190a_revpref13_r.gms
+ 560  povline_rp.pc=5;
+ 561  povline_rp.nd=0;
+ 562  put " ";
+ 563  loop(reg,
+ 564        put reg.tl;
+ 565  );
+ 566  put /;
+ 567  loop(regq,
+ 568       put regq.tl;
+ 569       loop(reg,
+ 570           put povline.l(regq,reg);
+ 571       );
+ 572       put /;
+ 573  );
+ 574  put /; put /; put /;
+ 575   
+ 576     s.l(cod,regq)= q.l(cod,regq)*price(cod,regq,'price_uw5')/povline.l(regq,regq);
+ 577     s.lo(cod,regq)=.0001;
+ 578     s.fx(cod,regq)$(NOT posquan(cod,regq))=0;
+ 579   
+ 580   
+GAMS Rev 240  WEX-VS8 24.0.2 x86/MS Windows                                                                                                                                                                                           05/17/13 09:53:10 Page 12
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+ 581     model revpref /obj, deflin, rev, defshr, cals/;
+ 582   
+ 583     revpref.holdfixed=1;
+ 584   
+ 585     option limrow=100;
+ 586   
+ 587     option nlp=conopt;
+ 588   
+ 589     solve revpref using nlp minimizing z;
+****                                         $257
+**** LINE    195 INPUT       C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\new\190a_revpref13_r.gms
+ 590   
+ 591     povline.l(regq,reg)$(NOT rq(regq) OR NOT r(reg))=0;
+ 592     display "this is without adjustment for calorie target or 90%", povline.l;
+ 593   
+ 594  put /;
+ 595  loop(rq,
+ 596       put rq.tl;
+ 597       loop(r,
+ 598           put povline.l(rq,r);
+ 599       );
+ 600       put /;
+ 601  );
+ 602  put /;
+ 603   
+ 604   
+ 605  PARAMETERS
+ 606     qent(cod,reg)  entropy quantities with all adjustments accounted for
+ 607     povline_ent(reg) entropy line that hits calorie targets (100% food expen)
+ 608    ;
+ 609  *readjust quantities to hit regional calorie target and calculate line;
+ 610     qent(cod,r)=q.l(cod,r)*quan(cod,r,'calpp')/caltarg;
+ 611   
+ 612     povline_ent(r)=sum(cod$posquan(cod,r),price(cod,r,'price_uw5')*
+ 613                                             qent(cod,r))/.9;
+ 614   
+ 615     perc_chng(r)=100*(povline_ent(r)/povline_ali(r)-1);
+ 616   
+ 617     display perc_chng, povline_ent, povline_ali;
+ 618   
+ 619     file res C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\qent.csv/;
+ 620   
+ 621     put res;
+****    $183
+**** LINE    227 INPUT       C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\new\190a_revpref13_r.gms
+ 622     res.pc=5;
+ 623     res.nd=6;
+ 624   
+ 625  *recall that the basket reflects 90% of expenditure and 95% of calories";
+ 626     put "spdomain" ;
+ 627     put "product" ;
+ 628     put "quan5";
+ 629     put "qent";
+GAMS Rev 240  WEX-VS8 24.0.2 x86/MS Windows                                                                                                                                                                                           05/17/13 09:53:10 Page 13
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+ 630     put "price";
+ 631     put "calperg";
+ 632   
+ 633     put /;
+ 634   
+ 635     loop(reg,
+ 636         loop(cod,
+ 637             put reg.tl;
+ 638             put cod.tl;
+ 639             put quan(cod,reg,'quan5');
+ 640             put qent(cod,reg);
+ 641             put price(cod,reg,'price_uw5')
+ 642             put quan(cod,reg,'calperg');
+ 643             put /;
+ 644         );
+ 645     );
+ 646   
+ 647     file lin C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\povline_food_ent.csv/;
+ 648   
+ 649     put lin;
+****    $183
+**** LINE    255 INPUT       C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\new\190a_revpref13_r.gms
+ 650     lin.pc=5;
+ 651  *Flexible, entropy, and fixed food pov lines at 100% expenditure
+ 652   
+ 653     put "spdomain";
+ 654     put "flex";
+ 655     put "ent";
+ 656     put /;
+ 657   
+ 658     loop(reg,
+ 659           put reg.tl;
+ 660           put povline_ali(reg);
+ 661           put povline_ent(reg);
+ 662           put /;
+ 663     );
+GAMS Rev 240  WEX-VS8 24.0.2 x86/MS Windows                                                                                                                                                                                           05/17/13 09:53:10 Page 14
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Error Messages
+
+
+183  Closing '/' missing in file statement
+222  Row dimension inconsistent with declared dimension and
+       column dimension
+257  Solve statement not checked because of previous errors
+409  Unrecognizable item - skip to find a new statement
+       looking for a ';' or a key word to get started again
+
+**** 6 ERROR(S)   0 WARNING(S)
+GAMS Rev 240  WEX-VS8 24.0.2 x86/MS Windows                                                                                                                                                                                           05/17/13 09:53:10 Page 15
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Include File Summary
+
+
+   SEQ   GLOBAL TYPE      PARENT   LOCAL  FILENAME
+
+     1        1 INPUT          0       0  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\new\190a_revpref13_r.gms
+     2       19 INCLUDE        1      19  .C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\product_flex.inc
+     3      109 INCLUDE        1      64  .C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\price_unit_flex.inc
+     4      332 INCLUDE        1      69  .C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\quan_flex.inc
+
+
+COMPILATION TIME     =        0.000 SECONDS      3 Mb  WIN240-240 Feb 14, 2013
+
+
+USER: Joint Workshop  at TIPS                        G130220/0001AN-GEN
+      University of Copenhagen, UNU-WIDER, and TIPS             DC10188
+      License for teaching and research at degree granting institutions
+
+
+**** FILE SUMMARY
+
+Input      C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\new\190a_revpref13_r.gms
+Output     C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\rep\190_revpref.lst
+
+**** USER ERROR(S) ENCOUNTERED

@@ -1,44 +1,45 @@
-"Matooke (Big Bunch)"
-"Matooke (Medium Bunch)"
-"Matooke (Small Bunch)"
-"Matooke (Heap)"
-"Sweet Potatoes (Fresh)"
-"Sweet Potatoes (Dry)"
-"Cassava (Fresh)"
-"Cassava (Dry/ Flour)"
-"Irish Potatoes"
-"Rice"
-"Maize (grains)"
-"Maize (cobs)"
-"Maize (flour)"
-"Bread"
-"Millet"
-"Sorghum"
-"Beef"
-"Pork"
-"Goat Meat"
-"Chicken"
-"Fresh Fish"
-"Dry/ Smoked fish"
-"Fresh Milk"
-"Cooking oil"
-"Sweet Bananas"
-"Mangos"
-"Other Fruits"
-"Onions"
-"Tomatoes"
-"Cabbages"
-"Dodo"
-"Other vegetables"
-"Beans fresh)"
-"Beans (dry)"
-"Ground nuts (pounded)"
-"Peas"
-"Sim sim"
-"Sugar"
-"Salt"
-"Other Alcoholic drinks"
-"Other drinks"
-"Other Tobacco"
-"Food"
-"Other foods"
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+121
+122
+123
+125
+127
+131
+132
+134
+135
+136
+137
+138
+139
+140
+141
+143
+144
+145
+146
+147
+150
+153
+154
+156
+157
+161
