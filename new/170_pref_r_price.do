@@ -51,10 +51,10 @@ gen crap=1;
          1  ".";
  lab val crap crap;
 
-outsheet product crap reg bswt price_uw$it_n using "$path\work\price_unit_flex.inc",  noname replace ;
+outsheet product crap reg bswt price_uw$it_n using "$path\work\price_unit_flex.inc",  noquote noname replace ;
 
 collapse (min) spdomain, by(product);
-outsheet product  using "$path\work\product_flex.inc", noquote noname replace;
+outsheet product  using "$path\work\product_flex.inc", noname replace;
 
 use "$path\work\quan_flex_it$it_n.dta", clear;
 gen reg=spdomain;

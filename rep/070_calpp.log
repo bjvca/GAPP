@@ -2,7 +2,7 @@
       name:  <unnamed>
        log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\rep\070_calpp.log
   log type:  text
- opened on:  17 May 2013, 09:52:34
+ opened on:  17 May 2013, 14:57:58
 
 . clear
 
@@ -192,10 +192,10 @@ variable hhid does not uniquely identify observations in the master data
     Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
        indid |     35945    2.57e+11    1.10e+11   1.01e+11   4.19e+11
-    motherhh |     20045    .7825892    .4124947          0          1
+    motherhh |     35945    .8787592    .3264114          0          1
         hhid |     35945    2.57e+09    1.10e+09   1.01e+09   4.19e+09
          sex |     35945     1.50861    .4999328          1          2
-         age |     34840    19.51099    17.41519          0         98
+         age |     35945    18.94194    17.44062          0         98
 -------------+--------------------------------------------------------
       strata |     35945    5.710586    2.766681          1         10
         mult |     35945    917.2863    619.3906   26.67222   10279.15
@@ -235,10 +235,10 @@ variables sex rural age do not uniquely identify observations in the master data
     Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
        indid |     35945    2.57e+11    1.10e+11   1.01e+11   4.19e+11
-    motherhh |     20045    .7825892    .4124947          0          1
+    motherhh |     35945    .8787592    .3264114          0          1
         hhid |     35945    2.57e+09    1.10e+09   1.01e+09   4.19e+09
          sex |     35945     1.50861    .4999328          1          2
-         age |     34840    19.51099    17.41519          0         98
+         age |     35945    18.94194    17.44062          0         98
 -------------+--------------------------------------------------------
       strata |     35945    5.710586    2.766681          1         10
         mult |     35945    917.2863    619.3906   26.67222   10279.15
@@ -290,7 +290,7 @@ variables sex rural age do not uniquely identify observations in the master data
 (1168 real changes made)
 
 .     replace cal = 1150 if age >= 1 & age <2;
-(1213 real changes made)
+(2318 real changes made)
 
 .     replace cal = 1350 if age >= 2 & age <3;
 (1288 real changes made)
@@ -375,7 +375,7 @@ variables sex rural age do not uniquely identify observations in the master data
 (783 real changes made)
 
 .     count if cal ==.;
- 1105
+    0
 
 .     *Fill in these two observations for IAF 2002/03:;
 .     * 1) this one is a child;
@@ -403,7 +403,7 @@ variables sex rural age do not uniquely identify observations in the master data
     Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
         hhid |      6775    2.51e+09    1.13e+09   1.01e+09   4.19e+09
-         cal |      6775    10971.36    6146.367       1950   50725.15
+         cal |      6775    11158.93    6185.119       1950   50725.15
          num |      6775    5.305535    2.940196          1         24
          psu |      6775     365.894     201.698          1        712
       hhsize |      6775        4.96     2.75857          1         24
@@ -412,7 +412,7 @@ variables sex rural age do not uniquely identify observations in the master data
       strata |      6775    5.551734    2.873672          1         10
        rural |      6775    .8199262    .3842773          0          1
     spdomain |      6775      3.2431    1.373578          1          5
-       calpp |      6775    2288.939     620.148   1463.317   24170.68
+       calpp |      6775    2347.762    704.6076   1463.317   26470.68
 
 . * MAH ;
 .  sum;
@@ -420,7 +420,7 @@ variables sex rural age do not uniquely identify observations in the master data
     Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
         hhid |      6775    2.51e+09    1.13e+09   1.01e+09   4.19e+09
-         cal |      6775    10971.36    6146.367       1950   50725.15
+         cal |      6775    11158.93    6185.119       1950   50725.15
          num |      6775    5.305535    2.940196          1         24
          psu |      6775     365.894     201.698          1        712
       hhsize |      6775        4.96     2.75857          1         24
@@ -429,7 +429,7 @@ variables sex rural age do not uniquely identify observations in the master data
       strata |      6775    5.551734    2.873672          1         10
        rural |      6775    .8199262    .3842773          0          1
     spdomain |      6775      3.2431    1.373578          1          5
-       calpp |      6775    2288.939     620.148   1463.317   24170.68
+       calpp |      6775    2347.762    704.6076   1463.317   26470.68
 
 .  codebook hhid;
 
@@ -462,5 +462,5 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\calpp.dta saved
       name:  <unnamed>
        log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\rep\070_calpp.log
   log type:  text
- closed on:  17 May 2013, 09:52:35
+ closed on:  17 May 2013, 14:57:59
 -------------------------------------------------------------------------------------------

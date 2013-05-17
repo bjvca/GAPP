@@ -18,17 +18,17 @@ set more off
 * TPI basket
 ******************************************************************************;
 
-* Number of items;
-global product_tpi_n "15";
+* Number of items for Uganda i primarily set it to 30 on considering a product for appearing over 1000 times on households menu min was 1085 and max was 6157 however the relevant code in new is atvivated to take care of this automatically;
+global product_tpi_n "30";
 
 * Code choose $product_tpi_n ;
 global product_tpi   "product_tpi==1";
 
 * Initial (arbitrary) quantile defining poor for price index calculations.
 * Mozambique: bottom 60%. Vietnam: bottom 20%. Tanzania: bottom 40% . Uganda: headcount 2009 24.5% ;
-global tpi_bottom "50"; 
+global tpi_bottom "30"; 
 
-* Set the number of regions in the TPI calc for Uganda are set to east central north and east;
+* Set the number of regions in the TPI calc for Uganda are set to 4 as east central north and east;
 global n_tpi "4";
 
 * To reproduce the mozambique 10 numbers, the following global should be commented out. It controls a line in 140_iterate.do 
@@ -40,7 +40,7 @@ global MZ "*";
 ******************************************************************************
 * Initial (arbitrary) quantile defining the (relatively) poor.
 ******************************************************************************;
-global bottom "50";
+global bottom "30";
 
 ******************************************************************************
 * Number of iterations in 140_iterate.do

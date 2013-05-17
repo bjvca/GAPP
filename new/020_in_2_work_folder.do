@@ -29,10 +29,8 @@ set more off
 
 use "$path\in\hhdata.dta", clear;
 
-*mah;
-*temporary solution. news instead of spdomain;
-**replace spdomain=news;
-*recode spdomain 10=1 11=2 20=3 30=4 40=5;
+
+*recode spdomain 10=1 11=2 20=3 30=4 40=5 these have been set to five for Uganda to ensure hwe have at least 1000 households per domain;
 tab spdomain, missing;
 	sort hhid;
 	save "$path\work\hhdata.dta", replace;

@@ -83,7 +83,9 @@ rename quantity quantityz
 rename value valuez
 drop cfactor
 sort hhid
+label drop _all
 destring hhid, replace
+
 save "C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\out\cons_cod_trans.dta", replace
 
 ***************************************************************************************************
@@ -272,6 +274,12 @@ sort hhid
 replace product = 999 if product==2
 la var product "product code is 999, if product is non food"
 replace prod_cat = 1 if prod_cat==.
+drop untcd
+replace descript=1 if descript==.
+label drop _all
+foreach x of varlist quantityd cod_hh_nom3 cod_hh_nom cod_hh_nom2 {
+replace `x'=0 if `x'==.
+}
 
 save "C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\out\cons_cod.dta", replace
 

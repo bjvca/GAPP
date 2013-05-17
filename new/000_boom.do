@@ -36,8 +36,8 @@ display "* # * # * # * # * # * # * # * # * # * # * # * # * # * # * # * # *"
 * - The do-file prefix indicates first time a do-file is called
 *
 * KS, 2003
-* CA, 2003-2008
-* MAH, Apr. 2010
+* CA, 2009-2010
+* MAH, Apr. 2012
 **************************************************************************
 
 clear all
@@ -123,10 +123,7 @@ do "$path/new/010_initial.do"
 				
 $no_temp_rev	do "$path/new/150_price_unit_fix.do"	/* Fixed basket: Prices */
 $no_temp_rev	do "$path/new/160_food_basket_fix.do"	/* Fixed food basket */
-
 				do "$path/new/170_pref_r_price.do"		/* Revealed preference tests */
-				di  "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@here"				
-
 $no_temp_rev	do "$path/new/180_povline_food_fix.do"	/* Inflating year t1's poverty lines to year t2 */
 
 				shell "$path/new/$revpref"				/* Adjusting flexible basket: inside pref. constraints */

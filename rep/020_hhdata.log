@@ -2,7 +2,7 @@
       name:  <unnamed>
        log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/rep/020_hhdata.log
   log type:  text
- opened on:  17 May 2013, 09:52:34
+ opened on:  17 May 2013, 14:57:58
 
 . clear
 
@@ -30,10 +30,8 @@ delimiter now ;
 > **************************************************************************;
 . use "$path\in\hhdata.dta", clear;
 
-. *mah;
-. *temporary solution. news instead of spdomain;
-. **replace spdomain=news;
-. *recode spdomain 10=1 11=2 20=3 30=4 40=5;
+. *recode spdomain 10=1 11=2 20=3 30=4 40=5 these have been set to five for Uganda to ensur
+> e hwe have at least 1000 households per domain;
 . tab spdomain, missing;
 
      spdomain |      Freq.     Percent        Cum.
@@ -94,10 +92,10 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\indata.dta saved
     Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
        indid |     35945    2.57e+11    1.10e+11   1.01e+11   4.19e+11
-    motherhh |     20045    .7825892    .4124947          0          1
+    motherhh |     35945    .8787592    .3264114          0          1
         hhid |     35945    2.57e+09    1.10e+09   1.01e+09   4.19e+09
          sex |     35945     1.50861    .4999328          1          2
-         age |     34840    19.51099    17.41519          0         98
+         age |     35945    18.94194    17.44062          0         98
 
 . use "$path\in\calperg.dta", clear;
 
@@ -129,10 +127,10 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\cons_cod.dta saved
     prod_cat |    412045    1.782558    .4125064          1          2
     descript |    412045    1.782558    .4125064          1          2
 -------------+--------------------------------------------------------
-   quantityd |     89596     .779464    3.170331          0   364.2857
- cod_hh_nom3 |     89596     383.356    648.4919          0      18500
+   quantityd |    412045    .1694884    1.512903          0   364.2857
+ cod_hh_nom3 |    412045    83.35781    341.2477          0      18500
   cod_hh_nom |    412045    1602.923    615777.4          0   3.95e+08
- cod_hh_nom2 |    252585    2614.436    786487.2   .0027397   3.95e+08
+ cod_hh_nom2 |    412045    1602.658    615777.4          0   3.95e+08
 
 . use "$path\in\cons_cod_trans.dta", clear;
 

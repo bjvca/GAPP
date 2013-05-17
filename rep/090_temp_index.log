@@ -2,7 +2,7 @@
       name:  <unnamed>
        log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/rep/090_temp_index.log
   log type:  text
- opened on:  17 May 2013, 09:52:36
+ opened on:  17 May 2013, 14:58:00
 
 . clear
 
@@ -516,7 +516,7 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000005.tmp saved
    quantityd |     85204     .819643    3.245947   .0000286   364.2857
  cod_hh_nom3 |     85204    403.1168    658.9792          0      18500
   cod_hh_nom |     85204    403.1168    658.9792          0      18500
- cod_hh_nom2 |     84857    404.7653    659.8198   7.142857      18500
+ cod_hh_nom2 |     85204    403.1168    658.9792          0      18500
 
 . sort product;
 

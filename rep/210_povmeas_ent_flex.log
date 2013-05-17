@@ -3,7 +3,7 @@
        log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/rep/210_povmeas_ent_flex.lo
 > g
   log type:  text
- opened on:  17 May 2013, 09:53:10
+ opened on:  17 May 2013, 14:58:40
 
 . clear
 
@@ -120,3 +120,4 @@ end of do-file
 
 r(601);
 
+. exit, clear

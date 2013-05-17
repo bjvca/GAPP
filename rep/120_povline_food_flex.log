@@ -3,7 +3,7 @@
        log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/rep/120_povline_food_flex.l
 > og
   log type:  text
- opened on:  17 May 2013, 09:52:49
+ opened on:  17 May 2013, 14:58:14
 
 . clear
 
@@ -211,35 +211,35 @@ variable spdomain does not uniquely identify observations in the master data
 
     Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
-      chkcal |        27    .0000257           0   .0000257   .0000257
+      chkcal |        27   -.0000771           0  -.0000771  -.0000771
 
 -------------------------------------------------------------------------------------------
 -> spdomain = Central urban
 
     Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
-      chkcal |        20    .0000771           0   .0000771   .0000771
+      chkcal |        20   -.0000128           0  -.0000128  -.0000128
 
 -------------------------------------------------------------------------------------------
 -> spdomain = Eastern
 
     Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
-      chkcal |        27   -.0001156           0  -.0001156  -.0001156
+      chkcal |        27   -.0000899           0  -.0000899  -.0000899
 
 -------------------------------------------------------------------------------------------
 -> spdomain = Northern
 
     Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
-      chkcal |        27    .0001156           0   .0001156   .0001156
+      chkcal |        27    .0001413           0   .0001413   .0001413
 
 -------------------------------------------------------------------------------------------
 -> spdomain = Western
 
     Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
-      chkcal |        28    .0002698           0   .0002698   .0002698
+      chkcal |        28    .0001285           0   .0001285   .0001285
 
 
 .         * obtain the value of each good in the bundle;
@@ -281,5 +281,5 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\povline_food_flex.d
        log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/rep/120_povline_food_flex.l
 > og
   log type:  text
- closed on:  17 May 2013, 09:52:49
+ closed on:  17 May 2013, 14:58:14
 -------------------------------------------------------------------------------------------

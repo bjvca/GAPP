@@ -1,0 +1,167 @@
+-------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\ww-ug\10_MZ/rep/020_hhdata.
+> log
+  log type:  text
+ opened on:  17 May 2013, 16:44:10
+
+. clear
+
+. set more off
+
+. #delimit ;
+delimiter now ;
+. **************************************************************************
+> * 020_hhdata.do         (start)
+> *
+> * Organize the hhid identifier in the HHData file the same way, and keep
+> * only the relevant variables.
+> *
+> * This file sets:
+> * - interview month, quarter and year
+> * - regions: make all needed regions. But in the end only the one specified
+> *            in initial.do are kept. These are
+> *            - rural: 0=urban, 1=rural
+> *            - news: speficifying North, East, West, South. But combinations
+> *                    are also possible, eg. North-East, Center,...
+> *            - reg_tpi: regions with own TPI
+> *            - strata: strata regions
+> *            - spdomain: spatial domains (regions with own poverty line)
+> *            - news_ru_ur: combination of news and rural
+> **************************************************************************;
+. use "$path\in\hhdata.dta", clear;
+
+.         sort hhid;
+
+.         save "$path\work\hhdata.dta", replace;
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\ww-ug\10_MZ\work\hhdata.dta saved
+
+.         sum;
+
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+         psu |     10832    543.1364    312.3444          1       1060
+     survmon |     10832    6.455687    3.387273          1         12
+    survquar |     10832    2.502216    1.104291          1          4
+    hhweight |     10832    425.7335    395.1881   39.58433   8495.651
+        hhid |     10832    543185.7    312349.5       1005    1060074
+-------------+--------------------------------------------------------
+      hhsize |     10832    4.724612    2.511602          1         34
+       rural |     10832    .5178176    .4997055          0          1
+        news |     10832    2.050591    .7957437          1          3
+     reg_tpi |     10832    3.583364    1.793944          1          6
+      strata |     10832    5.886263    3.179571          1         11
+-------------+--------------------------------------------------------
+    spdomain |     10832    6.763848    3.754441          1         13
+        bswt |     10832           1           0          1          1
+
+. use "$path\in\indata.dta", clear;
+
+.         *sort hhid;
+.         save "$path\work\indata.dta", replace;
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\ww-ug\10_MZ\work\indata.dta saved
+
+.         sum;
+
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+         sex |     51177    1.523849    .4994358          1          2
+         age |     51177    21.82535    31.91413          0        999
+    motherhh |     27054    1.243217    .6210263          1          9
+        hhid |     51177    551565.6    310839.4       1005    1060074
+         psu |     51177    551.5161    310.8342          1       1060
+-------------+--------------------------------------------------------
+     survmon |     51177    6.394513    3.368562          1         12
+    survquar |     51177    2.484046    1.096337          1          4
+    hhweight |     51177    420.8372    398.2136   39.58433   8495.651
+      hhsize |     51177    6.059656    2.921458          1         34
+       rural |     51177    .4996776    .5000048          0          1
+-------------+--------------------------------------------------------
+        news |     51177    2.072708    .7874173          1          3
+     reg_tpi |     51177    3.645739    1.770949          1          6
+      strata |     51177    5.972273    3.164235          1         11
+    spdomain |     51177    6.861383    3.717464          1         13
+        bswt |     51177           1           0          1          1
+
+. use "$path\in\calperg.dta", clear;
+(calperg.dta: FC, 11 Feb. 2010. Missing calories per gram excluded.)
+
+.         *sort hhid;
+.         save "$path\work\calperg.dta", replace;
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\ww-ug\10_MZ\work\calperg.dta saved
+
+.         sum;
+
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+     product |       422    33998.34    55178.86      11110     211925
+     calperg |       422    1.989534    1.814099          0          9
+    designa_ |         0
+      source |         0
+  product_t1 |       422    33998.34    55178.86      11110     211925
+
+. use "$path\in\cons_cod.dta", clear;
+
+.         *sort hhid;
+.         save "$path\work\cons_cod.dta", replace;
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\ww-ug\10_MZ\work\cons_cod.dta saved
+
+.         sum;
+
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+        hhid |    257521    569044.3    332482.7       1005    1060074
+     product |    257519    42979.03    65919.85      11112    1270051
+    descript |         0
+    food_cat |    257521    .4917075    .4999322          0          1
+    prod_cat |    257521     3.71426    3.463399          1         12
+-------------+--------------------------------------------------------
+       value |     85409    37.93459    85.42144          0      12000
+   quantityd |    257521    .1714902    .6480954          0   49.28571
+  cod_hh_nom |    257521    5.830475    23.51364          0   3947.368
+ cod_hh_nom2 |    225025    4.462249    15.63874          0   3947.368
+ cod_hh_nom3 |    257521    4.398147    15.66201          0   3947.368
+
+. use "$path\in\cons_cod_trans.dta", clear;
+
+.         *sort hhid;
+.         save "$path\work\cons_cod_trans.dta", replace;
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\ww-ug\10_MZ\work\cons_cod_trans.dta
+>  saved
+
+.         sum;
+
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+        hhid |    230711    612970.8    334251.7       1005    1060074
+     product |    228767     18499.8    25912.06      10000    1270051
+        unit |    217182    1.989216    .1653344          0          9
+      valued |     49941    6.822267    15.46102          0   813.9857
+   quantityd |     46821    .6177195    1.320455          0   49.28571
+-------------+--------------------------------------------------------
+ own_valued2 |     44151    7.243988     16.1794          0   813.9857
+      valuez |    229742     15.5856    48.81154          0      12000
+   quantityz |    202752     .759852     2.41718          0        200
+       value |    179801    18.01967    54.32029          0      12000
+        days |    169746     1.81662    5.525989          1        730
+-------------+--------------------------------------------------------
+    quantity |    155931    .8025297    2.658145          0        200
+daily_valu~2 |    155916    16.92026    44.86184          0       4425
+       days2 |    155862    1.815446    5.557555          1        730
+    food_cat |    228767    .8892148    .3138667          0          1
+
+. /*
+> use "$path\in\cons_cod_trans.dta", clear;
+>         *sort hhid;
+>         sum;
+> for var value quantityd cod_hh_nom cod_hh_nom2 cod_hh_nom3: replace X=0 if X==.;
+> collapse food_cat prod_cat (sum) value quantityd cod_hh_nom cod_hh_nom2 cod_hh_nom3, by(h
+> hid product descript);
+>         save "$path\work\cons_cod.dta", replace;
+>         sum;
+> */
+>  
+> **************************************************************************
+> * 020_hhdata.do         (end)
+> **************************************************************************;
+. cap log close;

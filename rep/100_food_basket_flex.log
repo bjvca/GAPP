@@ -3,7 +3,7 @@
        log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/rep/100_food_basket_flex.lo
 > g
   log type:  text
- opened on:  17 May 2013, 09:52:44
+ opened on:  17 May 2013, 14:58:08
 
 . clear
 
@@ -235,26 +235,25 @@ variable hhid does not uniquely identify observations in the master data
 > * work with the expenditures without doing temporal adjustment.
 > **************************************************************************;
 .           gen  food_expenditure= cod_hh_nom3;
-(138430 missing values generated)
 
 .                             *gen  food_expenditure= own_valued + daily_valued + monthly_v
 > alued + educ_valued;
 .           egen tot_food_expen= sum (food_expen), by (hhid) ;
 
 .           count if food_expenditure==.;
-138430
+    0
 
 .           count if tot_food_expen==.;
     0
 
 .                     gen food_share= food_expenditure/tot_food_expen;
-(138523 missing values generated)
+(925 missing values generated)
 
 .           count if food_share==.;
-138523
+  925
 
 .           drop if food_share==.;
-(138523 observations deleted)
+(925 observations deleted)
 
 .           sort hhid product;
 
@@ -325,10 +324,10 @@ variable hhid does not uniquely identify observations in the master data
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          2 |      3,740        9.93        9.93
-          3 |     33,942       90.07      100.00
+          2 |      3,740        2.13        2.13
+          3 |    171,540       97.87      100.00
 ------------+-----------------------------------
-      Total |     37,682      100.00
+      Total |    175,280      100.00
 
 .           sort _m;
 
@@ -347,9 +346,9 @@ variable spdomain does not uniquely identify observations in the master data
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          3 |     33,942      100.00      100.00
+          3 |    171,540      100.00      100.00
 ------------+-----------------------------------
-      Total |     33,942      100.00
+      Total |    171,540      100.00
 
 .           drop _merge;
 
@@ -366,10 +365,10 @@ variable spdomain does not uniquely identify observations in the master data
 .           by spdomain: gen cumshr= sum(f_share_w);
 
 .                     count if cumshr<=.075;
-  147
+  152
 
 .           drop if cumshr<=.075;
-(147 observations deleted)
+(152 observations deleted)
 
 .             lab var f_share_w "average food share for the 13 regions";
 

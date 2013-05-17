@@ -2,7 +2,7 @@
       name:  <unnamed>
        log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/rep/080_conpc.log
   log type:  text
- opened on:  17 May 2013, 09:52:35
+ opened on:  17 May 2013, 14:57:59
 
 . set more off
 
@@ -70,10 +70,10 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000001.tmp saved
     prod_cat |    412045    1.782558    .4125064          1          2
     descript |    412045    1.782558    .4125064          1          2
 -------------+--------------------------------------------------------
-   quantityd |     89596     .779464    3.170331          0   364.2857
- cod_hh_nom3 |     89596     383.356    648.4919          0      18500
+   quantityd |    412045    .1694884    1.512903          0   364.2857
+ cod_hh_nom3 |    412045    83.35781    341.2477          0      18500
   cod_hh_nom |    412045    1602.923    615777.4          0   3.95e+08
- cod_hh_nom2 |    252585    2614.436    786487.2   .0027397   3.95e+08
+ cod_hh_nom2 |    412045    1602.658    615777.4          0   3.95e+08
 
 . collapse (sum) cod_hh_nom, by(hhid);
 
@@ -182,5 +182,5 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\conpc.dta saved
       name:  <unnamed>
        log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/rep/080_conpc.log
   log type:  text
- closed on:  17 May 2013, 09:52:36
+ closed on:  17 May 2013, 14:58:00
 -------------------------------------------------------------------------------------------
