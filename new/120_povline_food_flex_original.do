@@ -1,4 +1,4 @@
-*global path "C:\user\gapp"
+*global path "C:/user/gapp"
 clear all
 set mem 999m
 
@@ -21,13 +21,13 @@ set more off
 
 /*
 This file uses:
-        work\food_basket_flex.dta
-        work\price_unit_flex.dta
-        work\calperg.dta
-        work\calpp.dta
+        work/food_basket_flex.dta
+        work/price_unit_flex.dta
+        work/calperg.dta
+        work/calpp.dta
 
 This file creates:
-        work\povline_flex.dta
+        work/povline_flex.dta
 */
 
 
@@ -35,7 +35,7 @@ This file creates:
 use "$path/work/food_basket_flex.dta";
         sort product spdomain;
         * merge in price information;
-        merge product spdomain using "$path\work\price_unit_flex.dta";
+        merge product spdomain using "$path/work/price_unit_flex.dta";
 
         tab _merge;
         list product spdomain descript if _merge==1;
@@ -45,7 +45,7 @@ use "$path/work/food_basket_flex.dta";
         sort product;
 
         * merge in information on calories per gram;
-        merge product using "$path\work\calperg.dta";
+        merge product using "$path/work/calperg.dta";
         tab _merge;
 
         * This tells where we are lacking calorie info or are lacking quantity info due to 
@@ -80,7 +80,7 @@ use "$path/work/food_basket_flex.dta";
 
         * merge in calorie requirements;
         sort spdomain;
-        merge spdomain using "$path\work\calpp.dta";
+        merge spdomain using "$path/work/calpp.dta";
         tab _merge;
         drop _merge;
 
@@ -112,7 +112,7 @@ lab var povline_f_flex "Food poverty line. Flexible basket";
         sort spdomain;
         keep spdomain povline_f_flex;
 
-save "$path\work\povline_food_flex.dta", replace;
+save "$path/work/povline_food_flex.dta", replace;
 
 
 

@@ -1,9 +1,9 @@
-*global path "C:\user\gapp"
+*global path "C:/user/gapp"
 clear all
 set mem 999m
 
 cap log close
-log using "$path\rep\110_price_unit_flex.log", replace
+log using "$path/rep/110_price_unit_flex.log", replace
 clear
 set more off
 #delimit ;
@@ -15,25 +15,25 @@ set more off
 *
 * Purpose: This do file creates a price_unit_flex database with the unit prices of the
 * goods of the flexible food basket in order to determine the poverty lines per spatial
-* domain. It uses the files work\daily.dta and work\own.dta file and draw unit prices
+* domain. It uses the files work/daily.dta and work/own.dta file and draw unit prices
 * by: sum of values and quantity
 ****************************************************************************************;
-*CA modified to bring in work\hhdata.dta for bootstrap
+*CA modified to bring in work/hhdata.dta for bootstrap
 *CA check for price calcs conditional on number of observations;
 
 /*
 This file uses:
-        work\daily.dta
-        work\own.dta
-        work\hhdata.dta
-        work\consump_nom.dta
-        work\codes_food_basket_flex.dta
-        work\temp_index_reg_tpi.dta
-          new\conversions.do
+        work/daily.dta
+        work/own.dta
+        work/hhdata.dta
+        work/consump_nom.dta
+        work/codes_food_basket_flex.dta
+        work/temp_index_reg_tpi.dta
+          new/conversions.do
 
 This file creates:
-        work\price_unit_flex.dta
-        work\bottom_basket.dta
+        work/price_unit_flex.dta
+        work/bottom_basket.dta
 */
 
 
@@ -70,14 +70,14 @@ tempfile dd_acsort;
 save `dd_acsort', replace;
 
 /*
-use "$path\work\daily.dta";
+use "$path/work/daily.dta";
 tempfile dd_acsort;
         drop days;
         sort product;
         tempfile dd_acsort;
 save `dd_acsort', replace;
 
-use "$path\work\own.dta";
+use "$path/work/own.dta";
         keep hhid product valued quantityd unit;
         rename valued value;
         rename quantityd quantity;
@@ -87,9 +87,9 @@ use "$path\work\own.dta";
 
         append using `dd_acsort';
 
-*CA modified to merge in work\hhdata.dta for bootstrap;
+*CA modified to merge in work/hhdata.dta for bootstrap;
 	sort hhid;
-      merge hhid using "$path\work\hhdata.dta";
+      merge hhid using "$path/work/hhdata.dta";
       tab _m;
 
 * Drop observations if non existent in HH data set;
@@ -109,7 +109,7 @@ save `dd_acsort', replace;
 * Merge the flexible food basket codes with the daily and own data sets
 * Drop all codes not a part of the flexible food basket
 **************************************************************************************;
-        merge product using "$path\work\codes_food_basket_flex.dta";
+        merge product using "$path/work/codes_food_basket_flex.dta";
 
         tab _merge;
         drop if _merge~=3;
@@ -125,7 +125,7 @@ save `dd_acsort', replace;
 **************************************************************************************;
 * Convert non-KG quantities (units and liters) to kilograms;
 **************************************************************************************;
-*do "$path\new\110a_conversions.do"
+*do "$path/new/110a_conversions.do"
 
 ********************************************************************
 * There remain a few difficult to interpret observations such as liters
@@ -166,7 +166,7 @@ tab spd;
 * Merge in temporal price index to convert nominal value to real
 ********************************************************************;
         sort reg_tpi survquar;
-        merge reg_tpi survquar using "$path\work\temp_index_reg_tpi.dta";
+        merge reg_tpi survquar using "$path/work/temp_index_reg_tpi.dta";
         tab _merge;
         drop if _merge ~= 3;
         drop _merge;
@@ -183,9 +183,9 @@ tab spd;
                         use "$path/work/conpc.dta", clear;
 *                       use "$path/work/consump_nom.dta", clear;
 
-*CA modified to merge in work\hhdata.dta for bootstrap;
+*CA modified to merge in work/hhdata.dta for bootstrap;
 	sort hhid;
-      merge hhid using "$path\work\hhdata.dta";
+      merge hhid using "$path/work/hhdata.dta";
       tab _m;
       drop _m;
 
@@ -238,11 +238,11 @@ tab spd;
                                         lab var bottom_basket "=1 if in bottom (60%) of PCE";
 
                                         sort hhid;                                        
-                        save "$path\work\bottom_basket.dta", replace;
+                        save "$path/work/bottom_basket.dta", replace;
         restore;
 
         sort hhid;
-        merge hhid using "$path\work\bottom_basket.dta";
+        merge hhid using "$path/work/bottom_basket.dta";
         tab _merge;
         drop _merge;
         
@@ -302,7 +302,7 @@ keep if hhppkg-lower5>=0 & hhppkg-upper5<=0;
         drop _merge;
 
         sort product spdomain;
-save "$path\work\price_unit_flex.dta", replace;
+save "$path/work/price_unit_flex.dta", replace;
 
 
 ****************************************************************************************

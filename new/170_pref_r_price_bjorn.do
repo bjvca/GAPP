@@ -1,4 +1,4 @@
-*global path "C:\user\gapp"
+*global path "C:/user/gapp"
 clear all
 set mem 999m
 
@@ -26,16 +26,16 @@ set more off
 
 /*
 This file uses:
-        work\quan_flex_it$it_n.dta
-        work\povline_food_flex_it$it_n.dta
-        work\price_unit_flex_it$it_n.dta
+        work/quan_flex_it$it_n.dta
+        work/povline_food_flex_it$it_n.dta
+        work/price_unit_flex_it$it_n.dta
                 
 This file creates:
-        work\pref_r_price.dta
-        work\revpref_price_`i'.dta
-        work\product_flex.inc
-        work\price_unit_flex.inc
-        work\quan_flex.inc
+        work/pref_r_price.dta
+        work/revpref_price_`i'.dta
+        work/product_flex.inc
+        work/price_unit_flex.inc
+        work/quan_flex.inc
 */
 
 
@@ -44,19 +44,19 @@ This file creates:
 * Export price, codes and quantity data to text
 ***************************************************************************;
 
-use "$path\work\price_unit_flex_it$it_n.dta";
+use "$path/work/price_unit_flex_it$it_n.dta";
 gen reg=spdomain ;
 gen crap=1;
  lab def crap
          1  ".";
  lab val crap crap;
 
-outsheet product crap reg bswt price_uw$it_n using "$path\work\price_unit_flex.inc",  noquote noname replace ;
+outsheet product crap reg bswt price_uw$it_n using "$path/work/price_unit_flex.inc",  noquote noname replace ;
 
 collapse (min) spdomain, by(product);
-outsheet product  using "$path\work\product_flex.inc", noname replace;
+outsheet product  using "$path/work/product_flex.inc", noname replace;
 
-use "$path\work\quan_flex_it$it_n.dta", clear;
+use "$path/work/quan_flex_it$it_n.dta", clear;
 gen reg=spdomain;
 gen crap=1;
  lab def crap
@@ -65,7 +65,7 @@ gen crap=1;
 
 format calperg quan$it_n calpp %14.9e;
 
-outsheet  product crap reg calperg quan$it_n  calpp povline_f_flex90_$it_n using "$path\work\quan_flex.inc", noname noquote replace;
+outsheet  product crap reg calperg quan$it_n  calpp povline_f_flex90_$it_n using "$path/work/quan_flex.inc", noname noquote replace;
 
 clear;
 
@@ -80,17 +80,17 @@ tempfile getmiss;
 tempfile codmiss;
 
 gen crap=0;
-save "$path\work\pref_r_price.dta", replace;
+save "$path/work/pref_r_price.dta", replace;
 
 forvalues i=1/$n_spdom {		;
 
         clear;
         gen crap=0;
-        save "$path\work\revpref_price_`i'.dta", replace;
+        save "$path/work/revpref_price_`i'.dta", replace;
 
         clear;
 
-                use "$path\work\quan_flex_it$it_n.dta", clear;
+                use "$path/work/quan_flex_it$it_n.dta", clear;
                 keep product spdomain quan$it_n price_uw$it_n val_ir$it_n povline_f_flex90_$it_n calpp;
         gen share=val_ir$it_n/povline_f_flex90_$it_n;
         rename price_uw$it_n pquanreg;
@@ -113,7 +113,7 @@ forvalues i=1/$n_spdom {		;
 
         forvalues j= 1/$n_spdom {		;
 
-                use "$path\work\price_unit_flex_it$it_n.dta";
+                use "$path/work/price_unit_flex_it$it_n.dta";
         
                         keep product spdomain price_uw$it_n descript count bswt;
                         sort product;
@@ -152,7 +152,7 @@ forvalues i=1/$n_spdom {		;
                             save `codmiss', replace;
 *browse;
                 
-                  use "$path\work\price_unit_flex_it$it_n.dta", clear;
+                  use "$path/work/price_unit_flex_it$it_n.dta", clear;
                         sort product;
 *browse;
                         merge product using `codmiss';
@@ -181,9 +181,9 @@ forvalues i=1/$n_spdom {		;
                         collapse (sum) val_q pricemiss (mean) spdomainq ratquan, by(spdomain);
                   gen linf_q=val_q/.9;
                   drop val_q;
-                        append using "$path\work\revpref_price_`i'.dta";
+                        append using "$path/work/revpref_price_`i'.dta";
                         sort spdomain;
-                save "$path\work\revpref_price_`i'.dta", replace;   
+                save "$path/work/revpref_price_`i'.dta", replace;   
 
 *browse;
 
@@ -191,16 +191,16 @@ forvalues i=1/$n_spdom {		;
         };
 
         *aggregate into a big data set;
-        append using "$path\work\pref_r_price.dta";
+        append using "$path/work/pref_r_price.dta";
       sort spdomain spdomainq;
-      save "$path\work\pref_r_price.dta", replace;
+      save "$path/work/pref_r_price.dta", replace;
  
 *close i loop;
 };
 
 *bring in actual flexible bundle numbers;
-use "$path\work\povline_food_flex_it$it_n.dta", clear;
-        merge spdomain using "$path\work\pref_r_price.dta";
+use "$path/work/povline_food_flex_it$it_n.dta", clear;
+        merge spdomain using "$path/work/pref_r_price.dta";
         tab _m; 
         drop crap;
         drop _m;
@@ -230,7 +230,7 @@ use "$path\work\povline_food_flex_it$it_n.dta", clear;
         sort spdomainq ;
       by spdomainq: tab pref_r;
 
-save "$path\work\pref_r_price.dta", replace;
+save "$path/work/pref_r_price.dta", replace;
 
 *drop comparisons with Maputo ;
 drop if spdomain>=11;

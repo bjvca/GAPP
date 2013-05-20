@@ -1,4 +1,16 @@
+
+
+if c(os)=="Unix" {
+global path "/home/bjvca/data/data/GAP/Haruna"
+}
+else{
 global path "C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA"
+}
+
+
+
+
+
 
 version 10.1
 
@@ -117,13 +129,13 @@ do "$path/new/010_initial.do"
 				do "$path/new/090_temp_index.do"		/* Temporal price index */
 				do "$path/new/100_food_basket_flex.do"	/* Flexible food basket */
 				do "$path/new/110_price_unit_flex.do"	/* Flexible basket: Prices */
-				do "$path/new/120_povline_food_flex.do"	/* Flexible basket: Poverty line */
+				do "$path/new/120_povline_food_flex_original.do"	/* Flexible basket: Poverty line */
 				do "$path/new/130_povmeas_flex.do"		/* Flexible basket: Poverty rates */
-				do "$path/new/140_iterate.do" $it_n $bottom	/* Flexible basket: Iterations */
+				do "$path/new/140_iterate_bjorn.do" $it_n $bottom	/* Flexible basket: Iterations */
 				
 $no_temp_rev	do "$path/new/150_price_unit_fix.do"	/* Fixed basket: Prices */
 $no_temp_rev	do "$path/new/160_food_basket_fix.do"	/* Fixed food basket */
-				do "$path/new/170_pref_r_price.do"		/* Revealed preference tests */
+				do "$path/new/170_pref_r_price_bjorn.do"		/* Revealed preference tests */
 $no_temp_rev	do "$path/new/180_povline_food_fix.do"	/* Inflating year t1's poverty lines to year t2 */
 
 				shell "$path/new/$revpref"				/* Adjusting flexible basket: inside pref. constraints */

@@ -1,4 +1,4 @@
-*global path "C:\user\gapp"
+*global path "C:/user/gapp"
 clear all
 set mem 999m
 
@@ -18,20 +18,20 @@ set more off
 **************************************************************************;
 
 
-*CA modified to add work\hhdata.dta for bootstrap;
+*CA modified to add work/hhdata.dta for bootstrap;
 
 /*
 This file uses:
-	in\foodshr96.dta
-	work\povline_f_flex.dta
-	work\consump_nom.dta
-	work\hhdata.dta
+	in/foodshr96.dta
+	work/povline_f_flex.dta
+	work/consump_nom.dta
+	work/hhdata.dta
 	work/temp_index_reg_tpi.dta
 
 This file creates:
-	work\foodshr96.dta
-	work\povmeas.dta
-	work\povlines.dta
+	work/foodshr96.dta
+	work/povmeas.dta
+	work/povlines.dta
 	work/cons_real.dta
 */
 
@@ -55,9 +55,9 @@ save `spdomainreg_tpi', replace;
 use "$path/work/conpc.dta", clear;
 *use "$path/work/consump_nom.dta", clear;
 
-*CA modified to merge in work\hhdata.dta for bootstrap;
+*CA modified to merge in work/hhdata.dta for bootstrap;
     sort hhid;
-    merge hhid using "$path\work\hhdata.dta";
+    merge hhid using "$path/work/hhdata.dta";
     tab _m;
     drop _m;
 
@@ -138,7 +138,7 @@ replace triwt = 11 - round(50*abs(cons_pc_tpi/povline_f_flex-1)+0.5)
 	lab var povline_flex "Poverty line. Flexible bundle";
 
 	sort spdomain;
-save "$path\work\povlines.dta", replace;
+save "$path/work/povlines.dta", replace;
 
 **************************************************************************;
 * Create spatial price index, based on the total poverty line, with
@@ -149,7 +149,7 @@ save "$path\work\povlines.dta", replace;
 **************************************************************************;
 use `contpi';
 	sort spdomain;
-	merge spdomain using "$path\work\povlines.dta";
+	merge spdomain using "$path/work/povlines.dta";
 	tab _merge;
 	drop _merge;
 
@@ -201,7 +201,7 @@ use `contpi';
 	lab var spg_flex "Squared poverty gap. Flex bundle";
 
 	sort hhid;
-	merge hhid using "$path\work\hhdata.dta";
+	merge hhid using "$path/work/hhdata.dta";
 	tab _merge;
 	drop if _merge~=3;
 	drop _merge;
@@ -225,7 +225,7 @@ save "$path/work/cons_real.dta" , replace;
 
 	collapse  (mean) h_flex pg_flex spg_flex [aw=hhweight*hhsize], by(strata);
 
-save "$path\work\povmeas.dta", replace;
+save "$path/work/povmeas.dta", replace;
 
 
 **************************************************************************

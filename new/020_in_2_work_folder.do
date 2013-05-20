@@ -1,5 +1,5 @@
 clear all
-global path "C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA"
+*global path "C:/Users/Templeton/Desktop/GAPP/GAPP-UGANDA-HARUNA"
 set mem 999m
 
 cap log close
@@ -27,42 +27,42 @@ set more off
 *            - news_ru_ur: combination of news and rural
 **************************************************************************;
 
-use "$path\in\hhdata.dta", clear;
+use "$path/in/hhdata.dta", clear;
 
 
 *recode spdomain 10=1 11=2 20=3 30=4 40=5 these have been set to five for Uganda to ensure hwe have at least 1000 households per domain;
 tab spdomain, missing;
 	sort hhid;
-	save "$path\work\hhdata.dta", replace;
+	save "$path/work/hhdata.dta", replace;
 	sum;
 
-use "$path\in\indata.dta", clear;
+use "$path/in/indata.dta", clear;
 	*sort hhid;
-	save "$path\work\indata.dta", replace;
+	save "$path/work/indata.dta", replace;
 	sum;
 
-use "$path\in\calperg.dta", clear;
+use "$path/in/calperg.dta", clear;
 	*sort hhid;
-	save "$path\work\calperg.dta", replace;
+	save "$path/work/calperg.dta", replace;
 	sum;
 
-use "$path\in\cons_cod.dta", clear;
+use "$path/in/cons_cod.dta", clear;
 	*sort hhid;
-	save "$path\work\cons_cod.dta", replace;
+	save "$path/work/cons_cod.dta", replace;
 	sum;
 
-use "$path\in\cons_cod_trans.dta", clear;
+use "$path/in/cons_cod_trans.dta", clear;
 	*sort hhid;
-	save "$path\work\cons_cod_trans.dta", replace;
+	save "$path/work/cons_cod_trans.dta", replace;
 	sum;
 
 /*
-use "$path\in\cons_cod_trans.dta", clear;
+use "$path/in/cons_cod_trans.dta", clear;
 	*sort hhid;
 	sum;
 for var value quantityd cod_hh_nom cod_hh_nom2 cod_hh_nom3: replace X=0 if X==.;
 collapse food_cat prod_cat (sum) value quantityd cod_hh_nom cod_hh_nom2 cod_hh_nom3, by(hhid product descript);
-	save "$path\work\cons_cod.dta", replace;
+	save "$path/work/cons_cod.dta", replace;
 	sum;
 */
  

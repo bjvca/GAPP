@@ -1,9 +1,9 @@
-*global path "C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA"
+*global path "C:/Users/Templeton/Desktop/GAPP/GAPP-UGANDA-HARUNA"
 clear all
 set mem 999m
 
 cap log close
-log using "$path\rep\070_calpp.log", replace
+log using "$path/rep/070_calpp.log", replace
 clear
 set more off
 #delimit ;
@@ -19,11 +19,11 @@ set more off
 
 /*
 This file uses:
-	work\indata.dta
-	work\hhdata.dta
+	work/indata.dta
+	work/hhdata.dta
 
 This file creates:
-	work\calpp.dta
+	work/calpp.dta
 */
 
 *-------------------------------------------------------------------------*
@@ -41,11 +41,11 @@ list;
 *-------------------------------------------------------------------------*
 * Now do the calorie needs for individuals
 *-------------------------------------------------------------------------*;
-use "$path\work\indata.dta";
+use "$path/work/indata.dta";
 
 * CA bootstrap modification;
 sort hhid;
-merge hhid using "$path\work\hhdata.dta";
+merge hhid using "$path/work/hhdata.dta";
 tab _m; drop _m;
 
 sum;
@@ -136,7 +136,7 @@ collapse (mean) calpp[aw=hhsize*hhweight], by (spdomain);
 
 sort spdomain;
 
-save "$path\work\calpp.dta",replace;
+save "$path/work/calpp.dta",replace;
 
 
 
