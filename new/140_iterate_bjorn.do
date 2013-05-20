@@ -170,12 +170,14 @@ while `pass' <= `maxit' {;
 			
             sort one;
             save `cutoff', replace;
+            save cutoff, replace;
  
 * Find relatively poor initially;
             use "$path/work/cons_real.dta", clear;
 			
 			gen cr_it`lastpass'=cr2;
             cap drop one;
+            cap drop cutoff;
             gen one=1;
 			
             sort one;
@@ -191,7 +193,7 @@ while `pass' <= `maxit' {;
 			
             keep hhid cr_it`lastpass' relpoor`pass' popwt;
             sort hhid;
-        save $path/work/relpoor_it`pass'.dta, replace;
+        save "$path/work/relpoor_it`pass'.dta", replace;
         };
 
 * Comment out if IAF 2002/03. (This code below excluded in order to replicate published figures 2002/03). ( END ) ;
