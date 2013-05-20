@@ -30,7 +30,7 @@ This file creates:
 * Include fertility rates from csv-file
 *-------------------------------------------------------------------------*;
 clear;
-insheet sex rural age fert_rate using "$path/in/fert_rate_mozambique.csv";
+insheet sex rural age fert_rate using "$path/in/fert_rate_Uganda.csv";
 ***************************************** check for Ugandan fertility rates *************************************
 *************************************************************************************************************;
 sort sex rural age;

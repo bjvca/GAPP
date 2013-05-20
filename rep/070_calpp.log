@@ -1,8 +1,8 @@
--------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------
       name:  <unnamed>
        log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\rep\070_calpp.log
   log type:  text
- opened on:  17 May 2013, 14:57:58
+ opened on:  20 May 2013, 14:39:05
 
 . clear
 
@@ -30,13 +30,13 @@ delimiter now ;
 > *-------------------------------------------------------------------------*;
 . clear;
 
-. insheet sex rural age fert_rate using "$path/in/fert_rate_mozambique.csv";
+. insheet sex rural age fert_rate using "$path/in/fert_rate_Uganda.csv";
 (4 vars, 96 obs)
 
-. ***************************************** check for Ugandan fertility rates *************
-> ************************
-> *****************************************************************************************
-> ********************;
+. ***************************************** check for Ugandan fertility rates *******
+> ******************************
+> ***********************************************************************************
+> **************************;
 . sort sex rural age;
 
 . tempfile fert_rate;
@@ -49,121 +49,121 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000001.tmp saved
      +------------------------------+
      | sex   rural   age   fert_r~e |
      |------------------------------|
-  1. |   2       0    12       .003 |
-  2. |   2       0    13       .003 |
-  3. |   2       0    14       .093 |
-  4. |   2       0    15       .093 |
-  5. |   2       0    16       .093 |
+  1. |   2       0    12       .008 |
+  2. |   2       0    13       .008 |
+  3. |   2       0    14       .008 |
+  4. |   2       0    15       .134 |
+  5. |   2       0    16       .134 |
      |------------------------------|
-  6. |   2       0    17       .093 |
-  7. |   2       0    18       .207 |
-  8. |   2       0    19       .207 |
-  9. |   2       0    20       .207 |
- 10. |   2       0    21       .207 |
+  6. |   2       0    17       .134 |
+  7. |   2       0    18       .134 |
+  8. |   2       0    19       .134 |
+  9. |   2       0    20       .313 |
+ 10. |   2       0    21       .313 |
      |------------------------------|
- 11. |   2       0    22       .207 |
- 12. |   2       0    23       .207 |
- 13. |   2       0    24       .207 |
- 14. |   2       0    25       .207 |
- 15. |   2       0    26       .207 |
+ 11. |   2       0    22       .313 |
+ 12. |   2       0    23       .313 |
+ 13. |   2       0    24       .313 |
+ 14. |   2       0    25       .291 |
+ 15. |   2       0    26       .291 |
      |------------------------------|
- 16. |   2       0    27       .207 |
- 17. |   2       0    28       .207 |
- 18. |   2       0    29       .207 |
- 19. |   2       0    30       .144 |
- 20. |   2       0    31       .144 |
+ 16. |   2       0    27       .291 |
+ 17. |   2       0    28       .291 |
+ 18. |   2       0    29       .291 |
+ 19. |   2       0    30       .232 |
+ 20. |   2       0    31       .232 |
      |------------------------------|
- 21. |   2       0    32       .144 |
- 22. |   2       0    33       .144 |
- 23. |   2       0    34       .144 |
- 24. |   2       0    35       .144 |
- 25. |   2       0    36       .144 |
+ 21. |   2       0    32       .232 |
+ 22. |   2       0    33       .232 |
+ 23. |   2       0    34       .232 |
+ 24. |   2       0    35       .172 |
+ 25. |   2       0    36       .172 |
      |------------------------------|
- 26. |   2       0    37       .144 |
- 27. |   2       0    38       .144 |
- 28. |   2       0    39       .144 |
- 29. |   2       0    40       .144 |
- 30. |   2       0    41       .144 |
+ 26. |   2       0    37       .172 |
+ 27. |   2       0    38       .172 |
+ 28. |   2       0    39       .172 |
+ 29. |   2       0    40       .074 |
+ 30. |   2       0    41       .074 |
      |------------------------------|
- 31. |   2       0    42       .144 |
- 32. |   2       0    43       .144 |
- 33. |   2       0    44       .144 |
- 34. |   2       0    45       .144 |
- 35. |   2       0    46       .144 |
+ 31. |   2       0    42       .074 |
+ 32. |   2       0    43       .074 |
+ 33. |   2       0    44       .074 |
+ 34. |   2       0    45       .023 |
+ 35. |   2       0    46       .023 |
      |------------------------------|
- 36. |   2       0    47       .144 |
- 37. |   2       0    48       .144 |
- 38. |   2       0    49       .144 |
- 39. |   2       0    50       .144 |
- 40. |   2       0    51       .144 |
+ 36. |   2       0    47       .023 |
+ 37. |   2       0    48       .023 |
+ 38. |   2       0    49       .023 |
+ 39. |   2       0    50       .006 |
+ 40. |   2       0    51       .006 |
      |------------------------------|
- 41. |   2       0    52       .144 |
- 42. |   2       0    53       .144 |
- 43. |   2       0    54       .144 |
- 44. |   2       0    55       .144 |
- 45. |   2       0    56       .144 |
+ 41. |   2       0    52       .006 |
+ 42. |   2       0    53       .006 |
+ 43. |   2       0    54       .006 |
+ 44. |   2       0    55       .006 |
+ 45. |   2       0    56       .006 |
      |------------------------------|
- 46. |   2       0    57       .144 |
- 47. |   2       0    58       .144 |
- 48. |   2       0    59       .144 |
- 49. |   2       1    12       .009 |
- 50. |   2       1    13       .009 |
+ 46. |   2       0    57       .006 |
+ 47. |   2       0    58       .006 |
+ 48. |   2       0    59       .006 |
+ 49. |   2       1    12       .008 |
+ 50. |   2       1    13       .008 |
      |------------------------------|
- 51. |   2       1    14        .11 |
- 52. |   2       1    15        .11 |
- 53. |   2       1    16        .11 |
- 54. |   2       1    17        .11 |
- 55. |   2       1    18        .28 |
+ 51. |   2       1    14       .008 |
+ 52. |   2       1    15       .134 |
+ 53. |   2       1    16       .134 |
+ 54. |   2       1    17       .134 |
+ 55. |   2       1    18       .134 |
      |------------------------------|
- 56. |   2       1    19        .28 |
- 57. |   2       1    20        .28 |
- 58. |   2       1    21        .28 |
- 59. |   2       1    22        .28 |
- 60. |   2       1    23        .28 |
+ 56. |   2       1    19       .134 |
+ 57. |   2       1    20       .313 |
+ 58. |   2       1    21       .313 |
+ 59. |   2       1    22       .313 |
+ 60. |   2       1    23       .313 |
      |------------------------------|
- 61. |   2       1    24        .28 |
- 62. |   2       1    25        .28 |
- 63. |   2       1    26        .28 |
- 64. |   2       1    27        .28 |
- 65. |   2       1    28        .28 |
+ 61. |   2       1    24       .313 |
+ 62. |   2       1    25       .291 |
+ 63. |   2       1    26       .291 |
+ 64. |   2       1    27       .291 |
+ 65. |   2       1    28       .291 |
      |------------------------------|
- 66. |   2       1    29        .28 |
- 67. |   2       1    30       .212 |
- 68. |   2       1    31       .212 |
- 69. |   2       1    32       .212 |
- 70. |   2       1    33       .212 |
+ 66. |   2       1    29       .291 |
+ 67. |   2       1    30       .232 |
+ 68. |   2       1    31       .232 |
+ 69. |   2       1    32       .232 |
+ 70. |   2       1    33       .232 |
      |------------------------------|
- 71. |   2       1    34       .212 |
- 72. |   2       1    35       .212 |
- 73. |   2       1    36       .212 |
- 74. |   2       1    37       .212 |
- 75. |   2       1    38       .212 |
+ 71. |   2       1    34       .232 |
+ 72. |   2       1    35       .172 |
+ 73. |   2       1    36       .172 |
+ 74. |   2       1    37       .172 |
+ 75. |   2       1    38       .172 |
      |------------------------------|
- 76. |   2       1    39       .212 |
- 77. |   2       1    40       .212 |
- 78. |   2       1    41       .212 |
- 79. |   2       1    42       .212 |
- 80. |   2       1    43       .212 |
+ 76. |   2       1    39       .172 |
+ 77. |   2       1    40       .074 |
+ 78. |   2       1    41       .074 |
+ 79. |   2       1    42       .074 |
+ 80. |   2       1    43       .074 |
      |------------------------------|
- 81. |   2       1    44       .212 |
- 82. |   2       1    45       .212 |
- 83. |   2       1    46       .212 |
- 84. |   2       1    47       .212 |
- 85. |   2       1    48       .212 |
+ 81. |   2       1    44       .074 |
+ 82. |   2       1    45       .023 |
+ 83. |   2       1    46       .023 |
+ 84. |   2       1    47       .023 |
+ 85. |   2       1    48       .023 |
      |------------------------------|
- 86. |   2       1    49       .212 |
- 87. |   2       1    50       .212 |
- 88. |   2       1    51       .212 |
- 89. |   2       1    52       .212 |
- 90. |   2       1    53       .212 |
+ 86. |   2       1    49       .023 |
+ 87. |   2       1    50       .006 |
+ 88. |   2       1    51       .006 |
+ 89. |   2       1    52       .006 |
+ 90. |   2       1    53       .006 |
      |------------------------------|
- 91. |   2       1    54       .212 |
- 92. |   2       1    55       .212 |
- 93. |   2       1    56       .212 |
- 94. |   2       1    57       .212 |
- 95. |   2       1    58       .212 |
+ 91. |   2       1    54       .006 |
+ 92. |   2       1    55       .006 |
+ 93. |   2       1    56       .006 |
+ 94. |   2       1    57       .006 |
+ 95. |   2       1    58       .006 |
      |------------------------------|
- 96. |   2       1    59       .212 |
+ 96. |   2       1    59       .006 |
      +------------------------------+
 
 . *-------------------------------------------------------------------------*
@@ -266,7 +266,7 @@ variables sex rural age do not uniquely identify observations in the master data
 -------------+--------------------------------------------------------
     spdomain |     35945    3.321575    1.334996          1          5
      reg_tpi |     35945    2.480234    1.085821          1          4
-   fert_rate |      9790    .1876158    .0860403       .003        .28
+   fert_rate |      9790    .1596475    .1158504       .006       .313
       _merge |     35945    1.544721    .8903613          1          3
 
 . * Do calorie calculations ;
@@ -275,8 +275,8 @@ variables sex rural age do not uniquely identify observations in the master data
 .     gen cal = .;
 (35945 missing values generated)
 
-. * Same assumptions about sex/age specific calories need in IAF 1997, IAF 2003 and IOF 200
-> 9;
+. * Same assumptions about sex/age specific calories need in IAF 1997, IAF 2003 and I
+> OF 2009;
 . * Children (no difference between boys and girls)   ;
 .      replace cal =  820 if age < 1;
 (1196 real changes made)
@@ -284,8 +284,8 @@ variables sex rural age do not uniquely identify observations in the master data
 . * Add 500 cal per day for mothers in first six months of breast feeding
 > * We assume that 60% of children under 1 are under six months old
 > * And that all of them breast feed
-> * We add these mother requirements of 300 on average to each child under 1 whose mother i
-> s alive;
+> * We add these mother requirements of 300 on average to each child under 1 whose mo
+> ther is alive;
 .     replace cal = 1120 if age <  1 & motherhh==1;
 (1168 real changes made)
 
@@ -336,38 +336,47 @@ variables sex rural age do not uniquely identify observations in the master data
 .     replace cal = 1950 if age >= 10 & age <12 & sex==2;
 (1025 real changes made)
 
-. * Women with a correction for pregnancy. We add 285 calories per for the final trimester.
+. * Women with a correction for pregnancy. We add 285 calories per for the final trim
+> ester.
 > * To do this we find the probability that rural and urban women are pregnant from
-> * live births data in the 1997 census over the past 12 months (no correction for still bi
-> rths).
-> * 3/4*probability of birth gives probability of preganancy. Probability of final trimeste
-> r is one
+> * live births data in the 1997 census over the past 12 months (no correction for st
+> ill births).
+> * 3/4*probability of birth gives probability of preganancy. Probability of final tr
+> imester is one
 > * third of that of that or 1/4 of the probability of birth
 > 
 > * Women urban;
-.     replace cal = 2100 + (fert_rate*285)/4 if age >= 12 & age <14 & sex==2 & rural==0;
+.     replace cal = 2100 + (fert_rate*285)/4 if age >= 12 & age <14 & sex==2 & rural=
+> =0;
 (135 real changes made)
 
-.     replace cal = 2150 + (fert_rate*285)/4 if age >= 14 & age <18 & sex==2 & rural==0;
+.     replace cal = 2150 + (fert_rate*285)/4 if age >= 14 & age <18 & sex==2 & rural=
+> =0;
 (267 real changes made)
 
-.     replace cal = 2100 + (fert_rate*285)/4 if age >= 18 & age <30 & sex==2 & rural==0;
+.     replace cal = 2100 + (fert_rate*285)/4 if age >= 18 & age <30 & sex==2 & rural=
+> =0;
 (874 real changes made)
 
-.     replace cal = 2150 + (fert_rate*285)/4 if age >= 30 & age <60 & sex==2 & rural==0;
+.     replace cal = 2150 + (fert_rate*285)/4 if age >= 30 & age <60 & sex==2 & rural=
+> =0;
 (491 real changes made)
 
 . * Women rural;
-.     replace cal = 2100 + (fert_rate*285)/4 if age >= 12 & age <14 & sex==2 & rural==1;
+.     replace cal = 2100 + (fert_rate*285)/4 if age >= 12 & age <14 & sex==2 & rural=
+> =1;
 (941 real changes made)
 
-.     replace cal = 2150 + (fert_rate*285)/4 if age >= 14 & age <18 & sex==2 & rural==1;
+.     replace cal = 2150 + (fert_rate*285)/4 if age >= 14 & age <18 & sex==2 & rural=
+> =1;
 (1392 real changes made)
 
-.     replace cal = 2100 + (fert_rate*285)/4 if age >= 18 & age <30 & sex==2 & rural==1;
+.     replace cal = 2100 + (fert_rate*285)/4 if age >= 18 & age <30 & sex==2 & rural=
+> =1;
 (2824 real changes made)
 
-.     replace cal = 2150 + (fert_rate*285)/4 if age >= 30 & age <60 & sex==2 & rural==1;
+.     replace cal = 2150 + (fert_rate*285)/4 if age >= 30 & age <60 & sex==2 & rural=
+> =1;
 (2866 real changes made)
 
 . * Women 60+ are not pregnant ;
@@ -382,7 +391,8 @@ variables sex rural age do not uniquely identify observations in the master data
 .     *replace cal = 1500 if cal ==. & age==.;
 .     * 2) this one is 21 years old;
 .     *replace cal = 2500 if cal ==. & b2==.;
-.     collapse (sum) cal num (max) psu hhsize hhweight strata rural spdomain, by (hhid);
+.     collapse (sum) cal num (max) psu hhsize hhweight strata rural spdomain, by (hhi
+> d);
 
 .     gen chk=hhsize - num;
 
@@ -403,7 +413,7 @@ variables sex rural age do not uniquely identify observations in the master data
     Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
         hhid |      6775    2.51e+09    1.13e+09   1.01e+09   4.19e+09
-         cal |      6775    11158.93    6185.119       1950   50725.15
+         cal |      6775    11156.05    6182.897       1950   50725.72
          num |      6775    5.305535    2.940196          1         24
          psu |      6775     365.894     201.698          1        712
       hhsize |      6775        4.96     2.75857          1         24
@@ -412,7 +422,7 @@ variables sex rural age do not uniquely identify observations in the master data
       strata |      6775    5.551734    2.873672          1         10
        rural |      6775    .8199262    .3842773          0          1
     spdomain |      6775      3.2431    1.373578          1          5
-       calpp |      6775    2347.762    704.6076   1463.317   26470.68
+       calpp |      6775    2347.186    704.3686   1463.578   26456.36
 
 . * MAH ;
 .  sum;
@@ -420,7 +430,7 @@ variables sex rural age do not uniquely identify observations in the master data
     Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
         hhid |      6775    2.51e+09    1.13e+09   1.01e+09   4.19e+09
-         cal |      6775    11158.93    6185.119       1950   50725.15
+         cal |      6775    11156.05    6182.897       1950   50725.72
          num |      6775    5.305535    2.940196          1         24
          psu |      6775     365.894     201.698          1        712
       hhsize |      6775        4.96     2.75857          1         24
@@ -429,13 +439,13 @@ variables sex rural age do not uniquely identify observations in the master data
       strata |      6775    5.551734    2.873672          1         10
        rural |      6775    .8199262    .3842773          0          1
     spdomain |      6775      3.2431    1.373578          1          5
-       calpp |      6775    2347.762    704.6076   1463.317   26470.68
+       calpp |      6775    2347.186    704.3686   1463.578   26456.36
 
 .  codebook hhid;
 
--------------------------------------------------------------------------------------------
-hhid                                                                           Household ID
--------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------
+hhid                                                                     Household ID
+-------------------------------------------------------------------------------------
 
                   type:  numeric (double)
 
@@ -462,5 +472,5 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\calpp.dta saved
       name:  <unnamed>
        log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\rep\070_calpp.log
   log type:  text
- closed on:  17 May 2013, 14:57:59
--------------------------------------------------------------------------------------------
+ closed on:  20 May 2013, 14:39:07
+-------------------------------------------------------------------------------------

@@ -1,8 +1,8 @@
--------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------
       name:  <unnamed>
        log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/rep/020_hhdata.log
   log type:  text
- opened on:  17 May 2013, 14:57:58
+ opened on:  20 May 2013, 14:39:05
 
 . clear
 
@@ -30,8 +30,8 @@ delimiter now ;
 > **************************************************************************;
 . use "$path\in\hhdata.dta", clear;
 
-. *recode spdomain 10=1 11=2 20=3 30=4 40=5 these have been set to five for Uganda to ensur
-> e hwe have at least 1000 households per domain;
+. *recode spdomain 10=1 11=2 20=3 30=4 40=5 these have been set to five for Uganda to
+>  ensure hwe have at least 1000 households per domain;
 . tab spdomain, missing;
 
      spdomain |      Freq.     Percent        Cum.
@@ -127,10 +127,10 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\cons_cod.dta saved
     prod_cat |    412045    1.782558    .4125064          1          2
     descript |    412045    1.782558    .4125064          1          2
 -------------+--------------------------------------------------------
-   quantityd |    412045    .1694884    1.512903          0   364.2857
- cod_hh_nom3 |    412045    83.35781    341.2477          0      18500
+   quantityd |     89596     .779464    3.170331          0   364.2857
+ cod_hh_nom3 |     89596     383.356    648.4919          0      18500
   cod_hh_nom |    412045    1602.923    615777.4          0   3.95e+08
- cod_hh_nom2 |    412045    1602.658    615777.4          0   3.95e+08
+ cod_hh_nom2 |    252585    2614.436    786487.2   .0027397   3.95e+08
 
 . use "$path\in\cons_cod_trans.dta", clear;
 
@@ -144,10 +144,11 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\cons_cod_trans.dta 
 -------------+--------------------------------------------------------
         hhid |     89596    2.45e+09    1.13e+09   1.01e+09   4.19e+09
      product |     89596    131.0155     15.7293        100        161
+       untcd |     88138    44.41037    30.53397          1         85
         unit |     89596           1           0          1          1
     food_cat |     89596           1           0          1          1
-   quantityz |     89596     .779464    3.170331          0   364.2857
 -------------+--------------------------------------------------------
+   quantityz |     89596     .779464    3.170331          0   364.2857
       valuez |     89596     383.356    648.4919          0      18500
 
 . /*
@@ -155,8 +156,8 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\cons_cod_trans.dta 
 >         *sort hhid;
 >         sum;
 > for var value quantityd cod_hh_nom cod_hh_nom2 cod_hh_nom3: replace X=0 if X==.;
-> collapse food_cat prod_cat (sum) value quantityd cod_hh_nom cod_hh_nom2 cod_hh_nom3, by(h
-> hid product descript);
+> collapse food_cat prod_cat (sum) value quantityd cod_hh_nom cod_hh_nom2 cod_hh_nom3
+> , by(hhid product descript);
 >         save "$path\work\cons_cod.dta", replace;
 >         sum;
 > */

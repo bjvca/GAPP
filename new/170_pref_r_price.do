@@ -19,7 +19,7 @@ set more off
 * a missing price in this case
 **************************************************************************;
 
-*global n_spdom "13";
+*global n_spdom "5";
 
 *global it_n "5";
 
