@@ -131,7 +131,7 @@ do "$path/new/010_initial.do"
 				do "$path/new/110_price_unit_flex.do"	/* Flexible basket: Prices */
 				do "$path/new/120_povline_food_flex_original.do"	/* Flexible basket: Poverty line */
 				do "$path/new/130_povmeas_flex.do"		/* Flexible basket: Poverty rates */
-				do "$path/new/140_iterate.do" $it_n $bottom	/* Flexible basket: Iterations */
+				do "$path/new/140_iterate_bjorn.do" $it_n $bottom	/* Flexible basket: Iterations */
 				
 $no_temp_rev	do "$path/new/150_price_unit_fix.do"	/* Fixed basket: Prices */
 $no_temp_rev	do "$path/new/160_food_basket_fix.do"	/* Fixed food basket */
