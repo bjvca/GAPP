@@ -3,7 +3,7 @@
        log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/rep/220_gen_results.l
 > og
   log type:  text
- opened on:  20 May 2013, 14:39:49
+ opened on:  20 May 2013, 17:28:24
 
 . set more off
 
@@ -74,7 +74,7 @@ delimiter now cr
 
     Variable |     Obs      Weight        Mean   Std. Dev.       Min        Max
 -------------+-----------------------------------------------------------------
-           h |    6775   200636622    .1141657   .3180359          0          1
+           h |    6775   200636622    .1101053   .3130441          0          1
 
 .         glob p0_nat=r(mean)
 
@@ -82,7 +82,7 @@ delimiter now cr
 
     Variable |     Obs      Weight        Mean   Std. Dev.       Min        Max
 -------------+-----------------------------------------------------------------
-          pg |    6775   200636622    .0297301   .1085264          0   .9125761
+          pg |    6775   200636622    .0292879   .1079718          0   .9122196
 
 .         glob p1_nat=r(mean)
 
@@ -90,7 +90,7 @@ delimiter now cr
 
     Variable |     Obs      Weight        Mean   Std. Dev.       Min        Max
 -------------+-----------------------------------------------------------------
-         spg |    6775   200636622    .0126601   .0630618          0   .8327953
+         spg |    6775   200636622     .012514   .0628442          0   .8321447
 
 .         glob p2_nat=r(mean)
 
@@ -101,7 +101,7 @@ Percentile ratios for distribution of cr2: all valid obs.
 ------------------------------------------------------------
 p90/p10  p90/p50  p10/p50  p75/p25  p75/p50  p25/p50
 ------------------------------------------------------------
-  9.864    4.054    0.411    2.865    1.787    0.624
+  9.867    4.039    0.409    2.859    1.786    0.625
               
 Generalized Entropy indices GE(a), where a = income difference
  sensitivity parameter, and Gini coefficient
@@ -109,7 +109,7 @@ Generalized Entropy indices GE(a), where a = income difference
 ----------------------------------------------------------------------
   All obs |     GE(-1)       GE(0)       GE(1)       GE(2)        Gini
 ----------+-----------------------------------------------------------
-          |    1.86355     1.16375     2.74591   596.96149     0.76574
+          |    1.93099     1.18859     2.82141   648.03192     0.77153
 ----------------------------------------------------------------------
    
 Atkinson indices, A(e), where e > 0 is the inequality aversion parameter
@@ -117,7 +117,7 @@ Atkinson indices, A(e), where e > 0 is the inequality aversion parameter
 ----------------------------------------------
   All obs |     A(0.5)        A(1)        A(2)
 ----------+-----------------------------------
-          |    0.56087     0.68769     0.78845
+          |    0.56951     0.69535     0.79432
 ----------------------------------------------
 
 .         glob gini_nat=$S_gini
@@ -142,7 +142,7 @@ Atkinson indices, A(e), where e > 0 is the inequality aversion parameter
 
     Variable |     Obs      Weight        Mean   Std. Dev.       Min        Max
 -------------+-----------------------------------------------------------------
-           h |    5555   174051227    .1265777   .3325293          0          1
+           h |    5555   174051227    .1232432   .3287458          0          1
 
 .                 glob p0_rur=r(mean)
 
@@ -150,7 +150,7 @@ Atkinson indices, A(e), where e > 0 is the inequality aversion parameter
 
     Variable |     Obs      Weight        Mean   Std. Dev.       Min        Max
 -------------+-----------------------------------------------------------------
-          pg |    5555   174051227    .0334395    .115135          0   .9125761
+          pg |    5555   174051227    .0331094   .1146968          0   .9122196
 
 .                 glob p1_rur=r(mean)
 
@@ -158,7 +158,7 @@ Atkinson indices, A(e), where e > 0 is the inequality aversion parameter
 
     Variable |     Obs      Weight        Mean   Std. Dev.       Min        Max
 -------------+-----------------------------------------------------------------
-         spg |    5555   174051227    .0143719   .0672221          0   .8327953
+         spg |    5555   174051227    .0142492   .0670197          0   .8321447
 
 .                 glob p2_rur=r(mean)
 
@@ -169,7 +169,7 @@ Percentile ratios for distribution of cr2: all valid obs.
 ------------------------------------------------------------
 p90/p10  p90/p50  p10/p50  p75/p25  p75/p50  p25/p50
 ------------------------------------------------------------
-  7.593    3.159    0.416    2.663    1.686    0.633
+  7.593    3.159    0.416    2.667    1.689    0.633
               
 Generalized Entropy indices GE(a), where a = income difference
  sensitivity parameter, and Gini coefficient
@@ -177,7 +177,7 @@ Generalized Entropy indices GE(a), where a = income difference
 ----------------------------------------------------------------------
   All obs |     GE(-1)       GE(0)       GE(1)       GE(2)        Gini
 ----------+-----------------------------------------------------------
-          |    1.03026     0.77598     1.40236    14.75926     0.65199
+          |    1.03072     0.77597     1.40208    14.75368     0.65197
 ----------------------------------------------------------------------
    
 Atkinson indices, A(e), where e > 0 is the inequality aversion parameter
@@ -185,7 +185,7 @@ Atkinson indices, A(e), where e > 0 is the inequality aversion parameter
 ----------------------------------------------
   All obs |     A(0.5)        A(1)        A(2)
 ----------+-----------------------------------
-          |    0.39885     0.53975     0.67326
+          |    0.39881     0.53974     0.67336
 ----------------------------------------------
 
 .                 glob gini_rur=$S_gini
@@ -212,7 +212,7 @@ Atkinson indices, A(e), where e > 0 is the inequality aversion parameter
 
     Variable |     Obs      Weight        Mean   Std. Dev.       Min        Max
 -------------+-----------------------------------------------------------------
-           h |    1220    26585395    .0329059   .1784635          0          1
+           h |    1220    26585395    .0240933   .1534017          0          1
 
 .                 glob p0_urb=r(mean)
 
@@ -220,7 +220,7 @@ Atkinson indices, A(e), where e > 0 is the inequality aversion parameter
 
     Variable |     Obs      Weight        Mean   Std. Dev.       Min        Max
 -------------+-----------------------------------------------------------------
-          pg |    1220    26585395    .0054453   .0377478          0   .7605618
+          pg |    1220    26585395    .0042687   .0337069          0   .7601436
 
 .                 glob p1_urb=r(mean)
 
@@ -228,7 +228,7 @@ Atkinson indices, A(e), where e > 0 is the inequality aversion parameter
 
     Variable |     Obs      Weight        Mean   Std. Dev.       Min        Max
 -------------+-----------------------------------------------------------------
-         spg |    1220    26585395    .0014534     .01687          0   .5784542
+         spg |    1220    26585395    .0011534   .0158637          0   .5778184
 
 .                 glob p2_urb=r(mean)
 
@@ -239,7 +239,7 @@ Percentile ratios for distribution of cr2: all valid obs.
 ------------------------------------------------------------
 p90/p10  p90/p50  p10/p50  p75/p25  p75/p50  p25/p50
 ------------------------------------------------------------
- 17.059    5.082    0.298    4.586    2.436    0.531
+ 17.204    5.150    0.299    4.841    2.544    0.525
               
 Generalized Entropy indices GE(a), where a = income difference
  sensitivity parameter, and Gini coefficient
@@ -247,7 +247,7 @@ Generalized Entropy indices GE(a), where a = income difference
 ----------------------------------------------------------------------
   All obs |     GE(-1)       GE(0)       GE(1)       GE(2)        Gini
 ----------+-----------------------------------------------------------
-          |    4.24589     1.70588     3.52089   349.83948     0.85686
+          |    4.37208     1.72611     3.54836   355.93866     0.85938
 ----------------------------------------------------------------------
    
 Atkinson indices, A(e), where e > 0 is the inequality aversion parameter
@@ -255,7 +255,7 @@ Atkinson indices, A(e), where e > 0 is the inequality aversion parameter
 ----------------------------------------------
   All obs |     A(0.5)        A(1)        A(2)
 ----------+-----------------------------------
-          |    0.69335     0.81839     0.89465
+          |    0.69733     0.82203     0.89737
 ----------------------------------------------
 
 .                 glob gini_urb=$S_gini
@@ -292,16 +292,16 @@ delimiter now cr
 
 full[1,22]
           rep     p0_nat     p1_nat     p2_nat   gini_nat    ge0_nat    ge1_nat
-r1          0  .11416573  .02973011  .01266011  .76574367  1.1637452  2.7459052
+r1          0  .11010532  .02928787  .01251397  .77152616  1.1885883   2.821414
 
       ge2_nat     p0_rur     p1_rur     p2_rur   gini_rur    ge0_rur    ge1_rur
-r1  596.96149  .12657773  .03343948  .01437188  .65199053  .77597743  1.4023634
+r1  648.03192   .1232432  .03310942  .01424923  .65197414  .77597272  1.4020847
 
       ge2_rur     p0_urb     p1_urb     p2_urb   gini_urb    ge0_urb    ge1_urb
-r1  14.759265  .03290592  .00544531  .00145338  .85685533  1.7058761  3.5208936
+r1  14.753678  .02409327  .00426866  .00115344  .85938072  1.7261134  3.5483627
 
       ge2_urb
-r1  349.83948
+r1  355.93866
 
 . 
 . 
@@ -332,5 +332,5 @@ rep was float now byte
        log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/rep/220_gen_results.l
 > og
   log type:  text
- closed on:  20 May 2013, 14:39:49
+ closed on:  20 May 2013, 17:28:24
 -------------------------------------------------------------------------------------

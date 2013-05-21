@@ -1,42 +1,42 @@
 geo,geono,h_ent_m,pg_ent_m,spg_ent_m,dum,rural,news,reg_tpi,strata,spdomain
-"National",1,58.57103,22.95273,12.04202,1,,,,,
-" ",,,,,,,,,,
-"Rural/Urban",0,51.64765,19.93567,10.22556,,0,,,,
-"Rural/Urban",1,61.59537,24.27068,12.8355,,1,,,,
-" ",,,,,,,,,,
-"North/Center/South",1,54.82881,19.47238,9.680734,,,"North:   Niassa, Cabo Delgado, Nampula",,,
-"North/Center/South",2,62.00582,25.8051,14.00548,,,"Central: Sofala, Tete, Manica, Zambezia",,,
-"North/Center/South",3,57.53562,22.60563,11.75566,,,"South:   Gaza, Inha, Map Prov, Map City",,,
-" ",,,,,,,,,,
-"TPI - 6 regions",1,54.78085,18.58626,8.933391,,,,"North  Rural",,
-"TPI - 6 regions",2,54.96272,21.94653,11.76743,,,,"North  Urban",,
-"TPI - 6 regions",3,63.52845,26.59078,14.54541,,,,"Center Rural",,
-"TPI - 6 regions",4,56.28348,22.85236,11.9763,,,,"Center Urban",,
-"TPI - 6 regions",5,70.40532,29.4857,16.06175,,,,"South  Rural",,
-"TPI - 6 regions",6,46.05284,16.46701,7.913628,,,,"South  Urban",,
-" ",,,,,,,,,,
-"Provinces",1,39.75249,14.55639,7.743083,,,,,"Niassa",
-"Provinces",2,46.99976,14.28351,6.205369,,,,,"Cabo Delgado",
-"Provinces",3,62.67789,23.10752,11.69719,,,,,"Nampula",
-"Provinces",4,72.78973,29.88343,15.2242,,,,,"Zambezia",
-"Provinces",5,43.51769,17.35765,9.470793,,,,,"Tete",
-"Provinces",6,57.39628,22.30049,11.76444,,,,,"Manica",
-"Provinces",7,61.1368,28.59568,18.08567,,,,,"Sofala",
-"Provinces",8,61.82809,23.7947,11.8636,,,,,"Inhambane",
-"Provinces",9,67.66083,31.14138,18.56888,,,,,"Gaza",
-"Provinces",10,63.82456,23.09923,10.94049,,,,,"Maputo Prov",
-"Provinces",11,32.69187,10.31811,4.394744,,,,,"Maputo City",
-" ",,,,,,,,,,
-"Spatial domains",1,41.36562,12.97101,5.970914,,,,,,"Niassa & Cabo Delg.-rur"
-"Spatial domains",2,52.80714,19.48173,10.05344,,,,,,"Niassa & Cabo Delg.-urb"
-"Spatial domains",3,65.42911,23.04333,11.28484,,,,,,"Nampula-rural"
-"Spatial domains",4,56.11201,23.2607,12.68128,,,,,,"Nampula-urban"
-"Spatial domains",5,72.30442,30.89222,16.93933,,,,,,"Sofala & Zambezia-rural"
-"Spatial domains",6,58.78367,24.61095,13.06829,,,,,,"Sofala & Zambezia-urban"
-"Spatial domains",7,49.17073,19.55351,10.6289,,,,,,"Manica & Tete-rural"
-"Spatial domains",8,51.31343,19.35652,9.805565,,,,,,"Manica & Tete-urbana"
-"Spatial domains",9,69.44992,29.76084,16.56278,,,,,,"Gaza & Inhambane-rural"
-"Spatial domains",10,50.26696,20.5422,11.21698,,,,,,"Gaza & Inhambane-urban"
-"Spatial domains",11,75.15781,28.11702,13.56942,,,,,,"Maputo Province-rural"
-"Spatial domains",12,58.97167,20.95062,9.814785,,,,,,"Maputo Province-urban"
-"Spatial domains",13,32.69187,10.31811,4.394744,,,,,,"Maputo City"
+National,1,58.57103,22.95273,12.04202,1,,,,,
+ ,,,,,,,,,,
+Rural/Urban,0,51.64765,19.93567,10.22556,,0,,,,
+Rural/Urban,1,61.59537,24.27068,12.8355,,1,,,,
+ ,,,,,,,,,,
+North/Center/South,1,54.82881,19.47238,9.680734,,,"North:   Niassa, Cabo Delgado, Nampula",,,
+North/Center/South,2,62.00582,25.8051,14.00548,,,"Central: Sofala, Tete, Manica, Zambezia",,,
+North/Center/South,3,57.53562,22.60563,11.75566,,,"South:   Gaza, Inha, Map Prov, Map City",,,
+ ,,,,,,,,,,
+TPI - 6 regions,1,54.78085,18.58626,8.933391,,,,North  Rural,,
+TPI - 6 regions,2,54.96272,21.94653,11.76743,,,,North  Urban,,
+TPI - 6 regions,3,63.52845,26.59078,14.54541,,,,Center Rural,,
+TPI - 6 regions,4,56.28348,22.85236,11.9763,,,,Center Urban,,
+TPI - 6 regions,5,70.40532,29.4857,16.06175,,,,South  Rural,,
+TPI - 6 regions,6,46.05284,16.46701,7.913628,,,,South  Urban,,
+ ,,,,,,,,,,
+Provinces,1,39.75249,14.55639,7.743083,,,,,Niassa,
+Provinces,2,46.99976,14.28351,6.205369,,,,,Cabo Delgado,
+Provinces,3,62.67789,23.10752,11.69719,,,,,Nampula,
+Provinces,4,72.78973,29.88343,15.2242,,,,,Zambezia,
+Provinces,5,43.51769,17.35765,9.470793,,,,,Tete,
+Provinces,6,57.39628,22.30049,11.76444,,,,,Manica,
+Provinces,7,61.1368,28.59568,18.08567,,,,,Sofala,
+Provinces,8,61.82809,23.7947,11.8636,,,,,Inhambane,
+Provinces,9,67.66083,31.14138,18.56888,,,,,Gaza,
+Provinces,10,63.82456,23.09923,10.94049,,,,,Maputo Prov,
+Provinces,11,32.69187,10.31811,4.394744,,,,,Maputo City,
+ ,,,,,,,,,,
+Spatial domains,1,41.36562,12.97101,5.970914,,,,,,Niassa & Cabo Delg.-rur
+Spatial domains,2,52.80714,19.48173,10.05344,,,,,,Niassa & Cabo Delg.-urb
+Spatial domains,3,65.42911,23.04333,11.28484,,,,,,Nampula-rural
+Spatial domains,4,56.11201,23.2607,12.68128,,,,,,Nampula-urban
+Spatial domains,5,72.30442,30.89222,16.93933,,,,,,Sofala & Zambezia-rural
+Spatial domains,6,58.78367,24.61095,13.06829,,,,,,Sofala & Zambezia-urban
+Spatial domains,7,49.17073,19.55351,10.6289,,,,,,Manica & Tete-rural
+Spatial domains,8,51.31343,19.35652,9.805565,,,,,,Manica & Tete-urbana
+Spatial domains,9,69.44992,29.76084,16.56278,,,,,,Gaza & Inhambane-rural
+Spatial domains,10,50.26696,20.5422,11.21698,,,,,,Gaza & Inhambane-urban
+Spatial domains,11,75.15781,28.11702,13.56942,,,,,,Maputo Province-rural
+Spatial domains,12,58.97167,20.95062,9.814785,,,,,,Maputo Province-urban
+Spatial domains,13,32.69187,10.31811,4.394744,,,,,,Maputo City
