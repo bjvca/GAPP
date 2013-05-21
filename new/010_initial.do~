@@ -26,7 +26,7 @@ global product_tpi   "product_tpi==1";
 
 * Initial (arbitrary) quantile defining poor for price index calculations.
 * Mozambique: bottom 60%. Vietnam: bottom 20%. Tanzania: bottom 40% . Uganda: headcount 2009 24.5% ;
-global tpi_bottom "50"; 
+global tpi_bottom "24.5"; 
 
 * Set the number of regions in the TPI calc for Uganda are set to 4 as east central north and east;
 global n_tpi "4";

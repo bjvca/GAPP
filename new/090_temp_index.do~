@@ -1,4 +1,4 @@
-*global path "C:/Users/Templeton/Desktop/GAPP/GAPP-UGANDA-HARUNA"
+*global path "C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA"
 clear all
 set mem 999m
 
@@ -41,19 +41,19 @@ set more off
 
 /*
 This file uses:
-        work/own.dta
-        work/receipts.dta
-        work/daily.dta
-        work/hhdata
-        work/cons_cat.dta
+        work\own.dta
+        work\receipts.dta
+        work\daily.dta
+        work\hhdata
+        work\cons_cat.dta
 
 This file creates:
-        work/tpi_unit_val_quarterly.dta
-        work/tpi_unit_val_monthly.dta
-        work/tpi_news_share.dta
-        work/tpi_reg_tpi_share.dta
-        work/temp_index_news.dta
-        work/temp_index_reg_tpi.dta
+        work\tpi_unit_val_quarterly.dta
+        work\tpi_unit_val_monthly.dta
+        work\tpi_news_share.dta
+        work\tpi_reg_tpi_share.dta
+        work\temp_index_news.dta
+        work\temp_index_reg_tpi.dta
 */      
 
 
@@ -73,7 +73,7 @@ This file creates:
 *------------------------------------------------------------------------*
 * Population weights for each HH
 *------------------------------------------------------------------------*;
-use "$path/work/hhdata.dta", clear;
+use "$path/work\hhdata.dta", clear;
 keep hhid hhweight hhsize;
 gen popwt = hhweight*hhsize;
 lab var popwt "Population weights = hhsize X hhweight";
@@ -85,9 +85,9 @@ sum;
 *------------------------------------------------------------------------*
 * Make list of all consumed products
 *------------------------------------------------------------------------*;
-*use "$path/in/cons_cod.dta", clear;
-*save "$path/work/cons_cod.dta", replace;
-use "$path/work/cons_cod.dta", clear;
+*use "$path/in\cons_cod.dta", clear;
+*save "$path/work\cons_cod.dta", replace;
+use "$path/work\cons_cod.dta", clear;
 keep product descript;
 
 collapse product, by(descript);
@@ -101,9 +101,9 @@ sum;
 * Find the poorest part of the population
 *------------------------------------------------------------------------*;
 use
-"$path/work/cons_cod.dta", clear;
+"$path/work\cons_cod.dta", clear;
 *use
-*"$path/work/cons_cod.dta", clear;
+*"$path/work\cons_cod.dta", clear;
 
 ********************************************check the COICOP categories to create the variable prod_cat, for the moment it is equal to food_cat******;
 
@@ -479,7 +479,7 @@ sum;
 * choose the relatively poor (i.e., below median nominal consumption per
 * capita).
 **************************************************************************;
-use "$path/work/conpc.dta", clear;
+use "$path\work\conpc.dta", clear;
 keep hhid cons_hh_nom;
 *use "$path/in/cons_cat.dta" ;
 *save "$path/work/cons_cat.dta", replace ;
@@ -487,7 +487,7 @@ keep hhid cons_hh_nom;
 
 *CA modified to merge in hhdata for bootstrap;
        sort hhid;
-        merge hhid using "$path/work/hhdata.dta";
+        merge hhid using "$path\work\hhdata.dta";
 	  tab _m; drop _m;
 
         collapse (mean) cons_hh_nom hhsize hhweight , by(hhid);
@@ -588,13 +588,13 @@ sum;
 * was created earlier because we will need some other variables from
 * the cons_cat.dta file.
 **************************************************************************;
-use "$path/work/conpc.dta", clear;
+use "$path\work\conpc.dta", clear;
 keep hhid cons_hh_nom;
 *use "$path/in/cons_cat.dta", clear ;
 
 *CA modified to merge in hhdata for bootstrap;
        sort hhid;
-        merge hhid using "$path/work/hhdata.dta";
+        merge hhid using "$path\work\hhdata.dta";
 	  tab _m;
 
         collapse (mean) cons_hh_nom hhsize strata hhweight rural news survquar reg_tpi,

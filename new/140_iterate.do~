@@ -1,4 +1,4 @@
-*global path "C:/user/gapp"
+*global path "C:\user\gapp"
 clear all
 set mem 999m
 
@@ -8,7 +8,7 @@ clear
 set more off
 #delimit ;
 
-*global povline_initial "$path/in/povlines_first_iof.dta";
+*global povline_initial "$path\in\povlines_first_iof.dta";
 
 **************************************************************************
 * 140_iterate.do	(start)
@@ -34,31 +34,31 @@ set more off
 /*
 This file uses:
 	    in/povlines_first_new.dta
-        work/hhdata.dta
-        work/consump_nom.dta
-        work/own.dta
-        work/daily.dta
-        work/temp_index_reg_tpi.dta
-        work/cons_cod.dta
-        work/food_cat.dta
-        work/cons_real.dta
-        work/products.dta
-        work/match96_02.dta
-        new/conversions.do
+        work\hhdata.dta
+        work\consump_nom.dta
+        work\own.dta
+        work\daily.dta
+        work\temp_index_reg_tpi.dta
+        work\cons_cod.dta
+        work\food_cat.dta
+        work\cons_real.dta
+        work\products.dta
+        work\match96_02.dta
+        new\conversions.do
         
 This file creates (where `pass' is the number of the iteration):
-        work/codes_food_basket_flex_it`pass'.dta
-        work/price_unit_flex_it`pass'.dta
-        work/quan_flex_it`pass'.dta
-        work/match_cod_flex_it`pass'.csv
-        work/relpoor_it`pass'.dta
-        work/povlines_it`pass'.dta
-        work/foodshares_it`pass'.dta
-        work/nat_pov_flex.csv
-        work/rur_pov_flex.csv
-        work/strata_pov_flex.csv
-        work/spdomain_pov_flex.csv
-        work/reg_tpi_pov_flex.csv
+        work\codes_food_basket_flex_it`pass'.dta
+        work\price_unit_flex_it`pass'.dta
+        work\quan_flex_it`pass'.dta
+        work\match_cod_flex_it`pass'.csv
+        work\relpoor_it`pass'.dta
+        work\povlines_it`pass'.dta
+        work\foodshares_it`pass'.dta
+        work\nat_pov_flex.csv
+        work\rur_pov_flex.csv
+        work\strata_pov_flex.csv
+        work\spdomain_pov_flex.csv
+        work\reg_tpi_pov_flex.csv
 */
 
 **************************************************************************;
@@ -68,7 +68,7 @@ This file creates (where `pass' is the number of the iteration):
 **************************************************************************;
 use "$path/work/conpc.dta";
         sort hhid;
-        merg hhid using "$path/work/hhdata.dta";
+        merg hhid using "$path\work\hhdata.dta";
         tab _merge;
         drop _merge;
         sort reg_tpi survquar;
@@ -87,7 +87,7 @@ save `contpi', replace;
 
 
 
-*use "$path/in/povlines_first_iterate.dta", clear;
+*use "$path\in\povlines_first_iterate.dta", clear;
 
 *save "$path/work/povlines_first.dta", replace;
 
@@ -106,7 +106,7 @@ local pass=1;
 
 * Use these few lines if you want to specify the number of iterations
 * and percentile cutpoint by passing them as parameters on the command
-* line, e.g.:   wstata do new/iterate1.do 5 50;
+* line, e.g.:   wstata do new\iterate1.do 5 50;
 if "`1'"=="" | "`2'"=="" {	;
         di in red "Error: you need to specify number of iterations as first parameter";
         di in red "       and percentile cutpoint as second parameter on command line.";
@@ -142,7 +142,7 @@ while `pass' <= `maxit' {;
                gen relpoor`pass'= cons_pc_tpi if cons_pc_tpi<=cutoff;
               rename cons_pc_tpi cr_it0;
               sort hhid;
-         save "$path/work/relpoor_it`pass'.dta", replace;
+         save "$path\work\relpoor_it`pass'.dta", replace;
 *        use "$path/work/cons_real.dta", clear;
 *              gen cr_it0=cr2;
         };
@@ -190,7 +190,7 @@ while `pass' <= `maxit' {;
 			
             keep hhid cr_it`lastpass' relpoor`pass' popwt;
             sort hhid;
-        save $path/work/relpoor_it`pass'.dta, replace;
+        save $path\work\relpoor_it`pass'.dta, replace;
         };
 
 * Comment out if IAF 2002/03. (This code below excluded in order to replicate published figures 2002/03). ( END ) ;
@@ -233,7 +233,7 @@ while `pass' <= `maxit' {;
 
                 keep hhid cr_it`lastpass' relpoor`pass' popwt;
                 sort hhid;
-        save "$path/work/relpoor_it`pass'.dta", replace;
+        save "$path\work\relpoor_it`pass'.dta", replace;
         };
 
 
@@ -245,9 +245,9 @@ while `pass' <= `maxit' {;
 **************************************************************************;
         use "$path/work/cons_cod.dta", clear;
 
-*CA modified to merge in work/hhdata.dta for bootstrap;
+*CA modified to merge in work\hhdata.dta for bootstrap;
     sort hhid;
-    merge hhid using "$path/work/hhdata.dta";
+    merge hhid using "$path\work\hhdata.dta";
     tab _m;
     drop _m;
 
@@ -269,7 +269,7 @@ while `pass' <= `maxit' {;
 * per capita from the previous iteration, and also identifies those below 
 * the cutoff. Then select only those who are below the cutoff.
 **************************************************************************;
-                merge hhid using "$path/work/relpoor_it`pass'.dta";
+                merge hhid using "$path\work\relpoor_it`pass'.dta";
                 tab _merge;
                 drop _merge;
 
@@ -339,14 +339,14 @@ while `pass' <= `maxit' {;
 
                 sort product;
 				* Include food product labels ;
-*                merge product using "$path/work/products.dta";
+*                merge product using "$path\work\products.dta";
 *                tab _merge;
 *                keep if _merge==3;
                 keep product descript numreg;  
                 sort product;     
                 display _N;  
 
-        save "$path/work/codes_food_basket_flex_it`pass'.dta", replace;
+        save "$path\work\codes_food_basket_flex_it`pass'.dta", replace;
 
 
 **************************************************************************;
@@ -386,13 +386,13 @@ drop if quantity==0 ;
 
 
 /*
-        use "$path/work/daily.dta", clear;
+        use "$path\work\daily.dta", clear;
                 drop days;
                 sort product;
                 tempfile dd_acsort;
         save `dd_acsort', replace;
         
-        use "$path/work/own.dta", clear;
+        use "$path\work\own.dta", clear;
                 keep hhid product valued quantityd unit;
                 rename valued value;
                 rename quantityd quantity;
@@ -403,9 +403,9 @@ drop if quantity==0 ;
                 append using `dd_acsort';
 */
 
-                *CA modified to insert work/hhdata.dta for bootstrap;
+                *CA modified to insert work\hhdata.dta for bootstrap;
                 sort hhid;
-                merge hhid using "$path/work/hhdata.dta";
+                merge hhid using "$path\work\hhdata.dta";
                 tab _m; 
                 drop if _m==2;
                 drop _m;
@@ -419,7 +419,7 @@ drop if quantity==0 ;
 * Merge the basket codes with the dd  and own data sets.
 * Drop all codes not a part of the flexible food basket
 **************************************************************************;
-                merge product using "$path/work/codes_food_basket_flex_it`pass'.dta";
+                merge product using "$path\work\codes_food_basket_flex_it`pass'.dta";
         
                 tab _merge;
                 drop if _merge~=3;
@@ -433,7 +433,7 @@ drop if quantity==0 ;
 **************************************************************************************
 * Convert non-KG quantities (units, liters) into kilograms
 **************************************************************************************;
-*do "$path/new/110a_conversions.do"
+*do "$path\new\110a_conversions.do"
 
 ********************************************************************
 * There remain a few difficult to interpret observations such as liters
@@ -461,7 +461,7 @@ drop if quantity==0 ;
                 drop _merge;
 
                 sort hhid;
-                merge hhid using "$path/work/relpoor_it`pass'.dta";
+                merge hhid using "$path\work\relpoor_it`pass'.dta";
                 tab _merge;
                 drop _merge;
 				
@@ -520,7 +520,7 @@ drop if quantity==0 ;
                 drop _merge;
 
                 sort product spdomain;
-        save "$path/work/price_unit_flex_it`pass'.dta", replace;
+        save "$path\work\price_unit_flex_it`pass'.dta", replace;
 
 
 **************************************************************************;
@@ -542,7 +542,7 @@ drop if quantity==0 ;
 **************************************************************************;
         use `foodshares', clear;
                 sort product spdomain;
-                merge product spdomain using "$path/work/price_unit_flex_it`pass'.dta";
+                merge product spdomain using "$path\work\price_unit_flex_it`pass'.dta";
         
                 tab _merge;
                 list product spdomain descript if _merge==1;
@@ -551,7 +551,7 @@ drop if quantity==0 ;
                 drop _merge;
                 sort product;
         
-                merge product using "$path/work/calperg.dta";
+                merge product using "$path\work\calperg.dta";
                 tab _merge;
 				
                 * This tells where we are lacking calorie info or are lacking quantity info due to 
@@ -588,7 +588,7 @@ drop if quantity==0 ;
                 by spdomain: egen calreg=sum(cal_ir);
         
                 sort spdomain;
-                merge spdomain using "$path/work/calpp.dta";
+                merge spdomain using "$path\work\calpp.dta";
                 tab _merge;
                 drop _merge;
 				
@@ -611,7 +611,7 @@ drop if quantity==0 ;
 
                 *drop product96;
 keep product spdomain quan`pass'  price_uw`pass' val_ir`pass' povline_f_flex90_`pass' calpp calperg;
-                    save "$path/work/quan_flex_it`pass'.dta", replace;
+                    save "$path\work\quan_flex_it`pass'.dta", replace;
 
         
                 collapse (mean) povline_f_flex90_`pass', by (spdomain);
@@ -619,7 +619,7 @@ keep product spdomain quan`pass'  price_uw`pass' val_ir`pass' povline_f_flex90_`
                 keep spdomain povline_f_flex90_`pass';
                 sort spdomain;
         
-        save "$path/work/povline_food_flex_it`pass'.dta", replace;
+        save "$path\work\povline_food_flex_it`pass'.dta", replace;
         
 
 **************************************************************************;
@@ -648,9 +648,9 @@ keep product spdomain quan`pass'  price_uw`pass' val_ir`pass' povline_f_flex90_`
                 gen triwt=0 ;
 		replace triwt = 11 - round(50*abs(cons_pc_tpi/povline_f_flex90_`pass'-1)+0.5)
                 if abs(cons_pc_tpi/povline_f_flex90_`pass'-1)<=0.2;
-				***since there were very small numbers of the poor in Kampala and central Urban, for Ugandanda we added weight 1***
+				
 				* Nearness to poverty line and population weights ;
-                gen tripopwt=(0.0001+triwt)*hhweight*hhsize;
+                gen tripopwt=triwt*hhweight*hhsize;
 				
                 preserve;
                         collapse (mean) nf_pc_nom [aw=tripopwt] ,
@@ -675,7 +675,7 @@ keep product spdomain quan`pass'  price_uw`pass' val_ir`pass' povline_f_flex90_`
 
 keep spdomain povline_flex`pass';
                 sort spdomain;
-        save "$path/work/povlines_it`pass'.dta", replace;
+        save "$path\work\povlines_it`pass'.dta", replace;
 
 **************************************************************************;
 * Create spatial price index, based on the total poverty line, with
@@ -686,7 +686,7 @@ keep spdomain povline_flex`pass';
 **************************************************************************;
         use `contpi', clear;
                 sort spdomain;
-                merge spdomain using "$path/work/povlines_it`pass'.dta";
+                merge spdomain using "$path\work\povlines_it`pass'.dta";
                 tab _merge;
                 drop _merge;
 
@@ -838,7 +838,7 @@ append using `str';
 append using `one';
 append using `r13';
 
-outsheet geo geono h_flex`lastpass' pg_flex`lastpass' spg_flex`lastpass' dum rural news reg_tpi strata spdomain using "$path/work/poverty_flexBask.csv", replace c;
+outsheet geo geono h_flex`lastpass' pg_flex`lastpass' spg_flex`lastpass' dum rural news reg_tpi strata spdomain using "$path\work\poverty_flexBask.csv", replace c;
 
 **************************************************************************
 * Convergence graph (based on 5 iterations)

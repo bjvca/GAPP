@@ -84,6 +84,7 @@ use "$path/work/conpc.dta";
         tempfile contpi;
         sort hhid;
 save `contpi', replace;
+save contpi_, replace;
 
 
 
@@ -169,12 +170,13 @@ while `pass' <= `maxit' {;
 			
             sort one;
             save `cutoff', replace;
+            save cutoff, replace;
  
 * Find relatively poor initially;
             use "$path/work/cons_real.dta", clear;
 			
 			gen cr_it`lastpass'=cr2;
-            cap drop one;
+            cap drop one cutoff;
             gen one=1;
 			
             sort one;
@@ -190,7 +192,7 @@ while `pass' <= `maxit' {;
 			
             keep hhid cr_it`lastpass' relpoor`pass' popwt;
             sort hhid;
-        save $path/work/relpoor_it`pass'.dta, replace;
+        save "$path/work/relpoor_it`pass'.dta", replace;
         };
 
 * Comment out if IAF 2002/03. (This code below excluded in order to replicate published figures 2002/03). ( END ) ;
@@ -646,15 +648,16 @@ keep product spdomain quan`pass'  price_uw`pass' val_ir`pass' povline_f_flex90_`
                 drop _merge;
 
                 gen triwt=0 ;
+
 		replace triwt = 11 - round(50*abs(cons_pc_tpi/povline_f_flex90_`pass'-1)+0.5)
                 if abs(cons_pc_tpi/povline_f_flex90_`pass'-1)<=0.2;
-				***since there were very small numbers of the poor in Kampala and central Urban, for Ugandanda we added weight 1***
+				***since the poor were very few in Kampala and Central urban for Uganda we added 1 to weights****
 				* Nearness to poverty line and population weights ;
-                gen tripopwt=(0.0001+triwt)*hhweight*hhsize;
+                gen tripopwt=(0.001+triwt)*hhweight*hhsize;
+
 				
                 preserve;
-                        collapse (mean) nf_pc_nom [aw=tripopwt] ,
-                                by(spdomain);
+                        collapse (mean) nf_pc_nom [aw=tripopwt] , by(spdomain);
                         rename nf_pc_nom povline_nf_flex`pass';
                         lab var povline_nf_flex`pass' "Nonfood poverty line. Flexible bundle";
                         tempfile znf;

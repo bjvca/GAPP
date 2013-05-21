@@ -1,4 +1,4 @@
-*global path "C:/Users/Templeton/Desktop/GAPP/GAPP-UGANDA-HARUNA"
+*global path "C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA"
 clear all
 set mem 100m
 
@@ -19,11 +19,11 @@ set more off
 
 /*
 This file uses:
-        work/hhdata.dta
-        work/consump_nom.dta
+        work\hhdata.dta
+        work\consump_nom.dta
       
 This file creates:
-        work/conpc.dta
+        work\conpc.dta
 */
 
 
@@ -31,10 +31,10 @@ This file creates:
 ***************************************************************************
 * Food expenditure
 ****************************************************************************;
-*use "$path/in/cons_cod.dta";
-use "$path/work/cons_cod.dta";
+*use "$path\in\cons_cod.dta";
+use "$path\work\cons_cod.dta";
             *sort product;
-            *merge product using "$path/work/food_cat.dta";
+            *merge product using "$path\work\food_cat.dta";
             *tab _m;
             *drop _m;
             keep if food_cat==1;
@@ -48,23 +48,23 @@ save `foodexp';
 ***************************************************************************
 * Food expenditure merged with all expenditure
 ****************************************************************************;
-use "$path/work/cons_cod.dta";
-*use "$path/in/cons_cod.dta";
-*use "$path/in/cons_cat.dta";
+use "$path\work\cons_cod.dta";
+*use "$path\in\cons_cod.dta";
+*use "$path\in\cons_cat.dta";
 sum;
 collapse (sum) cod_hh_nom, by(hhid);
 *gen cons_pc_nom = cons_hh_nom/hhsize;
 rename cod_hh_nom cons_hh_nom;
 *keep  hhid cons_pc_nom cons_hh_nom ;
 *keep hhid cod_hh_nom;
-*use "$path/in/cons_cod.dta";
-*use "$path/in/consump_nom.dta";
-*use "$path/work/consump_nom.dta";
+*use "$path\in\cons_cod.dta";
+*use "$path\in\consump_nom.dta";
+*use "$path\work\consump_nom.dta";
 *            keep  hhid cons_hh_nom ;
             display _N;
             keep  hhid cons_hh_nom ;
             sort hhid;
-            merge hhid using "$path/work/hhdata.dta";
+            merge hhid using "$path\work\hhdata.dta";
             tab _m;
             drop _m;
 gen cons_pc_nom = cons_hh_nom/hhsize;
@@ -85,7 +85,7 @@ keep hhid cons_hh_nom cons_pc_nom food_pc_nom nf_pc_nom;
             sort hhid;
 
 * MAH ; sum; codebook hhid;
-save "$path/work/conpc.dta", replace;
+save "$path\work\conpc.dta", replace;
 
 
 ***************************************************************************
