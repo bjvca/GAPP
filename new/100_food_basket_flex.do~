@@ -1,4 +1,4 @@
-*global path "C:\user\gapp"
+*global path "C:/user/gapp"
 clear all
 set mem 999m
 
@@ -32,16 +32,16 @@ set more off
 
 /*
 This file uses:
-                work\cons_cod.dta
-                work\hhdata.dta
-                work\products.dta
+                work/cons_cod.dta
+                work/hhdata.dta
+                work/products.dta
                 work/consump_nom.dta
                 work/temp_index_reg_tpi.dta
                 work/food_cat.dta
 
 This file creates:
-                work\food_basket_flex.dta
-                work\codes_food_basket_flex.dta
+                work/food_basket_flex.dta
+                work/codes_food_basket_flex.dta
 */
 
 
@@ -58,9 +58,9 @@ This file creates:
 use "$path/work/conpc.dta", clear;
 *use "$path/work/consump_nom.dta", clear;
 
-*CA modified to merge in work\hhdata.dta for bootstrap;
+*CA modified to merge in work/hhdata.dta for bootstrap;
         sort hhid;
-        merge hhid using "$path/work\hhdata.dta";
+        merge hhid using "$path/work/hhdata.dta";
         tab _m;
         drop _m;
 
@@ -218,7 +218,7 @@ use `food_basket_flex';
 
             lab var f_share_w "average food share for the 13 regions";
 
-save "$path\work\food_basket_flex.dta", replace;
+save "$path/work/food_basket_flex.dta", replace;
 
 * List first spatial region to get an idea about contents;
 list product spdomain f_share_w cumshr if spdomain==1;
@@ -232,7 +232,7 @@ list product spdomain f_share_w cumshr if spdomain==1;
           lab var numreg "number of goods in the basket";
 
 /*
-          merge product using "$path\work\products.dta";
+          merge product using "$path/work/products.dta";
             tab _merge;
           keep if _merge==3;
 */
@@ -240,7 +240,7 @@ list product spdomain f_share_w cumshr if spdomain==1;
           sort product;     
           display _N;  
 
-save "$path/work\codes_food_basket_flex.dta", replace;
+save "$path/work/codes_food_basket_flex.dta", replace;
 
 
 

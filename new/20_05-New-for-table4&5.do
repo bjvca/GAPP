@@ -89,15 +89,15 @@ save "$path/out/household_table4cf.dta", replace
 *********************************************************************************************
 la var quantity "daily quantity consumed in Kgs per household"
 la var value  "daily value of consumption in UGX per per household"
-drop quantityz
-rename quantity quantityz
+
 drop cfactor
 sort hhid
 label drop _all
 destring hhid, replace
 
 save "$path/out/cons_cod_trans.dta", replace
-
+save "$path/in/cons_cod_trans.dta", replace
+save "$path/work/cons_cod_trans.dta", replace
 ***************************************************************************************************
 **    Standard table 4, cons_cod_trans generated: AMOUNT AND QUANTITY OF FOOD TRANSACTION: TRANSACTION LEVEL
 **
@@ -158,7 +158,7 @@ clear
 use "$path/in/HSEC8.dta"
 save "$path/out/hhnondurables.dta", replace
 rename hh hhid
-drop if inlist( h8q2 ,003,009,010,011,012)
+drop if inlist( h8q2 ,001,002,003,009,010,011,012)
 gen nondurablevalue = h8q4* h8q5
 la var nondurablevalue "household daily non-durables expenditure"
 sort hhid
@@ -242,40 +242,54 @@ sort hhid
 save "$path/out/hhdeduc&medic&durabex.dta", replace
 
 use "$path/out/hhdnondurablesexp.dta"
-collapse (sum) dassetvalue , by(hhid)
+collapse (sum) dnondurables , by(hhid)
 sort hhid
 save "$path/out/hhdnondurablesexp.dta", replace
 
 use "$path/out/hhdeduc&medic&durabex.dta"
 merge 1:1 hhid using "$path/out/hhdnondurablesexp.dta"
-
+drop _merge
+sort hhid
 save "$path/out/hhdeduc&medic&durab&nondurabex.dta", replace
 
-clear
 
-use "$path/out/hhdeduc&medic&durab&nondurabex.dta"
+
 use "$path/out/hhdfrequentsexp.dta"
-collapse (sum) dassetvalue , by(hhid)
+collapse (sum) dhhfrequents , by(hhid)
 sort hhid
 save "$path/out/hhdfrequentsexp.dta", replace
 
+use "$path/out/hhdeduc&medic&durab&nondurabex.dta"
+merge 1:1 hhid using "$path/out/hhdfrequentsexp.dta" 
+drop _merge
+sort hhid
 save "$path/out/hhdeduc&medic&durab&nondurab&freqsex.dta", replace
 
 use "$path/out/hhdsemidurablesexp.dta"
-collapse (sum) dassetvalue , by(hhid)
+collapse (sum) hhdsemidurs , by(hhid)
 sort hhid
 save "$path/out/hhdsemidurablesexp.dta", replace
 
+use "$path/out/hhdeduc&medic&durab&nondurab&freqsex.dta"
+merge 1:1 hhid using "$path/out/hhdsemidurablesexp.dta"
+drop _merge
+replace hhdsemidurs=0 if hhdsemidurs==.
+sort hhid
 save "$path/out/hhdeduc&medic&durab&nondurab&freqs&semidurabex.dta", replace
 
 use "$path/out/hhdnonconsumpexp.dta"
-collapse (sum) dassetvalue , by(hhid)
+collapse (sum) hhdnonconsumpexp , by(hhid)
 sort hhid
 save "$path/out/hhdnonconsumpexp.dta", replace
 
+use "$path/out/hhdeduc&medic&durab&nondurab&freqs&semidurabex.dta"
+merge 1:1 hhid using "$path/out/hhdnonconsumpexp.dta"
+drop _merge
+replace hhdnonconsumpexp=0 if hhdnonconsumpexp==.
+sort hhid
 save "$path/out/hhdeduc&medic&durab&nondurab&freqs&semidurab&nonconsmpex.dta", replace
 
-egen hhnonfoodexp = rowtotal ( educationd medicalexpd dassetvalue dnondurables dhhfrequents hhdsemidurs hhdnonconsumpexp)
+gen hhnonfoodexp =  educationd+medicalexpd+dassetvalue+dnondurables+dhhfrequents+hhdsemidurs+hhdnonconsumpexp
 la var hhnonfoodexp "household total non food expenditure"
 keep hhid hhnonfoodexp
 
@@ -300,21 +314,13 @@ sort hhid
 destring hhid, replace
 save "$path/out/hhtotalnonfoodexp.dta", replace
 
+use "$path/out/hhtotalnonfoodexp.dta"
 append using  "$path/out/cons_cod_trans.dta"
 
 
 rename quantityz quantityd
 egen cod_hh_nom = rowtotal( hhnonfoodexp valuez)
 la var cod_hh_nom "total household daily expenditure"
-gen cod_hh_nom2 = cod_hh_nom
-la var cod_hh_nom2 "total household expenditure where quantity
-gen cod_hh_nom3= cod_hh_nom if ~inlist( cod_hh_nom,0,.& product,157,160,161)
-drop cod_hh_nom2
-rename cod_hh_nom3 cod_hh_nom2
-la var cod_hh_nom2 "total hh expenditure only when quantity is reported, observations without quantity set missing"
-rename valuez cod_hh_nom3
-la var cod_hh_nom2 "total household daily expenditure only when quantity is reported without quantity set to missing"
-la var cod_hh_nom3 "total household daily food expenditure, excluding receipts in kind"
 la var quantityd "housedhold daily quantity of food consumed in Kgs"
 drop unit
 drop hhnonfoodexp
@@ -325,7 +331,7 @@ replace prod_cat = 1 if prod_cat==.
 drop untcd
 replace descript=1 if descript==.
 label drop _all
-save "C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\out\cons_cod.dta", replace
-
+save "$path/out/cons_cod.dta", replace
+save "$path/work/cons_cod.dta", replace
 
 

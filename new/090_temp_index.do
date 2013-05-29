@@ -259,7 +259,7 @@ keep if $product_tpi;
 *        replace valued_ac=0 if valued_ac==.;
 *        replace quantityd_ac=0 if quantityd_ac==.;
 
-        gen valued_tot=cod_hh_nom2;
+        gen valued_tot=cod_hh_nom;
         gen quantityd_tot=quantityd;
 *		replace quantityd_tot=0 if (valued_tot>0 & valued_tot<.) & quantityd_tot==.;
 

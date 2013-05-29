@@ -144,7 +144,7 @@ use "$path/work/cons_cod.dta";
 * work with the expenditures without doing temporal adjustment.
 **************************************************************************;
 
-          gen  food_expenditure= cod_hh_nom3;
+          gen  food_expenditure= cod_hh_nom;
 		  
           *gen  food_expenditure= own_valued + daily_valued + monthly_valued + educ_valued;
           egen tot_food_expen= sum (food_expen), by (hhid) ;

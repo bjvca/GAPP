@@ -112,8 +112,8 @@ if "`1'"=="" | "`2'"=="" {	;
         di in red "Error: you need to specify number of iterations as first parameter";
         di in red "       and percentile cutpoint as second parameter on command line.";
 };
-local maxit=`1';
-local cutpt=`2';
+local maxit `1';
+local cutpt `2';
 
 tempfile cutoff;
 
@@ -176,7 +176,8 @@ while `pass' <= `maxit' {;
             use "$path/work/cons_real.dta", clear;
 			
 			gen cr_it`lastpass'=cr2;
-            cap drop one cutoff;
+            cap drop one;
+            cap drop cutoff;
             gen one=1;
 			
             sort one;
@@ -263,7 +264,7 @@ while `pass' <= `maxit' {;
 */
 
 				* Only food transactions ;
-                keep if food_cat;
+                keep if food_cat==1;
                 sort hhid;
 
 **************************************************************************;
@@ -282,7 +283,7 @@ while `pass' <= `maxit' {;
 * Calculate HH level food shares. Since we're only doing shares here, we can
 * work with the expenditures without doing temporal adjustment.
 **************************************************************************;
-                gen  food_expenditure = cod_hh_nom3;
+                gen  food_expenditure = cod_hh_nom;
                 *gen  food_expenditure= own_valued + daily_valued + monthly_valued + educ_valued;
                 egen tot_food_expen= sum (food_expen), by (hhid) ;
                 count if food_expenditure==.;
@@ -649,9 +650,9 @@ keep product spdomain quan`pass'  price_uw`pass' val_ir`pass' povline_f_flex90_`
 
                 gen triwt=0 ;
 
-		replace triwt = 11 - round(50*abs(cons_pc_tpi/povline_f_flex90_`pass'-1)+0.5)
+		replace triwt = 11 - round(50*abs(cons_pc_tpi/povline_f_flex90_`pass'-1)+0.5);
                 if abs(cons_pc_tpi/povline_f_flex90_`pass'-1)<=0.2;
-				***since the poor were very few in Kampala and Central urban for Uganda we added 1 to weights****
+				***since the poor were very few in Kampala and Central urban for Uganda we added 1 to weights****;
 				* Nearness to poverty line and population weights ;
                 gen tripopwt=(0.001+triwt)*hhweight*hhsize;
 
