@@ -3,7 +3,7 @@
        log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\ww-ug\10_MZ/rep/080_conpc.l
 > og
   log type:  text
- opened on:  17 May 2013, 16:44:12
+ opened on:  24 May 2013, 11:01:06
 
 . set more off
 
@@ -52,7 +52,7 @@ delimiter now ;
 .             tempfile foodexp;
 
 . save `foodexp';
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000001.tmp saved
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000001.tmp saved
 
 . ***************************************************************************
 > * Food expenditure merged with all expenditure
@@ -185,5 +185,5 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\ww-ug\10_MZ\work\conpc.d
        log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\ww-ug\10_MZ/rep/080_conpc.l
 > og
   log type:  text
- closed on:  17 May 2013, 16:44:13
+ closed on:  24 May 2013, 11:01:08
 -------------------------------------------------------------------------------------------

@@ -52,7 +52,7 @@ global it_n "5";
 ******************************************************************************;
 global n_spdom "5";
 
-******************* we deleted East urban, North urban and West urban because too few observations were in those spatial domains; 
+******************* we deleted East urban (132 hhds), North urban (172 hhds) and West urban (107 hhds) because too few observations were in those spatial domains; 
 
 
 ******************************************************************************

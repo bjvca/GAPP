@@ -3,7 +3,7 @@
        log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\ww-ug\10_MZ/rep/210_povmeas
 > _ent_flex.log
   log type:  text
- opened on:  17 May 2013, 16:45:19
+ opened on:  24 May 2013, 11:02:15
 
 . clear
 
@@ -99,8 +99,8 @@ variables reg_tpi survquar do not uniquely identify observations in the master d
 .         tempfile contpi;
 
 . save `contpi', replace;
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000001.tmp not found)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000001.tmp saved
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000001.tmp not found)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000001.tmp saved
 
 . **************************************************************************;
 . * Calculate the food shares for people near the food poverty line
@@ -129,7 +129,7 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000001.tmp saved
 .       tempfile food_povline_ent;
 
 . save `food_povline_ent';
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000002.tmp saved
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000002.tmp saved
 
 . clear;
 
@@ -196,8 +196,8 @@ variable spdomain does not uniquely identify observations in the master data
 . tempfile povlines_ent;
 
 . save `povlines_ent', replace;
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000003.tmp not found)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000003.tmp saved
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000003.tmp not found)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000003.tmp saved
 
 . clear;
 
@@ -636,8 +636,8 @@ h_ent was float now byte
 .       sort spdomain;
 
 . save `spi', replace;
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000004.tmp not found)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000004.tmp saved
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000004.tmp not found)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000004.tmp saved
 
 . clear;
 
@@ -1086,7 +1086,7 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\ww-ug\10_MZ\work\povmeas
 . tempfile nat;
 
 . save `nat';
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000005.tmp saved
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000005.tmp saved
 
 .         *output the rural/urban measures;
 .         use "$path\work\povmeas_ent_flex.dta", clear;
@@ -1101,7 +1101,7 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000005.tmp saved
 . tempfile rur;
 
 . save `rur';
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000006.tmp saved
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000006.tmp saved
 
 .         *output the North South Center measures;
 .         use "$path\work\povmeas_ent_flex.dta", clear;
@@ -1116,7 +1116,7 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000006.tmp saved
 . tempfile new;
 
 . save `new';
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000007.tmp saved
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000007.tmp saved
 
 .         *output the North South Center rural/urban measures;
 .         use "$path\work\povmeas_ent_flex.dta", clear;
@@ -1131,7 +1131,7 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000007.tmp saved
 . tempfile rtp;
 
 . save `rtp';
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000008.tmp saved
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000008.tmp saved
 
 .         *output the provincial measures;
 .         use "$path\work\povmeas_ent_flex.dta", clear;
@@ -1146,7 +1146,7 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000008.tmp saved
 . tempfile str;
 
 . save `str';
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000009.tmp saved
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000009.tmp saved
 
 .                 *output the dominios espaciais measures;
 .         use "$path\work\povmeas_ent_flex.dta", clear;
@@ -1161,7 +1161,7 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000009.tmp saved
 . tempfile r13;
 
 . save `r13';
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j00000a.tmp saved
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k00000a.tmp saved
 
 . clear;
 
@@ -1173,7 +1173,7 @@ obs was 0, now 1
 . tempfile one;
 
 . save `one';
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j00000b.tmp saved
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k00000b.tmp saved
 
 . use          `nat';
 (Final data set. Official published poverty rates are calculated from this data s)
@@ -1216,8 +1216,8 @@ geo was str11 now str18
 .       sort spdomain;
 
 . save `spi_m', replace;
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j00000c.tmp not found)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j00000c.tmp saved
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k00000c.tmp not found)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k00000c.tmp saved
 
 . use `povlines_ent';
 
@@ -1265,5 +1265,5 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\ww-ug\10_MZ\work\povline
        log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\ww-ug\10_MZ/rep/210_povmeas
 > _ent_flex.log
   log type:  text
- closed on:  17 May 2013, 16:45:21
+ closed on:  24 May 2013, 11:02:17
 -------------------------------------------------------------------------------------------

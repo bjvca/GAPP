@@ -117,6 +117,9 @@ local cutpt=`2';
 
 tempfile cutoff;
 
+di `maxit';
+di `cutpt';
+di "**********************************************************************";
 
 while `pass' <= `maxit' {;	
 
@@ -854,7 +857,7 @@ gen iteration=.
 tempfile converg
 save `converg'
 
-forvalues X = 1/5 {
+forvalues X = 1/`maxit' {
 	use "$path/work/cons_real_it`X'.dta", clear
 	collapse (mean) h_flex`X' pg_flex`X' spg_flex`X' [aw=popwt], by(strata)
 	rename h_flex`X' h_flex

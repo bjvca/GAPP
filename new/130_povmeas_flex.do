@@ -223,11 +223,13 @@ use `contpi';
 	sort hhid;
 save "$path/work/cons_real.dta" , replace;
 
-	collapse  (mean) h_flex pg_flex spg_flex [aw=hhweight*hhsize], by(strata);
+	collapse  (mean) h_flex pg_flex spg_flex [aw=hhweight*hhsize], by (strata);
 
 save "$path/work/povmeas.dta", replace;
 
-
+*** HARUNA, the file Povmeas.dta gives the headcount poverty rates using flexible food bundle without inflicting reveales preferences
+*** therefore specifications in line 226 of this do file have been changed repeatedly to generate these counts for particular
+*** classifications of interest including strata spdomain region urban/rural (urban) and national (done by removing the by command 
 **************************************************************************
 * 130_povmeas_flex.do		(end)
 **************************************************************************;
