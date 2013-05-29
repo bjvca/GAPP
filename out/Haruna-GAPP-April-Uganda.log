@@ -1,0 +1,35 @@
+------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\out\Haruna-GAPP-April-Ugan
+> da.log
+  log type:  text
+ opened on:  11 Apr 2013, 09:29:34
+
+. br
+
+. do "C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\out\wasswa.do"
+
+. psmatch2 Impr_LS dep_ratio hh_size Educ_yrs age_hh Sex Central West D_Road Val_Assets T_
+> Land Landsq maleshr Agesq urban D_off_farmY, out(MilkYield) common kernel kerneltype (no
+> rmal)
+variable Impr_LS not found
+r(111);
+
+end of do-file
+
+r(111);
+
+. clear
+
+. use "C:\Users\Templeton\Desktop\DESKTOP\Data analysis for Diary prodn with HAZ, WAZ and 
+> POVERTY_vers10.dta", clear
+
+. set more off
+
+. log close
+      name:  <unnamed>
+       log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\out\Haruna-GAPP-April-Ugan
+> da.log
+  log type:  text
+ closed on:  11 Apr 2013, 09:37:44
+------------------------------------------------------------------------------------------

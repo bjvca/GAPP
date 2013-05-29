@@ -3,7 +3,7 @@
        log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\ww-ug\10_MZ/rep/100_food_ba
 > sket_flex.log
   log type:  text
- opened on:  17 May 2013, 16:44:27
+ opened on:  24 May 2013, 11:01:22
 
 . clear
 
@@ -118,8 +118,8 @@ variables reg_tpi survquar do not uniquely identify observations in the master d
 .         tempfile contpi;
 
 .         save `contpi', replace;
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000001.tmp not found)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000001.tmp saved
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000001.tmp not found)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000001.tmp saved
 
 .         collapse (p$bottom) one cons_pc_tpi [aw=hhsize*hhweight] ;
 
@@ -130,8 +130,8 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000001.tmp saved
 .         sort one;
 
 .         save `60pct', replace;
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000002.tmp not found)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000002.tmp saved
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000002.tmp not found)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000002.tmp saved
 
 .                 use `contpi';
 
@@ -159,8 +159,8 @@ variable one does not uniquely identify observations in the master data
 bottom_bask |
          et |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          0 |4,333.00951       40.00       40.00
-          1 |6,498.99049       60.00      100.00
+          0 |  5,417.589       50.01       50.01
+          1 |  5,414.411       49.99      100.00
 ------------+-----------------------------------
       Total |     10,832      100.00
 
@@ -169,7 +169,7 @@ bottom_bask |
 .                                 sort hhid;
 
 . save `contpi' , replace;
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000001.tmp saved
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000001.tmp saved
 
 . **************************************************************************;
 . * Next, need to keep only the food products in order to calculate the 
@@ -228,7 +228,7 @@ variable hhid does not uniquely identify observations in the master data
 .         drop _merge;
 
 .         keep if bottom_basket==1;
-(76453 observations deleted)
+(87595 observations deleted)
 
 .      **************************************************************************;
 . * Calculate food shares. Since we're only doing shares here, we can
@@ -247,21 +247,21 @@ variable hhid does not uniquely identify observations in the master data
     0
 
 .                     gen food_share= food_expenditure/tot_food_expen;
-(65 missing values generated)
+(64 missing values generated)
 
 .           count if food_share==.;
-   65
+   64
 
 .           drop if food_share==.;
-(65 observations deleted)
+(64 observations deleted)
 
 .           sort hhid product;
 
 .                         tempfile food_basket_flex;
 
 . save `food_basket_flex', replace;
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000003.tmp not found)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000003.tmp saved
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000003.tmp not found)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000003.tmp saved
 
 . ********************************************************************************;
 . * Now prepare to get the variable spdomain to the using dataset, and then find the 
@@ -279,8 +279,8 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000003.tmp saved
 .                         tempfile spdomain;
 
 .                 save `spdomain' , replace;
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000005.tmp not found)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000005.tmp saved
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000005.tmp not found)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000005.tmp saved
 
 .                 restore;
 
@@ -294,13 +294,13 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000005.tmp saved
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          2 |      5,815       53.68       53.68
-          3 |      5,017       46.32      100.00
+          2 |      6,799       62.77       62.77
+          3 |      4,033       37.23      100.00
 ------------+-----------------------------------
       Total |     10,832      100.00
 
 .            drop if _m==2;
-(5815 observations deleted)
+(6799 observations deleted)
 
 .            drop _merge;
 
@@ -311,7 +311,7 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000005.tmp saved
 .            tempfile tothhweight;
 
 . save `tothhweight';
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000006.tmp saved
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000006.tmp saved
 
 . use `food_basket_flex';
 
@@ -324,15 +324,15 @@ variable hhid does not uniquely identify observations in the master data
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          2 |      5,815       10.40       10.40
-          3 |     50,107       89.60      100.00
+          2 |      6,799       14.86       14.86
+          3 |     38,966       85.14      100.00
 ------------+-----------------------------------
-      Total |     55,922      100.00
+      Total |     45,765      100.00
 
 .           sort _m;
 
 .           drop if _m==2;
-(5815 observations deleted)
+(6799 observations deleted)
 
 .           drop _m;
 
@@ -346,9 +346,9 @@ variable spdomain does not uniquely identify observations in the master data
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          3 |     50,107      100.00      100.00
+          3 |     38,966      100.00      100.00
 ------------+-----------------------------------
-      Total |     50,107      100.00
+      Total |     38,966      100.00
 
 .           drop _merge;
 
@@ -365,10 +365,10 @@ variable spdomain does not uniquely identify observations in the master data
 .           by spdomain: gen cumshr= sum(f_share_w);
 
 .                     count if cumshr<=.075;
- 1038
+  935
 
 .           drop if cumshr<=.075;
-(1038 observations deleted)
+(935 observations deleted)
 
 .             lab var f_share_w "average food share for the 13 regions";
 
@@ -382,46 +382,45 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\ww-ug\10_MZ\work\food_ba
      +---------------------------------------------------------+
      | product                  spdomain   f_shar~w     cumshr |
      |---------------------------------------------------------|
-  1. |   11676   Niassa & Cabo Delg.-rur   .0045555   .0761324 |
-  2. |   11244   Niassa & Cabo Delg.-rur   .0048407    .080973 |
-  3. |   11736   Niassa & Cabo Delg.-rur   .0052354   .0862084 |
-  4. |   11354   Niassa & Cabo Delg.-rur   .0054018   .0916102 |
-  5. |   11781   Niassa & Cabo Delg.-rur   .0055502   .0971605 |
+  1. |   11745   Niassa & Cabo Delg.-rur   .0047594   .0778592 |
+  2. |   11354   Niassa & Cabo Delg.-rur   .0047787   .0826379 |
+  3. |   11736   Niassa & Cabo Delg.-rur   .0052156   .0878535 |
+  4. |   11781   Niassa & Cabo Delg.-rur   .0053157   .0931692 |
+  5. |   11751   Niassa & Cabo Delg.-rur   .0056383   .0988075 |
      |---------------------------------------------------------|
-  6. |   11737   Niassa & Cabo Delg.-rur   .0059509   .1031113 |
-  7. |   11783   Niassa & Cabo Delg.-rur   .0061833   .1092947 |
-  8. |   11751   Niassa & Cabo Delg.-rur   .0069238   .1162184 |
-  9. |   11753   Niassa & Cabo Delg.-rur   .0070407   .1232592 |
- 10. |   11132   Niassa & Cabo Delg.-rur   .0073268    .130586 |
+  6. |   11132   Niassa & Cabo Delg.-rur   .0059727   .1047801 |
+  7. |   11783   Niassa & Cabo Delg.-rur   .0067358   .1115159 |
+  8. |   11753   Niassa & Cabo Delg.-rur   .0076408   .1191567 |
+  9. |   11623   Niassa & Cabo Delg.-rur   .0077347   .1268914 |
+ 10. |   11737   Niassa & Cabo Delg.-rur   .0083326    .135224 |
      |---------------------------------------------------------|
- 11. |   11623   Niassa & Cabo Delg.-rur   .0080298   .1386158 |
- 12. |   11812   Niassa & Cabo Delg.-rur   .0097388   .1483545 |
- 13. |   11755   Niassa & Cabo Delg.-rur   .0097467   .1581013 |
- 14. |   11715   Niassa & Cabo Delg.-rur   .0099373   .1680385 |
- 15. |   11731   Niassa & Cabo Delg.-rur   .0104351   .1784736 |
+ 11. |   11755   Niassa & Cabo Delg.-rur   .0084532   .1436772 |
+ 12. |   11812   Niassa & Cabo Delg.-rur   .0086856   .1523629 |
+ 13. |   11715   Niassa & Cabo Delg.-rur   .0103422    .162705 |
+ 14. |   11143   Niassa & Cabo Delg.-rur   .0113603   .1740654 |
+ 15. |   11731   Niassa & Cabo Delg.-rur   .0118661   .1859315 |
      |---------------------------------------------------------|
- 16. |   11143   Niassa & Cabo Delg.-rur   .0108681   .1893417 |
- 17. |   11133   Niassa & Cabo Delg.-rur   .0112947   .2006364 |
- 18. |   11719   Niassa & Cabo Delg.-rur   .0116148   .2122512 |
- 19. |   11121   Niassa & Cabo Delg.-rur   .0124618   .2247129 |
- 20. |   11754   Niassa & Cabo Delg.-rur   .0136805   .2383934 |
+ 16. |   11121   Niassa & Cabo Delg.-rur   .0134249   .1993564 |
+ 17. |   11719   Niassa & Cabo Delg.-rur   .0137333   .2130897 |
+ 18. |   11133   Niassa & Cabo Delg.-rur    .014075   .2271647 |
+ 19. |   11754   Niassa & Cabo Delg.-rur   .0163549   .2435196 |
+ 20. |   11279   Niassa & Cabo Delg.-rur   .0180797   .2615992 |
      |---------------------------------------------------------|
- 21. |  117392   Niassa & Cabo Delg.-rur   .0156328   .2540262 |
- 22. |   11279   Niassa & Cabo Delg.-rur   .0180708    .272097 |
- 23. |   11712   Niassa & Cabo Delg.-rur   .0200467   .2921437 |
- 24. |   11782   Niassa & Cabo Delg.-rur   .0202422   .3123859 |
- 25. |   11541   Niassa & Cabo Delg.-rur   .0223212   .3347071 |
+ 21. |  117392   Niassa & Cabo Delg.-rur   .0190453   .2806445 |
+ 22. |   11782   Niassa & Cabo Delg.-rur   .0201196   .3007641 |
+ 23. |   11541   Niassa & Cabo Delg.-rur   .0218503   .3226145 |
+ 24. |   11712   Niassa & Cabo Delg.-rur   .0237624   .3463768 |
+ 25. |   11674   Niassa & Cabo Delg.-rur   .0307365   .3771133 |
      |---------------------------------------------------------|
- 26. |   11713   Niassa & Cabo Delg.-rur   .0300423   .3647495 |
- 27. |   11674   Niassa & Cabo Delg.-rur   .0307587   .3955082 |
- 28. |   11738   Niassa & Cabo Delg.-rur   .0322078    .427716 |
- 29. |   11112   Niassa & Cabo Delg.-rur    .041687   .4694031 |
- 30. |   11752   Niassa & Cabo Delg.-rur   .0428736   .5122766 |
+ 26. |   11112   Niassa & Cabo Delg.-rur   .0331956   .4103089 |
+ 27. |   11713   Niassa & Cabo Delg.-rur   .0352984   .4456073 |
+ 28. |   11738   Niassa & Cabo Delg.-rur   .0377003   .4833075 |
+ 29. |   11752   Niassa & Cabo Delg.-rur   .0434576   .5267651 |
+ 30. |   11311   Niassa & Cabo Delg.-rur   .0478258   .5745909 |
      |---------------------------------------------------------|
- 31. |   11311   Niassa & Cabo Delg.-rur   .0563368   .5686135 |
- 32. |   11361   Niassa & Cabo Delg.-rur   .0659862   .6345997 |
- 33. |   11146   Niassa & Cabo Delg.-rur   .1225905   .7571902 |
- 34. |   11141   Niassa & Cabo Delg.-rur   .2428098          1 |
+ 31. |   11361   Niassa & Cabo Delg.-rur   .0738285   .6484194 |
+ 32. |   11146   Niassa & Cabo Delg.-rur   .1352727   .7836921 |
+ 33. |   11141   Niassa & Cabo Delg.-rur   .2163079          1 |
      +---------------------------------------------------------+
 
 .                     gen numreg=1;

@@ -3,7 +3,7 @@
        log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\ww-ug\10_MZ/rep/120_povline
 > _food_flex.log
   log type:  text
- opened on:  17 May 2013, 16:44:34
+ opened on:  24 May 2013, 11:01:29
 
 . clear
 
@@ -45,15 +45,15 @@ product was long now double
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          2 |        355       48.04       48.04
-          3 |        384       51.96      100.00
+          2 |        344       47.45       47.45
+          3 |        381       52.55      100.00
 ------------+-----------------------------------
-      Total |        739      100.00
+      Total |        725      100.00
 
 .         list product spdomain descript if _merge==1;
 
 .         drop if _merge ~=3;
-(355 observations deleted)
+(344 observations deleted)
 
 .         drop _merge;
 
@@ -68,10 +68,10 @@ variable product does not uniquely identify observations in the master data
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
           1 |          2        0.27        0.27
-          2 |        355       48.04       48.31
-          3 |        382       51.69      100.00
+          2 |        355       48.23       48.51
+          3 |        379       51.49      100.00
 ------------+-----------------------------------
-      Total |        739      100.00
+      Total |        736      100.00
 
 .         * This tells where we are lacking calorie info or are lacking quantity info due t
 > o 
@@ -81,8 +81,8 @@ variable product does not uniquely identify observations in the master data
      +----------------------------------------------------------+
      | product                  spdomain               descript |
      |----------------------------------------------------------|
-376. |  113791   Sofala & Zambezia-rural   "Caracol, caramucho" |
-384. |  119291      Manica & Tete-urbana                   Soda |
+373. |  113791   Sofala & Zambezia-rural   "Caracol, caramucho" |
+381. |  119291      Manica & Tete-urbana                   Soda |
      +----------------------------------------------------------+
 
 .         drop if _merge~=3;
@@ -107,28 +107,28 @@ variable product does not uniquely identify observations in the master data
     0
 -------------------------------------------------------------------------------------------
 -> spdomain = Nampula-urban
-    0
+    1
 -------------------------------------------------------------------------------------------
 -> spdomain = Sofala & Zambezia-rural
-    2
+    1
 -------------------------------------------------------------------------------------------
 -> spdomain = Sofala & Zambezia-urban
-    1
+    0
 -------------------------------------------------------------------------------------------
 -> spdomain = Manica & Tete-rural
-    1
+    2
 -------------------------------------------------------------------------------------------
 -> spdomain = Manica & Tete-urbana
-    1
+    2
 -------------------------------------------------------------------------------------------
 -> spdomain = Gaza & Inhambane-rural
-    0
+    1
 -------------------------------------------------------------------------------------------
 -> spdomain = Gaza & Inhambane-urban
-    0
+    1
 -------------------------------------------------------------------------------------------
 -> spdomain = Maputo Province-rural
-    0
+    4
 -------------------------------------------------------------------------------------------
 -> spdomain = Maputo Province-urban
     0
@@ -137,7 +137,7 @@ variable product does not uniquely identify observations in the master data
     0
 
 .         drop if round(bswt) < 10;
-(9 observations deleted)
+(16 observations deleted)
 
 .         by spdomain: egen baskshr=sum(f_share_w);
 
@@ -145,7 +145,7 @@ variable product does not uniquely identify observations in the master data
 
 .         * bundle was cut at 92.5 percent- cut back to 90 percent if necessary;
 .         drop if cumshr1<=baskshr-.9;
-(35 observations deleted)
+(26 observations deleted)
 
 .         * reobtain the share represented from the average basket- should be slightly more
 >  than 90;
@@ -160,91 +160,91 @@ variable product does not uniquely identify observations in the master data
 
     Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
-     baskshr |        30    .9024969           0   .9024969   .9024969
+     baskshr |        30    .9032872           0   .9032872   .9032872
 
 -------------------------------------------------------------------------------------------
 -> spdomain = Niassa & Cabo Delg.-urb
 
     Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
-     baskshr |        27    .9045519           0   .9045519   .9045519
+     baskshr |        26    .9032109           0   .9032109   .9032109
 
 -------------------------------------------------------------------------------------------
 -> spdomain = Nampula-rural
 
     Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
-     baskshr |        28    .9006783           0   .9006783   .9006783
+     baskshr |        29    .9021769           0   .9021769   .9021769
 
 -------------------------------------------------------------------------------------------
 -> spdomain = Nampula-urban
 
     Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
-     baskshr |        28    .9002784           0   .9002784   .9002784
+     baskshr |        28    .9035017           0   .9035017   .9035017
 
 -------------------------------------------------------------------------------------------
 -> spdomain = Sofala & Zambezia-rural
 
     Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
-     baskshr |        27    .9008114           0   .9008114   .9008114
+     baskshr |        27    .9003816           0   .9003816   .9003816
 
 -------------------------------------------------------------------------------------------
 -> spdomain = Sofala & Zambezia-urban
 
     Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
-     baskshr |        26    .9053407           0   .9053407   .9053407
+     baskshr |        25    .9033801           0   .9033801   .9033801
 
 -------------------------------------------------------------------------------------------
 -> spdomain = Manica & Tete-rural
 
     Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
-     baskshr |        25    .9049879           0   .9049879   .9049879
+     baskshr |        27    .8956223           0   .8956223   .8956223
 
 -------------------------------------------------------------------------------------------
 -> spdomain = Manica & Tete-urbana
 
     Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
-     baskshr |        24    .8636101           0   .8636101   .8636101
+     baskshr |        25    .8514768           0   .8514768   .8514768
 
 -------------------------------------------------------------------------------------------
 -> spdomain = Gaza & Inhambane-rural
 
     Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
-     baskshr |        28     .901368           0    .901368    .901368
+     baskshr |        28    .9067275           0   .9067275   .9067275
 
 -------------------------------------------------------------------------------------------
 -> spdomain = Gaza & Inhambane-urban
 
     Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
-     baskshr |        29    .9045255           0   .9045255   .9045255
+     baskshr |        28    .9010898           0   .9010898   .9010898
 
 -------------------------------------------------------------------------------------------
 -> spdomain = Maputo Province-rural
 
     Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
-     baskshr |        21    .9007212           0   .9007212   .9007212
+     baskshr |        20    .8582838           0   .8582838   .8582838
 
 -------------------------------------------------------------------------------------------
 -> spdomain = Maputo Province-urban
 
     Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
-     baskshr |        23    .9083755           0   .9083755   .9083755
+     baskshr |        23    .9109277           0   .9109277   .9109277
 
 -------------------------------------------------------------------------------------------
 -> spdomain = Maputo City
 
     Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
-     baskshr |        22    .9044978           0   .9044978   .9044978
+     baskshr |        21     .901933           0    .901933    .901933
 
 
 .         * obtain quantities and calories provided by these quantities;
@@ -268,9 +268,9 @@ variable spdomain does not uniquely identify observations in the master data
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          3 |        338      100.00      100.00
+          3 |        337      100.00      100.00
 ------------+-----------------------------------
-      Total |        338      100.00
+      Total |        337      100.00
 
 .         drop _merge;
 
@@ -278,10 +278,10 @@ variable spdomain does not uniquely identify observations in the master data
 .         gen ratio=.95*calpp/calreg;
 
 .                         replace quan=quan*ratio;
-(338 real changes made)
+(337 real changes made)
 
 .         replace cal_ir=quan*calperg;
-(338 real changes made)
+(336 real changes made)
 
 .         * do a consistency check;
 .         sort spdomain;
@@ -289,7 +289,7 @@ variable spdomain does not uniquely identify observations in the master data
 .         by spdomain: egen chkcal=sum(cal_ir);
 
 .         replace chkcal=chkcal/.95-calpp ;
-(338 real changes made)
+(337 real changes made)
 
 .                         * these values should be about zero;
 .         by spdomain: sum chkcal;
@@ -299,21 +299,21 @@ variable spdomain does not uniquely identify observations in the master data
 
     Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
-      chkcal |        30   -.0001028           0  -.0001028  -.0001028
+      chkcal |        30    .0000257           0   .0000257   .0000257
 
 -------------------------------------------------------------------------------------------
 -> spdomain = Niassa & Cabo Delg.-urb
 
     Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
-      chkcal |        27     .000167           0    .000167    .000167
+      chkcal |        26   -.0000899           0  -.0000899  -.0000899
 
 -------------------------------------------------------------------------------------------
 -> spdomain = Nampula-rural
 
     Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
-      chkcal |        28   -.0001028           0  -.0001028  -.0001028
+      chkcal |        29    .0000257           0   .0000257   .0000257
 
 -------------------------------------------------------------------------------------------
 -> spdomain = Nampula-urban
@@ -327,49 +327,49 @@ variable spdomain does not uniquely identify observations in the master data
 
     Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
-      chkcal |        27   -.0000385           0  -.0000385  -.0000385
+      chkcal |        27    .0000899           0   .0000899   .0000899
 
 -------------------------------------------------------------------------------------------
 -> spdomain = Sofala & Zambezia-urban
 
     Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
-      chkcal |        26   -.0000771           0  -.0000771  -.0000771
+      chkcal |        25   -.0000771           0  -.0000771  -.0000771
 
 -------------------------------------------------------------------------------------------
 -> spdomain = Manica & Tete-rural
 
     Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
-      chkcal |        25    .0000771           0   .0000771   .0000771
+      chkcal |        27    .0000771           0   .0000771   .0000771
 
 -------------------------------------------------------------------------------------------
 -> spdomain = Manica & Tete-urbana
 
     Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
-      chkcal |        24    .0000128           0   .0000128   .0000128
+      chkcal |        25    .0000128           0   .0000128   .0000128
 
 -------------------------------------------------------------------------------------------
 -> spdomain = Gaza & Inhambane-rural
 
     Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
-      chkcal |        28    .0000771           0   .0000771   .0000771
+      chkcal |        28   -.0000514           0  -.0000514  -.0000514
 
 -------------------------------------------------------------------------------------------
 -> spdomain = Gaza & Inhambane-urban
 
     Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
-      chkcal |        29    .0000128           0   .0000128   .0000128
+      chkcal |        28   -.0001156           0  -.0001156  -.0001156
 
 -------------------------------------------------------------------------------------------
 -> spdomain = Maputo Province-rural
 
     Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
-      chkcal |        21   -.0000642           0  -.0000642  -.0000642
+      chkcal |        20   -.0000642           0  -.0000642  -.0000642
 
 -------------------------------------------------------------------------------------------
 -> spdomain = Maputo Province-urban
@@ -383,7 +383,7 @@ variable spdomain does not uniquely identify observations in the master data
 
     Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
-      chkcal |        22    .0000257           0   .0000257   .0000257
+      chkcal |        21    .0000257           0   .0000257   .0000257
 
 
 .         * obtain the value of each good in the bundle;
@@ -394,7 +394,7 @@ variable spdomain does not uniquely identify observations in the master data
 .         by spdomain: egen povline_f_flex90=sum(val_ir);
 
 .         replace povline_f_flex=povline_f_flex90/.9;
-(338 real changes made)
+(337 real changes made)
 
 .         collapse (mean) povline_f_flex, by (spdomain);
 
@@ -423,5 +423,5 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\ww-ug\10_MZ\work\povline
        log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\ww-ug\10_MZ/rep/120_povline
 > _food_flex.log
   log type:  text
- closed on:  17 May 2013, 16:44:34
+ closed on:  24 May 2013, 11:01:29
 -------------------------------------------------------------------------------------------

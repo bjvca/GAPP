@@ -3,7 +3,7 @@
        log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\ww-ug\10_MZ\rep\110_price_u
 > nit_flex.log
   log type:  text
- opened on:  17 May 2013, 16:44:29
+ opened on:  24 May 2013, 11:01:24
 
 . clear
 
@@ -114,13 +114,13 @@ variable product does not uniquely identify observations in the master data
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          1 |     44,117       19.22       19.22
-          3 |    185,386       80.78      100.00
+          1 |     44,179       19.25       19.25
+          3 |    185,324       80.75      100.00
 ------------+-----------------------------------
       Total |    229,503      100.00
 
 .         drop if _merge~=3;
-(44117 observations deleted)
+(44179 observations deleted)
 
 .         drop _merge;
 
@@ -128,7 +128,7 @@ variable product does not uniquely identify observations in the master data
 . * Drop observations where product code or quantity or value information is unavailable
 > **************************************************************************************;
 .         drop if product==. | value==. | quantity==.  ;
-(2196 observations deleted)
+(2194 observations deleted)
 
 . **************************************************************************************;
 . * Convert non-KG quantities (units and liters) to kilograms;
@@ -155,8 +155,8 @@ variable product does not uniquely identify observations in the master data
 .                         tempfile spdomainreg_tpi;
 
 .                 save `spdomainreg_tpi', replace;
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000002.tmp not found)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000002.tmp saved
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000002.tmp not found)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000002.tmp saved
 
 .         restore;
 
@@ -170,9 +170,9 @@ variable hhid does not uniquely identify observations in the master data
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
           2 |         81        0.04        0.04
-          3 |    183,190       99.96      100.00
+          3 |    183,130       99.96      100.00
 ------------+-----------------------------------
-      Total |    183,271      100.00
+      Total |    183,211      100.00
 
 .         drop _merge;
 
@@ -193,9 +193,9 @@ variables reg_tpi survquar do not uniquely identify observations in the master d
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          3 |    183,190      100.00      100.00
+          3 |    183,130      100.00      100.00
 ------------+-----------------------------------
-      Total |    183,190      100.00
+      Total |    183,130      100.00
 
 .         drop if _merge ~= 3;
 (0 observations deleted)
@@ -300,8 +300,8 @@ variables reg_tpi survquar do not uniquely identify observations in the master d
 .                                 tempfile contpi;
 
 .                                 save `contpi', replace;
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000004.tmp not found)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000004.tmp saved
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000004.tmp not found)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000004.tmp saved
 
 .                                 collapse (p$bottom) one cons_pc_tpi [aw=hhsize*hhweight],
 >  by(spdomain) ;
@@ -313,8 +313,8 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000004.tmp saved
 .                                 sort spdomain;
 
 .                                 save `60pct', replace;
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000005.tmp not found)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000005.tmp saved
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000005.tmp not found)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000005.tmp saved
 
 .                                 use `contpi';
 
@@ -349,8 +349,8 @@ variable spdomain does not uniquely identify observations in the master data
 bottom_bask |
          et |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          0 | 388.478104       40.05       40.05
-          1 | 581.521896       59.95      100.00
+          0 | 485.694933       50.07       50.07
+          1 | 484.305067       49.93      100.00
 ------------+-----------------------------------
       Total |        970      100.00
 
@@ -360,8 +360,8 @@ bottom_bask |
 bottom_bask |
          et |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          0 | 250.128022       40.08       40.08
-          1 | 373.871978       59.92      100.00
+          0 | 316.078341       50.65       50.65
+          1 | 307.921659       49.35      100.00
 ------------+-----------------------------------
       Total |        624      100.00
 
@@ -371,8 +371,8 @@ bottom_bask |
 bottom_bask |
          et |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          0 | 402.774554       40.08       40.08
-          1 | 602.225446       59.92      100.00
+          0 | 503.200401       50.07       50.07
+          1 | 501.799599       49.93      100.00
 ------------+-----------------------------------
       Total |      1,005      100.00
 
@@ -382,8 +382,8 @@ bottom_bask |
 bottom_bask |
          et |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          0 | 229.667959       40.29       40.29
-          1 | 340.332041       59.71      100.00
+          0 | 285.546889       50.10       50.10
+          1 | 284.453111       49.90      100.00
 ------------+-----------------------------------
       Total |        570      100.00
 
@@ -393,8 +393,8 @@ bottom_bask |
 bottom_bask |
          et |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          0 | 605.057928       40.04       40.04
-          1 | 905.942072       59.96      100.00
+          0 |755.8867916       50.03       50.03
+          1 |755.1132084       49.97      100.00
 ------------+-----------------------------------
       Total |      1,511      100.00
 
@@ -404,8 +404,8 @@ bottom_bask |
 bottom_bask |
          et |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          0 | 345.244389       40.01       40.01
-          1 | 517.755611       59.99      100.00
+          0 | 431.600163       50.01       50.01
+          1 | 431.399837       49.99      100.00
 ------------+-----------------------------------
       Total |        863      100.00
 
@@ -415,8 +415,8 @@ bottom_bask |
 bottom_bask |
          et |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          0 | 417.784593       40.02       40.02
-          1 | 626.215407       59.98      100.00
+          0 |522.3256783       50.03       50.03
+          1 |521.6743217       49.97      100.00
 ------------+-----------------------------------
       Total |      1,044      100.00
 
@@ -426,8 +426,8 @@ bottom_bask |
 bottom_bask |
          et |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          0 | 211.831399       40.12       40.12
-          1 | 316.168601       59.88      100.00
+          0 | 265.270126       50.24       50.24
+          1 | 262.729874       49.76      100.00
 ------------+-----------------------------------
       Total |        528      100.00
 
@@ -437,8 +437,8 @@ bottom_bask |
 bottom_bask |
          et |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          0 | 360.446577       40.09       40.09
-          1 | 538.553423       59.91      100.00
+          0 | 450.791541       50.14       50.14
+          1 | 448.208459       49.86      100.00
 ------------+-----------------------------------
       Total |        899      100.00
 
@@ -448,8 +448,8 @@ bottom_bask |
 bottom_bask |
          et |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          0 | 288.434659       40.12       40.12
-          1 | 430.565341       59.88      100.00
+          0 | 359.917569       50.06       50.06
+          1 | 359.082431       49.94      100.00
 ------------+-----------------------------------
       Total |        719      100.00
 
@@ -459,8 +459,8 @@ bottom_bask |
 bottom_bask |
          et |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          0 | 72.4390321       40.24       40.24
-          1 | 107.560968       59.76      100.00
+          0 | 90.8027703       50.45       50.45
+          1 | 89.1972297       49.55      100.00
 ------------+-----------------------------------
       Total |        180      100.00
 
@@ -470,8 +470,8 @@ bottom_bask |
 bottom_bask |
          et |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          0 |  288.29671       40.04       40.04
-          1 |  431.70329       59.96      100.00
+          0 | 360.087026       50.01       50.01
+          1 | 359.912974       49.99      100.00
 ------------+-----------------------------------
       Total |        720      100.00
 
@@ -481,8 +481,8 @@ bottom_bask |
 bottom_bask |
          et |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          0 |  479.89177       40.02       40.02
-          1 |  719.10823       59.98      100.00
+          0 |    600.651       50.10       50.10
+          1 |    598.349       49.90      100.00
 ------------+-----------------------------------
       Total |      1,199      100.00
 
@@ -512,15 +512,15 @@ variable hhid does not uniquely identify observations in the master data
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
           2 |         81        0.04        0.04
-          3 |    183,190       99.96      100.00
+          3 |    183,130       99.96      100.00
 ------------+-----------------------------------
-      Total |    183,271      100.00
+      Total |    183,211      100.00
 
 .         drop _merge;
 
 .                         * Only keep price observations for the poor ;
 .         keep if bottom_basket==1;
-(92901 observations deleted)
+(112241 observations deleted)
 
 .         **************************************************************************;
 . * Toss out the bottom 5% and top 5% of the HH-LEVEL prices per kg in
@@ -528,64 +528,64 @@ variable hhid does not uniquely identify observations in the master data
 > * that may have an undue influence on the price calculation. 
 > **************************************************************************;
 .                 gen hhppkg=value_r/quantity;
-(70 missing values generated)
+(69 missing values generated)
 
 .                 egen lower5=pctile(hhppkg), p(5) by(spdomain product);
-(70 missing values generated)
+(69 missing values generated)
 
 .                 egen upper5=pctile(hhppkg), p(95) by(spdomain product);
-(70 missing values generated)
+(69 missing values generated)
 
 . sum;
 
     Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
-        hhid |     90370    617709.2    332306.3       1046    1060069
-     product |     90300    12171.53    7913.469      11112     119291
-        unit |     90300           2           0          2          2
- own_valued2 |     20251    5.617222    11.35031          0        188
-       value |     90300    11.22256    28.00963          0       1710
+        hhid |     70970    617059.4    333963.2       1055    1060069
+     product |     70901    12204.73    8127.693      11112     119291
+        unit |     70901           2           0          2          2
+ own_valued2 |     16358    5.149077    9.877154          0        153
+       value |     70901    10.78787    26.27373          0       1050
 -------------+--------------------------------------------------------
-    quantity |     90300    .6479621    2.194268   .0007143        180
-        days |     70020    1.593345    5.427416          1        730
-daily_valu~2 |     70049    12.84305    31.02254          0       1710
-       days2 |     70020    1.593345    5.427416          1        730
-    food_cat |     90300           1           0          1          1
+    quantity |     70901    .6291503    2.020526   .0007143        150
+        days |     54523    1.587275    5.495274          1        730
+daily_valu~2 |     54543      12.479    29.25218          0       1050
+       days2 |     54523    1.587275    5.495274          1        730
+    food_cat |     70901           1           0          1          1
 -------------+--------------------------------------------------------
-       count |     90300           1           0          1          1
+       count |     70901           1           0          1          1
     descript |         0
-      numreg |     90300    9.731739    3.670388          1         13
-    survquar |     90370    2.464911    1.120219          1          4
-     reg_tpi |     90370     4.06864    1.834977          1          6
+      numreg |     70901    9.649413    3.771582          1         13
+    survquar |     70970    2.463999     1.11152          1          4
+     reg_tpi |     70970    4.066028     1.83872          1          6
 -------------+--------------------------------------------------------
-    spdomain |     90370    7.875324    4.064451          1         13
-    tpi_trim |     90370    1.015645    .0521737    .911971   1.144117
-     value_r |     90300    11.05584    27.50979          0   1614.836
- cons_pc_nom |     90370    18.02913    9.934085   .5010331   49.29142
-    hhweight |     90370    362.3423    380.8506   39.58433   8495.651
+    spdomain |     70970    7.882626    4.077668          1         13
+    tpi_trim |     70970    1.017025    .0523565    .911971   1.144117
+     value_r |     70901    10.60635    25.73419          0       1050
+ cons_pc_nom |     70970    16.03584    8.542838   .5010331   40.57268
+    hhweight |     70970    363.0387    386.4117   39.58433   8495.651
 -------------+--------------------------------------------------------
-      hhsize |     90370    5.925351    2.615895          1         34
-        bswt |     90370           1           0          1          1
- cons_hh_nom |     90370    106.0011    78.50564   1.079779   810.2852
- food_pc_nom |     90370    9.740167    4.625507   .0239118   37.99315
-   nf_pc_nom |     90370    8.288968    7.381248   .1096491   41.87552
+      hhsize |     70970     6.07351    2.580556          1         23
+        bswt |     70970           1           0          1          1
+ cons_hh_nom |     70970    97.75036    71.78728   1.079779   620.9477
+ food_pc_nom |     70970    8.780533    4.056364   .0239118   33.10923
+   nf_pc_nom |     70970    7.255309    6.177412   .1096491   37.92599
 -------------+--------------------------------------------------------
- food_pc_tpi |     90370    9.627231      4.6156   .0240237   37.33191
- cons_pc_tpi |     90370     17.9162    9.955699   .4552435   48.83665
-   pctile_60 |     90370    27.85726    12.40179   12.34431   48.88223
-bottom_bas~t |     90370           1           0          1          1
-      hhppkg |     90300    39.91528    125.2099          0   23437.82
+ food_pc_tpi |     70970    8.665799    4.041908   .0240237   32.79527
+ cons_pc_tpi |     70970    15.92111    8.560246   .4552435   40.26645
+   pctile_60 |     70970    23.45345    10.06516   10.71368   40.29236
+bottom_bas~t |     70970           1           0          1          1
+      hhppkg |     70901    39.92543    136.5984          0   23437.82
 -------------+--------------------------------------------------------
-      lower5 |     90300    18.10817     24.5103          0   258.2221
-      upper5 |     90300    72.74084     199.698          0   11921.42
+      lower5 |     70901    18.01935    24.28189          0   219.3052
+      upper5 |     70901    75.38599    393.1991          0   23437.82
 
 . describe;
 
 Contains data from C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\ww-ug\10_MZ/work/cons
 > _cod_trans.dta
-  obs:        90,370                          
- vars:            32                          17 May 2013 16:44
- size:    33,617,640                          (_dta has notes)
+  obs:        70,970                          
+ vars:            32                          24 May 2013 11:01
+ size:    26,400,840                          (_dta has notes)
 -------------------------------------------------------------------------------------------
               storage  display     value
 variable name   type   format      label      variable label
@@ -620,7 +620,7 @@ food_pc_nom     float  %9.0g                  nominal food consumption per capit
 nf_pc_nom       float  %9.0g                  nominal non-food consumption per capita
 food_pc_tpi     float  %9.0g                  Temp-adjusted per capita food consumption/day
 cons_pc_tpi     float  %9.0g                  Temp adjusted total consumption/day
-pctile_60       float  %9.0g                  (p 60) cons_pc_tpi
+pctile_60       float  %9.0g                  (p 50) cons_pc_tpi
 bottom_basket   float  %9.0g                  =1 if in bottom (60%) of PCE
 hhppkg          float  %9.0g                  
 lower5          float  %9.0g                  
@@ -630,7 +630,7 @@ Sorted by:
      Note:  dataset has changed since last saved
 
 . keep if hhppkg-lower5>=0 & hhppkg-upper5<=0;
-(7385 observations deleted)
+(5711 observations deleted)
 
 . *********************************************************************
 > * Note that we do prices in three ways. First, by summing quantity and value 
@@ -672,8 +672,8 @@ Sorted by:
 
     Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
-     ratiotw |       734    1.410035    3.393806   .4626189   83.05256
-     ratiomw |       734    1.167457    1.474132          0   28.21631
+     ratiotw |       720    1.603589     7.00967   .4907718   167.2426
+     ratiomw |       720    1.124457    1.065056          0   22.49004
 
 .         sort product;
 
@@ -684,9 +684,9 @@ variable product does not uniquely identify observations in the master data
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          3 |        739      100.00      100.00
+          3 |        725      100.00      100.00
 ------------+-----------------------------------
-      Total |        739      100.00
+      Total |        725      100.00
 
 .         count if _merge~=3;
     0

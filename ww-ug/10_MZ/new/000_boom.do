@@ -1,4 +1,4 @@
-global path "C:\user\gapp\poverty\10_MZ"
+global path "C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\ww-ug\10_MZ"
 *global path "C:\mozpov\iof0809"
 
 version 10.1

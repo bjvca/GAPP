@@ -3,7 +3,7 @@
        log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\ww-ug\10_MZ/rep/090_temp_in
 > dex.log
   log type:  text
- opened on:  17 May 2013, 16:44:13
+ opened on:  24 May 2013, 11:01:08
 
 . clear
 
@@ -83,8 +83,8 @@ delimiter now ;
 . tempfile popwt;
 
 . save `popwt', replace;
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000001.tmp not found)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000001.tmp saved
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000001.tmp not found)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000001.tmp saved
 
 . sum;
 
@@ -111,8 +111,8 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000001.tmp saved
 . tempfile descript;
 
 . save `descript', replace;
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000002.tmp not found)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000002.tmp saved
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000002.tmp not found)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000002.tmp saved
 
 . sum;
 
@@ -237,7 +237,7 @@ variable hhid does not uniquely identify observations in the master data
 . tempfile hhid;
 
 . save `hhid';
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000004.tmp saved
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000004.tmp saved
 
 . restore;
 
@@ -334,7 +334,7 @@ variable hhid does not uniquely identify observations in the master data
 . merge product using `descript';
 product was long now double
 variable product does not uniquely identify observations in
-    C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000002.tmp
+    C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000002.tmp
 
 . tab _merge;
 
@@ -661,8 +661,8 @@ variable product does not uniquely identify observations in
 . tempfile product_tpi;
 
 . save `product_tpi', replace;
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000005.tmp not found)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000005.tmp saved
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000005.tmp not found)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000005.tmp saved
 
 . sum;
 
@@ -756,8 +756,8 @@ product was long now double
 . tempfile acredd;
 
 . save `acredd' , replace;
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000006.tmp not found)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000006.tmp saved
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000006.tmp not found)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000006.tmp saved
 
 . sum;
 
@@ -947,8 +947,8 @@ quantityd_~t |     54941    .3895977    .7253671   .0002595   20.57143
 .         tempfile hhd;
 
 . save `hhd' , replace;
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000007.tmp not found)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000007.tmp saved
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000007.tmp not found)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000007.tmp saved
 
 . use `acredd', clear;
 
@@ -1014,7 +1014,7 @@ product was double now int
 .         sort hhid;
 
 . save `acredd', replace;
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000006.tmp saved
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000006.tmp saved
 
 . sum;
 
@@ -1096,8 +1096,8 @@ quantityd_~t |     54941    .3895977    .7253671   .0002595   20.57143
 .         tempfile bottom_tpi;
 
 . save `bottom_tpi', replace;
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000008.tmp not found)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j000008.tmp saved
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000008.tmp not found)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000008.tmp saved
 
 . sum;
 
@@ -1166,8 +1166,8 @@ quantityd_~t |     18738    .3793513    .6772446   .0002595      14.28
 .                         tempfile uvm;
 
 .                 save `uvm', replace;
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j00000a.tmp not found)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j00000a.tmp saved
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k00000a.tmp not found)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k00000a.tmp saved
 
 .                 save "$path/work/tpi_unit_val_monthly.dta", replace;
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\ww-ug\10_MZ/work/tpi_unit_val_month
@@ -1246,8 +1246,8 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\ww-ug\10_MZ/work/tpi_uni
 > erly.dta saved
 
 .                 save `uvq', replace;
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j00000c.tmp not found)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j00000c.tmp saved
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k00000c.tmp not found)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k00000c.tmp saved
 
 .         restore;
 
@@ -1728,8 +1728,8 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j00000c.tmp saved
 .                         keep reg_tpi product survquar ppkg_trim;
 
 .                 save `uvq2', replace;
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j00000e.tmp not found)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j00000e.tmp saved
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k00000e.tmp not found)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k00000e.tmp saved
 
 .                                 use `uvq' ;
 
@@ -1748,7 +1748,7 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j00000e.tmp saved
 .                         drop _merge;
 
 .                 save `uvq', replace;
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j00000c.tmp saved
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k00000c.tmp saved
 
 .                 save "$path/work/tpi_unit_val_quarterly.dta", replace;
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\ww-ug\10_MZ/work/tpi_unit_val_quart
@@ -1808,8 +1808,8 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\ww-ug\10_MZ/work/tpi_uni
 .         tempfile thhcons;
 
 . save `thhcons', replace;
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j00000f.tmp not found)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j00000f.tmp saved
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k00000f.tmp not found)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k00000f.tmp saved
 
 . **************************************************************************;
 . * Merge the file with consumption on the food products with HH consumption file,
@@ -2107,21 +2107,21 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\ww-ug\10_MZ/work/tpi_reg
 .                 tempfile tempwt6;
 
 .                 save `tempwt6', replace;
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j00000g.tmp not found)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j00000g.tmp saved
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k00000g.tmp not found)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k00000g.tmp saved
 
 . use `uvq', clear;
 
 .         sort reg_tpi product;
 
 . save , replace;
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j00000c.tmp saved
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k00000c.tmp saved
 
 . use `tempwt6';
 
 .         merge reg_tpi product using `uvq';
 variables reg_tpi product do not uniquely identify observations in
-    C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0j00000c.tmp
+    C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k00000c.tmp
 (label news_ru_ur already defined)
 
 .         tab _merge;

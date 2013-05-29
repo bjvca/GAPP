@@ -650,7 +650,7 @@ keep product spdomain quan`pass'  price_uw`pass' val_ir`pass' povline_f_flex90_`
                 if abs(cons_pc_tpi/povline_f_flex90_`pass'-1)<=0.2;
 				***since there were very small numbers of the poor in Kampala and central Urban, for Ugandanda we added weight 1***
 				* Nearness to poverty line and population weights ;
-                gen tripopwt=(0.001+triwt)*hhweight*hhsize;
+                gen tripopwt=(0.0001+triwt)*hhweight*hhsize;
 				
                 preserve;
                         collapse (mean) nf_pc_nom [aw=tripopwt] ,

@@ -1,32 +1,32 @@
 geo,geono,h_flex5,pg_flex5,spg_flex5,dum,rural,news,reg_tpi,strata,spdomain
-"National",1,13.27349,3.524001,1.438313,1,,,,,
+"National",1,25.88001,8.524497,4.009721,1,,,,,
 " ",,,,,,,,,,
-"Rural/Urban",0,9.466668,2.570024,.9988682,,"Urban",,,,
-"Rural/Urban",1,13.85496,3.669716,1.505436,,"Rural",,,,
+"Rural/Urban",0,46.50978,23.07086,13.80288,,"Urban",,,,
+"Rural/Urban",1,22.72892,6.302619,2.513868,,"Rural",,,,
 " ",,,,,,,,,,
-"North/Center/South",1,9.745623,2.375167,.8557896,,,1,,,
-"North/Center/South",2,10.56949,2.03977,.5741771,,,2,,,
-"North/Center/South",3,22.80326,7.720497,3.766764,,,3,,,
-"North/Center/South",4,12.57606,3.205968,1.261447,,,4,,,
+"North/Center/South",1,34.6378,14.96693,8.391261,,,1,,,
+"North/Center/South",2,14.81432,3.087467,1.002589,,,2,,,
+"North/Center/South",3,12.28245,3.314303,1.278609,,,3,,,
+"North/Center/South",4,43.83979,13.86849,5.986068,,,4,,,
 " ",,,,,,,,,,
-"TPI - 6 regions",1,9.745623,2.375167,.8557896,,,,"central",,
-"TPI - 6 regions",2,10.56949,2.03977,.5741771,,,,"eastern",,
-"TPI - 6 regions",3,22.80326,7.720497,3.766764,,,,"northern",,
-"TPI - 6 regions",4,12.57606,3.205968,1.261447,,,,"western",,
+"TPI - 6 regions",1,34.6378,14.96693,8.391261,,,,"central",,
+"TPI - 6 regions",2,14.81432,3.087467,1.002589,,,,"eastern",,
+"TPI - 6 regions",3,12.28245,3.314303,1.278609,,,,"northern",,
+"TPI - 6 regions",4,43.83979,13.86849,5.986068,,,,"western",,
 " ",,,,,,,,,,
-"Provinces",1,16.00835,4.918114,1.944569,,,,,"KAMPALA",
-"Provinces",2,7.628228,1.779613,.6119896,,,,,"CENTRAL 1",
-"Provinces",3,9.269841,1.910963,.6455591,,,,,"CENTRAL 2",
-"Provinces",4,8.544658,1.568559,.4815414,,,,,"EAST CENTRAL",
-"Provinces",5,12.22193,2.42432,.6497759,,,,,"EASTERN",
-"Provinces",6,12.47709,4.11691,1.860989,,,,,"MID-NOTHERN",
-"Provinces",7,70.60767,30.07423,16.06469,,,,,"NORTH-EAST",
-"Provinces",8,15.20253,2.349776,.6982543,,,,,"WEST-NILE",
-"Provinces",9,15.87085,4.597505,1.95191,,,,,"MID-WESTERN",
-"Provinces",10,9.08376,1.731017,.5295955,,,,,"SOUTH-WESTERN",
+"Provinces",1,68.48491,35.89403,22.40182,,,,,"KAMPALA",
+"Provinces",2,25.94173,10.98827,6.236616,,,,,"CENTRAL 1",
+"Provinces",3,29.24814,10.20057,4.678041,,,,,"CENTRAL 2",
+"Provinces",4,13.10596,2.292355,.7455057,,,,,"EAST CENTRAL",
+"Provinces",5,16.20849,3.736347,1.212392,,,,,"EASTERN",
+"Provinces",6,8.382059,2.352697,.9433661,,,,,"MID-NOTHERN",
+"Provinces",7,42.96652,11.62509,4.466468,,,,,"NORTH-EAST",
+"Provinces",8,3.359016,.7567871,.2477523,,,,,"WEST-NILE",
+"Provinces",9,48.26009,15.91615,7.167523,,,,,"MID-WESTERN",
+"Provinces",10,39.15452,11.69808,4.733792,,,,,"SOUTH-WESTERN",
 " ",,,,,,,,,,
-"Spatial domains",1,7.663714,1.6407,.5273578,,,,,,"Central rural"
-"Spatial domains",2,14.01398,3.880981,1.529145,,,,,,"Central urban"
-"Spatial domains",3,10.56949,2.03977,.5741771,,,,,,"Eastern"
-"Spatial domains",4,22.80326,7.720497,3.766764,,,,,,"Northern"
-"Spatial domains",5,12.57606,3.205968,1.261447,,,,,,"Western"
+"Spatial domains",1,16.12149,4.003998,1.392253,,,,,,"Central rural"
+"Spatial domains",2,72.6002,37.44329,22.74073,,,,,,"Central urban"
+"Spatial domains",3,14.81432,3.087467,1.002589,,,,,,"Eastern"
+"Spatial domains",4,12.28245,3.314303,1.278609,,,,,,"Northern"
+"Spatial domains",5,43.83979,13.86849,5.986068,,,,,,"Western"
