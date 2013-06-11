@@ -1,0 +1,4331 @@
+-----------------------------------------------------------------------
+      name:  <unnamed>
+       log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_20
+> 05\GAPP2/rep/140_iterate.log
+  log type:  text
+ opened on:  11 Jun 2013, 12:42:52
+
+. clear
+
+. set more off
+
+. #delimit ;
+delimiter now ;
+. *global povline_initial "$path/in/povlines_first_iof.dta";
+. *********************************************************************
+> *****
+> * 140_iterate.do        (start)
+> *
+> * Purpose: Create flexible food basket and poverty line with iterativ
+> e procedure
+> *
+> * This program will take the results from the first pass at the
+> * poverty lines and applies the corresponding spatial deflator to
+> * re-select the relatively poor, their consumption bundles, and
+> * their prices.
+> *
+> * Welfare indicator is here always temporally and spatially adjusted 
+> per capita
+> * expenditure. Here called cr_it< >.
+> *
+> * We will iterate this process 5 times which here assures convergence
+> .
+> *
+> * CA, Mar 2010: Relatively poor are those below last iterated poverty
+>  line
+> * MAH, Apr 2010: Cleaning
+> * URB, feb 2012: Commented out "drop if unit~=2"
+> *********************************************************************
+> *****;
+. /*
+> This file uses:
+>             in/povlines_first_new.dta
+>         work/hhdata.dta
+>         work/consump_nom.dta
+>         work/own.dta
+>         work/daily.dta
+>         work/temp_index_reg_tpi.dta
+>         work/cons_cod.dta
+>         work/food_cat.dta
+>         work/cons_real.dta
+>         work/products.dta
+>         work/match96_02.dta
+>         new/conversions.do
+>         
+> This file creates (where `pass' is the number of the iteration):
+>         work/codes_food_basket_flex_it`pass'.dta
+>         work/price_unit_flex_it`pass'.dta
+>         work/quan_flex_it`pass'.dta
+>         work/match_cod_flex_it`pass'.csv
+>         work/relpoor_it`pass'.dta
+>         work/povlines_it`pass'.dta
+>         work/foodshares_it`pass'.dta
+>         work/nat_pov_flex.csv
+>         work/rur_pov_flex.csv
+>         work/strata_pov_flex.csv
+>         work/spdomain_pov_flex.csv
+>         work/reg_tpi_pov_flex.csv
+> */
+> 
+> *********************************************************************
+> *****;
+. * Make a key file that will be used over and over, without change
+> * in every iteration. This will include the TEMPORALLY deflated consu
+> mption
+> * and various HH data such as hhweight, spdomain, etc.
+> *********************************************************************
+> *****;
+. use "$path/work/conpc.dta";
+
+.         sort hhid;
+
+.         merg hhid using "$path/work/hhdata.dta";
+
+.         tab _merge;
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |          1        0.01        0.01
+          3 |      7,426       99.99      100.00
+------------+-----------------------------------
+      Total |      7,427      100.00
+
+.         drop _merge;
+
+.         sort reg_tpi survquar;
+
+.         merge reg_tpi survquar using "$path/work/temp_index_reg_tpi.d
+> ta";
+variables reg_tpi survquar do not uniquely identify observations in
+    the master data
+(label lsurvquar already defined)
+(label region already defined)
+
+.         tab _merge;
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |          1        0.01        0.01
+          3 |      7,426       99.99      100.00
+------------+-----------------------------------
+      Total |      7,427      100.00
+
+.         drop _merge;
+
+.                 gen food_pc_tpi = food_pc_nom /tpi_trim;
+(12 missing values generated)
+
+.         gen cons_pc_tpi = food_pc_tpi + nf_pc_nom;
+(13 missing values generated)
+
+.         lab var food_pc_tpi "Temp-adjusted per capita food consumptio
+> n/day";
+
+.         lab var cons_pc_tpi "Temp adjusted total consumption/day";
+
+.         tempfile contpi;
+
+.         sort hhid;
+
+. save `contpi', replace;
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000001.tmp not fo
+> und)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000001.tmp saved
+
+. save contpi_, replace;
+file contpi_.dta saved
+
+. *use "$path/in/povlines_first_iterate.dta", clear;
+. *save "$path/work/povlines_first.dta", replace;
+. *********************************************************************
+> *****;
+. * Now set some information pertaining to the iterations. For now we'l
+> l
+> * manually set the number of iterations. Also specify the percentile
+> * cutpoint that we will use for defining the relatively poor.
+> *********************************************************************
+> *****;
+. local lastpass=0;
+
+. local pass=1;
+
+. * Use these two lines to manually specify the number of iterations
+> * and the cutpoint here in the do file.;
+.   *local maxit=5;
+.   *local cutpt=50;
+. * Use these few lines if you want to specify the number of iterations
+> * and percentile cutpoint by passing them as parameters on the comman
+> d
+> * line, e.g.:   wstata do new/iterate1.do 5 50;
+. if "`1'"=="" | "`2'"=="" {      ;
+.         di in red "Error: you need to specify number of iterations as
+>  first parameter";
+.         di in red "       and percentile cutpoint as second parameter
+>  on command line.";
+. };
+
+. local maxit `1';
+
+. local cutpt `2';
+
+. tempfile cutoff;
+
+. di "*****************************************************************
+> *****";
+**********************************************************************
+
+. while `pass' <= `maxit' {;
+  2.         **********************************************************
+> ****************;
+. *********************************************************************
+> *****;
+. * Pick out the bottom X percent in real consumption per capita 
+> * (temporally & spatially adjusted), as ranked by the previous iterat
+> ion.
+> * The percentile to use is defined by "cutpt". This produces a file t
+> hat
+> * has the hhid, and a dummy variable indicating if they were below th
+> e
+> * cutpoint on the last iteration.
+> *********************************************************************
+> *****;
+. *********************************************************************
+> *****;
+. /*
+> * Comment out if IOF 2008/09. (This code included instead of below co
+> de in order to replicate published figures 2002/03). ( START ) ;
+> 
+>         if "`pass'"=="1" {      ;
+>               use `contpi', clear;
+>               sort spdomain;
+>               merge spdomain using "$path/work/povlines_first.dta";
+>               tab _m;
+>               drop _m;
+> *              gen relpoor`pass'= cons_pc_tpi<=cutoff;
+>                gen relpoor`pass'= cons_pc_tpi if cons_pc_tpi<=cutoff;
+>               rename cons_pc_tpi cr_it0;
+>               sort hhid;
+>          save "$path/work/relpoor_it`pass'.dta", replace;
+> *        use "$path/work/cons_real.dta", clear;
+> *              gen cr_it0=cr2;
+>         };
+>         
+> 
+> * Comment out if IOF 2008/09. (This code included instead of below co
+> de in order to replicate published figures 2002/03). ( END ) ;
+> */
+> 
+> 
+> 
+> * Comment out if IAF 2002/03. (This code below excluded in order to r
+> eplicate published figures 2002/03). ( START ) ;
+.         if "`pass'"=="1" { ;
+  3. * Find real income at cut point initially;
+.                 use "$path/work/cons_real.dta", clear;
+  4.                                     gen cr_it0=cr2;
+  5.                         cap drop one;
+  6.             gen one=1;
+  7.                                     collapse (p`cutpt') one cr_it`
+> lastpass' [aw=popwt] ;
+  8.                                     rename cr_it`lastpass' cutoff;
+  9.                                     sort one;
+ 10.             save `cutoff', replace;
+ 11.             save cutoff, replace;
+ 12.  * Find relatively poor initially;
+.             use "$path/work/cons_real.dta", clear;
+ 13.                                                 gen cr_it`lastpass
+> '=cr2;
+ 14.             cap drop one;
+ 15.             cap drop cutoff;
+ 16.             gen one=1;
+ 17.                                     sort one;
+ 18.             merge one using `cutoff';
+ 19.             tab _merge;
+ 20.             drop _merge;
+ 21.                                     drop one;
+ 22.                            gen relpoor`pass'=cr_it`lastpass'<=cuto
+> ff;
+ 23.             *lab var relpoor`pass' "=1 if in bottom of PCE";
+.                                     tab relpoor`pass' [aw=popwt];
+ 24.                                     keep hhid cr_it`lastpass' relp
+> oor`pass' popwt;
+ 25.             sort hhid;
+ 26.         save "$path/work/relpoor_it`pass'.dta", replace;
+ 27.         };
+ 28. * Comment out if IAF 2002/03. (This code below excluded in order t
+> o replicate published figures 2002/03). ( END ) ;
+.                 if `pass'>1 {   ;
+ 29. * Find real income at cut point in iteration number `pass' ;
+.                 use "$path/work/cons_real_it`lastpass'.dta" , clear;
+ 30.                                                 cap drop one;
+ 31.                 gen one=1;
+ 32.                                                                 *C
+> A modified from hhweight*hhsize to popwt;
+.                 collapse (p`cutpt') one cr_it`lastpass' [aw=popwt] ;
+ 33.                         rename cr_it`lastpass' cutoff;
+ 34.                                                                   
+>       sort one;
+ 35.         save `cutoff', replace;
+ 36.         * Find relatively poor in iteration number `pass' ;
+.                 use "$path/work/cons_real_it`lastpass'.dta", clear;
+ 37.                                                 cap drop one;
+ 38.                 gen one=1;
+ 39.                                                 sort one;
+ 40.                 merge one using `cutoff';
+ 41.                 tab _merge;
+ 42.                 drop _merge;
+ 43.                                                 drop one;
+ 44.                 gen relpoor`pass'=cr_it`lastpass'<=cutoff;
+ 45.                 *lab var relpoor`pass' "=1 if in bottom of PCE";
+.                                                 tab relpoor`pass' [aw
+> =popwt];
+ 46. *CA modified to popwt above and to keep popwt below;
+.                 keep hhid cr_it`lastpass' relpoor`pass' popwt;
+ 47.                 sort hhid;
+ 48.         save "$path/work/relpoor_it`pass'.dta", replace;
+ 49.         };
+ 50.         **********************************************************
+> ****************;
+. * Get the consumption file, and select only those codes that are food
+> ,
+> * using our definition of "food", which includes alcoholic beverages.
+> *********************************************************************
+> *****;
+.         use "$path/work/cons_cod.dta", clear;
+ 51. *CA modified to merge in work/hhdata.dta for bootstrap;
+.     sort hhid;
+ 52.     merge hhid using "$path/work/hhdata.dta";
+ 53.     tab _m;
+ 54.     drop _m;
+ 55.         /*
+>                 sort product;
+>                 merge product using "$path/work/food_cat.dta";
+>                 tab _merge;
+>                 keep if _merge==3;
+>                 drop _merge;
+> */
+> 
+>                                 * Only food transactions ;
+.                 keep if food_cat==1;
+ 56.                 sort hhid;
+ 57. ******************************************************************
+> ********;
+. * Merge with file that has temporally AND spatially adjusted consumpt
+> ion
+> * per capita from the previous iteration, and also identifies those b
+> elow 
+> * the cutoff. Then select only those who are below the cutoff.
+> *********************************************************************
+> *****;
+.                 merge hhid using "$path/work/relpoor_it`pass'.dta";
+ 58.                 tab _merge;
+ 59.                 drop _merge;
+ 60.                                 * Keep only transactions by the po
+> or ;
+.                 keep if relpoor`pass';
+ 61. ******************************************************************
+> ********;
+. * Calculate HH level food shares. Since we're only doing shares here,
+>  we can
+> * work with the expenditures without doing temporal adjustment.
+> *********************************************************************
+> *****;
+.                 gen  food_expenditure = cod_hh_nom;
+ 62.                 *gen  food_expenditure= own_valued + daily_valued 
+> + monthly_valued + educ_valued;
+.                 egen tot_food_expen= sum (food_expen), by (hhid) ;
+ 63.                 count if food_expenditure==.;
+ 64.                 count if tot_food_expen==.;
+ 65.                 gen food_share= food_expenditure/tot_food_expen;
+ 66.                 count if food_share==.;
+ 67.                 drop if food_share==.;
+ 68.                 sort hhid product;
+ 69.                 tempfile foodshares;
+ 70.         save `foodshares', replace;
+ 71. ******************************************************************
+> **************;
+. * Now find the total (economy wise, e.g. not by HH) shares by each pr
+> oduct in
+> * order to select the most important goods in each domain's basket.
+> *********************************************************************
+> ***********;
+.                 collapse (mean) hhweight spdomain, by (hhid);
+ 72.                 sort hhid ;
+ 73.                  collapse (sum) hhweight , by(spdomain);
+ 74.                 rename hhweight tothhweight;
+ 75.                 tempfile tothhweight;
+ 76.                 sort spdomain;
+ 77.         save `tothhweight', replace;
+ 78.         use `foodshares', clear;
+ 79.                 sort spdomain;
+ 80.                 merge spdomain using `tothhweight';
+ 81.                 tab _merge;
+ 82.                 drop _merge;
+ 83.                 sort spdomain product;
+ 84.                 gen f_share_w`pass'=(food_share*hhweight)/tothhwei
+> ght;
+ 85.                 collapse (sum) f_share_w`pass', by(spdomain produc
+> t descript);
+ 86.                                sort spdomain f_share_w`pass';
+ 87.                 by spdomain: gen cumshr`pass'= sum(f_share_w`pass'
+> );
+ 88.                 count if cumshr`pass'<=.075;
+ 89.                 drop if cumshr`pass'<=.075;
+ 90.                 lab var f_share_w`pass' "average food share for th
+> e 13 spatial domains";
+ 91.         save `foodshares', replace;
+ 92.                                                 * Number of spatia
+> ls domains a food product appears ;
+.                 gen numreg=1;
+ 93.                 collapse (sum) numreg cumshr`pass', by (product de
+> script);
+ 94.                 keep product numreg descript;
+ 95.                 display _N;
+ 96.                 sort product;
+ 97.                                 * Include food product labels ;
+. *                merge product using "$path/work/products.dta";
+. *                tab _merge;
+. *                keep if _merge==3;
+.                 keep product descript numreg;
+ 98.                   sort product;
+ 99.                      display _N;
+100.           save "$path/work/codes_food_basket_flex_it`pass'.dta", r
+> eplace;
+101. ******************************************************************
+> ********;
+. *********************************************************************
+> *****;
+. * That is pretty much the part equivalent to "100_food_basket_flex.do
+> ",
+> * which figures out the food shares for the relevant reference group.
+>  Now
+> * we figure out the prices with a code stream that is adapted from
+> * "110_price_unit_flex.do".
+> *********************************************************************
+> *****;
+. *********************************************************************
+> *****;
+. *********************************************************************
+> *****************
+> * Create sorted data set with daily + own expenditure and the matched
+>  codes
+> *********************************************************************
+> *****************;
+. use "$path/in/cons_cod_trans.dta", clear;
+102. *save "$path/work/cons_cod_trans.dta", replace;
+. *drop value   ;
+. *drop quantity;
+. keep hhid product food_cat valuez quantityz unit;
+103. rename valuez    value;
+104. rename quantityz quantity;
+105. *drop count;
+. drop if quantity==0 ;
+106.         tempfile dd_acsort;
+107.         save    `dd_acsort', replace;
+108. /*
+>         use "$path/work/daily.dta", clear;
+>                 drop days;
+>                 sort product;
+>                 tempfile dd_acsort;
+>         save `dd_acsort', replace;
+>         
+>         use "$path/work/own.dta", clear;
+>                 keep hhid product valued quantityd unit;
+>                 rename valued value;
+>                 rename quantityd quantity;
+>         
+>                 *CHECK THE ZEROS IN quantity FOR NOW DELETE;
+>                 drop if quantity==0;
+>         
+>                 append using `dd_acsort';
+> */
+> 
+>                 *CA modified to insert work/hhdata.dta for bootstrap;
+.                 sort hhid;
+109.                 merge hhid using "$path/work/hhdata.dta";
+110.                 tab _m;
+111.                  drop if _m==2;
+112.                 drop _m;
+113.                                 sort product;
+114.                 gen count=1;
+115.         save `dd_acsort', replace;
+116.         **********************************************************
+> ****************;
+. * Merge the basket codes with the dd  and own data sets.
+> * Drop all codes not a part of the flexible food basket
+> *********************************************************************
+> *****;
+.                 merge product using "$path/work/codes_food_basket_fle
+> x_it`pass'.dta";
+117.                         tab _merge;
+118.                 drop if _merge~=3;
+119.                 drop _merge;
+120. ******************************************************************
+> ********************
+> * Drop observations where product code, quantity or value information
+>  is unavailable
+> *********************************************************************
+> *****************;
+.                 drop if product==. | value==. | quantity==.  ;
+121.         **********************************************************
+> ****************************
+> * Convert non-KG quantities (units, liters) into kilograms
+> *********************************************************************
+> *****************;
+. *do "$path/new/110a_conversions.do"
+> 
+> ********************************************************************
+> * There remain a few difficult to interpret observations such as lite
+> rs
+> * of fish and liters of pasta. These are dropped.
+> ********************************************************************;
+. *                $MZ drop if unit~=2;
+.         *************************************************************
+> *************;
+. * Bring in the spdomain and reg_tpi variables, and also the informati
+> on on
+> * relatively poor households.
+> *********************************************************************
+> *****;
+.                 preserve;
+122.                                                 * Temporally adjus
+> ted expenditure ;
+.                         use `contpi', clear;
+123.                                 keep hhid hhweight spdomain reg_tp
+> i survquar tpi_trim cons_pc_tpi ;
+124.                                 sort hhid;
+125.                                 tempfile hhd2;
+126.                         save `hhd2', replace;
+127.                 restore;
+128.                                 compress;
+129.                 sort hhid;
+130.                 merge hhid using `hhd2';
+131.                 tab _merge;
+132.                 drop _merge;
+133.                 sort hhid;
+134.                 merge hhid using "$path/work/relpoor_it`pass'.dta"
+> ;
+135.                 tab _merge;
+136.                 drop _merge;
+137.                                                 * Keep nominal foo
+> d transactions by poor people ;
+.                 keep if relpoor`pass';
+138.                 drop if product==.;
+139.                                                                 * 
+> Temporally deflate transaction values ;
+.                 gen value_r=value/tpi_trim;
+140. ******************************************************************
+> ********;
+. * Toss out the bottom 5% and top 5% of the HH-LEVEL prices per kg in
+> * each spdomain & product combination. This should eliminate outliers
+> * that may have an undue influence on the price calculation. 
+> *********************************************************************
+> *****;
+.                 gen hhppkg=value_r/quantity;
+141.                 egen lower5=pctile(hhppkg), p(5)  by(spdomain prod
+> uct);
+142.                 egen upper5=pctile(hhppkg), p(95) by(spdomain prod
+> uct);
+143.                 keep if hhppkg>=lower5 & hhppkg<=upper5;
+144. ******************************************************************
+> ***
+> * Note that we do prices in three ways. First, by summing quantity an
+> d value 
+> * This average price price_uw is thus quantity/value weighted. Second
+> , we
+> * calculate the price and take simple means for a transaction weighte
+> d
+> * price, price_ut. Last we take the median, price_um. But in the end
+> * we only use price_unitw
+> *********************************************************************
+> ;
+.                 gen price_ut`pass'=value_r/(quantity*1000);
+145.                 gen price_um`pass'=price_ut;
+146.                 collapse (sum) 
+>                         quantity value_r count bswt (mean) price_ut (
+> median) price_um [aw=hhweight], 
+>                         by(spdomain product);
+147.                 *Generate weighted price per gram ;
+.                 gen price_uw`pass'=value_r/(quantity*1000);
+148.                 drop value_r quantity;
+149.                 sort spdomain product;
+150.                 lab var price_ut`pass' "Average of calculated pric
+> es - transaction weighted";
+151.                 lab var price_um`pass' "Median of prices";
+152.                 lab var price_uw`pass' "Value share weighted mean 
+> prices";
+153. * Get an idea of the difference between the price measures;
+.                 gen ratiotw`pass'=price_ut`pass'/price_uw`pass';
+154.                 gen ratiomw`pass'=price_um`pass'/price_uw`pass';
+155.                 sum ratiotw`pass' ratiomw`pass';
+156.                 sort product;
+157.                 merge product using "$path/work/codes_food_basket_
+> flex_it`pass'.dta";
+158.                 tab _m;
+159.                 count if _merge~=3;
+160.                 drop if _merge~=3;
+161.                 drop _merge;
+162.                 sort product spdomain;
+163.         save "$path/work/price_unit_flex_it`pass'.dta", replace;
+164. ******************************************************************
+> ********;
+. *********************************************************************
+> *****;
+. * That concludes the prices part. Now we move to calculating the food
+> * poverty lines, which draws code from "120_povline_flex.do" with ver
+> y few
+> * changes:
+> * - The changes facilitate accumulating vectors
+> *   of intermediate results across iterations, rather than generating
+>  a
+> *   bunch of new files.
+> *********************************************************************
+> *****;
+. *********************************************************************
+> *****;
+. *********************************************************************
+> *****;
+. * Use the file with the food basket (`foodshares'), which is in share
+> s. 
+> * Then merge it with the prices file, and then with the calories file
+> .
+> * Along the way, drop those observations where we have no price infor
+> mation
+> * or no calorie information, but list them out.
+> *********************************************************************
+> *****;
+.         use `foodshares', clear;
+165.                 sort product spdomain;
+166.                 merge product spdomain using "$path/work/price_uni
+> t_flex_it`pass'.dta";
+167.                         tab _merge;
+168.                 list product spdomain descript if _merge==1;
+169.                         drop if _merge ~=3;
+170.                 drop _merge;
+171.                 sort product;
+172.                         merge product using "$path/work/calperg.dt
+> a";
+173.                 tab _merge;
+174.                                                 * This tells where
+>  we are lacking calorie info or are lacking quantity info due to 
+>                 * missing price info above;
+.                 list product spdomain descript if _merge==1;
+175.                         drop if _merge~=3;
+176.                 drop _merge;
+177.                 sort spdomain f_share_w`pass';
+178.                                 *CA modified to change count bswt;
+.                 by spdomain: count if round(bswt)<10;
+179.                                 sum bswt;
+180.                                                 drop if round(bswt
+> ) < 10;
+181.                                                                 * 
+> Total food share in spatial domain ;
+.                 by spdomain: egen baskshr=sum(f_share_w`pass');
+182.                                 * Cumulated food share in spatial 
+> domain ;
+.                 by spdomain: gen  cumshr =sum(f_share_w`pass');
+183.                 drop if cumshr<=baskshr-.9;
+184.                         drop baskshr;
+185.                 by spdomain: egen baskshr=sum(f_share_w`pass');
+186.                 tabstat baskshr , by(spdomain) st(n mean sd min ma
+> x);
+187.                                                                 * 
+> How many grams in 1 MT exp on food item ;
+.                                 gen quan`pass'=f_share_w`pass'/price_
+> uw`pass';
+188.                                 * How many calories in 1 MT exp on
+>  food item ;
+.                 gen cal_ir`pass'=quan`pass'*calperg;
+189.                                 * how many calories in 1 MT exp in
+>  food basket ;
+.                 by spdomain: egen calreg=sum(cal_ir);
+190.                         sort spdomain;
+191.                 merge spdomain using "$path/work/calpp.dta";
+192.                 tab _merge;
+193.                 drop _merge;
+194.                                                         * get the 
+> expansion factor to hit 95% of calorie requirements ;
+.                 gen ratio=.95*calpp/calreg;
+195.                         replace quan`pass'=quan`pass'*ratio;
+196.                 replace cal_ir`pass'=quan`pass'*calperg;
+197.                         sort spdomain product;
+198.                 by spdomain: egen chkcal=sum(cal_ir`pass');
+199.                 replace chkcal=chkcal/.95-calpp ;
+200.                                                 tabstat chkcal , b
+> y(spdomain) st(n mean sd min max);
+201.                         gen val_ir`pass'=quan`pass'*price_uw`pass'
+> ;
+202.                         by spdomain: egen povline_f_flex90_`pass'=
+> sum(val_ir`pass');
+203.                 replace povline_f=povline_f_flex90_`pass'/.9;
+204.                 *drop product96;
+. keep product spdomain quan`pass'  price_uw`pass' val_ir`pass' povline
+> _f_flex90_`pass' calpp calperg;
+205.                     save "$path/work/quan_flex_it`pass'.dta", repl
+> ace;
+206.                         collapse (mean) povline_f_flex90_`pass', b
+> y (spdomain);
+207.                                                 keep spdomain povl
+> ine_f_flex90_`pass';
+208.                 sort spdomain;
+209.                 save "$path/work/povline_food_flex_it`pass'.dta", 
+> replace;
+210.         **********************************************************
+> ****************;
+. *********************************************************************
+> *****;
+. * Now comes the part that draws the non-food and total poverty lines,
+> * and generates estimates of poverty measures. This is drawn from 
+> * "130_povmeas_flex.do" with a few changes.
+> *********************************************************************
+> *****;
+. *********************************************************************
+> *****;
+. *********************************************************************
+> *****
+> * Calculate non-food expenditure for HH around the food poverty line
+> *
+> * Develop a discrete triangular weighted distribution. This gives a
+> * weight of  1 to HH at +/- 18-20% from food poverty line, and
+> * weight of  2 to HH at +/- 16-18% from food poverty line, and ...
+> * weight of 10 to HH at +/-  0- 2% from food poverty line.
+> * This weight is called triwt below.
+> *********************************************************************
+> *****;
+.         use `contpi', clear;
+211.                 sort spdomain;
+212.                 merge spdomain using "$path/work/povline_food_flex
+> _it`pass'.dta";
+213.                 tab _merge;
+214.                 drop _merge;
+215.                 gen triwt=0;
+216.                 replace triwt = 11 - round(50*abs(cons_pc_tpi/povl
+> ine_f_flex90_`pass'-1)+0.5) if abs(cons_pc_tpi/povline_f_flex90_`pass
+> '-1) <= 0.2;
+217.                                 ***since the poor were very few in
+>  Kampala and Central urban for Uganda we added 1 to weights****;
+.                                 * Nearness to poverty line and popula
+> tion weights ;
+.                 gen tripopwt=(0.001+triwt)*hhweight*hhsize;
+218.                                                 preserve;
+219.                         collapse (mean) nf_pc_nom [aw=tripopwt] , 
+> by(spdomain);
+220.                         rename nf_pc_nom povline_nf_flex`pass';
+221.                         lab var povline_nf_flex`pass' "Nonfood pov
+> erty line. Flexible bundle";
+222.                         tempfile znf;
+223.                         sort spdomain;
+224.                         save `znf', replace;
+225.                                                                 re
+> store;
+226.                                 sort spdomain;
+227.                 merge spdomain using `znf';
+228.                 tab _merge;
+229.                 drop _merge;
+230. ******************************************************************
+> ********
+> * Poverty line is the sum of the food and non-food poverty lines
+> *********************************************************************
+> *****;
+.                 gen povline_flex`pass'=povline_f_flex90_`pass' + povl
+> ine_nf_flex`pass';
+231. keep spdomain povline_flex`pass';
+232.                 sort spdomain;
+233.         save "$path/work/povlines_it`pass'.dta", replace;
+234. ******************************************************************
+> ********;
+. * Create spatial price index, based on the total poverty line, with
+> * adjustment so that mean (and total) nominal consumption equals
+> * mean (and total) spatially deflated consumption.
+> *
+> * Choose arbitrary strata to be the base at first: we just use the fi
+> rst stratum.
+> *********************************************************************
+> *****;
+.         use `contpi', clear;
+235.                 sort spdomain;
+236.                 merge spdomain using "$path/work/povlines_it`pass'
+> .dta";
+237.                 tab _merge;
+238.                 drop _merge;
+239.                 gen cr= cons_pc_tpi ;
+240.                 gen linpob`pass'=povline_flex`pass';
+241.                 qui sum linpob`pass' if spdomain==1, meanonly;
+242.                 global spi_base=r(mean);
+243.                 gen spi`pass'=linpob`pass'/$spi_base;
+244.                 gen cr_it`pass'=cr/spi`pass';
+245.                 qui sum cr [aw=hhweight*hhsize];
+246.                 global sumcr=r(sum);
+247.                 qui sum cr_it`pass' [aw=hhweight*hhsize];
+248.                 global sumcr2=r(sum);
+249.                 replace spi`pass'=spi`pass'*$sumcr2/$sumcr;
+250.                 gen linpobr`pass'=linpob`pass'/spi`pass';
+251.                 replace cr_it`pass'=cr/spi`pass';
+252.                 su cr cr_it`pass' linpob`pass' linpobr`pass' [aw=h
+> hweight*hhsize];
+253.                 lab var cr "Temporally-adjusted cons pc";
+254.                 lab var cr_it`pass' "Spatially & temporally adjust
+> ed cons pc";
+255.                 lab var linpob`pass' "Poverty line";
+256.                 lab var linpobr`pass' "Real poverty line";
+257.                 lab var spi`pass' "Spatial price index";
+258.                 gen linpob=linpob`pass';
+259. ******************************************************************
+> ********
+> * calculate poverty measures with the flexible food bundle
+> *********************************************************************
+> *****;
+.                 gen h=100 if cr_it`pass'<=linpobr`pass' & linpobr`pas
+> s'~=. & cr_it`pass'~=.;
+260.                 replace  h   = 0 if cr_it`pass' > linpobr`pass' & 
+> linpobr`pass'~=. & cr_it`pass'~=.;
+261.                 gen      pg  = ((linpobr`pass' - cr_it`pass' )/lin
+> pobr`pass') *100;
+262.                 replace  pg  = 0             if h==0;
+263.                 gen      spg = ((( linpobr`pass' - cr_it`pass' )/ 
+> linpobr`pass' )^2)*100;
+264.                 replace  spg = 0             if h==0;
+265.                 gen h_flex`pass'  =h;
+266.                 gen pg_flex`pass' =pg;
+267.                 gen spg_flex`pass'=spg;
+268.                                 lab var h_flex`pass'   "Poverty he
+> adcount. Flexible bundle";
+269.                 lab var pg_flex`pass'  "Poverty gap. Flexible bund
+> le";
+270.                 lab var spg_flex`pass' "Squared poverty gap. Flexi
+> ble bundle";
+271.                 gen popwt=hhsize*hhweight;
+272.                         * Stata 10.1 syntax ;
+.                         svyset , clear;
+273.                         svyset [pweight=popwt] , str(strata) psu(p
+> su);
+274.                 svy: mean h_flex`pass' pg_flex`pass' spg_flex`pass
+> ';
+275.                 svy: mean h_flex`pass' pg_flex`pass' spg_flex`pass
+> ' , over(rural);
+276.                 svy: mean h_flex`pass' pg_flex`pass' spg_flex`pass
+> ' , over(strata);
+277.                 svy: mean h_flex`pass' pg_flex`pass' spg_flex`pass
+> ' , over(strata rural);
+278.                 svy: mean h_flex`pass' pg_flex`pass' spg_flex`pass
+> ' , over(spdomain);
+279. *preserve;
+. keep hhid popwt cr_it`pass' h_flex`pass' pg_flex`pass' spg_flex`pass'
+>  rural news reg_tpi strata spdomain;
+280.                 compress;
+281.                 sort hhid;
+282.         save "$path/work/cons_real_it`pass'.dta" , replace;
+283. *restore;
+.                                 * New cutoff point (percentile) to us
+> e in next iteration is equal to the poverty ;
+.                 * rate in this iteration ;
+.                                                 sum h_flex`pass' [aw=
+> popwt] ;
+284.                                 * Comment out next line for IAF 20
+> 02/03 in order to replicate official figures ( START );
+.                 * URB: In this case, we just use the poorest 50% as t
+> here are too few actually poor to calculate the bundle and prices..;
+.                 local cutpt= $tpi_bottom;
+285. *               local cutpt= round(r(mean));
+.                 * Comment out next line for IAF 2002/03 in order to r
+> eplicate official figures ( END );
+. *       save foodshares tempfile to disk;
+.         use `foodshares', clear;
+286.         save "$path/work/foodshares_it`pass'.dta", replace;
+287.         local lastpass = `pass';
+288.         local pass = `pass' + 1;
+289.         };
+(742 missing values generated)
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000002.tmp not fo
+> und)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000002.tmp saved
+file cutoff.dta saved
+(742 missing values generated)
+variable one does not uniquely identify observations in the master
+    data
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          3 |      7,426      100.00      100.00
+------------+-----------------------------------
+      Total |      7,426      100.00
+
+   relpoor1 |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          0 |  3,996.701       53.90       53.90
+          1 |  3,418.299       46.10      100.00
+------------+-----------------------------------
+      Total |      7,415      100.00
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\GAPP2
+> /work/relpoor_it1.dta saved
+variable hhid does not uniquely identify observations in the master
+    data
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |        133        0.13        0.13
+          2 |          1        0.00        0.13
+          3 |     99,617       99.87      100.00
+------------+-----------------------------------
+      Total |     99,751      100.00
+(7559 observations deleted)
+variable hhid does not uniquely identify observations in the master
+    data
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          2 |          6        0.01        0.01
+          3 |     92,192       99.99      100.00
+------------+-----------------------------------
+      Total |     92,198      100.00
+(60721 observations deleted)
+(5 missing values generated)
+    5
+    0
+(5 missing values generated)
+    5
+(5 observations deleted)
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000003.tmp not fo
+> und)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000003.tmp saved
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000004.tmp not fo
+> und)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000004.tmp saved
+variable spdomain does not uniquely identify observations in the
+    master data
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          3 |     31,472      100.00      100.00
+------------+-----------------------------------
+      Total |     31,472      100.00
+  163
+(163 observations deleted)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000003.tmp saved
+42
+42
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\GAPP2
+> /work/codes_food_basket_flex_it1.dta saved
+(2770 observations deleted)
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000005.tmp not fo
+> und)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000005.tmp saved
+variable hhid does not uniquely identify observations in the master
+    data
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |        133        0.15        0.15
+          2 |        163        0.18        0.33
+          3 |     89,422       99.67      100.00
+------------+-----------------------------------
+      Total |     89,718      100.00
+(163 observations deleted)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000005.tmp saved
+variable product does not uniquely identify observations in the
+    master data
+product was int now float
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |     10,717       11.97       11.97
+          2 |          1        0.00       11.97
+          3 |     78,838       88.03      100.00
+------------+-----------------------------------
+      Total |     89,556      100.00
+(10718 observations deleted)
+(62 observations deleted)
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000007.tmp not fo
+> und)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000007.tmp saved
+product was float now int
+unit was float now byte
+food_cat was float now byte
+region was float now byte
+psu was int now byte
+survquar was float now byte
+survmon was float now byte
+strata was float now byte
+rural was float now byte
+reg_tpi was float now byte
+spdomain was float now byte
+news was float now byte
+bswt was float now byte
+count was float now byte
+descript was float now byte
+numreg was double now byte
+variable hhid does not uniquely identify observations in the master
+    data
+survquar was byte now float
+reg_tpi was byte now float
+spdomain was byte now float
+(label region already defined)
+(label lsurvquar already defined)
+(label lspdomain already defined)
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          2 |        212        0.27        0.27
+          3 |     78,776       99.73      100.00
+------------+-----------------------------------
+      Total |     78,988      100.00
+variable hhid does not uniquely identify observations in the master
+    data
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |          1        0.00        0.00
+          3 |     78,987      100.00      100.00
+------------+-----------------------------------
+      Total |     78,988      100.00
+(51004 observations deleted)
+(32 observations deleted)
+(2035 observations deleted)
+
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+    ratiotw1 |       252     2.53851    16.83134   .8776407   263.2088
+    ratiomw1 |       252     2.49688    19.96462   .1777841   311.3565
+variable product does not uniquely identify observations in the
+    master data
+product was int now float
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          2 |          2        0.79        0.79
+          3 |        252       99.21      100.00
+------------+-----------------------------------
+      Total |        254      100.00
+    2
+(2 observations deleted)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\GAPP2
+> /work/price_unit_flex_it1.dta saved
+(label lspdomain already defined)
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |         12        4.55        4.55
+          2 |         81       30.68       35.23
+          3 |        171       64.77      100.00
+------------+-----------------------------------
+      Total |        264      100.00
+
+     +-------------------------------------+
+     | product         spdomain   descript |
+     |-------------------------------------|
+172. |     157    Central urban          1 |
+173. |     157    Central rural          1 |
+174. |     157    Eastern rural          1 |
+175. |     157   Northern urban          1 |
+176. |     157    Western urban          1 |
+     |-------------------------------------|
+177. |     157    Western rural          1 |
+178. |     161    Central urban          1 |
+179. |     161    Central rural          1 |
+180. |     161    Eastern rural          1 |
+181. |     161   Northern urban          1 |
+     |-------------------------------------|
+182. |     161   Northern rural          1 |
+183. |     161    Western urban          1 |
+     +-------------------------------------+
+(93 observations deleted)
+variable product does not uniquely identify observations in the
+    master data
+(note: descript is str30 in using data but will be float now)
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          2 |         22       11.40       11.40
+          3 |        171       88.60      100.00
+------------+-----------------------------------
+      Total |        193      100.00
+(22 observations deleted)
+
+-----------------------------------------------------------------------
+-> spdomain = Central urban
+   11
+-----------------------------------------------------------------------
+-> spdomain = Central rural
+    0
+-----------------------------------------------------------------------
+-> spdomain = Eastern rural
+    0
+-----------------------------------------------------------------------
+-> spdomain = Northern urban
+    7
+-----------------------------------------------------------------------
+-> spdomain = Northern rural
+    1
+-----------------------------------------------------------------------
+-> spdomain = Western urban
+    2
+-----------------------------------------------------------------------
+-> spdomain = Western rural
+    0
+
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+        bswt |       171    140.2047    166.2031          1        897
+(21 observations deleted)
+(2 observations deleted)
+
+Summary for variables: baskshr
+     by categories of: spdomain (Spatial domains: each with own poverty
+>  line (they are 9))
+
+      spdomain |         N      mean        sd       min       max
+---------------+--------------------------------------------------
+ Central urban |        10  .6476496         0  .6476496  .6476496
+ Central rural |        27  .8866609         0  .8866609  .8866609
+ Eastern rural |        28   .898918         0   .898918   .898918
+Northern urban |        10  .5857797         0  .5857797  .5857797
+Northern rural |        18  .8919194         0  .8919194  .8919194
+ Western urban |        27  .8177038         0  .8177038  .8177038
+ Western rural |        28  .9049791         0  .9049791  .9049791
+---------------+--------------------------------------------------
+         Total |       148  .8440257  .0958321  .5857797  .9049791
+------------------------------------------------------------------
+variable spdomain does not uniquely identify observations in the
+    master data
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          2 |          2        1.33        1.33
+          3 |        148       98.67      100.00
+------------+-----------------------------------
+      Total |        150      100.00
+(2 missing values generated)
+(148 real changes made)
+(142 real changes made)
+(150 real changes made)
+
+Summary for variables: chkcal
+     by categories of: spdomain (Spatial domains: each with own poverty
+>  line (they are 9))
+
+      spdomain |         N      mean        sd       min       max
+---------------+--------------------------------------------------
+       Kampala |         1 -1169.365         . -1169.365 -1169.365
+ Central urban |        10  .0000578         0  .0000578  .0000578
+ Central rural |        27 -.0000835         0 -.0000835 -.0000835
+ Eastern urban |         1 -1196.554         . -1196.554 -1196.554
+ Eastern rural |        28  .0000385         0  .0000385  .0000385
+Northern urban |        10  .0000321         0  .0000321  .0000321
+Northern rural |        18   .000045         0   .000045   .000045
+ Western urban |        27  -.000045         0  -.000045  -.000045
+ Western rural |        28 -.0000899         0 -.0000899 -.0000899
+---------------+--------------------------------------------------
+         Total |       150 -15.77281  136.1463 -1196.554  .0000578
+------------------------------------------------------------------
+(2 missing values generated)
+(148 real changes made)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\GAPP2
+> /work/quan_flex_it1.dta saved
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\GAPP2
+> /work/povline_food_flex_it1.dta saved
+variable spdomain does not uniquely identify observations in the
+    master data
+(label lspdomain already defined)
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |          1        0.01        0.01
+          3 |      7,426       99.99      100.00
+------------+-----------------------------------
+      Total |      7,427      100.00
+(148 real changes made)
+(12 missing values generated)
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000009.tmp not fo
+> und)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000009.tmp saved
+variable spdomain does not uniquely identify observations in the
+    master data
+(label lspdomain already defined)
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |          1        0.01        0.01
+          3 |      7,426       99.99      100.00
+------------+-----------------------------------
+      Total |      7,427      100.00
+(1 missing value generated)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\GAPP2
+> /work/povlines_it1.dta saved
+variable spdomain does not uniquely identify observations in the
+    master data
+variable spdomain does not uniquely identify observations in
+    C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\GAPP
+    > 2/work/povlines_it1.dta
+(label lspdomain already defined)
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          3 |      7,427      100.00      100.00
+------------+-----------------------------------
+      Total |      7,427      100.00
+(13 missing values generated)
+(1 missing value generated)
+(1 missing value generated)
+(13 missing values generated)
+(7426 real changes made)
+(1 missing value generated)
+(7414 real changes made)
+
+    Variable |     Obs      Weight        Mean   Std. Dev.       Min   
+>      Max
+-------------+---------------------------------------------------------
+> --------
+          cr |    7414  30109848.2    1106.447   1372.576   61.85136   
+> 113681.6
+      cr_it1 |    7414  30109848.2    1106.447   1121.081    33.7938   
+> 92370.14
+     linpob1 |    7415  30112959.1    454.1564    389.776   135.1897   
+> 1664.246
+    linpobr1 |    7415  30112959.1    378.1317   .0000264   378.1317   
+> 378.1317
+(1 missing value generated)
+(6688 missing values generated)
+(6675 real changes made)
+(13 missing values generated)
+(6675 real changes made)
+(13 missing values generated)
+(6675 real changes made)
+(13 missing values generated)
+(13 missing values generated)
+(13 missing values generated)
+(12 missing values generated)
+
+      pweight: popwt
+          VCE: linearized
+  Single unit: missing
+     Strata 1: strata
+         SU 1: psu
+        FPC 1: <zero>
+(running mean on estimation sample)
+
+Survey: Mean estimation
+
+Number of strata =      10        Number of obs    =      7414
+Number of PSUs   =     297        Population size  =  30109848
+                                  Design df        =       287
+
+--------------------------------------------------------------
+             |             Linearized
+             |       Mean   Std. Err.     [95% Conf. Interval]
+-------------+------------------------------------------------
+     h_flex1 |   10.81581   .8294733      9.183188    12.44843
+    pg_flex1 |   2.769334   .3094665      2.160222    3.378446
+   spg_flex1 |    1.10079   .1571219      .7915326    1.410047
+--------------------------------------------------------------
+(running mean on estimation sample)
+
+Survey: Mean estimation
+
+Number of strata =      10        Number of obs    =      7414
+Number of PSUs   =     297        Population size  =  30109848
+                                  Design df        =       287
+
+        Urban: rural = Urban
+        Rural: rural = Rural
+
+--------------------------------------------------------------
+             |             Linearized
+        Over |       Mean   Std. Err.     [95% Conf. Interval]
+-------------+------------------------------------------------
+h_flex1      |
+       Urban |    34.1156    2.69816      28.80491     39.4263
+       Rural |   6.435853    .506343      5.439237     7.43247
+-------------+------------------------------------------------
+pg_flex1     |
+       Urban |   10.34772    1.22882      7.929079    12.76636
+       Rural |   1.344729   .1544341      1.040762    1.648696
+-------------+------------------------------------------------
+spg_flex1    |
+       Urban |   4.493108   .6910506      3.132937    5.853278
+       Rural |   .4630932   .0704583      .3244126    .6017737
+--------------------------------------------------------------
+(running mean on estimation sample)
+
+Survey: Mean estimation
+
+Number of strata =      10        Number of obs    =      7414
+Number of PSUs   =     297        Population size  =  30109848
+                                  Design df        =       287
+
+      Kampala: strata = Kampala
+    _subpop_2: strata = Central 1
+    _subpop_3: strata = Central 2
+    _subpop_4: strata = East Central
+      Eastern: strata = Eastern
+    _subpop_6: strata = Mid Northern
+    _subpop_7: strata = North East
+    _subpop_8: strata = West Nile
+    _subpop_9: strata = Mid Western
+   _subpop_10: strata = South Western
+
+--------------------------------------------------------------
+             |             Linearized
+        Over |       Mean   Std. Err.     [95% Conf. Interval]
+-------------+------------------------------------------------
+h_flex1      |
+     Kampala |   36.28238   4.316114      27.78713    44.77763
+   _subpop_2 |   8.070023   1.841849      4.444778    11.69527
+   _subpop_3 |   12.25446   3.302606      5.754062    18.75487
+   _subpop_4 |    4.73928   1.027991      2.715922    6.762638
+     Eastern |   5.105347   1.529682      2.094528    8.116165
+   _subpop_6 |   5.747371   1.762079      2.279134    9.215608
+   _subpop_7 |   8.732556   4.413198      .0462161     17.4189
+   _subpop_8 |   5.560171   2.400439      .8354726    10.28487
+   _subpop_9 |   13.22614   2.130382      9.032982    17.41929
+  _subpop_10 |   14.49782    1.54442      11.45799    17.53765
+-------------+------------------------------------------------
+pg_flex1     |
+     Kampala |   11.20248   2.005512      7.255106    15.14986
+   _subpop_2 |   1.841669    .467573      .9213623    2.761977
+   _subpop_3 |   3.147077   1.288825      .6103288    5.683826
+   _subpop_4 |   1.090716   .2881337      .5235923    1.657839
+     Eastern |   1.472175    .602758      .2857884    2.658562
+   _subpop_6 |   1.391401   .5084351       .390666    2.392135
+   _subpop_7 |   2.336973   1.687311      -.984101    5.658047
+   _subpop_8 |   1.353454   .5846853       .202639    2.504269
+   _subpop_9 |   3.305183   .8536907      1.624894    4.985471
+  _subpop_10 |   3.217144   .4888262      2.255005    4.179283
+-------------+------------------------------------------------
+spg_flex1    |
+     Kampala |   4.940525   1.057145      2.859784    7.021265
+   _subpop_2 |    .603355   .1788114      .2514069    .9553031
+   _subpop_3 |   1.327765   .6877598      -.025928    2.681458
+   _subpop_4 |   .4095539     .12941      .1548408    .6642669
+     Eastern |   .6380959   .2994082      .0487815     1.22741
+   _subpop_6 |   .5382852   .2270986      .0912951    .9852753
+   _subpop_7 |   .9848044   .8374231     -.6634654    2.633074
+   _subpop_8 |   .4383632   .1809086      .0822873     .794439
+   _subpop_9 |   1.270102   .4249861      .4336175    2.106587
+  _subpop_10 |   1.125549   .2184767      .6955293    1.555569
+--------------------------------------------------------------
+(running mean on estimation sample)
+
+Survey: Mean estimation
+
+Number of strata =      10        Number of obs    =      7414
+Number of PSUs   =     297        Population size  =  30109848
+                                  Design df        =       287
+
+         Over: strata rural
+    _subpop_1: Kampala Urban
+    _subpop_2: Central 1 Urban
+    _subpop_3: Central 1 Rural
+    _subpop_4: Central 2 Urban
+    _subpop_5: Central 2 Rural
+    _subpop_6: East Central Urban
+    _subpop_7: East Central Rural
+    _subpop_8: Eastern Urban
+    _subpop_9: Eastern Rural
+   _subpop_10: Mid Northern Urban
+   _subpop_11: Mid Northern Rural
+   _subpop_12: North East Urban
+   _subpop_13: North East Rural
+   _subpop_14: West Nile Urban
+   _subpop_15: West Nile Rural
+   _subpop_16: Mid Western Urban
+   _subpop_17: Mid Western Rural
+   _subpop_18: South Western Urban
+   _subpop_19: South Western Rural
+
+--------------------------------------------------------------
+             |             Linearized
+        Over |       Mean   Std. Err.     [95% Conf. Interval]
+-------------+------------------------------------------------
+h_flex1      |
+   _subpop_1 |   36.28238   4.316114      27.78713    44.77763
+   _subpop_2 |   34.94357   6.811409      21.53692    48.35023
+   _subpop_3 |   3.958315    1.45657        1.0914    6.825229
+   _subpop_4 |   51.34002   1.600457       48.1899    54.49014
+   _subpop_5 |   6.693115   1.081429      4.564577    8.821654
+   _subpop_6 |   38.41203   4.288407      29.97131    46.85275
+   _subpop_7 |   2.174859    .548178        1.0959    3.253818
+   _subpop_8 |   36.21004   4.892574      26.58017    45.83992
+   _subpop_9 |   2.427689   .8410558      .7722688    4.083109
+  _subpop_10 |   35.51656   5.924754      23.85508    47.17804
+  _subpop_11 |   .5072558   .3429608     -.1677816    1.182293
+  _subpop_12 |   42.27906   3.945045      34.51416    50.04395
+  _subpop_13 |   3.389263    .728484      1.955414    4.823112
+  _subpop_14 |   33.00213   8.369577      16.52859    49.47566
+  _subpop_15 |   .9048635    .563171     -.2036058    2.013333
+  _subpop_16 |   4.151773   1.327489      1.538925    6.764622
+  _subpop_17 |   14.37614   2.180616      10.08411    18.66817
+  _subpop_18 |    4.12265   .9762342      2.201163    6.044137
+  _subpop_19 |   15.13964   1.648848      11.89427    18.38501
+-------------+------------------------------------------------
+pg_flex1     |
+   _subpop_1 |   11.20248   2.005512      7.255106    15.14986
+   _subpop_2 |   9.209006   2.304544      4.673054    13.74496
+   _subpop_3 |   .7144521   .2964762      .1309086    1.297995
+   _subpop_4 |   17.60136   3.379408      10.94979    24.25292
+   _subpop_5 |   1.090428   .1915917      .7133249    1.467531
+   _subpop_6 |   10.11382   1.698063      6.771584    13.45606
+   _subpop_7 |   .4035416   .1702993      .0683476    .7387355
+   _subpop_8 |   13.93068   2.342209      9.320589    18.54076
+   _subpop_9 |   .3996814   .1943897      .0170711    .7822916
+  _subpop_10 |   9.187068   2.235121       4.78776    13.58638
+  _subpop_11 |   .0191697   .0173109     -.0149028    .0532421
+  _subpop_12 |   13.95452   2.847115      8.350649     19.5584
+  _subpop_13 |   .4865272   .1372245       .216433    .7566213
+  _subpop_14 |   8.244301   2.094524      4.121725    12.36688
+  _subpop_15 |   .1844774   .1322674     -.0758597    .4448146
+  _subpop_16 |   .7940363   .2938986      .2155663    1.372506
+  _subpop_17 |   3.623423    .913421      1.825569    5.421277
+  _subpop_18 |    .775921   .4156994     -.0422852    1.594127
+  _subpop_19 |   3.368161   .5170988      2.350374    4.385948
+-------------+------------------------------------------------
+spg_flex1    |
+   _subpop_1 |   4.940525   1.057145      2.859784    7.021265
+   _subpop_2 |   3.368769   .9912725      1.417683    5.319855
+   _subpop_3 |    .180241   .0938705     -.0045209    .3650029
+   _subpop_4 |   8.487708   2.497274      3.572412      13.403
+   _subpop_5 |   .3090014   .0779432      .1555887    .4624142
+   _subpop_6 |   3.825458   .9647163      1.926642    5.724275
+   _subpop_7 |   .1494083   .0921267     -.0319214     .330738
+   _subpop_8 |   6.603882   1.430982      3.787331    9.420432
+   _subpop_9 |   .1245293   .0698651     -.0129837    .2620424
+  _subpop_10 |   3.589726   1.165559      1.295599    5.883853
+  _subpop_11 |    .001156   .0011312     -.0010706    .0033825
+  _subpop_12 |   6.529325   1.605252      3.369765    9.688884
+  _subpop_13 |    .101672   .0324572      .0377876    .1655564
+  _subpop_14 |   2.541463   .6309685      1.299551    3.783376
+  _subpop_15 |   .0815891   .0603479     -.0371915    .2003698
+  _subpop_16 |   .2419703   .0982791      .0485311    .4354095
+  _subpop_17 |   1.400399   .4611402      .4927531    2.308045
+  _subpop_18 |   .3012468   .2422406     -.1755466    .7780402
+  _subpop_19 |   1.176542   .2311445      .7215883    1.631495
+--------------------------------------------------------------
+(running mean on estimation sample)
+
+Survey: Mean estimation
+
+Number of strata =      10        Number of obs    =      7414
+Number of PSUs   =     297        Population size  =  30109848
+                                  Design df        =       287
+
+      Kampala: spdomain = Kampala
+    _subpop_2: spdomain = Central urban
+    _subpop_3: spdomain = Central rural
+    _subpop_4: spdomain = Eastern urban
+    _subpop_5: spdomain = Eastern rural
+    _subpop_6: spdomain = Northern urban
+    _subpop_7: spdomain = Northern rural
+    _subpop_8: spdomain = Western urban
+    _subpop_9: spdomain = Western rural
+
+--------------------------------------------------------------
+             |             Linearized
+        Over |       Mean   Std. Err.     [95% Conf. Interval]
+-------------+------------------------------------------------
+h_flex1      |
+     Kampala |   36.28238   4.316114      27.78713    44.77763
+   _subpop_2 |   46.01614    3.92673       38.2873    53.74498
+   _subpop_3 |   5.848107   .8962241      4.084101    7.612113
+   _subpop_4 |   37.47891   2.719671      32.12588    42.83194
+   _subpop_5 |   2.454493   .4279078      1.612257    3.296729
+   _subpop_6 |    35.8803   4.616184      26.79443    44.96617
+   _subpop_7 |   .7142307   .2888434      .1457106    1.282751
+   _subpop_8 |   4.138667     .85215      2.461411    5.815923
+   _subpop_9 |   14.85436   1.319383      12.25747    17.45126
+-------------+------------------------------------------------
+pg_flex1     |
+     Kampala |   11.20248   2.005512      7.255106    15.14986
+   _subpop_2 |   14.87638   2.931343      9.106725    20.64604
+   _subpop_3 |   .9742576   .1638675       .651723    1.296792
+   _subpop_4 |   11.94682   1.563832      8.868789    15.02486
+   _subpop_5 |   .4247091   .1157675       .196848    .6525702
+   _subpop_6 |   9.451501   1.665244      6.173861    12.72914
+   _subpop_7 |   .0734312   .0385559      -.002457    .1493195
+   _subpop_8 |    .785884   .2476521      .2984392    1.273329
+   _subpop_9 |   3.463539   .4702185      2.538025    4.389054
+-------------+------------------------------------------------
+spg_flex1    |
+     Kampala |   4.940525   1.057145      2.859784    7.021265
+   _subpop_2 |   6.825602   1.997883      2.893241    10.75796
+   _subpop_3 |   .2692166   .0618953      .1473903    .3910429
+   _subpop_4 |   5.194631   .9618497      3.301456    7.087805
+   _subpop_5 |   .1384289   .0543466      .0314604    .2453974
+   _subpop_6 |   3.612558   .8507817      1.937995    5.287121
+   _subpop_7 |   .0242655   .0163952     -.0080046    .0565357
+   _subpop_8 |   .2686461   .1206844      .0311073    .5061849
+   _subpop_9 |   1.260185   .2250045      .8173172    1.703054
+--------------------------------------------------------------
+strata was float now byte
+rural was float now byte
+reg_tpi was float now byte
+spdomain was float now byte
+news was float now byte
+h_flex1 was float now byte
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\GAPP2
+> /work/cons_real_it1.dta saved
+
+    Variable |     Obs      Weight        Mean   Std. Dev.       Min   
+>      Max
+-------------+---------------------------------------------------------
+> --------
+     h_flex1 |    7414  30109848.2    10.81581   31.06009          0   
+>      100
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\GAPP2
+> /work/foodshares_it1.dta saved
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000002.tmp saved
+variable one does not uniquely identify observations in the master
+    data
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          3 |      7,427      100.00      100.00
+------------+-----------------------------------
+      Total |      7,427      100.00
+
+   relpoor2 |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          0 |3,707.38923       50.00       50.00
+          1 |3,707.61077       50.00      100.00
+------------+-----------------------------------
+      Total |      7,415      100.00
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\GAPP2
+> /work/relpoor_it2.dta saved
+variable hhid does not uniquely identify observations in the master
+    data
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |        133        0.13        0.13
+          2 |          1        0.00        0.13
+          3 |     99,617       99.87      100.00
+------------+-----------------------------------
+      Total |     99,751      100.00
+(7559 observations deleted)
+variable hhid does not uniquely identify observations in the master
+    data
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          2 |          7        0.01        0.01
+          3 |     92,192       99.99      100.00
+------------+-----------------------------------
+      Total |     92,199      100.00
+(53687 observations deleted)
+(4 missing values generated)
+    4
+    0
+(4 missing values generated)
+    4
+(4 observations deleted)
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k00000a.tmp not fo
+> und)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k00000a.tmp saved
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k00000b.tmp not fo
+> und)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k00000b.tmp saved
+variable spdomain does not uniquely identify observations in the
+    master data
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          3 |     38,508      100.00      100.00
+------------+-----------------------------------
+      Total |     38,508      100.00
+  228
+(228 observations deleted)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k00000a.tmp saved
+49
+49
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\GAPP2
+> /work/codes_food_basket_flex_it2.dta saved
+(2770 observations deleted)
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k00000c.tmp not fo
+> und)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k00000c.tmp saved
+variable hhid does not uniquely identify observations in the master
+    data
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |        133        0.15        0.15
+          2 |        163        0.18        0.33
+          3 |     89,422       99.67      100.00
+------------+-----------------------------------
+      Total |     89,718      100.00
+(163 observations deleted)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k00000c.tmp saved
+variable product does not uniquely identify observations in the
+    master data
+product was int now float
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |      2,089        2.33        2.33
+          2 |          2        0.00        2.33
+          3 |     87,466       97.67      100.00
+------------+-----------------------------------
+      Total |     89,557      100.00
+(2091 observations deleted)
+(64 observations deleted)
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k00000e.tmp not fo
+> und)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k00000e.tmp saved
+product was float now int
+unit was float now byte
+food_cat was float now byte
+region was float now byte
+psu was int now byte
+survquar was float now byte
+survmon was float now byte
+strata was float now byte
+rural was float now byte
+reg_tpi was float now byte
+spdomain was float now byte
+news was float now byte
+bswt was float now byte
+count was float now byte
+descript was float now byte
+numreg was double now byte
+variable hhid does not uniquely identify observations in the master
+    data
+survquar was byte now float
+reg_tpi was byte now float
+spdomain was byte now float
+(label region already defined)
+(label lsurvquar already defined)
+(label lspdomain already defined)
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          2 |        165        0.19        0.19
+          3 |     87,402       99.81      100.00
+------------+-----------------------------------
+      Total |     87,567      100.00
+variable hhid does not uniquely identify observations in the master
+    data
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          3 |     87,567      100.00      100.00
+------------+-----------------------------------
+      Total |     87,567      100.00
+(50720 observations deleted)
+(45 observations deleted)
+(2580 observations deleted)
+
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+    ratiotw2 |       406    2.018629    10.38074   .8325761   189.6303
+    ratiomw2 |       406    2.066568    14.99169   .1777841    265.028
+variable product does not uniquely identify observations in the
+    master data
+product was int now float
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          2 |          3        0.73        0.73
+          3 |        406       99.27      100.00
+------------+-----------------------------------
+      Total |        409      100.00
+    3
+(3 observations deleted)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\GAPP2
+> /work/price_unit_flex_it2.dta saved
+(label lspdomain already defined)
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |         18        4.25        4.25
+          2 |        166       39.15       43.40
+          3 |        240       56.60      100.00
+------------+-----------------------------------
+      Total |        424      100.00
+
+     +-------------------------------------+
+     | product         spdomain   descript |
+     |-------------------------------------|
+239. |     157          Kampala          1 |
+240. |     157    Central urban          1 |
+241. |     157    Central rural          1 |
+242. |     157    Eastern urban          1 |
+243. |     157    Eastern rural          1 |
+     |-------------------------------------|
+244. |     157   Northern urban          1 |
+245. |     157    Western urban          1 |
+246. |     157    Western rural          1 |
+249. |     160          Kampala          1 |
+250. |     160    Central urban          1 |
+     |-------------------------------------|
+251. |     161          Kampala          1 |
+252. |     161    Central urban          1 |
+253. |     161    Central rural          1 |
+254. |     161    Eastern urban          1 |
+255. |     161    Eastern rural          1 |
+     |-------------------------------------|
+256. |     161   Northern urban          1 |
+257. |     161   Northern rural          1 |
+258. |     161    Western urban          1 |
+     +-------------------------------------+
+(184 observations deleted)
+variable product does not uniquely identify observations in the
+    master data
+(note: descript is str30 in using data but will be float now)
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          2 |         16        6.25        6.25
+          3 |        240       93.75      100.00
+------------+-----------------------------------
+      Total |        256      100.00
+(16 observations deleted)
+
+-----------------------------------------------------------------------
+-> spdomain = Kampala
+    1
+-----------------------------------------------------------------------
+-> spdomain = Central urban
+    3
+-----------------------------------------------------------------------
+-> spdomain = Central rural
+    0
+-----------------------------------------------------------------------
+-> spdomain = Eastern urban
+    0
+-----------------------------------------------------------------------
+-> spdomain = Eastern rural
+    0
+-----------------------------------------------------------------------
+-> spdomain = Northern urban
+    1
+-----------------------------------------------------------------------
+-> spdomain = Northern rural
+    0
+-----------------------------------------------------------------------
+-> spdomain = Western urban
+    4
+-----------------------------------------------------------------------
+-> spdomain = Western rural
+    0
+
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+        bswt |       240    121.5917    117.2799          7        797
+(9 observations deleted)
+(3 observations deleted)
+
+Summary for variables: baskshr
+     by categories of: spdomain (Spatial domains: each with own poverty
+>  line (they are 9))
+
+      spdomain |         N      mean        sd       min       max
+---------------+--------------------------------------------------
+       Kampala |        25   .713111         0   .713111   .713111
+ Central urban |        24  .7434268         0  .7434268  .7434268
+ Central rural |        26  .8942902         0  .8942902  .8942902
+ Eastern urban |        30  .8152474         0  .8152474  .8152474
+ Eastern rural |        28  .9073393         0  .9073393  .9073393
+Northern urban |        24  .8718516         0  .8718516  .8718516
+Northern rural |        19  .8959973         0  .8959973  .8959973
+ Western urban |        25  .8220707         0  .8220707  .8220707
+ Western rural |        27  .9021698         0  .9021698  .9021698
+---------------+--------------------------------------------------
+         Total |       228  .8405405   .067836   .713111  .9073393
+------------------------------------------------------------------
+variable spdomain does not uniquely identify observations in the
+    master data
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          3 |        228      100.00      100.00
+------------+-----------------------------------
+      Total |        228      100.00
+(228 real changes made)
+(220 real changes made)
+(228 real changes made)
+
+Summary for variables: chkcal
+     by categories of: spdomain (Spatial domains: each with own poverty
+>  line (they are 9))
+
+      spdomain |         N      mean        sd       min       max
+---------------+--------------------------------------------------
+       Kampala |        25 -.0000193         0 -.0000193 -.0000193
+ Central urban |        24  .0000578         0  .0000578  .0000578
+ Central rural |        26 -.0000835         0 -.0000835 -.0000835
+ Eastern urban |        30   .000045         0   .000045   .000045
+ Eastern rural |        28 -.0000899         0 -.0000899 -.0000899
+Northern urban |        24  .0000321         0  .0000321  .0000321
+Northern rural |        19   .000045         0   .000045   .000045
+ Western urban |        25  .0000835         0  .0000835  .0000835
+ Western rural |        27  .0000385         0  .0000385  .0000385
+---------------+--------------------------------------------------
+         Total |       228  .0000102  .0000598 -.0000899  .0000835
+------------------------------------------------------------------
+(228 real changes made)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\GAPP2
+> /work/quan_flex_it2.dta saved
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\GAPP2
+> /work/povline_food_flex_it2.dta saved
+variable spdomain does not uniquely identify observations in the
+    master data
+(label lspdomain already defined)
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |          1        0.01        0.01
+          3 |      7,426       99.99      100.00
+------------+-----------------------------------
+      Total |      7,427      100.00
+(143 real changes made)
+(12 missing values generated)
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k00000g.tmp not fo
+> und)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k00000g.tmp saved
+variable spdomain does not uniquely identify observations in the
+    master data
+(label lspdomain already defined)
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |          1        0.01        0.01
+          3 |      7,426       99.99      100.00
+------------+-----------------------------------
+      Total |      7,427      100.00
+(1 missing value generated)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\GAPP2
+> /work/povlines_it2.dta saved
+variable spdomain does not uniquely identify observations in the
+    master data
+variable spdomain does not uniquely identify observations in
+    C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\GAPP
+    > 2/work/povlines_it2.dta
+(label lspdomain already defined)
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          3 |      7,427      100.00      100.00
+------------+-----------------------------------
+      Total |      7,427      100.00
+(13 missing values generated)
+(1 missing value generated)
+(1 missing value generated)
+(13 missing values generated)
+(7426 real changes made)
+(1 missing value generated)
+(7414 real changes made)
+
+    Variable |     Obs      Weight        Mean   Std. Dev.       Min   
+>      Max
+-------------+---------------------------------------------------------
+> --------
+          cr |    7414  30109848.2    1106.447   1372.576   61.85136   
+> 113681.6
+      cr_it2 |    7414  30109848.2    1106.447   1130.267   27.33145   
+> 86787.72
+     linpob2 |    7415  30112959.1     426.898   402.9489   135.3287   
+> 1914.104
+    linpobr2 |    7415  30112959.1    351.7362   .0000152   351.7361   
+> 351.7362
+(1 missing value generated)
+(6820 missing values generated)
+(6807 real changes made)
+(13 missing values generated)
+(6807 real changes made)
+(13 missing values generated)
+(6807 real changes made)
+(13 missing values generated)
+(13 missing values generated)
+(13 missing values generated)
+(12 missing values generated)
+
+      pweight: popwt
+          VCE: linearized
+  Single unit: missing
+     Strata 1: strata
+         SU 1: psu
+        FPC 1: <zero>
+(running mean on estimation sample)
+
+Survey: Mean estimation
+
+Number of strata =      10        Number of obs    =      7414
+Number of PSUs   =     297        Population size  =  30109848
+                                  Design df        =       287
+
+--------------------------------------------------------------
+             |             Linearized
+             |       Mean   Std. Err.     [95% Conf. Interval]
+-------------+------------------------------------------------
+     h_flex2 |   8.823645   .5837119      7.674746    9.972544
+    pg_flex2 |   2.323193   .2262554      1.877863    2.768524
+   spg_flex2 |   .9425352   .1174536      .7113556    1.173715
+--------------------------------------------------------------
+(running mean on estimation sample)
+
+Survey: Mean estimation
+
+Number of strata =      10        Number of obs    =      7414
+Number of PSUs   =     297        Population size  =  30109848
+                                  Design df        =       287
+
+        Urban: rural = Urban
+        Rural: rural = Rural
+
+--------------------------------------------------------------
+             |             Linearized
+        Over |       Mean   Std. Err.     [95% Conf. Interval]
+-------------+------------------------------------------------
+h_flex2      |
+       Urban |   23.41807   3.004076      17.50525    29.33088
+       Rural |   6.080147   .4832662      5.128951    7.031343
+-------------+------------------------------------------------
+pg_flex2     |
+       Urban |   7.805951   1.234197      5.376725    10.23518
+       Rural |    1.29253   .1507149      .9958835    1.589177
+-------------+------------------------------------------------
+spg_flex2    |
+       Urban |   3.604107   .6586047      2.307799    4.900415
+       Rural |   .4422058   .0678202      .3087178    .5756938
+--------------------------------------------------------------
+(running mean on estimation sample)
+
+Survey: Mean estimation
+
+Number of strata =      10        Number of obs    =      7414
+Number of PSUs   =     297        Population size  =  30109848
+                                  Design df        =       287
+
+      Kampala: strata = Kampala
+    _subpop_2: strata = Central 1
+    _subpop_3: strata = Central 2
+    _subpop_4: strata = East Central
+      Eastern: strata = Eastern
+    _subpop_6: strata = Mid Northern
+    _subpop_7: strata = North East
+    _subpop_8: strata = West Nile
+    _subpop_9: strata = Mid Western
+   _subpop_10: strata = South Western
+
+--------------------------------------------------------------
+             |             Linearized
+        Over |       Mean   Std. Err.     [95% Conf. Interval]
+-------------+------------------------------------------------
+h_flex2      |
+     Kampala |   44.62385   4.450201      35.86468    53.38302
+   _subpop_2 |   3.433051   1.248741      .9751998    5.890902
+   _subpop_3 |   6.190401   .9739064      4.273496    8.107306
+   _subpop_4 |   5.426034   1.304646      2.858146    7.993922
+     Eastern |   5.719395   1.697809      2.377659    9.061132
+   _subpop_6 |   .5069209   .3006752     -.0848872    1.098729
+   _subpop_7 |   7.204746   2.536642      2.211966    12.19753
+   _subpop_8 |   .7736243    .470968      -.153365    1.700614
+   _subpop_9 |   12.85824    2.07048      8.782984    16.93349
+  _subpop_10 |    12.9691   1.469953      10.07585    15.86236
+-------------+------------------------------------------------
+pg_flex2     |
+     Kampala |   14.98173    2.20727      10.63724    19.32622
+   _subpop_2 |   .6406285   .2613819      .1261599    1.155097
+   _subpop_3 |   1.059322   .1791413      .7067242    1.411919
+   _subpop_4 |   1.426072   .4053875      .6281623    2.223982
+     Eastern |    1.79566   .7359082      .3471982    3.244121
+   _subpop_6 |   .0475234   .0340251      -.019447    .1144938
+   _subpop_7 |   1.920417   1.136022      -.315573    4.156408
+   _subpop_8 |   .1583538    .113678     -.0653945     .382102
+   _subpop_9 |   3.125788   .8382745      1.475842    4.775733
+  _subpop_10 |   3.018427   .4734807      2.086492    3.950362
+-------------+------------------------------------------------
+spg_flex2    |
+     Kampala |   6.943681   1.301789      4.381416    9.505946
+   _subpop_2 |   .1633652   .0833895     -.0007674    .3274978
+   _subpop_3 |   .3084891   .0723015      .1661806    .4507976
+   _subpop_4 |   .5788651   .1787458      .2270461    .9306841
+     Eastern |   .8423819   .3964562      .0620513    1.622713
+   _subpop_6 |    .013562   .0126517     -.0113399    .0384639
+   _subpop_7 |   .8078978   .6141485     -.4009087    2.016704
+   _subpop_8 |   .0699369   .0519934     -.0323999    .1722737
+   _subpop_9 |   1.197014   .4096017      .3908092    2.003218
+  _subpop_10 |   1.050161   .2090173      .6387596    1.461562
+--------------------------------------------------------------
+(running mean on estimation sample)
+
+Survey: Mean estimation
+
+Number of strata =      10        Number of obs    =      7414
+Number of PSUs   =     297        Population size  =  30109848
+                                  Design df        =       287
+
+         Over: strata rural
+    _subpop_1: Kampala Urban
+    _subpop_2: Central 1 Urban
+    _subpop_3: Central 1 Rural
+    _subpop_4: Central 2 Urban
+    _subpop_5: Central 2 Rural
+    _subpop_6: East Central Urban
+    _subpop_7: East Central Rural
+    _subpop_8: Eastern Urban
+    _subpop_9: Eastern Rural
+   _subpop_10: Mid Northern Urban
+   _subpop_11: Mid Northern Rural
+   _subpop_12: North East Urban
+   _subpop_13: North East Rural
+   _subpop_14: West Nile Urban
+   _subpop_15: West Nile Rural
+   _subpop_16: Mid Western Urban
+   _subpop_17: Mid Western Rural
+   _subpop_18: South Western Urban
+   _subpop_19: South Western Rural
+
+--------------------------------------------------------------
+             |             Linearized
+        Over |       Mean   Std. Err.     [95% Conf. Interval]
+-------------+------------------------------------------------
+h_flex2      |
+   _subpop_1 |   44.62385   4.450201      35.86468    53.38302
+   _subpop_2 |          0  (omitted)
+   _subpop_3 |   3.958315    1.45657        1.0914    6.825229
+   _subpop_4 |   2.657288   1.376559     -.0521432    5.366719
+   _subpop_5 |   6.693115   1.081429      4.564577    8.821654
+   _subpop_6 |   48.11638   4.110543      40.02574    56.20701
+   _subpop_7 |   2.174859    .548178        1.0959    3.253818
+   _subpop_8 |   47.07044   3.973438      39.24967    54.89122
+   _subpop_9 |   2.159677   .7682942      .6474711    3.671883
+  _subpop_10 |   .5050185   .4940115     -.4673265    1.477364
+  _subpop_11 |   .5072558   .3429608     -.1677816    1.182293
+  _subpop_12 |   31.15928   3.325451      24.61392    37.70465
+  _subpop_13 |   3.389263    .728484      1.955414    4.823112
+  _subpop_14 |          0  (omitted)
+  _subpop_15 |   .9048635    .563171     -.2036058    2.013333
+  _subpop_16 |   4.151773   1.327489      1.538925    6.764622
+  _subpop_17 |   13.96162   2.125551       9.77797    18.14526
+  _subpop_18 |    4.12265   .9762342      2.201163    6.044137
+  _subpop_19 |   13.51636    1.57228      10.42169    16.61102
+-------------+------------------------------------------------
+pg_flex2     |
+   _subpop_1 |   14.98173    2.20727      10.63724    19.32622
+   _subpop_2 |          0  (omitted)
+   _subpop_3 |    .738646   .3050222      .1382818     1.33901
+   _subpop_4 |   .5470219   .3137348     -.0704911    1.164535
+   _subpop_5 |   1.132215   .1967646      .7449302    1.519499
+   _subpop_6 |   15.02812   2.051626      10.98998    19.06626
+   _subpop_7 |   .3901789   .1689575       .057626    .7227318
+   _subpop_8 |   18.16777   2.395625      13.45254    22.88299
+   _subpop_9 |   .3862619    .191102      .0101226    .7624012
+  _subpop_10 |    .205754   .2012696     -.1903976    .6019057
+  _subpop_11 |   .0196709   .0175734     -.0149181    .0542599
+  _subpop_12 |   11.03104   .6083091      9.833729    12.22835
+  _subpop_13 |   .4692753   .1365272      .2005536    .7379969
+  _subpop_14 |          0  (omitted)
+  _subpop_15 |   .1852172   .1324522     -.0754837    .4459182
+  _subpop_16 |    .760214   .2844058      .2004283        1.32
+  _subpop_17 |   3.425579   .8998953      1.654348    5.196811
+  _subpop_18 |   .7422096   .4114372     -.0676074    1.552027
+  _subpop_19 |   3.159237   .5008006      2.173529    4.144945
+-------------+------------------------------------------------
+spg_flex2    |
+   _subpop_1 |   6.943681   1.301789      4.381416    9.505946
+   _subpop_2 |          0  (omitted)
+   _subpop_3 |   .1883604   .0968776     -.0023202     .379041
+   _subpop_4 |   .2210821   .1380765     -.0506889    .4928531
+   _subpop_5 |    .320926   .0794087      .1646287    .4772232
+   _subpop_6 |   6.267166   1.216238      3.873288    8.661044
+   _subpop_7 |   .1456603   .0910347       -.03352    .3248406
+   _subpop_8 |   9.228451   1.653948      5.973046    12.48386
+   _subpop_9 |   .1204645   .0680267       -.01343     .254359
+  _subpop_10 |   .0838281    .082001     -.0775716    .2452277
+  _subpop_11 |   .0011935   .0011646     -.0010987    .0034856
+  _subpop_12 |   5.273184   .7812717      3.735435    6.810933
+  _subpop_13 |   .0966661   .0310246      .0356014    .1577308
+  _subpop_14 |          0  (omitted)
+  _subpop_15 |   .0818011   .0604939     -.0372669    .2008691
+  _subpop_16 |   .2311331   .0944716      .0451881    .4170782
+  _subpop_17 |   1.319421   .4450629      .4434194    2.195422
+  _subpop_18 |   .2919755   .2390596      -.178557    .7625079
+  _subpop_19 |   1.097063   .2211367      .6618078    1.532319
+--------------------------------------------------------------
+(running mean on estimation sample)
+
+Survey: Mean estimation
+
+Number of strata =      10        Number of obs    =      7414
+Number of PSUs   =     297        Population size  =  30109848
+                                  Design df        =       287
+
+      Kampala: spdomain = Kampala
+    _subpop_2: spdomain = Central urban
+    _subpop_3: spdomain = Central rural
+    _subpop_4: spdomain = Eastern urban
+    _subpop_5: spdomain = Eastern rural
+    _subpop_6: spdomain = Northern urban
+    _subpop_7: spdomain = Northern rural
+    _subpop_8: spdomain = Western urban
+    _subpop_9: spdomain = Western rural
+
+--------------------------------------------------------------
+             |             Linearized
+        Over |       Mean   Std. Err.     [95% Conf. Interval]
+-------------+------------------------------------------------
+h_flex2      |
+     Kampala |   44.62385   4.450201      35.86468    53.38302
+   _subpop_2 |   1.794474   1.071026     -.3135883    3.902536
+   _subpop_3 |   5.848107   .8962241      4.084101    7.612113
+   _subpop_4 |   47.93202   2.448877      43.11198    52.75205
+   _subpop_5 |    2.35479   .4093482      1.549084    3.160495
+   _subpop_6 |   .3341999    .328916     -.3131937    .9815934
+   _subpop_7 |   .7142307   .2888434      .1457106    1.282751
+   _subpop_8 |   4.138667     .85215      2.461411    5.815923
+   _subpop_9 |   13.68273   1.263064      11.19668    16.16877
+-------------+------------------------------------------------
+pg_flex2     |
+     Kampala |   14.98173    2.20727      10.63724    19.32622
+   _subpop_2 |   .3694054   .2430932     -.1090662    .8478769
+   _subpop_3 |   1.010609   .1684764      .6790025    1.342215
+   _subpop_4 |   16.61507   1.634627      13.39769    19.83245
+   _subpop_5 |   .4100958   .1144488      .1848304    .6353612
+   _subpop_6 |   .1361593   .1340066      -.127601    .3999196
+   _subpop_7 |   .0740893   .0386702      -.002024    .1502026
+   _subpop_8 |   .7521116   .2428109      .2741955    1.230028
+   _subpop_9 |   3.258755   .4595901      2.354161     4.16335
+-------------+------------------------------------------------
+spg_flex2    |
+     Kampala |   6.943681   1.301789      4.381416    9.505946
+   _subpop_2 |   .1492973   .1062998     -.0599288    .3585235
+   _subpop_3 |   .2799654   .0632626       .155448    .4044829
+   _subpop_4 |    7.72782   1.129268      5.505122    9.950518
+   _subpop_5 |   .1342038   .0535065      .0288889    .2395188
+   _subpop_6 |   .0554739   .0545968      -.051987    .1629348
+   _subpop_7 |   .0243671   .0164366     -.0079844    .0567187
+   _subpop_8 |   .2585136   .1184716      .0253302     .491697
+   _subpop_9 |   1.180147   .2163905      .7542332     1.60606
+--------------------------------------------------------------
+strata was float now byte
+rural was float now byte
+reg_tpi was float now byte
+spdomain was float now byte
+news was float now byte
+h_flex2 was float now byte
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\GAPP2
+> /work/cons_real_it2.dta saved
+
+    Variable |     Obs      Weight        Mean   Std. Dev.       Min   
+>      Max
+-------------+---------------------------------------------------------
+> --------
+     h_flex2 |    7414  30109848.2    8.823645   28.36576          0   
+>      100
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\GAPP2
+> /work/foodshares_it2.dta saved
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000002.tmp saved
+variable one does not uniquely identify observations in the master
+    data
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          3 |      7,427      100.00      100.00
+------------+-----------------------------------
+      Total |      7,427      100.00
+
+   relpoor3 |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          0 |3,707.68053       50.00       50.00
+          1 |3,707.31947       50.00      100.00
+------------+-----------------------------------
+      Total |      7,415      100.00
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\GAPP2
+> /work/relpoor_it3.dta saved
+variable hhid does not uniquely identify observations in the master
+    data
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |        133        0.13        0.13
+          2 |          1        0.00        0.13
+          3 |     99,617       99.87      100.00
+------------+-----------------------------------
+      Total |     99,751      100.00
+(7559 observations deleted)
+variable hhid does not uniquely identify observations in the master
+    data
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          2 |          7        0.01        0.01
+          3 |     92,192       99.99      100.00
+------------+-----------------------------------
+      Total |     92,199      100.00
+(54974 observations deleted)
+(4 missing values generated)
+    4
+    0
+(4 missing values generated)
+    4
+(4 observations deleted)
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k00000h.tmp not fo
+> und)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k00000h.tmp saved
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k00000i.tmp not fo
+> und)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k00000i.tmp saved
+variable spdomain does not uniquely identify observations in the
+    master data
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          3 |     37,221      100.00      100.00
+------------+-----------------------------------
+      Total |     37,221      100.00
+  216
+(216 observations deleted)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k00000h.tmp saved
+49
+49
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\GAPP2
+> /work/codes_food_basket_flex_it3.dta saved
+(2770 observations deleted)
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k00000j.tmp not fo
+> und)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k00000j.tmp saved
+variable hhid does not uniquely identify observations in the master
+    data
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |        133        0.15        0.15
+          2 |        163        0.18        0.33
+          3 |     89,422       99.67      100.00
+------------+-----------------------------------
+      Total |     89,718      100.00
+(163 observations deleted)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k00000j.tmp saved
+variable product does not uniquely identify observations in the
+    master data
+product was int now float
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |      2,089        2.33        2.33
+          2 |          2        0.00        2.33
+          3 |     87,466       97.67      100.00
+------------+-----------------------------------
+      Total |     89,557      100.00
+(2091 observations deleted)
+(64 observations deleted)
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k00000l.tmp not fo
+> und)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k00000l.tmp saved
+product was float now int
+unit was float now byte
+food_cat was float now byte
+region was float now byte
+psu was int now byte
+survquar was float now byte
+survmon was float now byte
+strata was float now byte
+rural was float now byte
+reg_tpi was float now byte
+spdomain was float now byte
+news was float now byte
+bswt was float now byte
+count was float now byte
+descript was float now byte
+numreg was double now byte
+variable hhid does not uniquely identify observations in the master
+    data
+survquar was byte now float
+reg_tpi was byte now float
+spdomain was byte now float
+(label region already defined)
+(label lsurvquar already defined)
+(label lspdomain already defined)
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          2 |        165        0.19        0.19
+          3 |     87,402       99.81      100.00
+------------+-----------------------------------
+      Total |     87,567      100.00
+variable hhid does not uniquely identify observations in the master
+    data
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          3 |     87,567      100.00      100.00
+------------+-----------------------------------
+      Total |     87,567      100.00
+(51907 observations deleted)
+(43 observations deleted)
+(2529 observations deleted)
+
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+    ratiotw3 |       392    1.792541    6.976603   .7676631   127.7142
+    ratiomw3 |       392    1.558298    7.024989   .1777841   122.9388
+variable product does not uniquely identify observations in the
+    master data
+product was int now float
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          2 |          3        0.76        0.76
+          3 |        392       99.24      100.00
+------------+-----------------------------------
+      Total |        395      100.00
+    3
+(3 observations deleted)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\GAPP2
+> /work/price_unit_flex_it3.dta saved
+(label lspdomain already defined)
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |         17        4.16        4.16
+          2 |        159       38.88       43.03
+          3 |        233       56.97      100.00
+------------+-----------------------------------
+      Total |        409      100.00
+
+     +-------------------------------------+
+     | product         spdomain   descript |
+     |-------------------------------------|
+233. |     157          Kampala          1 |
+234. |     157    Central urban          1 |
+235. |     157    Central rural          1 |
+236. |     157    Eastern urban          1 |
+237. |     157    Eastern rural          1 |
+     |-------------------------------------|
+238. |     157   Northern urban          1 |
+239. |     157    Western urban          1 |
+240. |     157    Western rural          1 |
+242. |     160          Kampala          1 |
+243. |     161          Kampala          1 |
+     |-------------------------------------|
+244. |     161    Central urban          1 |
+245. |     161    Central rural          1 |
+246. |     161    Eastern urban          1 |
+247. |     161    Eastern rural          1 |
+248. |     161   Northern urban          1 |
+     |-------------------------------------|
+249. |     161   Northern rural          1 |
+250. |     161    Western urban          1 |
+     +-------------------------------------+
+(176 observations deleted)
+variable product does not uniquely identify observations in the
+    master data
+(note: descript is str30 in using data but will be float now)
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          2 |         16        6.43        6.43
+          3 |        233       93.57      100.00
+------------+-----------------------------------
+      Total |        249      100.00
+(16 observations deleted)
+
+-----------------------------------------------------------------------
+-> spdomain = Kampala
+    0
+-----------------------------------------------------------------------
+-> spdomain = Central urban
+    5
+-----------------------------------------------------------------------
+-> spdomain = Central rural
+    0
+-----------------------------------------------------------------------
+-> spdomain = Eastern urban
+    0
+-----------------------------------------------------------------------
+-> spdomain = Eastern rural
+    0
+-----------------------------------------------------------------------
+-> spdomain = Northern urban
+    4
+-----------------------------------------------------------------------
+-> spdomain = Northern rural
+    0
+-----------------------------------------------------------------------
+-> spdomain = Western urban
+    4
+-----------------------------------------------------------------------
+-> spdomain = Western rural
+    0
+
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+        bswt |       233    121.4979    130.9677          2        821
+(13 observations deleted)
+(3 observations deleted)
+
+Summary for variables: baskshr
+     by categories of: spdomain (Spatial domains: each with own poverty
+>  line (they are 9))
+
+      spdomain |         N      mean        sd       min       max
+---------------+--------------------------------------------------
+       Kampala |        26  .7028496         0  .7028496  .7028496
+ Central urban |        19   .836489         0   .836489   .836489
+ Central rural |        27   .895773         0   .895773   .895773
+ Eastern urban |        31  .8144494         0  .8144494  .8144494
+ Eastern rural |        28  .9048787         0  .9048787  .9048787
+Northern urban |        14  .7919405         0  .7919405  .7919405
+Northern rural |        20  .8978899         0  .8978899  .8978899
+ Western urban |        25  .8147272         0  .8147272  .8147272
+ Western rural |        27  .9006981         0  .9006981  .9006981
+---------------+--------------------------------------------------
+         Total |       217  .8417962  .0654574  .7028496  .9048787
+------------------------------------------------------------------
+variable spdomain does not uniquely identify observations in the
+    master data
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          3 |        217      100.00      100.00
+------------+-----------------------------------
+      Total |        217      100.00
+(217 real changes made)
+(209 real changes made)
+(217 real changes made)
+
+Summary for variables: chkcal
+     by categories of: spdomain (Spatial domains: each with own poverty
+>  line (they are 9))
+
+      spdomain |         N      mean        sd       min       max
+---------------+--------------------------------------------------
+       Kampala |        26 -.0000193         0 -.0000193 -.0000193
+ Central urban |        19  .0000578         0  .0000578  .0000578
+ Central rural |        27 -.0000835         0 -.0000835 -.0000835
+ Eastern urban |        31 -.0000835         0 -.0000835 -.0000835
+ Eastern rural |        28 -.0000899         0 -.0000899 -.0000899
+Northern urban |        14  .0000321         0  .0000321  .0000321
+Northern rural |        20 -.0000835         0 -.0000835 -.0000835
+ Western urban |        25  .0000835         0  .0000835  .0000835
+ Western rural |        27  .0000385         0  .0000385  .0000385
+---------------+--------------------------------------------------
+         Total |       217 -.0000224  .0000668 -.0000899  .0000835
+------------------------------------------------------------------
+(217 real changes made)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\GAPP2
+> /work/quan_flex_it3.dta saved
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\GAPP2
+> /work/povline_food_flex_it3.dta saved
+variable spdomain does not uniquely identify observations in the
+    master data
+(label lspdomain already defined)
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |          1        0.01        0.01
+          3 |      7,426       99.99      100.00
+------------+-----------------------------------
+      Total |      7,427      100.00
+(145 real changes made)
+(12 missing values generated)
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k00000n.tmp not fo
+> und)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k00000n.tmp saved
+variable spdomain does not uniquely identify observations in the
+    master data
+(label lspdomain already defined)
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |          1        0.01        0.01
+          3 |      7,426       99.99      100.00
+------------+-----------------------------------
+      Total |      7,427      100.00
+(1 missing value generated)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\GAPP2
+> /work/povlines_it3.dta saved
+variable spdomain does not uniquely identify observations in the
+    master data
+variable spdomain does not uniquely identify observations in
+    C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\GAPP
+    > 2/work/povlines_it3.dta
+(label lspdomain already defined)
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          3 |      7,427      100.00      100.00
+------------+-----------------------------------
+      Total |      7,427      100.00
+(13 missing values generated)
+(1 missing value generated)
+(1 missing value generated)
+(13 missing values generated)
+(7426 real changes made)
+(1 missing value generated)
+(7414 real changes made)
+
+    Variable |     Obs      Weight        Mean   Std. Dev.       Min   
+>      Max
+-------------+---------------------------------------------------------
+> --------
+          cr |    7414  30109848.2    1106.447   1372.576   61.85136   
+> 113681.6
+      cr_it3 |    7414  30109848.2    1106.447   1188.033   27.36322   
+> 87357.19
+     linpob3 |    7415  30112959.1    433.8504   405.0117   132.4022   
+> 1929.191
+    linpobr3 |    7415  30112959.1    354.9205   .0000148   354.9205   
+> 354.9205
+(1 missing value generated)
+(6715 missing values generated)
+(6702 real changes made)
+(13 missing values generated)
+(6702 real changes made)
+(13 missing values generated)
+(6702 real changes made)
+(13 missing values generated)
+(13 missing values generated)
+(13 missing values generated)
+(12 missing values generated)
+
+      pweight: popwt
+          VCE: linearized
+  Single unit: missing
+     Strata 1: strata
+         SU 1: psu
+        FPC 1: <zero>
+(running mean on estimation sample)
+
+Survey: Mean estimation
+
+Number of strata =      10        Number of obs    =      7414
+Number of PSUs   =     297        Population size  =  30109848
+                                  Design df        =       287
+
+--------------------------------------------------------------
+             |             Linearized
+             |       Mean   Std. Err.     [95% Conf. Interval]
+-------------+------------------------------------------------
+     h_flex3 |   9.878789   .6663633       8.56721    11.19037
+    pg_flex3 |    2.61429   .2484141      2.125346    3.103235
+   spg_flex3 |   1.057369   .1272562       .806895    1.307842
+--------------------------------------------------------------
+(running mean on estimation sample)
+
+Survey: Mean estimation
+
+Number of strata =      10        Number of obs    =      7414
+Number of PSUs   =     297        Population size  =  30109848
+                                  Design df        =       287
+
+        Urban: rural = Urban
+        Rural: rural = Rural
+
+--------------------------------------------------------------
+             |             Linearized
+        Over |       Mean   Std. Err.     [95% Conf. Interval]
+-------------+------------------------------------------------
+h_flex3      |
+       Urban |   30.34991   3.449658      23.56007    37.13974
+       Rural |   6.030573   .4833702      5.079173    6.981974
+-------------+------------------------------------------------
+pg_flex3     |
+       Urban |   9.647043   1.342427      7.004792    12.28929
+       Rural |   1.292255   .1509793      .9950877    1.589422
+-------------+------------------------------------------------
+spg_flex3    |
+       Urban |   4.326015   .7083201      2.931854    5.720176
+       Rural |   .4429199   .0680677      .3089446    .5768952
+--------------------------------------------------------------
+(running mean on estimation sample)
+
+Survey: Mean estimation
+
+Number of strata =      10        Number of obs    =      7414
+Number of PSUs   =     297        Population size  =  30109848
+                                  Design df        =       287
+
+      Kampala: strata = Kampala
+    _subpop_2: strata = Central 1
+    _subpop_3: strata = Central 2
+    _subpop_4: strata = East Central
+      Eastern: strata = Eastern
+    _subpop_6: strata = Mid Northern
+    _subpop_7: strata = North East
+    _subpop_8: strata = West Nile
+    _subpop_9: strata = Mid Western
+   _subpop_10: strata = South Western
+
+--------------------------------------------------------------
+             |             Linearized
+        Over |       Mean   Std. Err.     [95% Conf. Interval]
+-------------+------------------------------------------------
+h_flex3      |
+     Kampala |   46.13317   4.202481      37.86158    54.40476
+   _subpop_2 |   3.433051   1.248741      .9751998    5.890902
+   _subpop_3 |   5.937434   1.015863      3.937947    7.936921
+   _subpop_4 |   5.426034   1.304646      2.858146    7.993922
+     Eastern |   5.839485   1.789056      2.318151     9.36082
+   _subpop_6 |   5.582914   1.782892      2.073713    9.092116
+   _subpop_7 |   9.733607   4.948176       -.00571    19.47292
+   _subpop_8 |   5.269294    2.34367      .6563324    9.882255
+   _subpop_9 |   12.85824    2.07048      8.782984    16.93349
+  _subpop_10 |    12.9691   1.469953      10.07585    15.86236
+-------------+------------------------------------------------
+pg_flex3     |
+     Kampala |   15.21859   2.219324      10.85037     19.5868
+   _subpop_2 |   .6289333   .2572994      .1225002    1.135367
+   _subpop_3 |    .996168   .1814314       .639063    1.353273
+   _subpop_4 |   1.443549   .4104413       .635692    2.251406
+     Eastern |   1.812936   .7415467      .3533764    3.272496
+   _subpop_6 |   1.433744   .5225675      .4051936    2.462295
+   _subpop_7 |   2.782316   1.986818     -1.128266    6.692897
+   _subpop_8 |    1.38911   .6047154      .1988703    2.579349
+   _subpop_9 |   3.145355   .8397923      1.492422    4.798288
+  _subpop_10 |   3.038341   .4750737      2.103271    3.973412
+-------------+------------------------------------------------
+spg_flex3    |
+     Kampala |   7.070737   1.315114      4.482246    9.659229
+   _subpop_2 |   .1594081   .0819445     -.0018804    .3206966
+   _subpop_3 |   .2833252   .0722363      .1411451    .4255053
+   _subpop_4 |   .5874131   .1812587      .2306482     .944178
+     Eastern |   .8520808   .4004911      .0638085    1.640353
+   _subpop_6 |   .5585993   .2338043      .0984107    1.018788
+   _subpop_7 |    1.22475   1.024385     -.7915093     3.24101
+   _subpop_8 |   .4553172   .1900368      .0812745    .8293598
+   _subpop_9 |   1.204786   .4112263      .3953837    2.014188
+  _subpop_10 |   1.058059   .2100163      .6446916    1.471426
+--------------------------------------------------------------
+(running mean on estimation sample)
+
+Survey: Mean estimation
+
+Number of strata =      10        Number of obs    =      7414
+Number of PSUs   =     297        Population size  =  30109848
+                                  Design df        =       287
+
+         Over: strata rural
+    _subpop_1: Kampala Urban
+    _subpop_2: Central 1 Urban
+    _subpop_3: Central 1 Rural
+    _subpop_4: Central 2 Urban
+    _subpop_5: Central 2 Rural
+    _subpop_6: East Central Urban
+    _subpop_7: East Central Rural
+    _subpop_8: Eastern Urban
+    _subpop_9: Eastern Rural
+   _subpop_10: Mid Northern Urban
+   _subpop_11: Mid Northern Rural
+   _subpop_12: North East Urban
+   _subpop_13: North East Rural
+   _subpop_14: West Nile Urban
+   _subpop_15: West Nile Rural
+   _subpop_16: Mid Western Urban
+   _subpop_17: Mid Western Rural
+   _subpop_18: South Western Urban
+   _subpop_19: South Western Rural
+
+--------------------------------------------------------------
+             |             Linearized
+        Over |       Mean   Std. Err.     [95% Conf. Interval]
+-------------+------------------------------------------------
+h_flex3      |
+   _subpop_1 |   46.13317   4.202481      37.86158    54.40476
+   _subpop_2 |          0  (omitted)
+   _subpop_3 |   3.958315    1.45657        1.0914    6.825229
+   _subpop_4 |   .6264536   .4034354     -.1676138    1.420521
+   _subpop_5 |   6.693115   1.081429      4.564577    8.821654
+   _subpop_6 |   48.11638   4.110543      40.02574    56.20701
+   _subpop_7 |   2.174859    .548178        1.0959    3.253818
+   _subpop_8 |   48.58554   4.191189      40.33618    56.83491
+   _subpop_9 |   2.159677   .7682942      .6474711    3.671883
+  _subpop_10 |   35.77393   5.813138      24.33214    47.21572
+  _subpop_11 |   .2685472   .2655182     -.2540627    .7911571
+  _subpop_12 |   49.56495   2.153912      45.32548    53.80441
+  _subpop_13 |   3.389263    .728484      1.955414    4.823112
+  _subpop_14 |   33.00213   8.369577      16.52859    49.47566
+  _subpop_15 |   .5646414   .3301644     -.0852093    1.214492
+  _subpop_16 |   4.151773   1.327489      1.538925    6.764622
+  _subpop_17 |   13.96162   2.125551       9.77797    18.14526
+  _subpop_18 |    4.12265   .9762342      2.201163    6.044137
+  _subpop_19 |   13.51636    1.57228      10.42169    16.61102
+-------------+------------------------------------------------
+pg_flex3     |
+   _subpop_1 |   15.21859   2.219324      10.85037     19.5868
+   _subpop_2 |          0  (omitted)
+   _subpop_3 |   .7251614   .3002581      .1341742    1.316149
+   _subpop_4 |   .2037051   .1311858     -.0545033    .4619134
+   _subpop_5 |   1.108925   .1938677       .727342    1.490508
+   _subpop_6 |    15.2321   2.061018      11.17547    19.28873
+   _subpop_7 |    .393452   .1692806      .0602631    .7266409
+   _subpop_8 |   18.34795   2.398567      13.62694    23.06896
+   _subpop_9 |   .3895144    .191893      .0118184    .7672104
+  _subpop_10 |   9.509287   2.264717      5.051726    13.96685
+  _subpop_11 |   .0122487   .0121106     -.0115881    .0360856
+  _subpop_12 |   17.35191   2.411202      12.60602    22.09779
+  _subpop_13 |   .4616681   .1349683      .1960148    .7273214
+  _subpop_14 |   8.545143   2.168307      4.277342    12.81294
+  _subpop_15 |   .1751464   .1287648     -.0782967    .4285895
+  _subpop_16 |   .7685885   .2867486      .2041915    1.332986
+  _subpop_17 |   3.446566   .9012794       1.67261    5.220522
+  _subpop_18 |   .7505567   .4124869     -.0613264     1.56244
+  _subpop_19 |   3.179867   .5025102      2.190794     4.16894
+-------------+------------------------------------------------
+spg_flex3    |
+   _subpop_1 |   7.070737   1.315114      4.482246    9.659229
+   _subpop_2 |          0  (omitted)
+   _subpop_3 |   .1837979   .0951883     -.0035578    .3711535
+   _subpop_4 |   .0662391   .0426579     -.0177229    .1502012
+   _subpop_5 |   .3142136   .0785846      .1595385    .4688888
+   _subpop_6 |    6.37611   1.226075      3.962871     8.78935
+   _subpop_7 |   .1465624   .0913014     -.0331429    .3262677
+   _subpop_8 |   9.339432   1.661223      6.069707    12.60916
+   _subpop_9 |   .1214445    .068474     -.0133305    .2562194
+  _subpop_10 |   3.728838   1.190348      1.385918    6.071758
+  _subpop_11 |   .0005587   .0005524     -.0005285    .0016459
+  _subpop_12 |   8.309138   1.651765      5.058029    11.56025
+  _subpop_13 |   .0963475   .0311443      .0350472    .1576477
+  _subpop_14 |   2.682872   .6669345      1.370169    3.995575
+  _subpop_15 |   .0774304   .0573953     -.0355388    .1903996
+  _subpop_16 |   .2337635    .095401      .0459892    .4215377
+  _subpop_17 |   1.327845   .4467855      .4484528    2.207236
+  _subpop_18 |   .2942168   .2398427     -.1778569    .7662905
+  _subpop_19 |   1.105311   .2221925      .6679778    1.542645
+--------------------------------------------------------------
+(running mean on estimation sample)
+
+Survey: Mean estimation
+
+Number of strata =      10        Number of obs    =      7414
+Number of PSUs   =     297        Population size  =  30109848
+                                  Design df        =       287
+
+      Kampala: spdomain = Kampala
+    _subpop_2: spdomain = Central urban
+    _subpop_3: spdomain = Central rural
+    _subpop_4: spdomain = Eastern urban
+    _subpop_5: spdomain = Eastern rural
+    _subpop_6: spdomain = Northern urban
+    _subpop_7: spdomain = Northern rural
+    _subpop_8: spdomain = Western urban
+    _subpop_9: spdomain = Western rural
+
+--------------------------------------------------------------
+             |             Linearized
+        Over |       Mean   Std. Err.     [95% Conf. Interval]
+-------------+------------------------------------------------
+h_flex3      |
+     Kampala |   46.13317   4.202481      37.86158    54.40476
+   _subpop_2 |   .4230458   .3097709     -.1866652    1.032757
+   _subpop_3 |   5.848107   .8962241      4.084101    7.612113
+   _subpop_4 |   48.49135   2.504505      43.56183    53.42088
+   _subpop_5 |    2.35479   .4093482      1.549084    3.160495
+   _subpop_6 |   36.05061   4.546899      27.10111    45.00011
+   _subpop_7 |    .461028   .2172458       .033431    .8886251
+   _subpop_8 |   4.138667     .85215      2.461411    5.815923
+   _subpop_9 |   13.68273   1.263064      11.19668    16.16877
+-------------+------------------------------------------------
+pg_flex3     |
+     Kampala |   15.21859   2.219324      10.85037     19.5868
+   _subpop_2 |   .1375626   .1007288     -.0606983    .3358234
+   _subpop_3 |   .9903483   .1658996       .663814    1.316883
+   _subpop_4 |   16.80887    1.63567      13.58944     20.0283
+   _subpop_5 |   .4136624   .1147659      .1877728     .639552
+   _subpop_6 |   9.774155   1.691017      6.445787    13.10252
+   _subpop_7 |   .0637921   .0364501     -.0079512    .1355355
+   _subpop_8 |   .7604738   .2440021      .2802132    1.240734
+   _subpop_9 |   3.279518   .4606929      2.372753    4.186284
+-------------+------------------------------------------------
+spg_flex3    |
+     Kampala |   7.070737   1.315114      4.482246    9.659229
+   _subpop_2 |   .0447315   .0327542     -.0197374    .1092003
+   _subpop_3 |   .2739173   .0624936      .1509133    .3969213
+   _subpop_4 |   7.838251   1.134855      5.604556    10.07195
+   _subpop_5 |   .1352214   .0537112      .0295037    .2409392
+   _subpop_6 |   3.757514   .8692874      2.046527    5.468501
+   _subpop_7 |   .0223984   .0155689     -.0082452     .053042
+   _subpop_8 |   .2609689   .1190129        .02672    .4952177
+   _subpop_9 |   1.188461   .2173067      .7607435    1.616178
+--------------------------------------------------------------
+strata was float now byte
+rural was float now byte
+reg_tpi was float now byte
+spdomain was float now byte
+news was float now byte
+h_flex3 was float now byte
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\GAPP2
+> /work/cons_real_it3.dta saved
+
+    Variable |     Obs      Weight        Mean   Std. Dev.       Min   
+>      Max
+-------------+---------------------------------------------------------
+> --------
+     h_flex3 |    7414  30109848.2    9.878789   29.83971          0   
+>      100
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\GAPP2
+> /work/foodshares_it3.dta saved
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000002.tmp saved
+variable one does not uniquely identify observations in the master
+    data
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          3 |      7,427      100.00      100.00
+------------+-----------------------------------
+      Total |      7,427      100.00
+
+   relpoor4 |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          0 | 3,706.7156       49.99       49.99
+          1 | 3,708.2844       50.01      100.00
+------------+-----------------------------------
+      Total |      7,415      100.00
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\GAPP2
+> /work/relpoor_it4.dta saved
+variable hhid does not uniquely identify observations in the master
+    data
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |        133        0.13        0.13
+          2 |          1        0.00        0.13
+          3 |     99,617       99.87      100.00
+------------+-----------------------------------
+      Total |     99,751      100.00
+(7559 observations deleted)
+variable hhid does not uniquely identify observations in the master
+    data
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          2 |          7        0.01        0.01
+          3 |     92,192       99.99      100.00
+------------+-----------------------------------
+      Total |     92,199      100.00
+(53539 observations deleted)
+(4 missing values generated)
+    4
+    0
+(4 missing values generated)
+    4
+(4 observations deleted)
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k00000o.tmp not fo
+> und)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k00000o.tmp saved
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k00000p.tmp not fo
+> und)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k00000p.tmp saved
+variable spdomain does not uniquely identify observations in the
+    master data
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          3 |     38,656      100.00      100.00
+------------+-----------------------------------
+      Total |     38,656      100.00
+  217
+(217 observations deleted)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k00000o.tmp saved
+49
+49
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\GAPP2
+> /work/codes_food_basket_flex_it4.dta saved
+(2770 observations deleted)
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k00000q.tmp not fo
+> und)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k00000q.tmp saved
+variable hhid does not uniquely identify observations in the master
+    data
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |        133        0.15        0.15
+          2 |        163        0.18        0.33
+          3 |     89,422       99.67      100.00
+------------+-----------------------------------
+      Total |     89,718      100.00
+(163 observations deleted)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k00000q.tmp saved
+variable product does not uniquely identify observations in the
+    master data
+product was int now float
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |      2,089        2.33        2.33
+          2 |          2        0.00        2.33
+          3 |     87,466       97.67      100.00
+------------+-----------------------------------
+      Total |     89,557      100.00
+(2091 observations deleted)
+(64 observations deleted)
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k00000s.tmp not fo
+> und)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k00000s.tmp saved
+product was float now int
+unit was float now byte
+food_cat was float now byte
+region was float now byte
+psu was int now byte
+survquar was float now byte
+survmon was float now byte
+strata was float now byte
+rural was float now byte
+reg_tpi was float now byte
+spdomain was float now byte
+news was float now byte
+bswt was float now byte
+count was float now byte
+descript was float now byte
+numreg was double now byte
+variable hhid does not uniquely identify observations in the master
+    data
+survquar was byte now float
+reg_tpi was byte now float
+spdomain was byte now float
+(label region already defined)
+(label lsurvquar already defined)
+(label lspdomain already defined)
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          2 |        165        0.19        0.19
+          3 |     87,402       99.81      100.00
+------------+-----------------------------------
+      Total |     87,567      100.00
+variable hhid does not uniquely identify observations in the master
+    data
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          3 |     87,567      100.00      100.00
+------------+-----------------------------------
+      Total |     87,567      100.00
+(50540 observations deleted)
+(46 observations deleted)
+(2566 observations deleted)
+
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+    ratiotw4 |       391    1.952892    9.927077   .8244891   189.6303
+    ratiomw4 |       391    1.928175    13.76899   .1777841    265.028
+variable product does not uniquely identify observations in the
+    master data
+product was int now float
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          2 |          3        0.76        0.76
+          3 |        391       99.24      100.00
+------------+-----------------------------------
+      Total |        394      100.00
+    3
+(3 observations deleted)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\GAPP2
+> /work/price_unit_flex_it4.dta saved
+(label lspdomain already defined)
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |         17        4.17        4.17
+          2 |        160       39.22       43.38
+          3 |        231       56.62      100.00
+------------+-----------------------------------
+      Total |        408      100.00
+
+     +-------------------------------------+
+     | product         spdomain   descript |
+     |-------------------------------------|
+231. |     157          Kampala          1 |
+232. |     157    Central urban          1 |
+233. |     157    Central rural          1 |
+234. |     157    Eastern urban          1 |
+235. |     157    Eastern rural          1 |
+     |-------------------------------------|
+236. |     157   Northern urban          1 |
+237. |     157    Western urban          1 |
+238. |     157    Western rural          1 |
+240. |     160          Kampala          1 |
+241. |     161          Kampala          1 |
+     |-------------------------------------|
+242. |     161    Central urban          1 |
+243. |     161    Central rural          1 |
+244. |     161    Eastern urban          1 |
+245. |     161    Eastern rural          1 |
+246. |     161   Northern urban          1 |
+     |-------------------------------------|
+247. |     161   Northern rural          1 |
+248. |     161    Western urban          1 |
+     +-------------------------------------+
+(177 observations deleted)
+variable product does not uniquely identify observations in the
+    master data
+(note: descript is str30 in using data but will be float now)
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          2 |         16        6.48        6.48
+          3 |        231       93.52      100.00
+------------+-----------------------------------
+      Total |        247      100.00
+(16 observations deleted)
+
+-----------------------------------------------------------------------
+-> spdomain = Kampala
+    0
+-----------------------------------------------------------------------
+-> spdomain = Central urban
+   13
+-----------------------------------------------------------------------
+-> spdomain = Central rural
+    0
+-----------------------------------------------------------------------
+-> spdomain = Eastern urban
+    0
+-----------------------------------------------------------------------
+-> spdomain = Eastern rural
+    0
+-----------------------------------------------------------------------
+-> spdomain = Northern urban
+    0
+-----------------------------------------------------------------------
+-> spdomain = Northern rural
+    0
+-----------------------------------------------------------------------
+-> spdomain = Western urban
+    3
+-----------------------------------------------------------------------
+-> spdomain = Western rural
+    0
+
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+        bswt |       231    127.4805    126.6999          1        815
+(16 observations deleted)
+(3 observations deleted)
+
+Summary for variables: baskshr
+     by categories of: spdomain (Spatial domains: each with own poverty
+>  line (they are 9))
+
+      spdomain |         N      mean        sd       min       max
+---------------+--------------------------------------------------
+       Kampala |        26  .7028496         0  .7028496  .7028496
+ Central urban |         4  .3485983         0  .3485983  .3485983
+ Central rural |        26   .891521         0   .891521   .891521
+ Eastern urban |        31  .8142532         0  .8142532  .8142532
+ Eastern rural |        28  .9054166         0  .9054166  .9054166
+Northern urban |        25  .8766153         0  .8766153  .8766153
+Northern rural |        19  .8930224         0  .8930224  .8930224
+ Western urban |        26  .8212865         0  .8212865  .8212865
+ Western rural |        27  .9007009         0  .9007009  .9007009
+---------------+--------------------------------------------------
+         Total |       212  .8396072  .0938852  .3485983  .9054166
+------------------------------------------------------------------
+variable spdomain does not uniquely identify observations in the
+    master data
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          3 |        212      100.00      100.00
+------------+-----------------------------------
+      Total |        212      100.00
+(212 real changes made)
+(204 real changes made)
+(212 real changes made)
+
+Summary for variables: chkcal
+     by categories of: spdomain (Spatial domains: each with own poverty
+>  line (they are 9))
+
+      spdomain |         N      mean        sd       min       max
+---------------+--------------------------------------------------
+       Kampala |        26 -.0000193         0 -.0000193 -.0000193
+ Central urban |         4 -.0000707         0 -.0000707 -.0000707
+ Central rural |        26 -.0000835         0 -.0000835 -.0000835
+ Eastern urban |        31  .0001735         0  .0001735  .0001735
+ Eastern rural |        28  .0000385         0  .0000385  .0000385
+Northern urban |        25  .0000321         0  .0000321  .0000321
+Northern rural |        19   .000045         0   .000045   .000045
+ Western urban |        26  -.000045         0  -.000045  -.000045
+ Western rural |        27  .0000385         0  .0000385  .0000385
+---------------+--------------------------------------------------
+         Total |       212  .0000237  .0000761 -.0000835  .0001735
+------------------------------------------------------------------
+(212 real changes made)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\GAPP2
+> /work/quan_flex_it4.dta saved
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\GAPP2
+> /work/povline_food_flex_it4.dta saved
+variable spdomain does not uniquely identify observations in the
+    master data
+(label lspdomain already defined)
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |          1        0.01        0.01
+          3 |      7,426       99.99      100.00
+------------+-----------------------------------
+      Total |      7,427      100.00
+(143 real changes made)
+(12 missing values generated)
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k00000u.tmp not fo
+> und)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k00000u.tmp saved
+variable spdomain does not uniquely identify observations in the
+    master data
+(label lspdomain already defined)
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |          1        0.01        0.01
+          3 |      7,426       99.99      100.00
+------------+-----------------------------------
+      Total |      7,427      100.00
+(1 missing value generated)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\GAPP2
+> /work/povlines_it4.dta saved
+variable spdomain does not uniquely identify observations in the
+    master data
+variable spdomain does not uniquely identify observations in
+    C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\GAPP
+    > 2/work/povlines_it4.dta
+(label lspdomain already defined)
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          3 |      7,427      100.00      100.00
+------------+-----------------------------------
+      Total |      7,427      100.00
+(13 missing values generated)
+(1 missing value generated)
+(1 missing value generated)
+(13 missing values generated)
+(7426 real changes made)
+(1 missing value generated)
+(7414 real changes made)
+
+    Variable |     Obs      Weight        Mean   Std. Dev.       Min   
+>      Max
+-------------+---------------------------------------------------------
+> --------
+          cr |    7414  30109848.2    1106.447   1372.576   61.85136   
+> 113681.6
+      cr_it4 |    7414  30109848.2    1106.447   1130.018   28.06456   
+>  90069.3
+     linpob4 |    7415  30112959.1    463.3373   457.1606   134.9748   
+> 1929.191
+    linpobr4 |    7415  30112959.1    364.0174   .0000152   364.0174   
+> 364.0175
+(1 missing value generated)
+(6723 missing values generated)
+(6710 real changes made)
+(13 missing values generated)
+(6710 real changes made)
+(13 missing values generated)
+(6710 real changes made)
+(13 missing values generated)
+(13 missing values generated)
+(13 missing values generated)
+(12 missing values generated)
+
+      pweight: popwt
+          VCE: linearized
+  Single unit: missing
+     Strata 1: strata
+         SU 1: psu
+        FPC 1: <zero>
+(running mean on estimation sample)
+
+Survey: Mean estimation
+
+Number of strata =      10        Number of obs    =      7414
+Number of PSUs   =     297        Population size  =  30109848
+                                  Design df        =       287
+
+--------------------------------------------------------------
+             |             Linearized
+             |       Mean   Std. Err.     [95% Conf. Interval]
+-------------+------------------------------------------------
+     h_flex4 |   10.49655   .8762468      8.771869    12.22124
+    pg_flex4 |   2.857424   .3349824       2.19809    3.516758
+   spg_flex4 |    1.19657   .1785695      .8450986    1.548042
+--------------------------------------------------------------
+(running mean on estimation sample)
+
+Survey: Mean estimation
+
+Number of strata =      10        Number of obs    =      7414
+Number of PSUs   =     297        Population size  =  30109848
+                                  Design df        =       287
+
+        Urban: rural = Urban
+        Rural: rural = Rural
+
+--------------------------------------------------------------
+             |             Linearized
+        Over |       Mean   Std. Err.     [95% Conf. Interval]
+-------------+------------------------------------------------
+h_flex4      |
+       Urban |   34.12755   3.448767      27.33946    40.91563
+       Rural |   6.054338   .4842382      5.101229    7.007446
+-------------+------------------------------------------------
+pg_flex4     |
+       Urban |   11.25522   1.433314      8.434083    14.07636
+       Rural |   1.278784   .1506326      .9822987    1.575268
+-------------+------------------------------------------------
+spg_flex4    |
+       Urban |   5.225447   .8261992      3.599269    6.851626
+       Rural |   .4392114   .0680775      .3052169     .573206
+--------------------------------------------------------------
+(running mean on estimation sample)
+
+Survey: Mean estimation
+
+Number of strata =      10        Number of obs    =      7414
+Number of PSUs   =     297        Population size  =  30109848
+                                  Design df        =       287
+
+      Kampala: strata = Kampala
+    _subpop_2: strata = Central 1
+    _subpop_3: strata = Central 2
+    _subpop_4: strata = East Central
+      Eastern: strata = Eastern
+    _subpop_6: strata = Mid Northern
+    _subpop_7: strata = North East
+    _subpop_8: strata = West Nile
+    _subpop_9: strata = Mid Western
+   _subpop_10: strata = South Western
+
+--------------------------------------------------------------
+             |             Linearized
+        Over |       Mean   Std. Err.     [95% Conf. Interval]
+-------------+------------------------------------------------
+h_flex4      |
+     Kampala |   46.13317   4.202481      37.86158    54.40476
+   _subpop_2 |   8.630166   1.889043      4.912031     12.3483
+   _subpop_3 |   13.20362   3.841285      5.642957    20.76428
+   _subpop_4 |   5.426034   1.304646      2.858146    7.993922
+     Eastern |   5.839485   1.789056      2.318151     9.36082
+   _subpop_6 |   .5069209   .3006752     -.0848872    1.098729
+   _subpop_7 |   7.204746   2.536642      2.211966    12.19753
+   _subpop_8 |   .7736243    .470968      -.153365    1.700614
+   _subpop_9 |   12.85824    2.07048      8.782984    16.93349
+  _subpop_10 |   13.10823   1.503749      10.14845      16.068
+-------------+------------------------------------------------
+pg_flex4     |
+     Kampala |   15.21858   2.219324      10.85037     19.5868
+   _subpop_2 |   2.129769   .5280391      1.090449     3.16909
+   _subpop_3 |   3.450967   1.461078      .5751787    6.326754
+   _subpop_4 |   1.447546   .4098027      .6409458    2.254145
+     Eastern |   1.816804   .7409043      .3585082    3.275099
+   _subpop_6 |   .0475865   .0348599     -.0210271    .1162001
+   _subpop_7 |   1.945033   1.143582     -.3058389    4.195905
+   _subpop_8 |   .1567406   .1132996     -.0662629    .3797441
+   _subpop_9 |   3.150932   .8407392      1.496135    4.805729
+  _subpop_10 |    3.04526   .4757669      2.108825    3.981695
+-------------+------------------------------------------------
+spg_flex4    |
+     Kampala |   7.070737   1.315114      4.482245    9.659229
+   _subpop_2 |   .7309317   .2087097       .320136    1.141727
+   _subpop_3 |   1.506796    .794263     -.0565233    3.070115
+   _subpop_4 |   .5881454   .1811377      .2316185    .9446723
+     Eastern |   .8528156   .4001357       .065243    1.640388
+   _subpop_6 |   .0144371   .0136081     -.0123473    .0412214
+   _subpop_7 |   .8195158   .6200146     -.4008368    2.039868
+   _subpop_8 |   .0694768   .0516744      -.032232    .1711856
+   _subpop_9 |   1.207221   .4119722      .3963513    2.018091
+  _subpop_10 |   1.060964   .2104194      .6468033    1.475125
+--------------------------------------------------------------
+(running mean on estimation sample)
+
+Survey: Mean estimation
+
+Number of strata =      10        Number of obs    =      7414
+Number of PSUs   =     297        Population size  =  30109848
+                                  Design df        =       287
+
+         Over: strata rural
+    _subpop_1: Kampala Urban
+    _subpop_2: Central 1 Urban
+    _subpop_3: Central 1 Rural
+    _subpop_4: Central 2 Urban
+    _subpop_5: Central 2 Rural
+    _subpop_6: East Central Urban
+    _subpop_7: East Central Rural
+    _subpop_8: Eastern Urban
+    _subpop_9: Eastern Rural
+   _subpop_10: Mid Northern Urban
+   _subpop_11: Mid Northern Rural
+   _subpop_12: North East Urban
+   _subpop_13: North East Rural
+   _subpop_14: West Nile Urban
+   _subpop_15: West Nile Rural
+   _subpop_16: Mid Western Urban
+   _subpop_17: Mid Western Rural
+   _subpop_18: South Western Urban
+   _subpop_19: South Western Rural
+
+--------------------------------------------------------------
+             |             Linearized
+        Over |       Mean   Std. Err.     [95% Conf. Interval]
+-------------+------------------------------------------------
+h_flex4      |
+   _subpop_1 |   46.13317   4.202481      37.86158    54.40476
+   _subpop_2 |   42.06224   8.114052      26.09164    58.03284
+   _subpop_3 |    3.51499   1.147473       1.25646     5.77352
+   _subpop_4 |   59.67516   6.311558      47.25235    72.09798
+   _subpop_5 |   6.591344   1.071332       4.48268    8.700009
+   _subpop_6 |   48.11638   4.110543      40.02574    56.20701
+   _subpop_7 |   2.174859    .548178        1.0959    3.253818
+   _subpop_8 |   48.58554   4.191189      40.33618    56.83491
+   _subpop_9 |   2.159677   .7682942      .6474711    3.671883
+  _subpop_10 |   .5050185   .4940115     -.4673265    1.477364
+  _subpop_11 |   .5072558   .3429608     -.1677816    1.182293
+  _subpop_12 |   31.15928   3.325451      24.61392    37.70465
+  _subpop_13 |   3.389263    .728484      1.955414    4.823112
+  _subpop_14 |          0  (omitted)
+  _subpop_15 |   .9048635    .563171     -.2036058    2.013333
+  _subpop_16 |   4.151773   1.327489      1.538925    6.764622
+  _subpop_17 |   13.96162   2.125551       9.77797    18.14526
+  _subpop_18 |    4.12265   .9762342      2.201163    6.044137
+  _subpop_19 |   13.66409   1.608673      10.49779    16.83038
+-------------+------------------------------------------------
+pg_flex4     |
+   _subpop_1 |   15.21858   2.219324      10.85037     19.5868
+   _subpop_2 |   11.63133   2.715923       6.28568    16.97699
+   _subpop_3 |   .6760107   .2839024      .1172158    1.234806
+   _subpop_4 |   20.54321   2.853545      14.92667    26.15974
+   _subpop_5 |   1.018971   .1830532      .6586739    1.379268
+   _subpop_6 |   15.21091   2.060039      11.15621    19.26561
+   _subpop_7 |   .3993667   .1698737      .0650105    .7337229
+   _subpop_8 |   18.32847   2.397919      13.60873    23.04821
+   _subpop_9 |   .3953917   .1933312      .0148649    .7759186
+  _subpop_10 |   .2134381   .2087861     -.1975082    .6243844
+  _subpop_11 |   .0183925   .0169093     -.0148895    .0516744
+  _subpop_12 |   11.14224   .5866834      9.987492    12.29699
+  _subpop_13 |   .4801002   .1368267      .2107891    .7494113
+  _subpop_14 |          0  (omitted)
+  _subpop_15 |   .1833304   .1319842     -.0764495    .4431102
+  _subpop_16 |   .7507254   .2817576       .196152    1.305299
+  _subpop_17 |   3.455113   .9018456      1.680042    5.230183
+  _subpop_18 |   .7327521   .4102524      -.074733    1.540237
+  _subpop_19 |   3.188315   .5032046      2.197875    4.178754
+-------------+------------------------------------------------
+spg_flex4    |
+   _subpop_1 |   7.070737   1.315114      4.482245    9.659229
+   _subpop_2 |    4.41682   1.214981      2.025417    6.808223
+   _subpop_3 |   .1669833   .0889457     -.0080854     .342052
+   _subpop_4 |   10.06005    2.59267      4.956985    15.16311
+   _subpop_5 |   .2897837   .0755623      .1410572    .4385102
+   _subpop_6 |   6.364708   1.225051      3.953484    8.775932
+   _subpop_7 |   .1482188   .0917846     -.0324376    .3288752
+   _subpop_8 |   9.327832   1.660467      6.059594    12.59607
+   _subpop_9 |   .1232411   .0692873     -.0131345    .2596168
+  _subpop_10 |   .0902062   .0882402     -.0834737    .2638862
+  _subpop_11 |   .0010998   .0010805     -.0010268    .0032264
+  _subpop_12 |   5.337241   .7792247      3.803521    6.870961
+  _subpop_13 |   .0999315   .0319876      .0369715    .1628915
+  _subpop_14 |          0  (omitted)
+  _subpop_15 |    .081263   .0601219     -.0370727    .1995987
+  _subpop_16 |   .2281951   .0934291      .0443019    .4120883
+  _subpop_17 |   1.331294   .4474874      .4505211    2.212068
+  _subpop_18 |   .2894791    .238176     -.1793142    .7582724
+  _subpop_19 |   1.108689   .2226238      .6705068    1.546872
+--------------------------------------------------------------
+(running mean on estimation sample)
+
+Survey: Mean estimation
+
+Number of strata =      10        Number of obs    =      7414
+Number of PSUs   =     297        Population size  =  30109848
+                                  Design df        =       287
+
+      Kampala: spdomain = Kampala
+    _subpop_2: spdomain = Central urban
+    _subpop_3: spdomain = Central rural
+    _subpop_4: spdomain = Eastern urban
+    _subpop_5: spdomain = Eastern rural
+    _subpop_6: spdomain = Northern urban
+    _subpop_7: spdomain = Northern rural
+    _subpop_8: spdomain = Western urban
+    _subpop_9: spdomain = Western rural
+
+--------------------------------------------------------------
+             |             Linearized
+        Over |       Mean   Std. Err.     [95% Conf. Interval]
+-------------+------------------------------------------------
+h_flex4      |
+     Kampala |   46.13317   4.202481      37.86158    54.40476
+   _subpop_2 |    53.9563   5.801523      42.53737    65.37523
+   _subpop_3 |   5.640802   .8508659      3.966073    7.315531
+   _subpop_4 |   48.49135   2.504505      43.56183    53.42088
+   _subpop_5 |    2.35479   .4093482      1.549084    3.160495
+   _subpop_6 |   .3341999    .328916     -.3131937    .9815934
+   _subpop_7 |   .7142307   .2888434      .1457106    1.282751
+   _subpop_8 |   4.138667     .85215      2.461411    5.815923
+   _subpop_9 |   13.77526   1.281445      11.25304    16.29748
+-------------+------------------------------------------------
+pg_flex4     |
+     Kampala |   15.21858   2.219324      10.85037     19.5868
+   _subpop_2 |   17.64954   2.752601       12.2317    23.06739
+   _subpop_3 |   .9130019   .1564879      .6049923    1.221011
+   _subpop_4 |   16.78846    1.63544      13.56948    20.00744
+   _subpop_5 |   .4201074   .1153453      .1930774    .6471374
+   _subpop_6 |   .1412443   .1390112     -.1323664     .414855
+   _subpop_7 |   .0724109    .038382      -.003135    .1479568
+   _subpop_8 |    .742637   .2414674      .2673654    1.217909
+   _subpop_9 |   3.288004   .4611419      2.380354    4.195653
+-------------+------------------------------------------------
+spg_flex4    |
+     Kampala |   7.070737   1.315114      4.482245    9.659229
+   _subpop_2 |   8.227705   2.118411      4.058112     12.3973
+   _subpop_3 |   .2518404   .0596744      .1343854    .3692954
+   _subpop_4 |   7.826701   1.134276      5.594146    10.05926
+   _subpop_5 |   .1370887   .0540828      .0306394     .243538
+   _subpop_6 |   .0596947   .0587509     -.0559425    .1753319
+   _subpop_7 |   .0241105   .0163313     -.0080339    .0562548
+   _subpop_8 |   .2557743   .1178633      .0237882    .4877605
+   _subpop_9 |   1.191865   .2176805      .7634125    1.620318
+--------------------------------------------------------------
+strata was float now byte
+rural was float now byte
+reg_tpi was float now byte
+spdomain was float now byte
+news was float now byte
+h_flex4 was float now byte
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\GAPP2
+> /work/cons_real_it4.dta saved
+
+    Variable |     Obs      Weight        Mean   Std. Dev.       Min   
+>      Max
+-------------+---------------------------------------------------------
+> --------
+     h_flex4 |    7414  30109848.2    10.49655   30.65297          0   
+>      100
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\GAPP2
+> /work/foodshares_it4.dta saved
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000002.tmp saved
+variable one does not uniquely identify observations in the master
+    data
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          3 |      7,427      100.00      100.00
+------------+-----------------------------------
+      Total |      7,427      100.00
+
+   relpoor5 |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          0 | 3,706.9792       49.99       49.99
+          1 | 3,708.0208       50.01      100.00
+------------+-----------------------------------
+      Total |      7,415      100.00
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\GAPP2
+> /work/relpoor_it5.dta saved
+variable hhid does not uniquely identify observations in the master
+    data
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |        133        0.13        0.13
+          2 |          1        0.00        0.13
+          3 |     99,617       99.87      100.00
+------------+-----------------------------------
+      Total |     99,751      100.00
+(7559 observations deleted)
+variable hhid does not uniquely identify observations in the master
+    data
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          2 |          7        0.01        0.01
+          3 |     92,192       99.99      100.00
+------------+-----------------------------------
+      Total |     92,199      100.00
+(54592 observations deleted)
+(4 missing values generated)
+    4
+    0
+(4 missing values generated)
+    4
+(4 observations deleted)
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k00000v.tmp not fo
+> und)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k00000v.tmp saved
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k00000w.tmp not fo
+> und)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k00000w.tmp saved
+variable spdomain does not uniquely identify observations in the
+    master data
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          3 |     37,603      100.00      100.00
+------------+-----------------------------------
+      Total |     37,603      100.00
+  218
+(218 observations deleted)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k00000v.tmp saved
+49
+49
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\GAPP2
+> /work/codes_food_basket_flex_it5.dta saved
+(2770 observations deleted)
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k00000x.tmp not fo
+> und)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k00000x.tmp saved
+variable hhid does not uniquely identify observations in the master
+    data
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |        133        0.15        0.15
+          2 |        163        0.18        0.33
+          3 |     89,422       99.67      100.00
+------------+-----------------------------------
+      Total |     89,718      100.00
+(163 observations deleted)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k00000x.tmp saved
+variable product does not uniquely identify observations in the
+    master data
+product was int now float
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |      2,089        2.33        2.33
+          2 |          2        0.00        2.33
+          3 |     87,466       97.67      100.00
+------------+-----------------------------------
+      Total |     89,557      100.00
+(2091 observations deleted)
+(64 observations deleted)
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000011.tmp not fo
+> und)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000011.tmp saved
+product was float now int
+unit was float now byte
+food_cat was float now byte
+region was float now byte
+psu was int now byte
+survquar was float now byte
+survmon was float now byte
+strata was float now byte
+rural was float now byte
+reg_tpi was float now byte
+spdomain was float now byte
+news was float now byte
+bswt was float now byte
+count was float now byte
+descript was float now byte
+numreg was double now byte
+variable hhid does not uniquely identify observations in the master
+    data
+survquar was byte now float
+reg_tpi was byte now float
+spdomain was byte now float
+(label region already defined)
+(label lsurvquar already defined)
+(label lspdomain already defined)
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          2 |        165        0.19        0.19
+          3 |     87,402       99.81      100.00
+------------+-----------------------------------
+      Total |     87,567      100.00
+variable hhid does not uniquely identify observations in the master
+    data
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          3 |     87,567      100.00      100.00
+------------+-----------------------------------
+      Total |     87,567      100.00
+(51619 observations deleted)
+(46 observations deleted)
+(2514 observations deleted)
+
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+    ratiotw5 |       395    1.967686    9.151095   .8299415   158.6394
+    ratiomw5 |       395    1.974126    12.89559   .1777841   210.9498
+variable product does not uniquely identify observations in the
+    master data
+product was int now float
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          2 |          3        0.75        0.75
+          3 |        395       99.25      100.00
+------------+-----------------------------------
+      Total |        398      100.00
+    3
+(3 observations deleted)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\GAPP2
+> /work/price_unit_flex_it5.dta saved
+(label lspdomain already defined)
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |         18        4.36        4.36
+          2 |        161       38.98       43.34
+          3 |        234       56.66      100.00
+------------+-----------------------------------
+      Total |        413      100.00
+
+     +-------------------------------------+
+     | product         spdomain   descript |
+     |-------------------------------------|
+233. |     157          Kampala          1 |
+234. |     157    Central urban          1 |
+235. |     157    Central rural          1 |
+236. |     157    Eastern urban          1 |
+237. |     157    Eastern rural          1 |
+     |-------------------------------------|
+238. |     157   Northern urban          1 |
+239. |     157    Western urban          1 |
+240. |     157    Western rural          1 |
+243. |     160          Kampala          1 |
+244. |     160    Central urban          1 |
+     |-------------------------------------|
+245. |     161          Kampala          1 |
+246. |     161    Central urban          1 |
+247. |     161    Central rural          1 |
+248. |     161    Eastern urban          1 |
+249. |     161    Eastern rural          1 |
+     |-------------------------------------|
+250. |     161   Northern urban          1 |
+251. |     161   Northern rural          1 |
+252. |     161    Western urban          1 |
+     +-------------------------------------+
+(179 observations deleted)
+variable product does not uniquely identify observations in the
+    master data
+(note: descript is str30 in using data but will be float now)
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          2 |         16        6.40        6.40
+          3 |        234       93.60      100.00
+------------+-----------------------------------
+      Total |        250      100.00
+(16 observations deleted)
+
+-----------------------------------------------------------------------
+-> spdomain = Kampala
+    0
+-----------------------------------------------------------------------
+-> spdomain = Central urban
+    2
+-----------------------------------------------------------------------
+-> spdomain = Central rural
+    0
+-----------------------------------------------------------------------
+-> spdomain = Eastern urban
+    0
+-----------------------------------------------------------------------
+-> spdomain = Eastern rural
+    0
+-----------------------------------------------------------------------
+-> spdomain = Northern urban
+    4
+-----------------------------------------------------------------------
+-> spdomain = Northern rural
+    0
+-----------------------------------------------------------------------
+-> spdomain = Western urban
+    4
+-----------------------------------------------------------------------
+-> spdomain = Western rural
+    0
+
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+        bswt |       234    121.6496    122.7253          4        807
+(10 observations deleted)
+(3 observations deleted)
+
+Summary for variables: baskshr
+     by categories of: spdomain (Spatial domains: each with own poverty
+>  line (they are 9))
+
+      spdomain |         N      mean        sd       min       max
+---------------+--------------------------------------------------
+       Kampala |        26  .7032538         0  .7032538  .7032538
+ Central urban |        25   .756444         0   .756444   .756444
+ Central rural |        26  .8937067         0  .8937067  .8937067
+ Eastern urban |        31  .8145826         0  .8145826  .8145826
+ Eastern rural |        28  .9057704         0  .9057704  .9057704
+Northern urban |        14  .7919405         0  .7919405  .7919405
+Northern rural |        19  .8948514         0  .8948514  .8948514
+ Western urban |        25  .8224103         0  .8224103  .8224103
+ Western rural |        27  .9001717         0  .9001717  .9001717
+---------------+--------------------------------------------------
+         Total |       221  .8325789  .0694031  .7032538  .9057704
+------------------------------------------------------------------
+variable spdomain does not uniquely identify observations in the
+    master data
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          3 |        221      100.00      100.00
+------------+-----------------------------------
+      Total |        221      100.00
+(221 real changes made)
+(213 real changes made)
+(221 real changes made)
+
+Summary for variables: chkcal
+     by categories of: spdomain (Spatial domains: each with own poverty
+>  line (they are 9))
+
+      spdomain |         N      mean        sd       min       max
+---------------+--------------------------------------------------
+       Kampala |        26 -.0000193         0 -.0000193 -.0000193
+ Central urban |        25  .0000578         0  .0000578  .0000578
+ Central rural |        26   .000045         0   .000045   .000045
+ Eastern urban |        31   .000045         0   .000045   .000045
+ Eastern rural |        28 -.0000899         0 -.0000899 -.0000899
+Northern urban |        14  .0000321         0  .0000321  .0000321
+Northern rural |        19 -.0000835         0 -.0000835 -.0000835
+ Western urban |        25  .0000835         0  .0000835  .0000835
+ Western rural |        27 -.0000899         0 -.0000899 -.0000899
+---------------+--------------------------------------------------
+         Total |       221 -2.21e-06  .0000665 -.0000899  .0000835
+------------------------------------------------------------------
+(221 real changes made)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\GAPP2
+> /work/quan_flex_it5.dta saved
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\GAPP2
+> /work/povline_food_flex_it5.dta saved
+variable spdomain does not uniquely identify observations in the
+    master data
+(label lspdomain already defined)
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |          1        0.01        0.01
+          3 |      7,426       99.99      100.00
+------------+-----------------------------------
+      Total |      7,427      100.00
+(141 real changes made)
+(12 missing values generated)
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000013.tmp not fo
+> und)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000013.tmp saved
+variable spdomain does not uniquely identify observations in the
+    master data
+(label lspdomain already defined)
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |          1        0.01        0.01
+          3 |      7,426       99.99      100.00
+------------+-----------------------------------
+      Total |      7,427      100.00
+(1 missing value generated)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\GAPP2
+> /work/povlines_it5.dta saved
+variable spdomain does not uniquely identify observations in the
+    master data
+variable spdomain does not uniquely identify observations in
+    C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\GAPP
+    > 2/work/povlines_it5.dta
+(label lspdomain already defined)
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          3 |      7,427      100.00      100.00
+------------+-----------------------------------
+      Total |      7,427      100.00
+(13 missing values generated)
+(1 missing value generated)
+(1 missing value generated)
+(13 missing values generated)
+(7426 real changes made)
+(1 missing value generated)
+(7414 real changes made)
+
+    Variable |     Obs      Weight        Mean   Std. Dev.       Min   
+>      Max
+-------------+---------------------------------------------------------
+> --------
+          cr |    7414  30109848.2    1106.447   1372.576   61.85136   
+> 113681.6
+      cr_it5 |    7414  30109848.2    1106.447   1132.415   29.11614   
+>  93481.7
+     linpob5 |    7415  30112959.1    472.7632   451.6105   134.9722   
+> 1928.898
+    linpobr5 |    7415  30112959.1    377.5999   .0000145   377.5999   
+> 377.5999
+(1 missing value generated)
+(6620 missing values generated)
+(6607 real changes made)
+(13 missing values generated)
+(6607 real changes made)
+(13 missing values generated)
+(6607 real changes made)
+(13 missing values generated)
+(13 missing values generated)
+(13 missing values generated)
+(12 missing values generated)
+
+      pweight: popwt
+          VCE: linearized
+  Single unit: missing
+     Strata 1: strata
+         SU 1: psu
+        FPC 1: <zero>
+(running mean on estimation sample)
+
+Survey: Mean estimation
+
+Number of strata =      10        Number of obs    =      7414
+Number of PSUs   =     297        Population size  =  30109848
+                                  Design df        =       287
+
+--------------------------------------------------------------
+             |             Linearized
+             |       Mean   Std. Err.     [95% Conf. Interval]
+-------------+------------------------------------------------
+     h_flex5 |   11.48879   .8894995      9.738021    13.23956
+    pg_flex5 |   3.110577   .3410356      2.439329    3.781825
+   spg_flex5 |   1.291259   .1799344      .9371004    1.645417
+--------------------------------------------------------------
+(running mean on estimation sample)
+
+Survey: Mean estimation
+
+Number of strata =      10        Number of obs    =      7414
+Number of PSUs   =     297        Population size  =  30109848
+                                  Design df        =       287
+
+        Urban: rural = Urban
+        Rural: rural = Rural
+
+--------------------------------------------------------------
+             |             Linearized
+        Over |       Mean   Std. Err.     [95% Conf. Interval]
+-------------+------------------------------------------------
+h_flex5      |
+       Urban |   40.31711   2.834735      34.73761    45.89662
+       Rural |   6.069566   .4790099      5.126748    7.012384
+-------------+------------------------------------------------
+pg_flex5     |
+       Urban |   12.87981   1.316125      10.28933    15.47029
+       Rural |    1.27413    .150613      .9776844    1.570577
+-------------+------------------------------------------------
+spg_flex5    |
+       Urban |   5.829746   .7840389       4.28655    7.372942
+       Rural |   .4381019   .0681155      .3040326    .5721711
+--------------------------------------------------------------
+(running mean on estimation sample)
+
+Survey: Mean estimation
+
+Number of strata =      10        Number of obs    =      7414
+Number of PSUs   =     297        Population size  =  30109848
+                                  Design df        =       287
+
+      Kampala: strata = Kampala
+    _subpop_2: strata = Central 1
+    _subpop_3: strata = Central 2
+    _subpop_4: strata = East Central
+      Eastern: strata = Eastern
+    _subpop_6: strata = Mid Northern
+    _subpop_7: strata = North East
+    _subpop_8: strata = West Nile
+    _subpop_9: strata = Mid Western
+   _subpop_10: strata = South Western
+
+--------------------------------------------------------------
+             |             Linearized
+        Over |       Mean   Std. Err.     [95% Conf. Interval]
+-------------+------------------------------------------------
+h_flex5      |
+     Kampala |   46.13317   4.202481      37.86158    54.40476
+   _subpop_2 |   8.630166   1.889043      4.912031     12.3483
+   _subpop_3 |   12.63156   3.638127      5.470762    19.79235
+   _subpop_4 |   5.426034   1.304646      2.858146    7.993922
+     Eastern |   5.839485   1.789056      2.318151     9.36082
+   _subpop_6 |   5.785893   1.769094       2.30385    9.267937
+   _subpop_7 |   9.733607   4.948176       -.00571    19.47292
+   _subpop_8 |   5.560171   2.400439      .8354726    10.28487
+   _subpop_9 |   12.85824    2.07048      8.782984    16.93349
+  _subpop_10 |   13.40978    1.47881      10.49909    16.32047
+-------------+------------------------------------------------
+pg_flex5     |
+     Kampala |   15.21389   2.219101      10.84612    19.58167
+   _subpop_2 |   2.033584   .5074795       1.03473    3.032438
+   _subpop_3 |   3.329426   1.417141      .5401179    6.118733
+   _subpop_4 |   1.443652   .4095715      .6375074    2.249797
+     Eastern |   1.812933   .7405594      .3553167    3.270549
+   _subpop_6 |   1.438961   .5222011      .4111311     2.46679
+   _subpop_7 |   2.791664   1.983843     -1.113063    6.696392
+   _subpop_8 |   1.396095   .6053134      .2046784    2.587512
+   _subpop_9 |   3.156112   .8412476      1.500315     4.81191
+  _subpop_10 |   3.050913   .4762289      2.113569    3.988258
+-------------+------------------------------------------------
+spg_flex5    |
+     Kampala |   7.068265   1.314857       4.48028    9.656251
+   _subpop_2 |     .68804   .1988203      .2967092    1.079371
+   _subpop_3 |   1.447685   .7664966     -.0609831    2.956352
+   _subpop_4 |   .5868405   .1809231       .230736     .942945
+     Eastern |   .8513851    .399873      .0643294    1.638441
+   _subpop_6 |   .5590589   .2337718      .0989343    1.019183
+   _subpop_7 |   1.225162   1.022978     -.7883282    3.238652
+   _subpop_8 |   .4585906   .1904818       .083672    .8335091
+   _subpop_9 |   1.209339   .4124601      .3975083    2.021169
+  _subpop_10 |   1.063203   .2107089      .6484725    1.477934
+--------------------------------------------------------------
+(running mean on estimation sample)
+
+Survey: Mean estimation
+
+Number of strata =      10        Number of obs    =      7414
+Number of PSUs   =     297        Population size  =  30109848
+                                  Design df        =       287
+
+         Over: strata rural
+    _subpop_1: Kampala Urban
+    _subpop_2: Central 1 Urban
+    _subpop_3: Central 1 Rural
+    _subpop_4: Central 2 Urban
+    _subpop_5: Central 2 Rural
+    _subpop_6: East Central Urban
+    _subpop_7: East Central Rural
+    _subpop_8: Eastern Urban
+    _subpop_9: Eastern Rural
+   _subpop_10: Mid Northern Urban
+   _subpop_11: Mid Northern Rural
+   _subpop_12: North East Urban
+   _subpop_13: North East Rural
+   _subpop_14: West Nile Urban
+   _subpop_15: West Nile Rural
+   _subpop_16: Mid Western Urban
+   _subpop_17: Mid Western Rural
+   _subpop_18: South Western Urban
+   _subpop_19: South Western Rural
+
+--------------------------------------------------------------
+             |             Linearized
+        Over |       Mean   Std. Err.     [95% Conf. Interval]
+-------------+------------------------------------------------
+h_flex5      |
+   _subpop_1 |   46.13317   4.202481      37.86158    54.40476
+   _subpop_2 |   42.06224   8.114052      26.09164    58.03284
+   _subpop_3 |    3.51499   1.147473       1.25646     5.77352
+   _subpop_4 |   56.75249   4.401771      48.08865    65.41634
+   _subpop_5 |   6.353741   1.038961      4.308793     8.39869
+   _subpop_6 |   48.11638   4.110543      40.02574    56.20701
+   _subpop_7 |   2.174859    .548178        1.0959    3.253818
+   _subpop_8 |   48.58554   4.191189      40.33618    56.83491
+   _subpop_9 |   2.159677   .7682942      .6474711    3.671883
+  _subpop_10 |   35.77393   5.813138      24.33214    47.21572
+  _subpop_11 |   .5072558   .3429608     -.1677816    1.182293
+  _subpop_12 |   49.56495   2.153912      45.32548    53.80441
+  _subpop_13 |   3.389263    .728484      1.955414    4.823112
+  _subpop_14 |   33.00213   8.369577      16.52859    49.47566
+  _subpop_15 |   .9048635    .563171     -.2036058    2.013333
+  _subpop_16 |   4.151773   1.327489      1.538925    6.764622
+  _subpop_17 |   13.96162   2.125551       9.77797    18.14526
+  _subpop_18 |    4.12265   .9762342      2.201163    6.044137
+  _subpop_19 |    13.9843   1.580436      10.87358    17.09501
+-------------+------------------------------------------------
+pg_flex5     |
+   _subpop_1 |   15.21389   2.219101      10.84612    19.58167
+   _subpop_2 |   10.99211   2.610331      5.854288    16.12993
+   _subpop_3 |   .6629114   .2801027      .1115952    1.214228
+   _subpop_4 |   19.74519    3.02597      13.78928     25.7011
+   _subpop_5 |   .9936829   .1800237      .6393487    1.348017
+   _subpop_6 |   15.19935   2.059505       11.1457    19.25299
+   _subpop_7 |   .3960578   .1695404      .0623575    .7297582
+   _subpop_8 |   18.31783   2.397566      13.59879    23.03687
+   _subpop_9 |   .3921037   .1925252      .0131633    .7710441
+  _subpop_10 |   9.509288   2.264717      5.051727    13.96685
+  _subpop_11 |   .0183831   .0169045     -.0148894    .0516555
+  _subpop_12 |   17.33198   2.415076      12.57847    22.08549
+  _subpop_13 |   .4756798   .1366294       .206757    .7446027
+  _subpop_14 |   8.545143   2.168307      4.277342    12.81294
+  _subpop_15 |   .1833165   .1319808     -.0764567    .4430896
+  _subpop_16 |   .7488441   .2812334      .1953026    1.302386
+  _subpop_17 |   3.461188   .9022489      1.685324    5.237052
+  _subpop_18 |    .730877   .4100181     -.0761469    1.537901
+  _subpop_19 |   3.194434   .5036903      2.203038    4.185829
+-------------+------------------------------------------------
+spg_flex5    |
+   _subpop_1 |   7.068265   1.314857       4.48028    9.656251
+   _subpop_2 |   4.123972   1.154283      1.852037    6.395906
+   _subpop_3 |   .1623355   .0872042     -.0093054    .3339764
+   _subpop_4 |   9.632074   2.577965      4.557957    14.70619
+   _subpop_5 |   .2831561   .0747329      .1360619    .4302503
+   _subpop_6 |   6.358492   1.224492      3.948368    8.768616
+   _subpop_7 |    .147288   .0915141      -.032836    .3274119
+   _subpop_8 |   9.321507   1.660055       6.05408    12.58893
+   _subpop_9 |   .1222319   .0688315     -.0132467    .2577105
+  _subpop_10 |   3.728838   1.190348      1.385918    6.071758
+  _subpop_11 |   .0010991   .0010798     -.0010263    .0032246
+  _subpop_12 |   8.297578   1.652149      5.045712    11.54944
+  _subpop_13 |   .0986663   .0316295      .0364111    .1609215
+  _subpop_14 |   2.682872   .6669346      1.370168    3.995575
+  _subpop_15 |   .0812591   .0601191     -.0370712    .1995894
+  _subpop_16 |   .2276179   .0932238      .0441288     .411107
+  _subpop_17 |   1.333753   .4479864      .4519978    2.215509
+  _subpop_18 |   .2889896   .2380013     -.1794597     .757439
+  _subpop_19 |   1.111097   .2229309      .6723103    1.549884
+--------------------------------------------------------------
+(running mean on estimation sample)
+
+Survey: Mean estimation
+
+Number of strata =      10        Number of obs    =      7414
+Number of PSUs   =     297        Population size  =  30109848
+                                  Design df        =       287
+
+      Kampala: spdomain = Kampala
+    _subpop_2: spdomain = Central urban
+    _subpop_3: spdomain = Central rural
+    _subpop_4: spdomain = Eastern urban
+    _subpop_5: spdomain = Eastern rural
+    _subpop_6: spdomain = Northern urban
+    _subpop_7: spdomain = Northern rural
+    _subpop_8: spdomain = Western urban
+    _subpop_9: spdomain = Western rural
+
+--------------------------------------------------------------
+             |             Linearized
+        Over |       Mean   Std. Err.     [95% Conf. Interval]
+-------------+------------------------------------------------
+h_flex5      |
+     Kampala |   46.13317   4.202481      37.86158    54.40476
+   _subpop_2 |   51.98261   4.700955      42.72989    61.23533
+   _subpop_3 |   5.476614   .8279155      3.847058    7.106171
+   _subpop_4 |   48.49135   2.504505      43.56183    53.42088
+   _subpop_5 |    2.35479   .4093482      1.549084    3.160495
+   _subpop_6 |   36.05061   4.546899      27.10111    45.00011
+   _subpop_7 |   .7142307   .2888434      .1457106    1.282751
+   _subpop_8 |   4.138667     .85215      2.461411    5.815923
+   _subpop_9 |   13.97582   1.269244      11.47761    16.47403
+-------------+------------------------------------------------
+pg_flex5     |
+     Kampala |   15.21389   2.219101      10.84612    19.58167
+   _subpop_2 |   16.90309   2.811278      11.36975    22.43643
+   _subpop_3 |     .89148   .1539789      .5884089    1.194551
+   _subpop_4 |   16.77731   1.635314      13.55858    19.99604
+   _subpop_5 |   .4165018   .1150202      .1901118    .6428919
+   _subpop_6 |   9.774156   1.691017      6.445788    13.10252
+   _subpop_7 |   .0723985   .0383799     -.0031433    .1479404
+   _subpop_8 |   .7407585   .2412018      .2660096    1.215507
+   _subpop_9 |   3.294106    .461458      2.385835    4.202377
+-------------+------------------------------------------------
+spg_flex5    |
+     Kampala |   7.068265   1.314857       4.48028    9.656251
+   _subpop_2 |   7.843608   2.092687      3.724648    11.96257
+   _subpop_3 |   .2458245   .0588993      .1298952    .3617539
+   _subpop_4 |   7.820403    1.13396       5.58847    10.05233
+   _subpop_5 |   .1360396   .0538746      .0300001    .2420791
+   _subpop_6 |   3.757514   .8692875      2.046527    5.468501
+   _subpop_7 |   .0241086   .0163305     -.0080342    .0562514
+   _subpop_8 |   .2552366   .1177434      .0234865    .4869867
+   _subpop_9 |   1.194292   .2179465      .7653161    1.623269
+--------------------------------------------------------------
+strata was float now byte
+rural was float now byte
+reg_tpi was float now byte
+spdomain was float now byte
+news was float now byte
+h_flex5 was float now byte
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\GAPP2
+> /work/cons_real_it5.dta saved
+
+    Variable |     Obs      Weight        Mean   Std. Dev.       Min   
+>      Max
+-------------+---------------------------------------------------------
+> --------
+     h_flex5 |    7414  30109848.2    11.48879   31.89081          0   
+>      100
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\GAPP2
+> /work/foodshares_it5.dta saved
+
+. *********************************************************************
+> *****
+> * Send results to one big csv-file
+> *********************************************************************
+> *****;
+. use "$path/work/cons_real_it`lastpass'.dta", clear ;
+
+.         gen dum=1;
+
+.         collapse (mean) dum h_flex`lastpass' pg_flex`lastpass' spg_fl
+> ex`lastpass' [aw=popwt];
+
+. gen geo="National";
+
+. gen geono=dum;
+
+. tempfile nat;
+
+. save `nat';
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000014.tmp saved
+
+.         use "$path/work/cons_real_it`lastpass'.dta", clear ;
+
+.         collapse (mean) h_flex`lastpass' pg_flex`lastpass' spg_flex`l
+> astpass' [aw=popwt], by(rural);
+
+. gen geo="Rural/Urban";
+
+. gen geono=rural;
+
+. tempfile rur;
+
+. save `rur';
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000015.tmp saved
+
+. use "$path/work/cons_real_it`lastpass'.dta", clear ;
+
+.         collapse (mean) h_flex`lastpass' pg_flex`lastpass' spg_flex`l
+> astpass' [aw=popwt], by(news);
+
+. gen geo="North/Center/South";
+
+. gen geono=news;
+
+. tempfile new;
+
+. save `new';
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000016.tmp saved
+
+. use "$path/work/cons_real_it`lastpass'.dta", clear ;
+
+.         collapse (mean) h_flex`lastpass' pg_flex`lastpass' spg_flex`l
+> astpass' [aw=popwt], by(reg_tpi);
+
+. gen geo="TPI - 6 regions";
+
+. gen geono=reg_tpi;
+
+. tempfile rtp;
+
+. save `rtp';
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000017.tmp saved
+
+. use "$path/work/cons_real_it`lastpass'.dta", clear ;
+
+.         collapse (mean) h_flex`lastpass' pg_flex`lastpass' spg_flex`l
+> astpass' [aw=popwt], by(strata);
+
+. gen geo="Provinces";
+
+. gen geono=strata;
+
+. tempfile str;
+
+. save `str';
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000018.tmp saved
+
+. use "$path/work/cons_real_it`lastpass'.dta", clear ;
+
+.         collapse (mean) h_flex`lastpass' pg_flex`lastpass' spg_flex`l
+> astpass' [aw=popwt], by(spdomain);
+
+. gen geo="Spatial domains";
+
+. gen geono=spdomain;
+
+. tempfile r13;
+
+. save `r13';
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000019.tmp saved
+
+. clear;
+
+. set obs 1;
+obs was 0, now 1
+
+. gen geo=" ";
+
+. tempfile one;
+
+. save `one';
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k00001a.tmp saved
+
+. use          `nat';
+
+. append using `one';
+
+. append using `rur';
+geo was str8 now str11
+
+. append using `one';
+
+. append using `new';
+geo was str11 now str18
+
+. append using `one';
+
+. append using `rtp';
+(label region already defined)
+
+. append using `one';
+
+. append using `str';
+
+. append using `one';
+
+. append using `r13';
+
+. outsheet geo geono h_flex`lastpass' pg_flex`lastpass' spg_flex`lastpa
+> ss' dum rural news reg_tpi strata spdomain using "$path/work/poverty_
+> flexBask.csv", replace c;
+
+. *********************************************************************
+> *****
+> * Convergence graph (based on 5 iterations)
+> *********************************************************************
+> *****;
+. #delimit cr
+delimiter now cr
+. 
+. clear
+
+. set obs 1
+obs was 0, now 1
+
+. gen iteration=.
+(1 missing value generated)
+
+. tempfile converg
+
+. save `converg'
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k00001b.tmp saved
+
+. 
+. forvalues X = 1/`maxit' {
+  2.         use "$path/work/cons_real_it`X'.dta", clear
+  3.         collapse (mean) h_flex`X' pg_flex`X' spg_flex`X' [aw=popwt
+> ], by(strata)
+  4.         rename h_flex`X' h_flex
+  5.         rename pg_flex`X' pg_flex
+  6.         rename spg_flex`X' spg_flex
+  7.         gen iteration=`X'
+  8.         order iteration
+  9.         *sum
+.         if `X' != 1     {
+ 10.                 append using `converg'
+ 11.                         }
+ 12.         save `converg', replace
+ 13.         }
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k00001b.tmp saved
+(label lstrata already defined)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k00001b.tmp saved
+(label lstrata already defined)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k00001b.tmp saved
+(label lstrata already defined)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k00001b.tmp saved
+(label lstrata already defined)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k00001b.tmp saved
+
+. 
+. use `converg', clear
+
+. sum
+
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+   iteration |        50           3    1.428571          1          5
+      strata |        50         5.5    2.901442          1         10
+      h_flex |        50    11.33591    11.65578   .5069209   46.13317
+     pg_flex |        50    3.169954    3.919785   .0475234   15.21859
+    spg_flex |        50    1.335697    1.840163    .013562   7.070737
+
+. 
+. twoway (connected h_flex iteration), by(, title(Convergence graph: Po
+> verty rate. %) subtitle(After iterative procedure)) by(strata)
+
+. graph export "$path/work/converge_pov_rate.tif", replace
+(file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\GAPP
+> 2/work/converge_pov_rate.tif written in TIFF format)
+
+. 
+. sort strata iteration
+
+. 
+. for var h_flex pg_flex spg_flex: replace X = round(X,0.01)
+
+->  replace h_flex = round(h_flex,0.01)
+(50 real changes made)
+
+->  replace pg_flex = round(pg_flex,0.01)
+(50 real changes made)
+
+->  replace spg_flex = round(spg_flex,0.01)
+(50 real changes made)
+
+. 
+. list strata iteration h_flex pg_flex spg_flex
+
+     +--------------------------------------------------------+
+     |        strata   iterat~n   h_flex   pg_flex   spg_flex |
+     |--------------------------------------------------------|
+  1. |       Kampala          1    36.28      11.2       4.94 |
+  2. |       Kampala          2    44.62     14.98       6.94 |
+  3. |       Kampala          3    46.13     15.22       7.07 |
+  4. |       Kampala          4    46.13     15.22       7.07 |
+  5. |       Kampala          5    46.13     15.21       7.07 |
+     |--------------------------------------------------------|
+  6. |     Central 1          1     8.07      1.84         .6 |
+  7. |     Central 1          2     3.43       .64        .16 |
+  8. |     Central 1          3     3.43       .63        .16 |
+  9. |     Central 1          4     8.63      2.13        .73 |
+ 10. |     Central 1          5     8.63      2.03        .69 |
+     |--------------------------------------------------------|
+ 11. |     Central 2          1    12.25      3.15       1.33 |
+ 12. |     Central 2          2     6.19      1.06        .31 |
+ 13. |     Central 2          3     5.94         1        .28 |
+ 14. |     Central 2          4     13.2      3.45       1.51 |
+ 15. |     Central 2          5    12.63      3.33       1.45 |
+     |--------------------------------------------------------|
+ 16. |  East Central          1     4.74      1.09        .41 |
+ 17. |  East Central          2     5.43      1.43        .58 |
+ 18. |  East Central          3     5.43      1.44        .59 |
+ 19. |  East Central          4     5.43      1.45        .59 |
+ 20. |  East Central          5     5.43      1.44        .59 |
+     |--------------------------------------------------------|
+ 21. |       Eastern          1     5.11      1.47        .64 |
+ 22. |       Eastern          2     5.72       1.8        .84 |
+ 23. |       Eastern          3     5.84      1.81        .85 |
+ 24. |       Eastern          4     5.84      1.82        .85 |
+ 25. |       Eastern          5     5.84      1.81        .85 |
+     |--------------------------------------------------------|
+ 26. |  Mid Northern          1     5.75      1.39        .54 |
+ 27. |  Mid Northern          2      .51       .05        .01 |
+ 28. |  Mid Northern          3     5.58      1.43        .56 |
+ 29. |  Mid Northern          4      .51       .05        .01 |
+ 30. |  Mid Northern          5     5.79      1.44        .56 |
+     |--------------------------------------------------------|
+ 31. |    North East          1     8.73      2.34        .98 |
+ 32. |    North East          2      7.2      1.92        .81 |
+ 33. |    North East          3     9.73      2.78       1.22 |
+ 34. |    North East          4      7.2      1.95        .82 |
+ 35. |    North East          5     9.73      2.79       1.23 |
+     |--------------------------------------------------------|
+ 36. |     West Nile          1     5.56      1.35        .44 |
+ 37. |     West Nile          2      .77       .16        .07 |
+ 38. |     West Nile          3     5.27      1.39        .46 |
+ 39. |     West Nile          4      .77       .16        .07 |
+ 40. |     West Nile          5     5.56       1.4        .46 |
+     |--------------------------------------------------------|
+ 41. |   Mid Western          1    13.23      3.31       1.27 |
+ 42. |   Mid Western          2    12.86      3.13        1.2 |
+ 43. |   Mid Western          3    12.86      3.15        1.2 |
+ 44. |   Mid Western          4    12.86      3.15       1.21 |
+ 45. |   Mid Western          5    12.86      3.16       1.21 |
+     |--------------------------------------------------------|
+ 46. | South Western          1     14.5      3.22       1.13 |
+ 47. | South Western          2    12.97      3.02       1.05 |
+ 48. | South Western          3    12.97      3.04       1.06 |
+ 49. | South Western          4    13.11      3.05       1.06 |
+ 50. | South Western          5    13.41      3.05       1.06 |
+     +--------------------------------------------------------+
+
+.         
+. #delimit ;
+delimiter now ;
+. *********************************************************************
+> *****
+> * 140_iterate.do        (end)
+> *********************************************************************
+> *****;
+. cap log close;
