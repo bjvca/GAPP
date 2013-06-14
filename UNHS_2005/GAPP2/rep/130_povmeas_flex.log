@@ -1,0 +1,749 @@
+-----------------------------------------------------------------------
+      name:  <unnamed>
+       log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_20
+> 05\GAPP2/rep/130_povmeas_flex.log
+  log type:  text
+ opened on:  11 Jun 2013, 12:42:50
+
+. clear
+
+. set more off
+
+. #delimit ;
+delimiter now ;
+. *********************************************************************
+> *****
+> * 130_povmeas_flex.do           (start)
+> *
+> * Purpose:
+> * Initial poverty measures calculation for flexible basket. (Before a
+> ny iteration)
+> *********************************************************************
+> *****;
+. *CA modified to add work/hhdata.dta for bootstrap;
+. /*
+> This file uses:
+>         in/foodshr96.dta
+>         work/povline_f_flex.dta
+>         work/consump_nom.dta
+>         work/hhdata.dta
+>         work/temp_index_reg_tpi.dta
+> 
+> This file creates:
+>         work/foodshr96.dta
+>         work/povmeas.dta
+>         work/povlines.dta
+>         work/cons_real.dta
+> */
+> 
+> 
+> 
+> *********************************************************************
+> *****;
+. * Bring in data file with nominal consumption per capita, and deflate
+>  it
+> * by temporal price index.
+> *********************************************************************
+> *****;
+. use "$path/work/hhdata.dta", clear;
+
+.         keep hhid strata reg_tpi spdomain news rural survmon survquar
+> ;
+
+.         tab reg_tpi, miss;
+
+    Regions |
+   used for |
+   temporal |
+price index |
+calculation |
+          s |      Freq.     Percent        Cum.
+------------+-----------------------------------
+    Central |      2,100       28.28       28.28
+    Eastern |      1,932       26.02       54.30
+   Northern |      1,624       21.87       76.16
+    Western |      1,770       23.84      100.00
+------------+-----------------------------------
+      Total |      7,426      100.00
+
+.         tab survquar, miss;
+
+  Sequential |
+      Survey |
+     Quarter |
+    (May-Jul |
+       05=1) |      Freq.     Percent        Cum.
+-------------+-----------------------------------
+  May-Jul 05 |      1,573       21.18       21.18
+ Sept-Oct 05 |      2,280       30.70       51.89
+ Nov05-Jan06 |      1,787       24.06       75.95
+Feb-Apr 2006 |      1,786       24.05      100.00
+-------------+-----------------------------------
+       Total |      7,426      100.00
+
+.         keep hhid spdomain reg_tpi survquar;
+
+.         sort hhid;
+
+.         tempfile spdomainreg_tpi;
+
+. save `spdomainreg_tpi', replace;
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000001.tmp not fo
+> und)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000001.tmp saved
+
+. use "$path/work/conpc.dta", clear;
+
+. *use "$path/work/consump_nom.dta", clear;
+. *CA modified to merge in work/hhdata.dta for bootstrap;
+.     sort hhid;
+
+.     merge hhid using "$path/work/hhdata.dta";
+
+.     tab _m;
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |          1        0.01        0.01
+          3 |      7,426       99.99      100.00
+------------+-----------------------------------
+      Total |      7,427      100.00
+
+.     drop _m;
+
+.         keep hhid hhweight hhsize cons_pc_nom ;
+
+.         sort hhid;
+
+.         merge hhid using `spdomainreg_tpi';
+(label lspdomain already defined)
+(label lsurvquar already defined)
+(label region already defined)
+
+.         tab _merge;
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |          1        0.01        0.01
+          3 |      7,426       99.99      100.00
+------------+-----------------------------------
+      Total |      7,427      100.00
+
+.         drop _merge;
+
+.         sort reg_tpi survquar;
+
+.         merge reg_tpi survquar using "$path/work/temp_index_reg_tpi.d
+> ta";
+variables reg_tpi survquar do not uniquely identify observations in
+    the master data
+(label lsurvquar already defined)
+(label region already defined)
+
+.         tab _merge;
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |          1        0.01        0.01
+          3 |      7,426       99.99      100.00
+------------+-----------------------------------
+      Total |      7,427      100.00
+
+.         drop _merge;
+
+.         sort hhid;
+
+.         merge hhid using "$path/work/conpc.dta";
+
+.         tab _merge;
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          3 |      7,427      100.00      100.00
+------------+-----------------------------------
+      Total |      7,427      100.00
+
+.         drop _merge;
+
+.         gen food_pc_tpi  = food_pc_nom /tpi_trim;
+(12 missing values generated)
+
+.         lab var food_pc_tpi "Temp-adjusted per capita food consumptio
+> n/day";
+
+.                 gen cons_pc_tpi = food_pc_tpi + nf_pc_nom;
+(13 missing values generated)
+
+.         lab var cons_pc_tpi "Temp adjusted total consumption/day";
+
+.         gen one=1;
+
+. * TPI deflated per capita consumption ;
+.         tempfile contpi;
+
+. save `contpi', replace;
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000002.tmp not fo
+> und)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000002.tmp saved
+
+. *********************************************************************
+> *****
+> * Calculate non-food expenditure for HH around the food poverty line
+> *
+> * Develop a discrete triangular weighted distribution. This gives a
+> * weight of  1 to HH at +/- 18-20% from food poverty line, and
+> * weight of  2 to HH at +/- 16-18% from food poverty line, and ...
+> * weight of 10 to HH at +/-  0- 2% from food poverty line.
+> * This weight is called triwt below.
+> *********************************************************************
+> *****;
+. use `contpi';
+
+.         sort spdomain;
+
+.         merge spdomain using "$path/work/povline_food_flex.dta";
+variable spdomain does not uniquely identify observations in the
+    master data
+(label lspdomain already defined)
+
+.         tab _merge;
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |          1        0.01        0.01
+          3 |      7,426       99.99      100.00
+------------+-----------------------------------
+      Total |      7,427      100.00
+
+.         drop _merge;
+
+. gen     triwt = 0 ;
+
+. replace triwt = 11 - round(50*abs(cons_pc_tpi/povline_f_flex-1)+0.5)
+>                 if abs(cons_pc_tpi/povline_f_flex-1)<=0.2;
+(142 real changes made)
+
+.                                         * Nearness to poverty line an
+> d population weights ;
+.         gen tripopwt=triwt*hhweight*hhsize;
+(12 missing values generated)
+
+.         preserve;
+
+.                 collapse (mean) nf_pc_nom [aw=tripopwt] ,
+>                         by(spdomain);
+
+.                                         rename nf_pc_nom povline_na_f
+> lex;
+
+.                 lab var povline_na_flex "Nonfood poverty line. Flexib
+> le bundle";
+
+.                                 tempfile znf;
+
+.                 sort spdomain;
+
+.                 save `znf', replace;
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000004.tmp not fo
+> und)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000004.tmp saved
+
+.                 tab spdomain;
+
+       Spatial |
+ domains: each |
+      with own |
+  poverty line |
+  (they are 9) |      Freq.     Percent        Cum.
+---------------+-----------------------------------
+ Central urban |          1       14.29       14.29
+ Central rural |          1       14.29       28.57
+ Eastern rural |          1       14.29       42.86
+Northern urban |          1       14.29       57.14
+Northern rural |          1       14.29       71.43
+ Western urban |          1       14.29       85.71
+ Western rural |          1       14.29      100.00
+---------------+-----------------------------------
+         Total |          7      100.00
+
+.         restore;
+
+.         sort spdomain;
+
+.         merge spdomain using `znf';
+variable spdomain does not uniquely identify observations in the
+    master data
+(label lspdomain already defined)
+
+.         tab _merge;
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |        739        9.95        9.95
+          3 |      6,688       90.05      100.00
+------------+-----------------------------------
+      Total |      7,427      100.00
+
+.         drop _merge;
+
+. *********************************************************************
+> *****;
+. * Poverty line is the sum of the food and non-food poverty lines
+> *********************************************************************
+> *****;
+.         gen povline_flex=povline_f_flex + povline_na_flex;
+(739 missing values generated)
+
+.         lab var povline_flex "Poverty line. Flexible bundle";
+
+.         sort spdomain;
+
+. save "$path/work/povlines.dta", replace;
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\GAPP2
+> /work/povlines.dta saved
+
+. *********************************************************************
+> *****;
+. * Create spatial price index, based on the total poverty line, with
+> * adjustment so that mean (and total) nominal consumption equals
+> * mean (and total) spatially deflated consumption.
+> *
+> * Choose arbitrary strata to be the base at first: we just use the fi
+> rst stratum.
+> *********************************************************************
+> *****;
+. use `contpi';
+
+.         sort spdomain;
+
+.         merge spdomain using "$path/work/povlines.dta";
+variable spdomain does not uniquely identify observations in the
+    master data
+variable spdomain does not uniquely identify observations in
+    C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\GAPP
+    > 2/work/povlines.dta
+(label lspdomain already defined)
+(label lsurvquar already defined)
+(label region already defined)
+
+.         tab _merge;
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          3 |      7,427      100.00      100.00
+------------+-----------------------------------
+      Total |      7,427      100.00
+
+.         drop _merge;
+
+.         * Real consumption pc, temporally deflated ;
+.         gen cr= cons_pc_tpi ;
+(13 missing values generated)
+
+.         * Poverty line;
+.         gen linpob=povline_flex;
+(739 missing values generated)
+
+.         *qui sum linpob if spdomain==1, meanonly;
+.         sum linpob if spdomain==3, meanonly;
+
+.         global spi_base=r(mean);
+
+.         * Spatial price index ;
+.         gen spi=linpob/$spi_base;
+(739 missing values generated)
+
+.         * Real consumption pc, temporally and spatially deflated ;
+.         gen cr2=cr/spi;
+(743 missing values generated)
+
+.         qui sum cr [aw=hhweight*hhsize];
+
+.         global sumcr=r(sum);
+
+.         qui sum cr2 [aw=hhweight*hhsize];
+
+.         global sumcr2=r(sum);
+
+.         replace spi=spi*$sumcr2/$sumcr;
+(6688 real changes made)
+
+.         gen linpobr=linpob/spi;
+(739 missing values generated)
+
+.         replace cr2=cr/spi;
+(6684 real changes made)
+
+.         sum cr cr2 linpob linpobr [aw=hhweight*hhsize];
+
+    Variable |     Obs      Weight        Mean   Std. Dev.       Min   
+>      Max
+-------------+---------------------------------------------------------
+> --------
+          cr |    7414  30109848.2    1106.447   1372.576   61.85136   
+> 113681.6
+         cr2 |    6684  27754546.2    1200.342   1225.234   83.25842   
+> 80056.53
+      linpob |    6685  27757657.1    303.2085   118.2338   110.6555   
+> 475.2576
+     linpobr |    6685  27757657.1    334.6846   .0000124   334.6846   
+> 334.6847
+
+.         lab var cr      "Temporally-adjusted cons pc";
+
+.         lab var cr2     "Spatially & temporally adjusted cons pc";
+
+.         lab var linpob  "Poverty line";
+
+.         lab var linpobr "Real poverty line";
+
+.         lab var spi     "Spatial price index";
+
+. *********************************************************************
+> *****
+> * calculate poverty measures with the flexible food bundle
+> *********************************************************************
+> *****;
+.         gen h = 100     if cr <=(linpob);
+(6404 missing values generated)
+
+.         replace  h = 0 if cr > (linpob);
+(6404 real changes made)
+
+.                         gen             pg      = ((linpob - cr )/lin
+> pob) *100;
+(743 missing values generated)
+
+.         replace         pg      = 0             if h==0;
+(6404 real changes made)
+
+.         gen             spg     = ((( linpob - cr )/ linpob )^2)*100;
+(743 missing values generated)
+
+.         replace         spg     = 0             if h==0;
+(6404 real changes made)
+
+.         gen h_flex=h;
+
+.         gen pg_flex=pg;
+(739 missing values generated)
+
+.         gen spg_flex=spg;
+(739 missing values generated)
+
+.         lab var h_flex   "Poverty headcount. Flex bundle";
+
+.         lab var pg_flex  "Poverty gap. Flex bundle";
+
+.         lab var spg_flex "Squared poverty gap. Flex bundle";
+
+.         sort hhid;
+
+.         merge hhid using "$path/work/hhdata.dta";
+(label region already defined)
+(label lsurvquar already defined)
+(label lspdomain already defined)
+
+.         tab _merge;
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |          1        0.01        0.01
+          3 |      7,426       99.99      100.00
+------------+-----------------------------------
+      Total |      7,427      100.00
+
+.         drop if _merge~=3;
+(1 observation deleted)
+
+.         drop _merge;
+
+.         gen popwt=hhsize*hhweight;
+(11 missing values generated)
+
+.                 * Stata 10.1 syntax ;
+.         svyset , clear;
+
+.         svyset [pweight=popwt] , str(strata) psu(psu);
+
+      pweight: popwt
+          VCE: linearized
+  Single unit: missing
+     Strata 1: strata
+         SU 1: psu
+        FPC 1: <zero>
+
+.         svy: mean h_flex pg_flex spg_flex;
+(running mean on estimation sample)
+
+Survey: Mean estimation
+
+Number of strata =       9        Number of obs    =      6685
+Number of PSUs   =     262        Population size  =  27757657
+                                  Design df        =       253
+
+--------------------------------------------------------------
+             |             Linearized
+             |       Mean   Std. Err.     [95% Conf. Interval]
+-------------+------------------------------------------------
+      h_flex |   5.192036     .43285      4.339588    6.044484
+     pg_flex |   1.117672   .1341936      .8533935    1.381951
+    spg_flex |   .3809124   .0594453      .2638417     .497983
+--------------------------------------------------------------
+
+.         svy: mean h_flex pg_flex spg_flex , over(rural);
+(running mean on estimation sample)
+
+Survey: Mean estimation
+
+Number of strata =       9        Number of obs    =      6685
+Number of PSUs   =     262        Population size  =  27757657
+                                  Design df        =       253
+
+        Urban: rural = Urban
+        Rural: rural = Rural
+
+--------------------------------------------------------------
+             |             Linearized
+        Over |       Mean   Std. Err.     [95% Conf. Interval]
+-------------+------------------------------------------------
+h_flex       |
+       Urban |   1.457964   .4031832      .6639412    2.251987
+       Rural |   5.546932   .4667081      4.627804     6.46606
+-------------+------------------------------------------------
+pg_flex      |
+       Urban |   .3113998   .0939871       .126303    .4964966
+       Rural |   1.194303   .1456092       .907542    1.481063
+-------------+------------------------------------------------
+spg_flex     |
+       Urban |   .1047932   .0385447      .0288838    .1807026
+       Rural |   .4071555   .0645698      .2799927    .5343183
+--------------------------------------------------------------
+
+.         svy: mean h_flex pg_flex spg_flex , over(news);
+(running mean on estimation sample)
+
+Survey: Mean estimation
+
+Number of strata =       9        Number of obs    =      6685
+Number of PSUs   =     262        Population size  =  27757657
+                                  Design df        =       253
+
+      Central: news = Central
+      Eastern: news = Eastern
+     Northern: news = Northern
+      Western: news = Western
+
+--------------------------------------------------------------
+             |             Linearized
+        Over |       Mean   Std. Err.     [95% Conf. Interval]
+-------------+------------------------------------------------
+h_flex       |
+     Central |     4.9155   .7802547      3.378878    6.452122
+     Eastern |   2.206982    .409425      1.400667    3.013298
+    Northern |   .1383518   .0852104     -.0294602    .3061638
+     Western |    11.9687   1.165284      9.673804    14.26359
+-------------+------------------------------------------------
+pg_flex      |
+     Central |    .811073   .1400688      .5352237    1.086922
+     Eastern |   .3898658   .1126436      .1680273    .6117044
+    Northern |   .0445842   .0266221     -.0078448    .0970133
+     Western |    2.87421   .4227345      2.041683    3.706737
+-------------+------------------------------------------------
+spg_flex     |
+     Central |   .2253449   .0532197      .1205347     .330155
+     Eastern |   .1285303   .0523414      .0254498    .2316107
+    Northern |   .0148158   .0087188     -.0023549    .0319864
+     Western |   1.031736   .1942976       .649089    1.414383
+--------------------------------------------------------------
+
+.         svy: mean h_flex pg_flex spg_flex , over(reg_tpi);
+(running mean on estimation sample)
+
+Survey: Mean estimation
+
+Number of strata =       9        Number of obs    =      6685
+Number of PSUs   =     262        Population size  =  27757657
+                                  Design df        =       253
+
+      Central: reg_tpi = Central
+      Eastern: reg_tpi = Eastern
+     Northern: reg_tpi = Northern
+      Western: reg_tpi = Western
+
+--------------------------------------------------------------
+             |             Linearized
+        Over |       Mean   Std. Err.     [95% Conf. Interval]
+-------------+------------------------------------------------
+h_flex       |
+     Central |     4.9155   .7802547      3.378878    6.452122
+     Eastern |   2.206982    .409425      1.400667    3.013298
+    Northern |   .1383518   .0852104     -.0294602    .3061638
+     Western |    11.9687   1.165284      9.673804    14.26359
+-------------+------------------------------------------------
+pg_flex      |
+     Central |    .811073   .1400688      .5352237    1.086922
+     Eastern |   .3898658   .1126436      .1680273    .6117044
+    Northern |   .0445842   .0266221     -.0078448    .0970133
+     Western |    2.87421   .4227345      2.041683    3.706737
+-------------+------------------------------------------------
+spg_flex     |
+     Central |   .2253449   .0532197      .1205347     .330155
+     Eastern |   .1285303   .0523414      .0254498    .2316107
+    Northern |   .0148158   .0087188     -.0023549    .0319864
+     Western |   1.031736   .1942976       .649089    1.414383
+--------------------------------------------------------------
+
+.         svy: mean h_flex pg_flex spg_flex , over(strata);
+(running mean on estimation sample)
+
+Survey: Mean estimation
+
+Number of strata =       9        Number of obs    =      6685
+Number of PSUs   =     262        Population size  =  27757657
+                                  Design df        =       253
+
+    _subpop_1: strata = Central 1
+    _subpop_2: strata = Central 2
+    _subpop_3: strata = East Central
+      Eastern: strata = Eastern
+    _subpop_5: strata = Mid Northern
+    _subpop_6: strata = North East
+    _subpop_7: strata = West Nile
+    _subpop_8: strata = Mid Western
+    _subpop_9: strata = South Western
+
+--------------------------------------------------------------
+             |             Linearized
+        Over |       Mean   Std. Err.     [95% Conf. Interval]
+-------------+------------------------------------------------
+h_flex       |
+   _subpop_1 |   3.048555   .9799433       1.11867    4.978441
+   _subpop_2 |   5.758123   1.018756        3.7518    7.764445
+   _subpop_3 |   2.018275    .539068      .9566427    3.079907
+     Eastern |   2.159677   .7682942      .6466101    3.672744
+   _subpop_5 |   .0755901   .0761614      -.074401    .2255811
+   _subpop_6 |   2.234712   .5678935      1.116311    3.353112
+   _subpop_7 |   .3187711   .2527374     -.1789661    .8165083
+   _subpop_8 |   11.97649   1.995022      8.047524    15.90546
+   _subpop_9 |   11.96376   1.423625      9.160098    14.76743
+-------------+------------------------------------------------
+pg_flex      |
+   _subpop_1 |   .5831223     .24241      .1057238    1.060521
+   _subpop_2 |   .9139557   .1692698      .5805984    1.247313
+   _subpop_3 |   .3716527   .1672467      .0422796    .7010258
+     Eastern |   .3676237   .1866402      .0000573    .7351901
+   _subpop_5 |   .0214145   .0215763     -.0210776    .0639065
+   _subpop_6 |   .3785045    .124378      .1335563    .6234526
+   _subpop_7 |   .1097905   .0830213     -.0537103    .2732913
+   _subpop_8 |    2.94534   .8202049      1.330041    4.560639
+   _subpop_9 |   2.829186   .4556033      1.931928    3.726444
+-------------+------------------------------------------------
+spg_flex     |
+   _subpop_1 |   .1436869    .076185     -.0063507    .2937245
+   _subpop_2 |   .2622002   .0687622       .126781    .3976194
+   _subpop_3 |   .1406903    .089552     -.0356721    .3170527
+     Eastern |    .115044   .0655004     -.0139514    .2440395
+   _subpop_5 |   .0060667   .0061125     -.0059712    .0181045
+   _subpop_6 |   .0811352   .0278878      .0262133     .136057
+   _subpop_7 |   .0390028   .0286556      -.017431    .0954366
+   _subpop_8 |   1.124852    .391658      .3535263    1.896177
+   _subpop_9 |   .9727943   .1987021      .5814735    1.364115
+--------------------------------------------------------------
+
+.         svy: mean h_flex pg_flex spg_flex , over(spdomain);
+(running mean on estimation sample)
+
+Survey: Mean estimation
+
+Number of strata =       9        Number of obs    =      6685
+Number of PSUs   =     262        Population size  =  27757657
+                                  Design df        =       253
+
+    _subpop_1: spdomain = Central urban
+    _subpop_2: spdomain = Central rural
+    _subpop_3: spdomain = Eastern rural
+    _subpop_4: spdomain = Northern urban
+    _subpop_5: spdomain = Northern rural
+    _subpop_6: spdomain = Western urban
+    _subpop_7: spdomain = Western rural
+
+--------------------------------------------------------------
+             |             Linearized
+        Over |       Mean   Std. Err.     [95% Conf. Interval]
+-------------+------------------------------------------------
+h_flex       |
+   _subpop_1 |   .4230458   .3097709     -.1870123    1.033104
+   _subpop_2 |    5.56959   .8628609      3.870285    7.268895
+   _subpop_3 |   2.206982    .409425      1.400667    3.013298
+   _subpop_4 |   .3341999    .328916     -.3135623     .981962
+   _subpop_5 |   .1037557   .0800164     -.0538274    .2613388
+   _subpop_6 |   4.627288   1.023749      2.611131    6.643444
+   _subpop_7 |   12.60079   1.217603      10.20286    14.99872
+-------------+------------------------------------------------
+pg_flex      |
+   _subpop_1 |   .1526192   .1117538     -.0674671    .3727055
+   _subpop_2 |   .9069422   .1557868      .6001379    1.213746
+   _subpop_3 |   .3898658   .1126436      .1680273    .6117044
+   _subpop_4 |   .0946779    .093181     -.0888313    .2781872
+   _subpop_5 |   .0357353   .0261978     -.0158582    .0873289
+   _subpop_6 |   .8611583   .2588069       .351468    1.370849
+   _subpop_7 |   3.047534    .447927      2.165393    3.929674
+-------------+------------------------------------------------
+spg_flex     |
+   _subpop_1 |   .0550593   .0403166     -.0243396    .1344583
+   _subpop_2 |    .250138   .0594554      .1330474    .3672287
+   _subpop_3 |   .1285303   .0523414      .0254498    .2316107
+   _subpop_4 |    .026822   .0263979     -.0251657    .0788097
+   _subpop_5 |   .0126949   .0090203     -.0050696    .0304594
+   _subpop_6 |   .2914509   .1254878      .0443172    .5385846
+   _subpop_7 |   1.095474     .20676      .6882841    1.502664
+--------------------------------------------------------------
+
+.         compress;
+survquar was float now byte
+reg_tpi was float now byte
+spdomain was float now byte
+one was float now byte
+triwt was float now byte
+h was float now byte
+h_flex was float now byte
+region was float now byte
+psu was int now byte
+survmon was float now byte
+strata was float now byte
+rural was float now byte
+news was float now byte
+bswt was float now byte
+
+.         sort hhid;
+
+. save "$path/work/cons_real.dta" , replace;
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\GAPP2
+> /work/cons_real.dta saved
+
+.         collapse  (mean) h_flex pg_flex spg_flex [aw=hhweight*hhsize]
+> ;
+
+. save "$path/work/povmeas.dta", replace;
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\GAPP2
+> /work/povmeas.dta saved
+
+. *** HARUNA, the file Povmeas.dta gives the headcount poverty rates us
+> ing flexible food bundle without inflicting reveales preferences
+> *** therefore specifications in line 226 of this do file have been ch
+> anged repeatedly to generate these counts for particular
+> *** classifications of interest including strata spdomain region urba
+> n/rural (urban) and national (done by removing the by command 
+> *********************************************************************
+> *****
+> * 130_povmeas_flex.do           (end)
+> *********************************************************************
+> *****;
+. log close;
+      name:  <unnamed>
+       log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_20
+> 05\GAPP2/rep/130_povmeas_flex.log
+  log type:  text
+ closed on:  11 Jun 2013, 12:42:52
+-----------------------------------------------------------------------

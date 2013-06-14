@@ -19,8 +19,8 @@ SETS
 $include C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\ww-ug\10_MZ\work\product_flex.inc
 /
 
- reg        13 spatial domains /1*13/
- r(reg)     non maputo spatial regions /1*13/
+ reg        9 spatial domains /1*9/
+ r(reg)     non maputo spatial regions /1*9/
 
  ptit       price table titles
 /
