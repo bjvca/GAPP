@@ -45,7 +45,10 @@ use "$path/in/calperg.dta", clear;
 	*sort hhid;
 	save "$path/work/calperg.dta", replace;
 	sum;
-
+use "$path/in/cons_cod.dta", clear;	
+	save "$path/work/cons_cod.dta", replace;
+use "$path/in/cons_cod_trans.dta", clear;	
+	save "$path/work/cons_cod_trans.dta", replace;
 
 /*
 use "$path/in/cons_cod_trans.dta", clear;

@@ -1,78 +1,113 @@
 {smcl}
 {com}{sf}{ul off}{txt}{.-}
       name:  {res}log_tot_s
-       {txt}log:  {res}C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/rep/log_total.smcl
+       {txt}log:  {res}/home/bjvca/data/data/GAP/Haruna/rep/log_total.smcl
   {txt}log type:  {res}smcl
+<<<<<<< HEAD
  {txt}opened on:  {res}20 Jun 2013, 09:08:27
 {txt}
+=======
+ {txt}opened on:  {res}19 Jun 2013, 15:43:30
+
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 {com}. log using "$path/rep/000_boom.log"  , name(log_000_boom) replace
 {txt}{.-}
       name:  {res}log_000_boom
-       {txt}log:  {res}C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/rep/000_boom.log
+       {txt}log:  {res}/home/bjvca/data/data/GAP/Haruna/rep/000_boom.log
   {txt}log type:  {res}text
+<<<<<<< HEAD
  {txt}opened on:  {res}20 Jun 2013, 09:08:27
 {txt}
+=======
+ {txt}opened on:  {res}19 Jun 2013, 15:43:30
+
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 {com}. 
 . display "* # * # * # * # * # * # * # * # * # * # * # * # * # * # * # * # *"
 {res}* # * # * # * # * # * # * # * # * # * # * # * # * # * # * # * # *
-{txt}
+
 {com}. display ""
 {res}
-{txt}
+
 {com}. display "Generel information:"
 {res}Generel information:
-{txt}
+
 {com}. display "   UGANDA HOUSEHOLD BUDGET SURVEY 2009/10"
 {res}   UGANDA HOUSEHOLD BUDGET SURVEY 2009/10
-{txt}
+
 {com}. display "   Poverty rate estimation"
 {res}   Poverty rate estimation
-{txt}
+
 {com}. display "   Methodology: Iterative procedure and revealed preferences tests"
 {res}   Methodology: Iterative procedure and revealed preferences tests
-{txt}
+
 {com}. display ""
 {res}
-{txt}
+
 {com}. display "* # * # * # * # * # * # * # * # * # * # * # * # * # * # * # * # *"
 {res}* # * # * # * # * # * # * # * # * # * # * # * # * # * # * # * # *
-{txt}
+
 {com}. 
 . 
 . **************************************************************************
-. * 000_boom.do   (start)
+
+. * 000_boom.do(start)
+
 . *
+
 . * Reminders:
-. *       1) Check very top of this file to make sure you are on the right path! 
-. *       2) GAMS 22.5 must be placed onto the path. See 190_revpref13_m1.bat.
-. *          Typically this needs to be edited.
+
+. *1) Check very top of this file to make sure you are on the right path! 
+
+. *2) GAMS 22.5 must be placed onto the path. See 190_revpref13_m1.bat.
+
+. *   Typically this needs to be edited.
+
 . *   3) In case of implementing a new survey the user must make necessary
+
 . *      changes in 010_initial.do, 020_hhdata.do and 030_rawdata.do.
+
 . *
+
 . * Process:
+
 . * - The do-file prefix indicates first time a do-file is called
+
 . *
+
 . * KS, 2003
+
 . * CA, 2009-2010
+
 . * MAH, Apr. 2012
+
 . **************************************************************************
+
 . 
 . clear all
-{txt}
-{com}. set more off
-{txt}
-{com}. set mem 700m
-{txt}
-{com}. 
+
+. set more off
+
+. set mem 700m
+
+. 
 . noisily display "Start time: " "$S_TIME"
+<<<<<<< HEAD
 {res}Start time: 09:08:27
 {txt}
+=======
+{res}Start time: 15:43:31
+
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 {com}. 
 . 
 . 
 . **************************************************************************
+
 . * Macros. Region definitions. Demographic definitions.
+
 . **************************************************************************
+
 . do "$path/new/010_initial.do"
 {txt}
 {com}. cap log close
@@ -80,9 +115,13 @@
 {com}. log using "$path/rep/010_initial.log", replace
 {txt}{.-}
       name:  {res}<unnamed>
-       {txt}log:  {res}C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/rep/010_initial.log
+       {txt}log:  {res}/home/bjvca/data/data/GAP/Haruna/rep/010_initial.log
   {txt}log type:  {res}text
+<<<<<<< HEAD
  {txt}opened on:  {res}20 Jun 2013, 09:08:27
+=======
+ {txt}opened on:  {res}19 Jun 2013, 15:43:31
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 {txt}
 {com}. clear
 {txt}
@@ -149,9 +188,13 @@
 > **************************************************************************;
 . log close;
       {txt}name:  {res}<unnamed>
-       {txt}log:  {res}C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/rep/010_initial.log
+       {txt}log:  {res}/home/bjvca/data/data/GAP/Haruna/rep/010_initial.log
   {txt}log type:  {res}text
+<<<<<<< HEAD
  {txt}closed on:  {res}20 Jun 2013, 09:08:27
+=======
+ {txt}closed on:  {res}19 Jun 2013, 15:43:31
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 {txt}{.-}
 
 {com}. 
@@ -159,47 +202,80 @@
 
 {com}. 
 . *do "C:\user\gapp\z_data_preb/new/100_collect_expen_moz.do"
+
 . *s;
+
 . 
 . *do "C:\user\gapp\z_data_preb/new/000_boom.do"
+
 . 
 . *global path "C:\user\gapp"
+
 . 
 . 
 . 
 . **************************************************************************;
+
 . **************************************************************************;
+
 . * This is the block of do files to set up the data to get nominal
+
 . * consumption. These DO NOT need to be bootstrapped.
+
 . **************************************************************************;
+
 . **************************************************************************;
-.         
-.         * This code produces some once for all data for the in-folder. Don't
-.         * run it unless you know what you are doing!!!
-.                 * Produces education expenditure
-.                 *do "$path\new\Create/education_Create.do"
-.                 * Imputation of missing recepts-in-kind. Run the code without this first...
-.                 *do "$path\new\Create/0_code_chain.do"
-.                 * First poverty lines dependent on IAF
-.                 *do "$path\new\Create/povlines_first_iof_Create.do"
-.                 * Match product codes for different surveys
-.                 *do "$path\new\Create/match96_02_Create.do"
-.                 * Basket from previous survey
-.                 *do "$path\new\Create/smallbasket_iof_Create.do"
-.                 * Match product codes between surveys
-.                 *do "$path\new\Create/rev_pref_matchcodes_02-96_iof_Create.do"
-.                 * Update poverty lines
-.                 *do "$path\new\Create/povlines-96-v1-vers7_iof_Create.do"               
-.                 * Food share
-.                 *do "$path\new\Create/foodshr96_iof_Create.do"
-.                 
-.                 *do "$path\new\Create/.do"
-.                 *do "$path\new\Create/.do"
+
+. 
+. * This code produces some once for all data for the in-folder. Don't
+
+. * run it unless you know what you are doing!!!
+
+. * Produces education expenditure
+
+. *do "$path\new\Create/education_Create.do"
+
+. * Imputation of missing recepts-in-kind. Run the code without this first...
+
+. *do "$path\new\Create/0_code_chain.do"
+
+. * First poverty lines dependent on IAF
+
+. *do "$path\new\Create/povlines_first_iof_Create.do"
+
+. * Match product codes for different surveys
+
+. *do "$path\new\Create/match96_02_Create.do"
+
+. * Basket from previous survey
+
+. *do "$path\new\Create/smallbasket_iof_Create.do"
+
+. * Match product codes between surveys
+
+. *do "$path\new\Create/rev_pref_matchcodes_02-96_iof_Create.do"
+
+. * Update poverty lines
+
+. *do "$path\new\Create/povlines-96-v1-vers7_iof_Create.do"
+
+. * Food share
+
+. *do "$path\new\Create/foodshr96_iof_Create.do"
+
+. 
+. *do "$path\new\Create/.do"
+
+. *do "$path\new\Create/.do"
+
 . 
 . */
-.         * This set of files takes the raw data and creates more handy data 
-.         * sets in the work-folder
-.         do "$path/new/020_in_2_work_folder.do"
+
+. * This set of files takes the raw data and creates more handy data 
+
+. * sets in the work-folder
+
+. do "$path/new/020_in_2_work_folder.do"
 {txt}
 {com}. clear all
 {txt}
@@ -212,9 +288,13 @@
 {com}. log using "$path/rep/020_hhdata.log", replace
 {txt}{.-}
       name:  {res}<unnamed>
-       {txt}log:  {res}C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/rep/020_hhdata.log
+       {txt}log:  {res}/home/bjvca/data/data/GAP/Haruna/rep/020_hhdata.log
   {txt}log type:  {res}text
+<<<<<<< HEAD
  {txt}opened on:  {res}20 Jun 2013, 09:08:27
+=======
+ {txt}opened on:  {res}19 Jun 2013, 15:43:32
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 {txt}
 {com}. clear
 {txt}
@@ -262,7 +342,7 @@ central rural {c |}{res}      1,177       17.37       17.37
 {com}.         sort hhid;
 {txt}
 {com}.         save "$path/work/hhdata.dta", replace;
-{txt}file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/hhdata.dta saved
+{txt}file /home/bjvca/data/data/GAP/Haruna/work/hhdata.dta saved
 
 {com}.         sum;
 
@@ -301,7 +381,7 @@ central rural {c |}{res}      1,177       17.37       17.37
 {txt}
 {com}.         *sort hhid;
 .         save "$path/work/indata.dta", replace;
-{txt}file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/indata.dta saved
+{txt}file /home/bjvca/data/data/GAP/Haruna/work/indata.dta saved
 
 {com}.         sum;
 
@@ -317,7 +397,7 @@ central rural {c |}{res}      1,177       17.37       17.37
 {txt}
 {com}.         *sort hhid;
 .         save "$path/work/calperg.dta", replace;
-{txt}file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/calperg.dta saved
+{txt}file /home/bjvca/data/data/GAP/Haruna/work/calperg.dta saved
 
 {com}.         sum;
 
@@ -327,6 +407,16 @@ central rural {c |}{res}      1,177       17.37       17.37
 {txt}{space 4}descript {c |}{res}         0
 {txt}{space 5}calperg {c |}{res}        62    1.980935    2.136932          0       8.84
 {txt}
+{com}. use "$path/in/cons_cod.dta", clear;
+{txt}
+{com}.                 save "$path/work/cons_cod.dta", replace;
+{txt}file /home/bjvca/data/data/GAP/Haruna/work/cons_cod.dta saved
+
+{com}. use "$path/in/cons_cod_trans.dta", clear;
+{txt}
+{com}.                 save "$path/work/cons_cod_trans.dta", replace;
+{txt}file /home/bjvca/data/data/GAP/Haruna/work/cons_cod_trans.dta saved
+
 {com}. /*
 > use "$path/in/cons_cod_trans.dta", clear;
 >         *sort hhid;
@@ -345,24 +435,8 @@ central rural {c |}{res}      1,177       17.37       17.37
 {com}. 
 {txt}end of do-file
 
-{com}.         
-. /*
->         * All kind of raw expenditure is handled: daily, own and monthly, rent and use value, education etc.
->         do "$path/new/030_rawdata.do"
-> 
->         * Data set specific changes to each processed raw data set takes place here
->         do "$path/new/040_specifities.do"
-> 
->         * These files summarizes and checks the data. But no temporal deflation done here yet
->         do "$path/new/050_consump_nom.do"
-> 
->         * Bring in data on food product's calories per gram
->         do "$path/new/060_calperg.do"
-> */
-. **********************************************************************;
-. **********************************************************************;
-. 
-.                                 do "$path/new/070_calpp.do"                             /* Calories per person in spatial domains*/
+{com}. 
+. do "$path/new/070_calpp.do"
 {txt}
 {com}. *global path "C:/Users/Templeton/Desktop/GAPP/GAPP-UGANDA-HARUNA"
 . clear all
@@ -375,9 +449,13 @@ central rural {c |}{res}      1,177       17.37       17.37
 {com}. log using "$path/rep/070_calpp.log", replace
 {txt}{.-}
       name:  {res}<unnamed>
-       {txt}log:  {res}C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/rep/070_calpp.log
+       {txt}log:  {res}/home/bjvca/data/data/GAP/Haruna/rep/070_calpp.log
   {txt}log type:  {res}text
+<<<<<<< HEAD
  {txt}opened on:  {res}20 Jun 2013, 09:08:27
+=======
+ {txt}opened on:  {res}19 Jun 2013, 15:43:41
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 {txt}
 {com}. clear
 {txt}
@@ -415,7 +493,11 @@ central rural {c |}{res}      1,177       17.37       17.37
 {com}. tempfile fert_rate;
 {txt}
 {com}. save `fert_rate';
+<<<<<<< HEAD
 {txt}file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000001.tmp saved
+=======
+{txt}file /tmp/St03924.000001 saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 
 {com}. list;
 {txt}
@@ -834,22 +916,26 @@ the master data
 {com}. sort spdomain;
 {txt}
 {com}. save "$path/work/calpp.dta",replace;
-{txt}file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/calpp.dta saved
+{txt}file /home/bjvca/data/data/GAP/Haruna/work/calpp.dta saved
 
 {com}. ***********************************************************************
 > * 070_calpp.do          (end)
 > ***********************************************************************;
 . log close;
       {txt}name:  {res}<unnamed>
-       {txt}log:  {res}C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/rep/070_calpp.log
+       {txt}log:  {res}/home/bjvca/data/data/GAP/Haruna/rep/070_calpp.log
   {txt}log type:  {res}text
+<<<<<<< HEAD
  {txt}closed on:  {res}20 Jun 2013, 09:08:28
+=======
+ {txt}closed on:  {res}19 Jun 2013, 15:43:42
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 {txt}{.-}
 
 {com}. 
 {txt}end of do-file
 
-{com}.                                 do "$path/new/080_conpc.do"                             /* Nominal food/non-food expenditure */
+{com}. do "$path/new/080_conpc.do"
 {txt}
 {com}. *global path "C:/Users/Templeton/Desktop/GAPP/GAPP-UGANDA-HARUNA"
 . clear all
@@ -864,9 +950,13 @@ the master data
 {com}. log using "$path/rep/080_conpc.log", replace
 {txt}{.-}
       name:  {res}<unnamed>
-       {txt}log:  {res}C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/rep/080_conpc.log
+       {txt}log:  {res}/home/bjvca/data/data/GAP/Haruna/rep/080_conpc.log
   {txt}log type:  {res}text
+<<<<<<< HEAD
  {txt}opened on:  {res}20 Jun 2013, 09:08:28
+=======
+ {txt}opened on:  {res}19 Jun 2013, 15:43:51
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 {txt}
 {com}. set more off
 {txt}
@@ -916,7 +1006,11 @@ the master data
 {com}.             tempfile foodexp 
 {txt}
 {com}. save `foodexp' 
+<<<<<<< HEAD
 {txt}file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000001.tmp saved
+=======
+{txt}file /tmp/St03924.000001 saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 
 {com}. 
 . ***************************************************************************
@@ -1018,7 +1112,7 @@ the master data
 {com}. 
 . * MAH   sum  codebook hhid 
 . save "$path/work/conpc.dta", replace 
-{txt}file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/conpc.dta saved
+{txt}file /home/bjvca/data/data/GAP/Haruna/work/conpc.dta saved
 
 {com}. 
 . 
@@ -1029,15 +1123,19 @@ the master data
 . 
 . log close 
       {txt}name:  {res}<unnamed>
-       {txt}log:  {res}C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/rep/080_conpc.log
+       {txt}log:  {res}/home/bjvca/data/data/GAP/Haruna/rep/080_conpc.log
   {txt}log type:  {res}text
+<<<<<<< HEAD
  {txt}closed on:  {res}20 Jun 2013, 09:08:28
+=======
+ {txt}closed on:  {res}19 Jun 2013, 15:43:51
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 {txt}{.-}
 
 {com}. 
 {txt}end of do-file
 
-{com}.                                 do "$path/new/090_temp_index.do"                /* Temporal price index */
+{com}. do "$path/new/090_temp_index.do"
 {txt}
 {com}. *global path "C:/Users/Templeton/Desktop/GAPP/GAPP-UGANDA-HARUNA"
 . clear all
@@ -1050,9 +1148,13 @@ the master data
 {com}. log using "$path/rep/090_temp_index.log", replace
 {txt}{.-}
       name:  {res}<unnamed>
-       {txt}log:  {res}C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/rep/090_temp_index.log
+       {txt}log:  {res}/home/bjvca/data/data/GAP/Haruna/rep/090_temp_index.log
   {txt}log type:  {res}text
+<<<<<<< HEAD
  {txt}opened on:  {res}20 Jun 2013, 09:08:28
+=======
+ {txt}opened on:  {res}19 Jun 2013, 15:44:00
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 {txt}
 {com}. clear
 {txt}
@@ -1133,8 +1235,13 @@ the master data
 {com}. tempfile popwt;
 {txt}
 {com}. save `popwt', replace;
+<<<<<<< HEAD
 {txt}(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000001.tmp not found)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000001.tmp saved
+=======
+{txt}(note: file /tmp/St03924.000001 not found)
+file /tmp/St03924.000001 saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 
 {com}. sum;
 
@@ -1161,8 +1268,13 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000001.tmp saved
 {com}. tempfile descript;
 {txt}
 {com}. save `descript', replace;
+<<<<<<< HEAD
 {txt}(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp not found)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
+=======
+{txt}(note: file /tmp/St03924.000002 not found)
+file /tmp/St03924.000002 saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 
 {com}. sum;
 
@@ -1293,7 +1405,11 @@ the master data
 {com}. tempfile hhid;
 {txt}
 {com}. save `hhid';
+<<<<<<< HEAD
 {txt}file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000004.tmp saved
+=======
+{txt}file /tmp/St03924.000004 saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 
 {com}. restore;
 {txt}
@@ -1594,8 +1710,13 @@ the master data
 {com}. tempfile product_tpi;
 {txt}
 {com}. save `product_tpi', replace;
+<<<<<<< HEAD
 {txt}(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000005.tmp not found)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000005.tmp saved
+=======
+{txt}(note: file /tmp/St03924.000005 not found)
+file /tmp/St03924.000005 saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 
 {com}. sum;
 
@@ -1691,8 +1812,13 @@ the master data
 {com}. tempfile acredd;
 {txt}
 {com}. save `acredd' , replace;
+<<<<<<< HEAD
 {txt}(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000006.tmp not found)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000006.tmp saved
+=======
+{txt}(note: file /tmp/St03924.000006 not found)
+file /tmp/St03924.000006 saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 
 {com}. sum;
 
@@ -1882,8 +2008,13 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000006.tmp saved
 {com}.         tempfile hhd;
 {txt}
 {com}. save `hhd' , replace;
+<<<<<<< HEAD
 {txt}(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000007.tmp not found)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000007.tmp saved
+=======
+{txt}(note: file /tmp/St03924.000007 not found)
+file /tmp/St03924.000007 saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 
 {com}. use `acredd', clear;
 {txt}
@@ -1953,7 +2084,11 @@ Month (May {c |}   Sequential Survey Quarter May-Jun 09=1)
 {com}.         sort hhid;
 {txt}
 {com}. save `acredd', replace;
+<<<<<<< HEAD
 {txt}file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000006.tmp saved
+=======
+{txt}file /tmp/St03924.000006 saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 
 {com}. sum;
 
@@ -2037,8 +2172,13 @@ Month (May {c |}   Sequential Survey Quarter May-Jun 09=1)
 {com}.         tempfile bottom_tpi;
 {txt}
 {com}. save `bottom_tpi', replace;
+<<<<<<< HEAD
 {txt}(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000008.tmp not found)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000008.tmp saved
+=======
+{txt}(note: file /tmp/St03924.000008 not found)
+file /tmp/St03924.000008 saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 
 {com}. sum;
 
@@ -2112,11 +2252,16 @@ the master data
 {com}.                         tempfile uvm;
 {txt}
 {com}.                 save `uvm', replace;
+<<<<<<< HEAD
 {txt}(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000a.tmp not found)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000a.tmp saved
+=======
+{txt}(note: file /tmp/St03924.00000a not found)
+file /tmp/St03924.00000a saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 
 {com}.                 save "$path/work/tpi_unit_val_monthly.dta", replace;
-{txt}file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/tpi_unit_val_monthly.dta saved
+{txt}file /home/bjvca/data/data/GAP/Haruna/work/tpi_unit_val_monthly.dta saved
 
 {com}.         restore;
 {txt}
@@ -2133,6 +2278,7 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000a.tmp saved
 {com}.                         sort reg_tpi product survquar;
 {txt}
 {com}.                         list in  1/3;
+<<<<<<< HEAD
 
      {txt}{c TLC}{hline 9}{c TT}{hline 13}{c TT}{hline 9}{c TT}{hline 9}{c TT}{hline 10}{c TT}{hline 10}{c TRC}
   1. {c |} product {c |}    survquar {c |} reg_tpi {c |}    news {c |} valued~t {c |} quanti~t {c |}
@@ -2183,15 +2329,40 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000a.tmp saved
      {c |}                                ppkg                             {c |}
      {c |}                            {res}467.6516                             {txt}{c |}
      {c BLC}{hline 65}{c BRC}
+=======
+{txt}
+     {c TLC}{hline 9}{c -}{hline 13}{c -}{hline 9}{c -}{hline 9}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c TRC}
+     {c |} {res}product      survquar   reg_tpi      news   valued~t   quanti~t       ppkg {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 13}{c -}{hline 9}{c -}{hline 9}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+  1. {c |} {res}    103    May-Jul 09   Central   Central   22305.95      4.833   4615.343 {txt}{c |}
+  2. {c |} {res}    103   Sept-Oct 09   Central   Central   14100.35   3.263633   4320.446 {txt}{c |}
+  3. {c |} {res}    103   Nov09-Jan10   Central   Central    4230.87   .8571429   4936.015 {txt}{c |}
+     {c BLC}{hline 9}{c -}{hline 13}{c -}{hline 9}{c -}{hline 9}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c BRC}
+
+{com}.                         list in -3/-1;
+{txt}
+     {c TLC}{hline 9}{c -}{hline 13}{c -}{hline 9}{c -}{hline 9}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c TRC}
+     {c |} {res}product      survquar   reg_tpi      news   valued~t   quanti~t       ppkg {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 13}{c -}{hline 9}{c -}{hline 9}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+451. {c |} {res}    150   Sept-Oct 09   Western   Western   6852.855   13.42874   510.3128 {txt}{c |}
+452. {c |} {res}    150   Nov09-Jan10   Western   Western   4807.188   10.23642    469.616 {txt}{c |}
+453. {c |} {res}    150    Feb-Apr 10   Western   Western   4498.977    9.62036   467.6516 {txt}{c |}
+     {c BLC}{hline 9}{c -}{hline 13}{c -}{hline 9}{c -}{hline 9}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c BRC}
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 
 {com}.                         tempfile uvq;
 {txt}
 {com}.                 save "$path/work/tpi_unit_val_quarterly.dta", replace;
-{txt}file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/tpi_unit_val_quarterly.dta saved
+{txt}file /home/bjvca/data/data/GAP/Haruna/work/tpi_unit_val_quarterly.dta saved
 
 {com}.                 save `uvq', replace;
+<<<<<<< HEAD
 {txt}(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000c.tmp not found)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000c.tmp saved
+=======
+{txt}(note: file /tmp/St03924.00000c not found)
+file /tmp/St03924.00000c saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 
 {com}.         restore;
 {txt}
@@ -2231,6 +2402,7 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000c.tmp saved
 {com}.                         sort reg_tpi product survquar;
 {txt}
 {com}.                         list , nol;
+<<<<<<< HEAD
 
      {txt}{c TLC}{hline 9}{c TT}{hline 10}{c TT}{hline 9}{c TT}{hline 6}{c TT}{hline 10}{c TT}{hline 10}{c TRC}
   1. {c |} product {c |} survquar {c |} reg_tpi {c |} news {c |} valued~t {c |} quanti~t {c |}
@@ -5847,14 +6019,568 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000c.tmp saved
      {c |}                         ppkg_t~m                          {c |}
      {c |}                         {res}456.3739                          {txt}{c |}
      {c BLC}{hline 59}{c BRC}
+=======
+{txt}
+     {c TLC}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c TRC}
+     {c |} {res}product   survquar   reg_tpi   news   valued~t   quanti~t   ppkg_t~m {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+  1. {c |} {res}    103          1         1      1   27980.07   6.259447   4470.054 {txt}{c |}
+  2. {c |} {res}    103          2         1      1   17594.25   4.205321   4183.805 {txt}{c |}
+  3. {c |} {res}    103          3         1      1    4230.87   .8571429   4936.015 {txt}{c |}
+  4. {c |} {res}    103          4         1      1   15566.47    3.49238   4457.267 {txt}{c |}
+  5. {c |} {res}    104          1         1      1   41332.25    29.9041    1382.16 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+  6. {c |} {res}    104          2         1      1   27478.42   14.26694    1926.02 {txt}{c |}
+  7. {c |} {res}    104          3         1      1   28430.43   16.45709   1727.548 {txt}{c |}
+  8. {c |} {res}    104          4         1      1   24137.55   14.70042   1641.963 {txt}{c |}
+  9. {c |} {res}    105          1         1      1   66764.94   60.39937   1105.391 {txt}{c |}
+ 10. {c |} {res}    105          2         1      1   49053.89   51.13417   959.3172 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+ 11. {c |} {res}    105          3         1      1   86792.54   56.01082   1549.567 {txt}{c |}
+ 12. {c |} {res}    105          4         1      1   91036.46   73.79705   1233.606 {txt}{c |}
+ 13. {c |} {res}    107          1         1      1   80557.08   72.96299   1104.082 {txt}{c |}
+ 14. {c |} {res}    107          2         1      1   51546.16   50.55532   1019.599 {txt}{c |}
+ 15. {c |} {res}    107          3         1      1   20121.76   15.13844   1329.183 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+ 16. {c |} {res}    107          4         1      1   25372.87   23.74666   1068.482 {txt}{c |}
+ 17. {c |} {res}    108          1         1      1   30648.54   30.95082   990.2336 {txt}{c |}
+ 18. {c |} {res}    108          2         1      1   15690.21   15.33161   1023.389 {txt}{c |}
+ 19. {c |} {res}    108          3         1      1   18055.25   18.31149    986.007 {txt}{c |}
+ 20. {c |} {res}    108          4         1      1   4044.285   4.058281   996.5513 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+ 21. {c |} {res}    109          1         1      1   4809.578   2.852984   1685.806 {txt}{c |}
+ 22. {c |} {res}    109          2         1      1   325.5481   .2857143   1139.418 {txt}{c |}
+ 23. {c |} {res}    109          3         1      1   2649.465    2.60956   1015.292 {txt}{c |}
+ 24. {c |} {res}    109          4         1      1   285.7143   .2857143       1000 {txt}{c |}
+ 25. {c |} {res}    110          1         1      1   724.3039   .3192948   2268.449 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+ 26. {c |} {res}    110          2         1      1   3910.332   1.782392   2193.867 {txt}{c |}
+ 27. {c |} {res}    110          3         1      1   6708.529   3.063627   2189.734 {txt}{c |}
+ 28. {c |} {res}    110          4         1      1   8424.983   3.804135   2214.691 {txt}{c |}
+ 29. {c |} {res}    111          1         1      1   4267.209   42.50213   100.3999 {txt}{c |}
+ 30. {c |} {res}    111          2         1      1   3303.839   2.748153   1202.203 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+ 31. {c |} {res}    111          3         1      1   1226.858   8.188209   149.8323 {txt}{c |}
+ 32. {c |} {res}    111          4         1      1   177.6402    .436336   407.1179 {txt}{c |}
+ 33. {c |} {res}    112          1         1      1   32276.63    208.759   154.6119 {txt}{c |}
+ 34. {c |} {res}    112          2         1      1   142.8571   1.428571        100 {txt}{c |}
+ 35. {c |} {res}    112          3         1      1    38559.4   201.5012   191.3607 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+ 36. {c |} {res}    112          4         1      1    3173.31   17.41693   182.1968 {txt}{c |}
+ 37. {c |} {res}    113          1         1      1   95491.25   79.45843   1201.776 {txt}{c |}
+ 38. {c |} {res}    113          2         1      1   120380.3   97.05282   1240.359 {txt}{c |}
+ 39. {c |} {res}    113          3         1      1   55399.16   45.94407   1205.796 {txt}{c |}
+ 40. {c |} {res}    113          4         1      1   76944.13   90.29299   852.1606 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+ 41. {c |} {res}    115          1         1      1   2498.212    1.53088    1631.88 {txt}{c |}
+ 42. {c |} {res}    115          2         1      1    3771.39   3.059502   1232.681 {txt}{c |}
+ 43. {c |} {res}    115          3         1      1   28.57143   .2857143   99.99999 {txt}{c |}
+ 44. {c |} {res}    115          4         1      1   1183.264   3.330243   355.3084 {txt}{c |}
+ 45. {c |} {res}    116          1         1      1   114.2857   .2857143        400 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+ 46. {c |} {res}    116          2         1      1   184.5455   .1773191   1040.753 {txt}{c |}
+ 47. {c |} {res}    116          4         1      1   1382.168   1.373979    1005.96 {txt}{c |}
+ 48. {c |} {res}    117          1         1      1   7633.675   1.797432   4246.989 {txt}{c |}
+ 49. {c |} {res}    117          2         1      1   8583.487   2.091576   4103.837 {txt}{c |}
+ 50. {c |} {res}    117          3         1      1   3758.858   .8647046   4346.985 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+ 51. {c |} {res}    117          4         1      1   16025.31    4.34796   3685.707 {txt}{c |}
+ 52. {c |} {res}    121          1         1      1   1428.571   .2857143       5000 {txt}{c |}
+ 53. {c |} {res}    121          2         1      1   1341.801   .2857143   4696.304 {txt}{c |}
+ 54. {c |} {res}    121          4         1      1   4554.616   .8181471   5566.989 {txt}{c |}
+ 55. {c |} {res}    122          1         1      1   9215.768   13.66372   674.4702 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+ 56. {c |} {res}    122          2         1      1   1661.497   1.782951   931.8804 {txt}{c |}
+ 57. {c |} {res}    122          3         1      1   7428.565   5.057465   1468.832 {txt}{c |}
+ 58. {c |} {res}    122          4         1      1   6696.592   5.136007   1303.852 {txt}{c |}
+ 59. {c |} {res}    123          1         1      1   8066.685   16.13365   499.9914 {txt}{c |}
+ 60. {c |} {res}    123          2         1      1   7675.335   11.35631   675.8652 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+ 61. {c |} {res}    123          3         1      1   5534.289   6.881509   804.2261 {txt}{c |}
+ 62. {c |} {res}    123          4         1      1    8086.75   13.27763   609.0506 {txt}{c |}
+ 63. {c |} {res}    125          1         1      1   21569.93   66.46408   324.5352 {txt}{c |}
+ 64. {c |} {res}    125          2         1      1    10660.7   26.72009   398.9768 {txt}{c |}
+ 65. {c |} {res}    125          3         1      1   5196.245   15.41529   337.0837 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+ 66. {c |} {res}    125          4         1      1    23681.9    63.5977   372.3703 {txt}{c |}
+ 67. {c |} {res}    127          1         1      1   7707.794   55.20439   139.6228 {txt}{c |}
+ 68. {c |} {res}    127          2         1      1   5930.786   55.55641   106.7525 {txt}{c |}
+ 69. {c |} {res}    127          3         1      1   7561.336   60.30632   125.3821 {txt}{c |}
+ 70. {c |} {res}    127          4         1      1   8659.957   76.33562   113.4458 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+ 71. {c |} {res}    132          1         1      1   6759.618   57.90385   116.7387 {txt}{c |}
+ 72. {c |} {res}    132          2         1      1   92.00952   .6053336    151.998 {txt}{c |}
+ 73. {c |} {res}    132          3         1      1    29130.7   91.18854   319.4557 {txt}{c |}
+ 74. {c |} {res}    132          4         1      1       1000       1.25        800 {txt}{c |}
+ 75. {c |} {res}    134          1         1      1   13205.65   15.53176   850.2353 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+ 76. {c |} {res}    134          2         1      1   841.1636   2.193209   383.5309 {txt}{c |}
+ 77. {c |} {res}    134          3         1      1   11317.46   19.33167   585.4362 {txt}{c |}
+ 78. {c |} {res}    134          4         1      1   35121.36    73.8617   475.5017 {txt}{c |}
+ 79. {c |} {res}    135          1         1      1   4011.594   19.62935   204.3671 {txt}{c |}
+ 80. {c |} {res}    135          2         1      1   2567.057   16.53876   155.2146 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+ 81. {c |} {res}    135          3         1      1   4141.319   35.55281   116.4836 {txt}{c |}
+ 82. {c |} {res}    135          4         1      1   3765.281   22.84676   164.8059 {txt}{c |}
+ 83. {c |} {res}    136          1         1      1   9500.441   65.23175   145.6414 {txt}{c |}
+ 84. {c |} {res}    136          2         1      1   7133.494   48.81925   146.1205 {txt}{c |}
+ 85. {c |} {res}    136          3         1      1   7702.662   59.20862   130.0936 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+ 86. {c |} {res}    136          4         1      1    10121.8   78.22575   129.3922 {txt}{c |}
+ 87. {c |} {res}    138          1         1      1   9114.662   39.97514   228.0082 {txt}{c |}
+ 88. {c |} {res}    138          2         1      1   16318.26   68.57767   237.9529 {txt}{c |}
+ 89. {c |} {res}    138          3         1      1   7946.319   46.69931   170.1592 {txt}{c |}
+ 90. {c |} {res}    138          4         1      1    9474.71   71.08236    133.292 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+ 91. {c |} {res}    139          1         1      1   4139.391   14.65936   282.3719 {txt}{c |}
+ 92. {c |} {res}    139          2         1      1   5452.034   25.94879   210.1074 {txt}{c |}
+ 93. {c |} {res}    139          3         1      1   4049.847   15.09635   268.2667 {txt}{c |}
+ 94. {c |} {res}    139          4         1      1   14749.86   46.23089   319.0476 {txt}{c |}
+ 95. {c |} {res}    140          1         1      1   8807.174   12.09222   728.3337 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+ 96. {c |} {res}    140          2         1      1   10301.09   8.380259   1229.209 {txt}{c |}
+ 97. {c |} {res}    140          3         1      1    8264.67   12.48013   662.2263 {txt}{c |}
+ 98. {c |} {res}    140          4         1      1        750         .5       1500 {txt}{c |}
+ 99. {c |} {res}    141          1         1      1   67475.05   69.73349   967.6133 {txt}{c |}
+100. {c |} {res}    141          2         1      1   13120.34   9.639807   1361.058 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+101. {c |} {res}    141          3         1      1   36632.37   31.72531   1154.673 {txt}{c |}
+102. {c |} {res}    141          4         1      1    40801.3   59.07461    690.674 {txt}{c |}
+103. {c |} {res}    147          1         1      1   47251.81   21.56806   2190.823 {txt}{c |}
+104. {c |} {res}    147          2         1      1    20488.3   8.911084   2299.193 {txt}{c |}
+105. {c |} {res}    147          3         1      1   19419.85   8.507444   2282.689 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+106. {c |} {res}    147          4         1      1   23064.87   9.913094   2326.708 {txt}{c |}
+107. {c |} {res}    150          1         1      1   5084.162   11.54195   440.4944 {txt}{c |}
+108. {c |} {res}    150          2         1      1   3353.427    7.61117   440.5929 {txt}{c |}
+109. {c |} {res}    150          3         1      1   3397.678   6.974756   487.1393 {txt}{c |}
+110. {c |} {res}    150          4         1      1   4269.165   10.97445   389.0096 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+111. {c |} {res}    103          1         2      2   8448.434   1.532631   5512.372 {txt}{c |}
+112. {c |} {res}    103          2         2      2   8960.873   1.680606   5331.929 {txt}{c |}
+113. {c |} {res}    103          3         2      2   6023.588   1.455383   4138.833 {txt}{c |}
+114. {c |} {res}    103          4         2      2   7971.215   1.800208   4427.942 {txt}{c |}
+115. {c |} {res}    104          1         2      2    2093.23   1.939373   1079.333 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+116. {c |} {res}    104          2         2      2    3352.08    1.51838   2207.668 {txt}{c |}
+117. {c |} {res}    104          3         2      2    3058.72   1.285714   2379.004 {txt}{c |}
+118. {c |} {res}    104          4         2      2   1292.326   .5714286    2261.57 {txt}{c |}
+119. {c |} {res}    105          1         2      2   59918.15   25.57772   2342.592 {txt}{c |}
+120. {c |} {res}    105          2         2      2   86324.43   53.17633   1623.362 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+121. {c |} {res}    105          3         2      2   98379.96   81.23507   1211.053 {txt}{c |}
+122. {c |} {res}    105          4         2      2     115869    54.0983   2141.823 {txt}{c |}
+123. {c |} {res}    107          1         2      2   106405.9   106.5264   998.8681 {txt}{c |}
+124. {c |} {res}    107          2         2      2   47061.09   53.44823   880.4985 {txt}{c |}
+125. {c |} {res}    107          3         2      2   26220.19   26.19767    1000.86 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+126. {c |} {res}    107          4         2      2   36205.63   40.36539   896.9473 {txt}{c |}
+127. {c |} {res}    108          1         2      2   201837.2   288.7963    698.891 {txt}{c |}
+128. {c |} {res}    108          2         2      2   144295.9    173.638   831.0161 {txt}{c |}
+129. {c |} {res}    108          3         2      2   133812.2   147.6573   906.2349 {txt}{c |}
+130. {c |} {res}    108          4         2      2   63274.71     89.455   707.3356 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+131. {c |} {res}    109          2         2      2   6091.657   5.241686   1162.156 {txt}{c |}
+132. {c |} {res}    109          3         2      2   1151.728   2.293729   502.1202 {txt}{c |}
+133. {c |} {res}    109          4         2      2   171.4286   .4285714        400 {txt}{c |}
+134. {c |} {res}    110          1         2      2   7247.359   3.682369   1968.124 {txt}{c |}
+135. {c |} {res}    110          2         2      2   20485.69   11.56369   1771.554 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+136. {c |} {res}    110          3         2      2   14400.78   7.883383   1826.726 {txt}{c |}
+137. {c |} {res}    110          4         2      2   22600.32   15.27362   1479.696 {txt}{c |}
+138. {c |} {res}    111          1         2      2   1626.542   15.63877    104.007 {txt}{c |}
+139. {c |} {res}    111          2         2      2   1248.773   1.985298   629.0101 {txt}{c |}
+140. {c |} {res}    111          3         2      2   563.0547   .7925051   710.4745 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+141. {c |} {res}    111          4         2      2   142.4982    .490827   290.3227 {txt}{c |}
+142. {c |} {res}    112          1         2      2   34505.41   227.9919   151.3449 {txt}{c |}
+143. {c |} {res}    112          2         2      2   21432.58   134.4644   159.3923 {txt}{c |}
+144. {c |} {res}    112          3         2      2   38647.29   207.2468   186.4795 {txt}{c |}
+145. {c |} {res}    112          4         2      2   376.0691   .7521383        500 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+146. {c |} {res}    113          1         2      2   131071.4    127.126   1031.035 {txt}{c |}
+147. {c |} {res}    113          2         2      2   225460.5   227.4201   991.3831 {txt}{c |}
+148. {c |} {res}    113          3         2      2   187810.8   161.4654   1163.165 {txt}{c |}
+149. {c |} {res}    113          4         2      2   96335.01   128.6226   748.9744 {txt}{c |}
+150. {c |} {res}    115          1         2      2   18462.29    31.4332   587.3502 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+151. {c |} {res}    115          2         2      2   43761.64   39.99917   1094.064 {txt}{c |}
+152. {c |} {res}    115          3         2      2   9731.383   14.29567   680.7224 {txt}{c |}
+153. {c |} {res}    115          4         2      2   45906.01   69.65378   659.0599 {txt}{c |}
+154. {c |} {res}    116          1         2      2   31988.24   127.1516   251.5756 {txt}{c |}
+155. {c |} {res}    116          2         2      2   62063.83   279.2232   222.2732 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+156. {c |} {res}    116          3         2      2   8482.907   13.57508   624.8882 {txt}{c |}
+157. {c |} {res}    116          4         2      2   28248.14   111.3285   253.7368 {txt}{c |}
+158. {c |} {res}    117          1         2      2   20505.34   4.690331   4371.833 {txt}{c |}
+159. {c |} {res}    117          2         2      2   46042.78   11.40807   4035.984 {txt}{c |}
+160. {c |} {res}    117          3         2      2   29165.07    7.06727    4126.78 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+161. {c |} {res}    117          4         2      2   30106.22   7.404443   4065.967 {txt}{c |}
+162. {c |} {res}    121          1         2      2   21826.11   3.451027   6324.525 {txt}{c |}
+163. {c |} {res}    121          2         2      2   14498.27    2.78166   5212.091 {txt}{c |}
+164. {c |} {res}    121          3         2      2   8364.753    1.41893   5895.112 {txt}{c |}
+165. {c |} {res}    121          4         2      2   8122.059   1.142857   7106.801 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+166. {c |} {res}    122          1         2      2   26838.95   30.13911   890.5025 {txt}{c |}
+167. {c |} {res}    122          2         2      2    42380.7   22.36816   1894.689 {txt}{c |}
+168. {c |} {res}    122          3         2      2   27469.77   21.09099   1302.441 {txt}{c |}
+169. {c |} {res}    122          4         2      2   20250.33   11.76829   1720.753 {txt}{c |}
+170. {c |} {res}    123          1         2      2   21575.99   40.68184   530.3593 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+171. {c |} {res}    123          2         2      2   24290.98   42.30871   574.1366 {txt}{c |}
+172. {c |} {res}    123          3         2      2   17449.71   22.96505   759.8376 {txt}{c |}
+173. {c |} {res}    123          4         2      2   11098.42   12.95904   856.4233 {txt}{c |}
+174. {c |} {res}    125          1         2      2      12894    36.7005   351.3304 {txt}{c |}
+175. {c |} {res}    125          2         2      2   21502.43   79.98335   268.8364 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+176. {c |} {res}    125          3         2      2   12755.66   48.50377   262.9829 {txt}{c |}
+177. {c |} {res}    125          4         2      2   20291.31   85.40718   237.5831 {txt}{c |}
+178. {c |} {res}    127          1         2      2   16491.75   146.2033   112.8001 {txt}{c |}
+179. {c |} {res}    127          2         2      2    19353.5   217.7983   88.85973 {txt}{c |}
+180. {c |} {res}    127          3         2      2   28356.22   294.6187   96.24716 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+181. {c |} {res}    127          4         2      2   11651.54   117.4689   99.18826 {txt}{c |}
+182. {c |} {res}    132          1         2      2   75361.95   534.4456   141.0096 {txt}{c |}
+183. {c |} {res}    132          2         2      2   1303.802   6.532956    199.573 {txt}{c |}
+184. {c |} {res}    132          3         2      2   38161.02   149.4831   255.2865 {txt}{c |}
+185. {c |} {res}    132          4         2      2   28.57143   .1428571        200 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+186. {c |} {res}    134          1         2      2   2259.207   7.080371   319.0804 {txt}{c |}
+187. {c |} {res}    134          2         2      2   8817.739   11.81184   746.5172 {txt}{c |}
+188. {c |} {res}    134          3         2      2   12178.82   16.23806   750.0172 {txt}{c |}
+189. {c |} {res}    134          4         2      2   23232.98   40.63345   571.7698 {txt}{c |}
+190. {c |} {res}    135          1         2      2   11507.37   93.68879   122.8255 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+191. {c |} {res}    135          2         2      2   8663.548   69.83316   124.0607 {txt}{c |}
+192. {c |} {res}    135          3         2      2   5687.013   31.82719   178.6841 {txt}{c |}
+193. {c |} {res}    135          4         2      2   7595.215   50.02222   151.8368 {txt}{c |}
+194. {c |} {res}    136          1         2      2   21636.38   161.2253   134.1997 {txt}{c |}
+195. {c |} {res}    136          2         2      2   16414.97   94.21056    174.237 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+196. {c |} {res}    136          3         2      2   13612.02   84.52911   161.0336 {txt}{c |}
+197. {c |} {res}    136          4         2      2   14339.21   91.07713   157.4403 {txt}{c |}
+198. {c |} {res}    138          1         2      2   32206.97   260.2532   123.7524 {txt}{c |}
+199. {c |} {res}    138          2         2      2   33911.71   292.3298    116.005 {txt}{c |}
+200. {c |} {res}    138          3         2      2   36137.64    329.141   109.7938 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+201. {c |} {res}    138          4         2      2   19432.54   107.3951   180.9444 {txt}{c |}
+202. {c |} {res}    139          1         2      2   11592.61   74.62579   155.3432 {txt}{c |}
+203. {c |} {res}    139          2         2      2   31205.62   182.9327   170.5853 {txt}{c |}
+204. {c |} {res}    139          3         2      2   10806.75   85.63273   126.1988 {txt}{c |}
+205. {c |} {res}    139          4         2      2   19656.77   97.18724   202.2567 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+206. {c |} {res}    140          1         2      2   44661.87   58.09808   768.7324 {txt}{c |}
+207. {c |} {res}    140          2         2      2   28385.72   46.15079   615.0648 {txt}{c |}
+208. {c |} {res}    140          3         2      2   8981.936   11.99034   749.0978 {txt}{c |}
+209. {c |} {res}    141          1         2      2   41769.94   39.09198   1068.504 {txt}{c |}
+210. {c |} {res}    141          2         2      2    45614.8   52.53929   868.2037 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+211. {c |} {res}    141          3         2      2   21699.36    24.6714    879.535 {txt}{c |}
+212. {c |} {res}    141          4         2      2   68938.98   94.73037   727.7389 {txt}{c |}
+213. {c |} {res}    146          1         2      2   1215.049   2.124981   571.7929 {txt}{c |}
+214. {c |} {res}    146          2         2      2   432.2245   .5714286   756.3929 {txt}{c |}
+215. {c |} {res}    146          3         2      2   442.3955   .3704661   1194.159 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+216. {c |} {res}    146          4         2      2   5822.676   5.854478   994.5679 {txt}{c |}
+217. {c |} {res}    147          1         2      2   57035.79    36.6103   1557.917 {txt}{c |}
+218. {c |} {res}    147          2         2      2   56774.16   40.13385    1414.62 {txt}{c |}
+219. {c |} {res}    147          3         2      2   33426.49   15.28603   2186.735 {txt}{c |}
+220. {c |} {res}    147          4         2      2   59842.97   28.62557   2090.542 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+221. {c |} {res}    150          1         2      2   9770.888   25.30105   386.1851 {txt}{c |}
+222. {c |} {res}    150          2         2      2   9106.063   24.76244   367.7369 {txt}{c |}
+223. {c |} {res}    150          3         2      2   4526.657   14.26324   317.3653 {txt}{c |}
+224. {c |} {res}    150          4         2      2   6456.998   19.16273   336.9561 {txt}{c |}
+225. {c |} {res}    103          1         3      3   1387.982   .2857143   4857.938 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+226. {c |} {res}    103          2         3      3   1714.286   .2857143       6000 {txt}{c |}
+227. {c |} {res}    103          3         3      3   3040.855   .7279042   4177.549 {txt}{c |}
+228. {c |} {res}    104          1         3      3   2005.754   1.016479   1973.236 {txt}{c |}
+229. {c |} {res}    104          2         3      3   3132.307   1.107591   2828.035 {txt}{c |}
+230. {c |} {res}    104          3         3      3   1510.643   2.201795    686.096 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+231. {c |} {res}    104          4         3      3   7284.352    6.68032    1090.42 {txt}{c |}
+232. {c |} {res}    105          1         3      3   7579.609   9.445668   802.4429 {txt}{c |}
+233. {c |} {res}    105          2         3      3   99474.78   149.1595   666.9019 {txt}{c |}
+234. {c |} {res}    105          3         3      3   151847.4   265.8431   571.1917 {txt}{c |}
+235. {c |} {res}    105          4         3      3     122497   191.2314   640.5696 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+236. {c |} {res}    107          1         3      3   146311.6   180.1492   812.1689 {txt}{c |}
+237. {c |} {res}    107          2         3      3    72315.9   95.56121   756.7496 {txt}{c |}
+238. {c |} {res}    107          3         3      3   10831.06   20.02557   540.8618 {txt}{c |}
+239. {c |} {res}    107          4         3      3   132003.7   218.3867   604.4495 {txt}{c |}
+240. {c |} {res}    108          1         3      3    88068.4   83.71042    1052.06 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+241. {c |} {res}    108          2         3      3    90455.6    251.233   360.0466 {txt}{c |}
+242. {c |} {res}    108          3         3      3   111859.2   251.6518   444.4998 {txt}{c |}
+243. {c |} {res}    108          4         3      3   225533.3   411.6173   547.9199 {txt}{c |}
+244. {c |} {res}    109          1         3      3   228.5714   .1428571       1600 {txt}{c |}
+245. {c |} {res}    109          2         3      3   2278.906   2.294455   993.2232 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+246. {c |} {res}    109          3         3      3   195.8106   .2857143   685.3372 {txt}{c |}
+247. {c |} {res}    109          4         3      3   633.8816   .6338816       1000 {txt}{c |}
+248. {c |} {res}    110          1         3      3    15930.5    19.8183   803.8278 {txt}{c |}
+249. {c |} {res}    110          2         3      3   5357.871   4.265913   1255.973 {txt}{c |}
+250. {c |} {res}    110          3         3      3   15034.49   24.20471   621.1392 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+251. {c |} {res}    110          4         3      3    10349.2   9.036545   1145.261 {txt}{c |}
+252. {c |} {res}    111          1         3      3   23985.69   58.55687   409.6136 {txt}{c |}
+253. {c |} {res}    111          2         3      3   27117.35   106.8634    253.757 {txt}{c |}
+254. {c |} {res}    111          3         3      3   31624.45   97.93583   322.9099 {txt}{c |}
+255. {c |} {res}    111          4         3      3    65345.2   110.3697   592.0576 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+256. {c |} {res}    112          1         3      3    34015.9   170.5171   199.4868 {txt}{c |}
+257. {c |} {res}    112          2         3      3   39165.34     158.93   246.4314 {txt}{c |}
+258. {c |} {res}    112          3         3      3   26198.13   71.89721   364.3832 {txt}{c |}
+259. {c |} {res}    112          4         3      3   5070.824   15.57525   325.5694 {txt}{c |}
+260. {c |} {res}    113          1         3      3   119647.2   202.2483   591.5855 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+261. {c |} {res}    113          2         3      3   130059.7   250.3498   519.5118 {txt}{c |}
+262. {c |} {res}    113          3         3      3   106096.5   246.2956   430.7689 {txt}{c |}
+263. {c |} {res}    113          4         3      3     125167   264.0272   474.0683 {txt}{c |}
+264. {c |} {res}    115          1         3      3   7783.653   20.58285    378.162 {txt}{c |}
+265. {c |} {res}    115          2         3      3   21506.79     37.531   573.0408 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+266. {c |} {res}    115          3         3      3   8165.481   20.14072   405.4216 {txt}{c |}
+267. {c |} {res}    115          4         3      3   15188.23   39.32678   386.2059 {txt}{c |}
+268. {c |} {res}    116          1         3      3     168723   507.8446   332.2335 {txt}{c |}
+269. {c |} {res}    116          2         3      3   47828.82   156.5319   305.5532 {txt}{c |}
+270. {c |} {res}    116          3         3      3   144867.1   509.3809   284.3984 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+271. {c |} {res}    116          4         3      3   248133.5   1137.957   218.0517 {txt}{c |}
+272. {c |} {res}    117          1         3      3   44951.24   10.94683   4106.324 {txt}{c |}
+273. {c |} {res}    117          2         3      3   68975.28   16.09678   4285.036 {txt}{c |}
+274. {c |} {res}    117          3         3      3   26606.27   6.288819   4230.727 {txt}{c |}
+275. {c |} {res}    117          4         3      3   80396.53   20.68476   3886.752 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+276. {c |} {res}    121          1         3      3   22638.31   4.258214   5316.385 {txt}{c |}
+277. {c |} {res}    121          2         3      3   28549.35   4.693279   6083.027 {txt}{c |}
+278. {c |} {res}    121          3         3      3   20585.47   3.951327   5209.762 {txt}{c |}
+279. {c |} {res}    121          4         3      3   26607.01    4.83996   5497.361 {txt}{c |}
+280. {c |} {res}    122          1         3      3   5349.333   4.820517   1109.701 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+281. {c |} {res}    122          2         3      3   15747.75   7.267682   2166.818 {txt}{c |}
+282. {c |} {res}    122          3         3      3   7478.418   8.206258   911.3067 {txt}{c |}
+283. {c |} {res}    122          4         3      3   28277.11   18.63877   1517.113 {txt}{c |}
+284. {c |} {res}    123          1         3      3   23462.33   34.56681   678.7531 {txt}{c |}
+285. {c |} {res}    123          2         3      3   24406.07    67.8063   359.9381 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+286. {c |} {res}    123          3         3      3   21695.27   30.14107    719.791 {txt}{c |}
+287. {c |} {res}    123          4         3      3   48956.11    100.206   488.5545 {txt}{c |}
+288. {c |} {res}    125          1         3      3   30760.49   146.9091   209.3845 {txt}{c |}
+289. {c |} {res}    125          2         3      3   44227.02   218.4774    202.433 {txt}{c |}
+290. {c |} {res}    125          3         3      3   10722.11   45.08393   237.8256 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+291. {c |} {res}    125          4         3      3   79228.42   338.8234    233.834 {txt}{c |}
+292. {c |} {res}    127          1         3      3   42074.41   186.2427   225.9118 {txt}{c |}
+293. {c |} {res}    127          2         3      3   46631.31    280.036    166.519 {txt}{c |}
+294. {c |} {res}    127          3         3      3   29400.22    187.388   156.8949 {txt}{c |}
+295. {c |} {res}    127          4         3      3   55595.09    293.654   189.3218 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+296. {c |} {res}    132          1         3      3   48588.78   194.0927    250.338 {txt}{c |}
+297. {c |} {res}    132          2         3      3   3648.937   20.92882   174.3499 {txt}{c |}
+298. {c |} {res}    132          3         3      3   42001.49   205.9577   203.9326 {txt}{c |}
+299. {c |} {res}    132          4         3      3    19212.7   178.1879   107.8227 {txt}{c |}
+300. {c |} {res}    134          1         3      3   155.2229   .7274977   213.3655 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+301. {c |} {res}    134          2         3      3    10869.5   23.14649   469.5959 {txt}{c |}
+302. {c |} {res}    134          3         3      3   9069.777   40.20297   225.5997 {txt}{c |}
+303. {c |} {res}    134          4         3      3   7297.082   54.49252   133.9098 {txt}{c |}
+304. {c |} {res}    135          1         3      3   12681.26   98.53264   128.7011 {txt}{c |}
+305. {c |} {res}    135          2         3      3   14072.66   105.4667   133.4323 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+306. {c |} {res}    135          3         3      3   9346.477   74.92667   124.7417 {txt}{c |}
+307. {c |} {res}    135          4         3      3   24765.63   169.7848   145.8649 {txt}{c |}
+308. {c |} {res}    136          1         3      3   19477.29   114.9663   169.4173 {txt}{c |}
+309. {c |} {res}    136          2         3      3   24458.77   144.3085   169.4895 {txt}{c |}
+310. {c |} {res}    136          3         3      3   14265.84   106.0618   134.5049 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+311. {c |} {res}    136          4         3      3   25970.86   135.9027   191.0989 {txt}{c |}
+312. {c |} {res}    138          1         3      3   9253.365   76.47931   120.9917 {txt}{c |}
+313. {c |} {res}    138          2         3      3   16232.53   152.2997   106.5828 {txt}{c |}
+314. {c |} {res}    138          3         3      3   16191.35   73.42917    220.503 {txt}{c |}
+315. {c |} {res}    138          4         3      3   45175.35   295.1644   153.0515 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+316. {c |} {res}    139          1         3      3   42458.62   267.9978    158.429 {txt}{c |}
+317. {c |} {res}    139          2         3      3    69505.2   516.2381   134.6379 {txt}{c |}
+318. {c |} {res}    139          3         3      3   61194.36   481.3755    127.124 {txt}{c |}
+319. {c |} {res}    139          4         3      3   128930.1   956.1249   134.8465 {txt}{c |}
+320. {c |} {res}    140          1         3      3   16735.45   66.30923   252.3849 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+321. {c |} {res}    140          2         3      3   33922.85   120.6847   281.0865 {txt}{c |}
+322. {c |} {res}    140          3         3      3   3544.451   27.68084   128.0471 {txt}{c |}
+323. {c |} {res}    140          4         3      3   1103.465   6.787628   162.5701 {txt}{c |}
+324. {c |} {res}    141          1         3      3   211822.6   405.9114   521.8445 {txt}{c |}
+325. {c |} {res}    141          2         3      3   115011.1   229.6279   500.8586 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+326. {c |} {res}    141          3         3      3   132797.7    314.154   422.7152 {txt}{c |}
+327. {c |} {res}    141          4         3      3   280411.3   478.7835   585.6746 {txt}{c |}
+328. {c |} {res}    146          1         3      3   29475.08   47.71924   617.6771 {txt}{c |}
+329. {c |} {res}    146          2         3      3    9137.42   19.10062   478.3834 {txt}{c |}
+330. {c |} {res}    146          3         3      3    43968.1   83.09945   529.1021 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+331. {c |} {res}    146          4         3      3   64848.72   107.8521   601.2743 {txt}{c |}
+332. {c |} {res}    147          1         3      3   38643.68   52.26244   739.4159 {txt}{c |}
+333. {c |} {res}    147          2         3      3   45999.82   27.59419   1667.011 {txt}{c |}
+334. {c |} {res}    147          3         3      3   19823.58   34.80156   569.6176 {txt}{c |}
+335. {c |} {res}    147          4         3      3   61223.22   87.53496   699.4144 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+336. {c |} {res}    150          1         3      3   13882.31   38.77251   358.0452 {txt}{c |}
+337. {c |} {res}    150          2         3      3   12036.65   44.03336   273.3531 {txt}{c |}
+338. {c |} {res}    150          3         3      3    11951.4   32.65119   366.0326 {txt}{c |}
+339. {c |} {res}    150          4         3      3   23097.34   74.97656   308.0608 {txt}{c |}
+340. {c |} {res}    103          1         4      4   57722.14   12.97941   4447.209 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+341. {c |} {res}    103          2         4      4    45169.7   10.05233   4493.456 {txt}{c |}
+342. {c |} {res}    103          3         4      4   39239.82   8.717917   4501.054 {txt}{c |}
+343. {c |} {res}    103          4         4      4   101544.5   21.40267   4744.479 {txt}{c |}
+344. {c |} {res}    104          1         4      4   141071.2   73.69963   1914.137 {txt}{c |}
+345. {c |} {res}    104          2         4      4   110327.3    58.8815   1873.717 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+346. {c |} {res}    104          3         4      4   16766.22   9.208137   1820.805 {txt}{c |}
+347. {c |} {res}    104          4         4      4   41852.12   20.29539    2062.15 {txt}{c |}
+348. {c |} {res}    105          1         4      4   94148.41   71.19848   1322.337 {txt}{c |}
+349. {c |} {res}    105          2         4      4   47562.11   42.65786   1114.967 {txt}{c |}
+350. {c |} {res}    105          3         4      4   78941.98   43.20865   1826.995 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+351. {c |} {res}    105          4         4      4   92154.45   31.69649   2907.403 {txt}{c |}
+352. {c |} {res}    107          1         4      4   108203.9   96.94696   1116.115 {txt}{c |}
+353. {c |} {res}    107          2         4      4   53212.55   43.79843   1214.942 {txt}{c |}
+354. {c |} {res}    107          3         4      4   27146.44   33.05517   821.2463 {txt}{c |}
+355. {c |} {res}    107          4         4      4   27556.72   17.09903   1611.596 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+356. {c |} {res}    108          1         4      4   57679.94   100.0033   576.7803 {txt}{c |}
+357. {c |} {res}    108          2         4      4    39039.5   108.7814   358.8803 {txt}{c |}
+358. {c |} {res}    108          3         4      4   30401.51   119.6213    254.148 {txt}{c |}
+359. {c |} {res}    108          4         4      4   9771.262   23.80152    410.531 {txt}{c |}
+360. {c |} {res}    109          1         4      4   31299.38   14.57124   2148.024 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+361. {c |} {res}    109          2         4      4   9759.044   2.798097   3487.743 {txt}{c |}
+362. {c |} {res}    109          3         4      4   61005.76    21.4227   2847.716 {txt}{c |}
+363. {c |} {res}    109          4         4      4   3069.189   1.103471   2781.394 {txt}{c |}
+364. {c |} {res}    110          1         4      4   4677.155   2.010081   2326.849 {txt}{c |}
+365. {c |} {res}    110          2         4      4   13321.37   7.270161   1832.335 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+366. {c |} {res}    110          3         4      4   2600.098   1.130947   2299.044 {txt}{c |}
+367. {c |} {res}    110          4         4      4   4566.597   2.188386   2086.743 {txt}{c |}
+368. {c |} {res}    111          1         4      4    2007.83   19.09495   105.1498 {txt}{c |}
+369. {c |} {res}    111          2         4      4        300   .4285714        700 {txt}{c |}
+370. {c |} {res}    111          3         4      4    7867.42   25.31371   310.7968 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+371. {c |} {res}    111          4         4      4   1522.486   4.805647   316.8119 {txt}{c |}
+372. {c |} {res}    112          1         4      4   25884.86   193.6875   133.6424 {txt}{c |}
+373. {c |} {res}    112          3         4      4   12178.21   87.55822    139.087 {txt}{c |}
+374. {c |} {res}    112          4         4      4    1755.08    17.5508        100 {txt}{c |}
+375. {c |} {res}    113          1         4      4   47394.95   47.22332   1003.634 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+376. {c |} {res}    113          2         4      4   48469.83   70.44191   688.0823 {txt}{c |}
+377. {c |} {res}    113          3         4      4   70079.26   169.0377   414.5778 {txt}{c |}
+378. {c |} {res}    113          4         4      4   50273.92   83.47207   602.2844 {txt}{c |}
+379. {c |} {res}    115          1         4      4   25097.38   39.88915   629.1781 {txt}{c |}
+380. {c |} {res}    115          2         4      4   21532.66   28.84919   746.3869 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+381. {c |} {res}    115          3         4      4   1420.884   2.216397   641.0784 {txt}{c |}
+382. {c |} {res}    115          4         4      4    30121.7   51.64064   583.2946 {txt}{c |}
+383. {c |} {res}    116          1         4      4   917.5398   1.889402   485.6245 {txt}{c |}
+384. {c |} {res}    116          2         4      4   6511.088   15.21597   427.9114 {txt}{c |}
+385. {c |} {res}    116          3         4      4   1082.778   2.403664   450.4698 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+386. {c |} {res}    116          4         4      4   1209.783      2.521   479.8822 {txt}{c |}
+387. {c |} {res}    117          1         4      4   21841.25   5.638525   3873.575 {txt}{c |}
+388. {c |} {res}    117          2         4      4   17774.36   4.180225   4252.011 {txt}{c |}
+389. {c |} {res}    117          3         4      4   5794.419   1.422716   4072.787 {txt}{c |}
+390. {c |} {res}    117          4         4      4   14949.13   4.043276   3697.282 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+391. {c |} {res}    121          1         4      4   5099.031   1.069648   4767.017 {txt}{c |}
+392. {c |} {res}    121          2         4      4   1428.571   .2857143       5000 {txt}{c |}
+393. {c |} {res}    121          3         4      4   2142.857   .4285714       5000 {txt}{c |}
+394. {c |} {res}    121          4         4      4   8133.521   .9496754   8564.527 {txt}{c |}
+395. {c |} {res}    122          1         4      4   5673.241   3.823686    1483.71 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+396. {c |} {res}    122          2         4      4    21513.3   9.423155   2283.025 {txt}{c |}
+397. {c |} {res}    122          3         4      4   2494.976   1.468203   1699.339 {txt}{c |}
+398. {c |} {res}    122          4         4      4   591.0954    .768097   769.5583 {txt}{c |}
+399. {c |} {res}    123          1         4      4   5820.176   5.537916   1050.969 {txt}{c |}
+400. {c |} {res}    123          2         4      4   13024.46   10.85043   1200.364 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+401. {c |} {res}    123          3         4      4   1771.775   1.275563   1389.015 {txt}{c |}
+402. {c |} {res}    123          4         4      4   2001.609   2.178003   919.0114 {txt}{c |}
+403. {c |} {res}    125          1         4      4   17879.23    60.5388    295.335 {txt}{c |}
+404. {c |} {res}    125          2         4      4   27326.82   99.45445   274.7672 {txt}{c |}
+405. {c |} {res}    125          3         4      4   15032.29   63.86476   235.3769 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+406. {c |} {res}    125          4         4      4   32948.73    80.5916   408.8358 {txt}{c |}
+407. {c |} {res}    127          1         4      4   7173.308    51.5822   139.0656 {txt}{c |}
+408. {c |} {res}    127          2         4      4   3807.929    27.6388   137.7748 {txt}{c |}
+409. {c |} {res}    127          3         4      4   6465.369   19.40709   333.1447 {txt}{c |}
+410. {c |} {res}    127          4         4      4   3620.757   24.67326   146.7482 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+411. {c |} {res}    132          1         4      4   8128.435   58.50154    138.944 {txt}{c |}
+412. {c |} {res}    132          2         4      4   579.4811   4.496207   128.8822 {txt}{c |}
+413. {c |} {res}    132          3         4      4   3457.194   29.35305   117.7797 {txt}{c |}
+414. {c |} {res}    132          4         4      4   285.7143   2.857143        100 {txt}{c |}
+415. {c |} {res}    134          1         4      4    15086.2   144.0807   104.7066 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+416. {c |} {res}    134          2         4      4   4043.966    23.1321   174.8205 {txt}{c |}
+417. {c |} {res}    134          3         4      4   3525.636   9.506943   370.8485 {txt}{c |}
+418. {c |} {res}    134          4         4      4   19624.72   77.34846   253.7183 {txt}{c |}
+419. {c |} {res}    135          1         4      4   6146.111   37.40993   164.2909 {txt}{c |}
+420. {c |} {res}    135          2         4      4   6314.667   28.44727    221.978 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+421. {c |} {res}    135          3         4      4   4595.168   18.84021   243.9022 {txt}{c |}
+422. {c |} {res}    135          4         4      4   3246.926   18.68448   173.7767 {txt}{c |}
+423. {c |} {res}    136          1         4      4   18169.32   98.73871   184.0141 {txt}{c |}
+424. {c |} {res}    136          2         4      4   12150.61   56.44592   215.2611 {txt}{c |}
+425. {c |} {res}    136          3         4      4   5998.816   28.32721   211.7687 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+426. {c |} {res}    136          4         4      4   8863.166   48.27153   183.6106 {txt}{c |}
+427. {c |} {res}    138          1         4      4   13147.22   87.07814   150.9819 {txt}{c |}
+428. {c |} {res}    138          2         4      4   19574.99   121.5304   161.0707 {txt}{c |}
+429. {c |} {res}    138          3         4      4   6227.256   47.20217   131.9273 {txt}{c |}
+430. {c |} {res}    138          4         4      4   8113.491   73.77719   109.9729 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+431. {c |} {res}    139          1         4      4   2936.403   23.97876   122.4585 {txt}{c |}
+432. {c |} {res}    139          2         4      4   3778.752   25.54026   147.9528 {txt}{c |}
+433. {c |} {res}    139          3         4      4   5271.114   48.48779   108.7101 {txt}{c |}
+434. {c |} {res}    139          4         4      4   1408.605   9.248912   152.2995 {txt}{c |}
+435. {c |} {res}    140          1         4      4   71133.88   118.8149   598.6948 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+436. {c |} {res}    140          2         4      4   15205.68   17.35047   876.3845 {txt}{c |}
+437. {c |} {res}    140          3         4      4   32864.91   66.02036   497.7997 {txt}{c |}
+438. {c |} {res}    140          4         4      4   7027.241   17.77869   395.2621 {txt}{c |}
+439. {c |} {res}    141          1         4      4   140772.5   216.9229   648.9519 {txt}{c |}
+440. {c |} {res}    141          2         4      4   62682.53   63.33383   989.7164 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+441. {c |} {res}    141          3         4      4   63254.47   91.40498   692.0243 {txt}{c |}
+442. {c |} {res}    141          4         4      4   58812.19   104.6559    561.958 {txt}{c |}
+443. {c |} {res}    146          1         4      4   42.85714   .0714286        600 {txt}{c |}
+444. {c |} {res}    146          4         4      4        200   .2857143   699.9999 {txt}{c |}
+445. {c |} {res}    147          1         4      4   16352.01   7.863955   2079.363 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+446. {c |} {res}    147          2         4      4   18721.27   16.42767   1139.618 {txt}{c |}
+447. {c |} {res}    147          3         4      4   8288.354   3.715445   2230.783 {txt}{c |}
+448. {c |} {res}    147          4         4      4   8031.189    3.56489   2252.857 {txt}{c |}
+449. {c |} {res}    150          1         4      4   11025.06   22.48492   490.3315 {txt}{c |}
+450. {c |} {res}    150          2         4      4   10378.65     20.903   496.5147 {txt}{c |}
+     {c LT}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+451. {c |} {res}    150          3         4      4   5044.698   10.70473   471.2587 {txt}{c |}
+452. {c |} {res}    150          4         4      4    5329.33   11.67755   456.3739 {txt}{c |}
+     {c BLC}{hline 9}{c -}{hline 10}{c -}{hline 9}{c -}{hline 6}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c BRC}
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 
 {com}.                         tempfile uvq2;
 {txt}
 {com}.                         keep reg_tpi product survquar ppkg_trim;
 {txt}
 {com}.                 save `uvq2', replace;
+<<<<<<< HEAD
 {txt}(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000e.tmp not found)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000e.tmp saved
+=======
+{txt}(note: file /tmp/St03924.00000e not found)
+file /tmp/St03924.00000e saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 
 {com}.                                 use `uvq' ;
 {txt}
@@ -5874,10 +6600,14 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000e.tmp saved
 {com}.                         drop _merge;
 {txt}
 {com}.                 save `uvq', replace;
+<<<<<<< HEAD
 {txt}file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000c.tmp saved
+=======
+{txt}file /tmp/St03924.00000c saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 
 {com}.                 save "$path/work/tpi_unit_val_quarterly.dta", replace;
-{txt}file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/tpi_unit_val_quarterly.dta saved
+{txt}file /home/bjvca/data/data/GAP/Haruna/work/tpi_unit_val_quarterly.dta saved
 
 {com}.         restore;
 {txt}
@@ -5934,8 +6664,13 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000e.tmp saved
 {com}.         tempfile thhcons;
 {txt}
 {com}. save `thhcons', replace;
+<<<<<<< HEAD
 {txt}(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000f.tmp not found)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000f.tmp saved
+=======
+{txt}(note: file /tmp/St03924.00000f not found)
+file /tmp/St03924.00000f saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 
 {com}. **************************************************************************;
 . * Merge the file with consumption on the food products with HH consumption file,
@@ -6241,20 +6976,29 @@ the master data
 {com}.                 sort reg_tpi product;
 {txt}
 {com}.                 save "$path/work/tpi_reg_tpi_share.dta", replace;
-{txt}file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/tpi_reg_tpi_share.dta saved
+{txt}file /home/bjvca/data/data/GAP/Haruna/work/tpi_reg_tpi_share.dta saved
 
 {com}.                 tempfile tempwt6;
 {txt}
 {com}.                 save `tempwt6', replace;
+<<<<<<< HEAD
 {txt}(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000g.tmp not found)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000g.tmp saved
+=======
+{txt}(note: file /tmp/St03924.00000g not found)
+file /tmp/St03924.00000g saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 
 {com}. use `uvq', clear;
 {txt}
 {com}.         sort reg_tpi product;
 {txt}
 {com}. save , replace;
+<<<<<<< HEAD
 {txt}file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000c.tmp saved
+=======
+{txt}file /tmp/St03924.00000c saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 
 {com}. use `tempwt6';
 {txt}
@@ -6263,7 +7007,11 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000g.tmp saved
 variable{txt}s{txt} reg_tpi
 product
 do not uniquely identify observations in
+<<<<<<< HEAD
 C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000c.tmp
+=======
+/tmp/St03924.00000c
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 {p_end}
 (label lbreg already defined)
 
@@ -6327,6 +7075,7 @@ C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000c.tmp
 {txt}
 {com}. list in  1/3;
 
+<<<<<<< HEAD
      {txt}{c TLC}{hline 9}{c TT}{hline 9}{c TT}{hline 10}{c TT}{hline 10}{c TT}{hline 12}{c TT}{hline 9}{c TRC}
   1. {c |} product {c |} reg_tpi {c |}    share {c |} medshare {c |}   survquar {c |}    news {c |}
      {c |} {res}    103 {txt}{c |} {res}Central {txt}{c |} {res}.0424736 {txt}{c |} {res}       0 {txt}{c |} {res}May-Jul 09 {txt}{c |} {res}Central {txt}{c |}
@@ -6394,6 +7143,57 @@ C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000c.tmp
      {c |}                            tpi1_t~m                             {c |}
      {c |}                            {res}6.611085                             {txt}{c |}
      {c BLC}{hline 65}{c BRC}
+=======
+     {txt}{c TLC}{hline 9}{c TT}{hline 9}{c TT}{hline 10}{c TT}{hline 10}{c TT}{hline 12}{c TT}{hline 9}{c TT}{hline 10}{c TT}{hline 10}{c TT}{hline 10}{c TRC}
+  1. {c |} product {c |} reg_tpi {c |}    share {c |} medshare {c |}   survquar {c |}    news {c |} valued~t {c |} quanti~t {c |}     ppkg {c |}
+     {c |} {res}    103 {txt}{c |} {res}Central {txt}{c |} {res}.0424736 {txt}{c |} {res}       0 {txt}{c |} {res}May-Jul 09 {txt}{c |} {res}Central {txt}{c |} {res}22305.95 {txt}{c |} {res}   4.833 {txt}{c |} {res}4615.343 {txt}{c |}
+     {c LT}{hline 9}{c BT}{hline 9}{c BT}{hline 4}{c TT}{hline 5}{c BT}{hline 10}{c BT}{hline 5}{c TT}{hline 6}{c BT}{hline 9}{c BT}{hline 7}{c TT}{hline 2}{c BT}{hline 10}{c BT}{hline 10}{c RT}
+     {c |}        ppkg_t~m        {c |}        _merge        {c |}            tpi1        {c |}        tpi1_t~m        {c |}
+     {c |}        {res}4470.054        {txt}{c |}        {res}     3        {txt}{c |}        {res}196.0304        {txt}{c |}        {res}189.8594        {txt}{c |}
+     {c BLC}{hline 24}{c BT}{hline 22}{c BT}{hline 24}{c BT}{hline 24}{c BRC}
+
+     {c TLC}{hline 9}{c TT}{hline 9}{c TT}{hline 10}{c TT}{hline 10}{c TT}{hline 12}{c TT}{hline 9}{c TT}{hline 10}{c TT}{hline 10}{c TT}{hline 10}{c TRC}
+  2. {c |} product {c |} reg_tpi {c |}    share {c |} medshare {c |}   survquar {c |}    news {c |} valued~t {c |} quanti~t {c |}     ppkg {c |}
+     {c |} {res}    104 {txt}{c |} {res}Central {txt}{c |} {res}.0654126 {txt}{c |} {res}       0 {txt}{c |} {res}May-Jul 09 {txt}{c |} {res}Central {txt}{c |} {res}31368.31 {txt}{c |} {res}20.25546 {txt}{c |} {res}1548.635 {txt}{c |}
+     {c LT}{hline 9}{c BT}{hline 9}{c BT}{hline 4}{c TT}{hline 5}{c BT}{hline 10}{c BT}{hline 5}{c TT}{hline 6}{c BT}{hline 9}{c BT}{hline 7}{c TT}{hline 2}{c BT}{hline 10}{c BT}{hline 10}{c RT}
+     {c |}        ppkg_t~m        {c |}        _merge        {c |}            tpi1        {c |}        tpi1_t~m        {c |}
+     {c |}        {res} 1382.16        {txt}{c |}        {res}     3        {txt}{c |}        {res}101.3003        {txt}{c |}        {res}90.41069        {txt}{c |}
+     {c BLC}{hline 24}{c BT}{hline 22}{c BT}{hline 24}{c BT}{hline 24}{c BRC}
+
+     {c TLC}{hline 9}{c TT}{hline 9}{c TT}{hline 10}{c TT}{hline 10}{c TT}{hline 12}{c TT}{hline 9}{c TT}{hline 10}{c TT}{hline 10}{c TT}{hline 10}{c TRC}
+  3. {c |} product {c |} reg_tpi {c |}    share {c |} medshare {c |}   survquar {c |}    news {c |} valued~t {c |} quanti~t {c |}     ppkg {c |}
+     {c |} {res}    105 {txt}{c |} {res}Central {txt}{c |} {res}.1701735 {txt}{c |} {res}.2986444 {txt}{c |} {res}May-Jul 09 {txt}{c |} {res}Central {txt}{c |} {res}46510.96 {txt}{c |} {res}34.25139 {txt}{c |} {res}1357.929 {txt}{c |}
+     {c LT}{hline 9}{c BT}{hline 9}{c BT}{hline 4}{c TT}{hline 5}{c BT}{hline 10}{c BT}{hline 5}{c TT}{hline 6}{c BT}{hline 9}{c BT}{hline 7}{c TT}{hline 2}{c BT}{hline 10}{c BT}{hline 10}{c RT}
+     {c |}        ppkg_t~m        {c |}        _merge        {c |}            tpi1        {c |}        tpi1_t~m        {c |}
+     {c |}        {res}1105.391        {txt}{c |}        {res}     3        {txt}{c |}        {res}231.0836        {txt}{c |}        {res}188.1083        {txt}{c |}
+     {c BLC}{hline 24}{c BT}{hline 22}{c BT}{hline 24}{c BT}{hline 24}{c BRC}
+
+{com}. list in -3/-1;
+
+     {txt}{c TLC}{hline 9}{c TT}{hline 9}{c TT}{hline 10}{c TT}{hline 10}{c TT}{hline 13}{c TT}{hline 9}{c TT}{hline 10}{c TT}{hline 10}{c TT}{hline 10}{c TRC}
+451. {c |} product {c |} reg_tpi {c |}    share {c |} medshare {c |}    survquar {c |}    news {c |} valued~t {c |} quanti~t {c |}     ppkg {c |}
+     {c |} {res}    150 {txt}{c |} {res}Western {txt}{c |} {res}.0144861 {txt}{c |} {res}.0578324 {txt}{c |} {res}Sept-Oct 09 {txt}{c |} {res}Western {txt}{c |} {res}6852.855 {txt}{c |} {res}13.42874 {txt}{c |} {res}510.3128 {txt}{c |}
+     {c LT}{hline 9}{c BT}{hline 9}{c BT}{hline 4}{c TT}{hline 5}{c BT}{hline 10}{c BT}{hline 5}{c TT}{hline 7}{c BT}{hline 9}{c BT}{hline 6}{c TT}{hline 3}{c BT}{hline 10}{c BT}{hline 10}{c RT}
+     {c |}        ppkg_t~m        {c |}        _merge        {c |}            tpi1        {c |}        tpi1_t~m         {c |}
+     {c |}        {res}496.5147        {txt}{c |}        {res}     3        {txt}{c |}        {res} 7.39245        {txt}{c |}        {res}7.192569         {txt}{c |}
+     {c BLC}{hline 24}{c BT}{hline 22}{c BT}{hline 24}{c BT}{hline 25}{c BRC}
+
+     {c TLC}{hline 9}{c TT}{hline 9}{c TT}{hline 10}{c TT}{hline 10}{c TT}{hline 13}{c TT}{hline 9}{c TT}{hline 10}{c TT}{hline 10}{c TT}{hline 10}{c TRC}
+452. {c |} product {c |} reg_tpi {c |}    share {c |} medshare {c |}    survquar {c |}    news {c |} valued~t {c |} quanti~t {c |}     ppkg {c |}
+     {c |} {res}    150 {txt}{c |} {res}Western {txt}{c |} {res}.0144861 {txt}{c |} {res}.0578324 {txt}{c |} {res}Nov09-Jan10 {txt}{c |} {res}Western {txt}{c |} {res}4807.188 {txt}{c |} {res}10.23642 {txt}{c |} {res} 469.616 {txt}{c |}
+     {c LT}{hline 9}{c BT}{hline 9}{c BT}{hline 4}{c TT}{hline 5}{c BT}{hline 10}{c BT}{hline 5}{c TT}{hline 7}{c BT}{hline 9}{c BT}{hline 6}{c TT}{hline 3}{c BT}{hline 10}{c BT}{hline 10}{c RT}
+     {c |}        ppkg_t~m        {c |}        _merge        {c |}            tpi1        {c |}        tpi1_t~m         {c |}
+     {c |}        {res}471.2587        {txt}{c |}        {res}     3        {txt}{c |}        {res}6.802912        {txt}{c |}        {res}6.826707         {txt}{c |}
+     {c BLC}{hline 24}{c BT}{hline 22}{c BT}{hline 24}{c BT}{hline 25}{c BRC}
+
+     {c TLC}{hline 9}{c TT}{hline 9}{c TT}{hline 10}{c TT}{hline 10}{c TT}{hline 13}{c TT}{hline 9}{c TT}{hline 10}{c TT}{hline 10}{c TT}{hline 10}{c TRC}
+453. {c |} product {c |} reg_tpi {c |}    share {c |} medshare {c |}    survquar {c |}    news {c |} valued~t {c |} quanti~t {c |}     ppkg {c |}
+     {c |} {res}    150 {txt}{c |} {res}Western {txt}{c |} {res}.0144861 {txt}{c |} {res}.0578324 {txt}{c |} {res} Feb-Apr 10 {txt}{c |} {res}Western {txt}{c |} {res}4498.977 {txt}{c |} {res} 9.62036 {txt}{c |} {res}467.6516 {txt}{c |}
+     {c LT}{hline 9}{c BT}{hline 9}{c BT}{hline 4}{c TT}{hline 5}{c BT}{hline 10}{c BT}{hline 5}{c TT}{hline 7}{c BT}{hline 9}{c BT}{hline 6}{c TT}{hline 3}{c BT}{hline 10}{c BT}{hline 10}{c RT}
+     {c |}        ppkg_t~m        {c |}        _merge        {c |}            tpi1        {c |}        tpi1_t~m         {c |}
+     {c |}        {res}456.3739        {txt}{c |}        {res}     3        {txt}{c |}        {res}6.774455        {txt}{c |}        {res}6.611085         {txt}{c |}
+     {c BLC}{hline 24}{c BT}{hline 22}{c BT}{hline 24}{c BT}{hline 25}{c BRC}
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 
 {com}.         **************************************************************************;
 . * Find TPI level and indexes for non-trimmed and trimmed prices
@@ -6511,10 +7311,10 @@ C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000c.tmp
 {txt}
 {com}. twoway (connected tpi_trim survquar),yline(1) by(, title("TPI: Trimmed"))
 > by(reg_tpi) sav("$path/work/reg_tpi-tpi_trim", replace);
-{res}{txt}(file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/reg_tpi-tpi_trim.gph saved)
+{res}{txt}(file /home/bjvca/data/data/GAP/Haruna/work/reg_tpi-tpi_trim.gph saved)
 
 {com}. graph export "$path/work/reg_tpi-tpi_trim.tif", replace;
-{txt}(file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/reg_tpi-tpi_trim.tif written in TIFF format)
+{txt}(file /home/bjvca/data/data/GAP/Haruna/work/reg_tpi-tpi_trim.tif written in TIFF format)
 
 {com}. list reg_tpi survquar tpi tpi_trim tpi_diff;
 {txt}
@@ -6547,7 +7347,7 @@ C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000c.tmp
 {com}. keep reg_tpi survquar tpi_trim;
 {txt}
 {com}. save "$path/work/temp_index_reg_tpi.dta", replace;
-{txt}file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/temp_index_reg_tpi.dta saved
+{txt}file /home/bjvca/data/data/GAP/Haruna/work/temp_index_reg_tpi.dta saved
 
 {com}.                        **************************************************************************
 > * 090_temp_index.do     (end)
@@ -6557,7 +7357,7 @@ C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000c.tmp
 {com}. 
 {txt}end of do-file
 
-{com}.                                 do "$path/new/100_food_basket_flex.do"  /* Flexible food basket */
+{com}. do "$path/new/100_food_basket_flex.do"
 {txt}
 {com}. *global path "C:/user/gapp"
 . clear all
@@ -6570,9 +7370,13 @@ C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000c.tmp
 {com}. log using "$path/rep/100_food_basket_flex.log", replace
 {txt}{.-}
       name:  {res}<unnamed>
-       {txt}log:  {res}C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/rep/100_food_basket_flex.log
+       {txt}log:  {res}/home/bjvca/data/data/GAP/Haruna/rep/100_food_basket_flex.log
   {txt}log type:  {res}text
+<<<<<<< HEAD
  {txt}opened on:  {res}20 Jun 2013, 09:08:38
+=======
+ {txt}opened on:  {res}19 Jun 2013, 15:44:20
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 {txt}
 {com}. clear
 {txt}
@@ -6696,8 +7500,13 @@ the master data
 {com}.         tempfile contpi;
 {txt}
 {com}.         save `contpi', replace;
+<<<<<<< HEAD
 {txt}(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000001.tmp not found)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000001.tmp saved
+=======
+{txt}(note: file /tmp/St03924.000001 not found)
+file /tmp/St03924.000001 saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 
 {com}.         collapse (p$bottom) one cons_pc_tpi [aw=hhsize*hhweight] ;
 {txt}
@@ -6708,8 +7517,13 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000001.tmp saved
 {com}.         sort one;
 {txt}
 {com}.         save `60pct', replace;
+<<<<<<< HEAD
 {txt}(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp not found)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
+=======
+{txt}(note: file /tmp/St03924.000002 not found)
+file /tmp/St03924.000002 saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 
 {com}.                 use `contpi';
 {txt}
@@ -6751,7 +7565,11 @@ the master data
 {com}.                                 sort hhid;
 {txt}
 {com}. save `contpi' , replace;
+<<<<<<< HEAD
 {txt}file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000001.tmp saved
+=======
+{txt}file /tmp/St03924.000001 saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 
 {com}. **************************************************************************;
 . * Next, need to keep only the food products in order to calculate the 
@@ -6844,8 +7662,13 @@ the master data
 {com}.                         tempfile food_basket_flex;
 {txt}
 {com}. save `food_basket_flex', replace;
+<<<<<<< HEAD
 {txt}(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp not found)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+=======
+{txt}(note: file /tmp/St03924.000003 not found)
+file /tmp/St03924.000003 saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 
 {com}. ********************************************************************************;
 . * Now prepare to get the variable spdomain to the using dataset, and then find the 
@@ -6863,8 +7686,13 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
 {com}.                         tempfile spdomain;
 {txt}
 {com}.                 save `spdomain' , replace;
+<<<<<<< HEAD
 {txt}(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000005.tmp not found)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000005.tmp saved
+=======
+{txt}(note: file /tmp/St03924.000005 not found)
+file /tmp/St03924.000005 saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 
 {com}.                 restore;
 {txt}
@@ -6895,7 +7723,11 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000005.tmp saved
 {com}.            tempfile tothhweight;
 {txt}
 {com}. save `tothhweight';
+<<<<<<< HEAD
 {txt}file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000006.tmp saved
+=======
+{txt}file /tmp/St03924.000006 saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 
 {com}. use `food_basket_flex';
 {txt}
@@ -6965,7 +7797,7 @@ the master data
 {com}.             lab var f_share_w "average food share for the 13 regions";
 {txt}
 {com}. save "$path/work/food_basket_flex.dta", replace;
-{txt}file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/food_basket_flex.dta saved
+{txt}file /home/bjvca/data/data/GAP/Haruna/work/food_basket_flex.dta saved
 
 {com}. * List first spatial region to get an idea about contents;
 . list product spdomain f_share_w cumshr if spdomain==1;
@@ -7026,7 +7858,7 @@ the master data
 {res}37
 {txt}
 {com}.   save "$path/work/codes_food_basket_flex.dta", replace;
-{txt}file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/codes_food_basket_flex.dta saved
+{txt}file /home/bjvca/data/data/GAP/Haruna/work/codes_food_basket_flex.dta saved
 
 {com}. **************************************************************************
 > * 100_food_basket_flex.do     (end)
@@ -7036,7 +7868,7 @@ the master data
 {com}. 
 {txt}end of do-file
 
-{com}.                                 do "$path/new/110_price_unit_flex.do"   /* Flexible basket: Prices */
+{com}. do "$path/new/110_price_unit_flex.do"
 {txt}
 {com}. *global path "C:/user/gapp"
 . clear all
@@ -7049,9 +7881,13 @@ the master data
 {com}. log using "$path/rep/110_price_unit_flex.log", replace
 {txt}{.-}
       name:  {res}<unnamed>
-       {txt}log:  {res}C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/rep/110_price_unit_flex.log
+       {txt}log:  {res}/home/bjvca/data/data/GAP/Haruna/rep/110_price_unit_flex.log
   {txt}log type:  {res}text
+<<<<<<< HEAD
  {txt}opened on:  {res}20 Jun 2013, 09:08:38
+=======
+ {txt}opened on:  {res}19 Jun 2013, 15:44:28
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 {txt}
 {com}. clear
 {txt}
@@ -7113,8 +7949,13 @@ the master data
 {com}.                 tempfile dd_acsort;
 {txt}
 {com}. save `dd_acsort', replace;
+<<<<<<< HEAD
 {txt}(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000001.tmp not found)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000001.tmp saved
+=======
+{txt}(note: file /tmp/St03924.000001 not found)
+file /tmp/St03924.000001 saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 
 {com}. /*
 > use "$path/work/daily.dta";
@@ -7240,8 +8081,13 @@ the master data
 {com}.                         tempfile spdomainreg_tpi;
 {txt}
 {com}.                 save `spdomainreg_tpi', replace;
+<<<<<<< HEAD
 {txt}(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp not found)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+=======
+{txt}(note: file /tmp/St03924.000003 not found)
+file /tmp/St03924.000003 saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 
 {com}.                                 codebook hhid;
 
@@ -7523,8 +8369,13 @@ the master data
 {com}.                                 tempfile contpi;
 {txt}
 {com}.                                 save `contpi', replace;
+<<<<<<< HEAD
 {txt}(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000005.tmp not found)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000005.tmp saved
+=======
+{txt}(note: file /tmp/St03924.000005 not found)
+file /tmp/St03924.000005 saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 
 {com}.                                 collapse (p$bottom) one cons_pc_tpi [aw=hhsize*hhweight], by(spdomain) ;
 {txt}
@@ -7535,8 +8386,13 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000005.tmp saved
 {com}.                                 sort spdomain;
 {txt}
 {com}.                                 save `60pct', replace;
+<<<<<<< HEAD
 {txt}(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000006.tmp not found)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000006.tmp saved
+=======
+{txt}(note: file /tmp/St03924.000006 not found)
+file /tmp/St03924.000006 saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 
 {com}.                                 use `contpi';
 {txt}
@@ -7634,7 +8490,7 @@ no observations
 {com}.                                         sort hhid;
 {txt}
 {com}.                                                                 save "$path/work/bottom_basket.dta", replace;
-{txt}file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/bottom_basket.dta saved
+{txt}file /home/bjvca/data/data/GAP/Haruna/work/bottom_basket.dta saved
 
 {com}.         restore;
 {txt}
@@ -7719,9 +8575,15 @@ the master data
 {txt}
 {com}. describe;
 
+<<<<<<< HEAD
 {txt}Contains data from {res}C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000001.tmp
 {txt}  obs:{res}        23,228                          
 {txt} vars:{res}            28                          20 Jun 2013 09:08
+=======
+{txt}Contains data from {res}/tmp/St03924.000001
+{txt}  obs:{res}        23,228                          
+{txt} vars:{res}            28                          19 Jun 2013 15:44
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 {txt} size:{res}     2,903,500                          
 {txt}{hline}
               storage  display     value
@@ -7834,7 +8696,7 @@ the master data
 {com}.         sort product spdomain;
 {txt}
 {com}. save "$path/work/price_unit_flex.dta", replace;
-{txt}file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/price_unit_flex.dta saved
+{txt}file /home/bjvca/data/data/GAP/Haruna/work/price_unit_flex.dta saved
 
 {com}. ****************************************************************************************
 > * 110_price_unit_flex.do                (end)
@@ -7844,7 +8706,7 @@ the master data
 {com}. 
 {txt}end of do-file
 
-{com}.                                 do "$path/new/120_povline_food_flex_original.do"        /* Flexible basket: Poverty line */
+{com}. do "$path/new/120_povline_food_flex_original.do"
 {txt}
 {com}. *global path "C:/user/gapp"
 . clear all
@@ -7857,9 +8719,13 @@ the master data
 {com}. log using "$path/rep/120_povline_food_flex.log", replace
 {txt}{.-}
       name:  {res}<unnamed>
-       {txt}log:  {res}C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/rep/120_povline_food_flex.log
+       {txt}log:  {res}/home/bjvca/data/data/GAP/Haruna/rep/120_povline_food_flex.log
   {txt}log type:  {res}text
+<<<<<<< HEAD
  {txt}opened on:  {res}20 Jun 2013, 09:08:41
+=======
+ {txt}opened on:  {res}19 Jun 2013, 15:44:41
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 {txt}
 {com}. clear
 {txt}
@@ -8138,7 +9004,7 @@ the master data
 {com}.         keep spdomain povline_f_flex;
 {txt}
 {com}. save "$path/work/povline_food_flex.dta", replace;
-{txt}file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/povline_food_flex.dta saved
+{txt}file /home/bjvca/data/data/GAP/Haruna/work/povline_food_flex.dta saved
 
 {com}. /*
 > * To be used in 140_iterate.do;
@@ -8152,15 +9018,20 @@ the master data
 > **************************************************************************;
 . log close;
       {txt}name:  {res}<unnamed>
-       {txt}log:  {res}C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/rep/120_povline_food_flex.log
+       {txt}log:  {res}/home/bjvca/data/data/GAP/Haruna/rep/120_povline_food_flex.log
   {txt}log type:  {res}text
+<<<<<<< HEAD
  {txt}closed on:  {res}20 Jun 2013, 09:08:41
+=======
+ {txt}closed on:  {res}19 Jun 2013, 15:44:41
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 {txt}{.-}
 
 {com}. 
 {txt}end of do-file
 
-{com}.                                 do "$path/new/130_povmeas_flex.do"              /* Flexible basket: Poverty rates */
+{com}. 
+. do "$path/new/130_povmeas_flex.do"
 {txt}
 {com}. *global path "C:/user/gapp"
 . clear all
@@ -8173,9 +9044,13 @@ the master data
 {com}. log using "$path/rep/130_povmeas_flex.log", replace
 {txt}{.-}
       name:  {res}<unnamed>
-       {txt}log:  {res}C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/rep/130_povmeas_flex.log
+       {txt}log:  {res}/home/bjvca/data/data/GAP/Haruna/rep/130_povmeas_flex.log
   {txt}log type:  {res}text
+<<<<<<< HEAD
  {txt}opened on:  {res}20 Jun 2013, 09:08:41
+=======
+ {txt}opened on:  {res}19 Jun 2013, 15:44:59
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 {txt}
 {com}. clear
 {txt}
@@ -8253,8 +9128,13 @@ calculation {c |}
 {com}.         tempfile spdomainreg_tpi;
 {txt}
 {com}. save `spdomainreg_tpi', replace;
+<<<<<<< HEAD
 {txt}(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000001.tmp not found)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000001.tmp saved
+=======
+{txt}(note: file /tmp/St03924.000001 not found)
+file /tmp/St03924.000001 saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 
 {com}. use "$path/work/conpc.dta", clear;
 {txt}
@@ -8348,8 +9228,13 @@ the master data
 .         tempfile contpi;
 {txt}
 {com}. save `contpi', replace;
+<<<<<<< HEAD
 {txt}(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp not found)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
+=======
+{txt}(note: file /tmp/St03924.000002 not found)
+file /tmp/St03924.000002 saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 
 {com}. **************************************************************************
 > * Calculate non-food expenditure for HH around the food poverty line
@@ -8407,8 +9292,13 @@ the master data
 {com}.                 sort spdomain;
 {txt}
 {com}.                 save `znf', replace;
+<<<<<<< HEAD
 {txt}(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000004.tmp not found)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000004.tmp saved
+=======
+{txt}(note: file /tmp/St03924.000004 not found)
+file /tmp/St03924.000004 saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 
 {com}.                 tab spdomain;
 
@@ -8460,7 +9350,7 @@ the master data
 {com}.         sort spdomain;
 {txt}
 {com}. save "$path/work/povlines.dta", replace;
-{txt}file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/povlines.dta saved
+{txt}file /home/bjvca/data/data/GAP/Haruna/work/povlines.dta saved
 
 {com}. **************************************************************************;
 . * Create spatial price index, based on the total poverty line, with
@@ -8482,7 +9372,7 @@ the master data
 {p 0 4 2}
 variable{txt} spdomain
 does not uniquely identify observations in
-C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/povlines.dta
+/home/bjvca/data/data/GAP/Haruna/work/povlines.dta
 {p_end}
 (label lspdomain already defined)
 (label lsurvquar already defined)
@@ -8867,12 +9757,12 @@ C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/povlines.dta
 {com}.         sort hhid;
 {txt}
 {com}. save "$path/work/cons_real.dta" , replace;
-{txt}file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/cons_real.dta saved
+{txt}file /home/bjvca/data/data/GAP/Haruna/work/cons_real.dta saved
 
 {com}.         collapse  (mean) h_flex pg_flex spg_flex [aw=hhweight*hhsize];
 {txt}
 {com}. save "$path/work/povmeas.dta", replace;
-{txt}file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/povmeas.dta saved
+{txt}file /home/bjvca/data/data/GAP/Haruna/work/povmeas.dta saved
 
 {com}. *** HARUNA, the file Povmeas.dta gives the headcount poverty rates using flexible food bundle without inflicting reveales preferences
 > *** therefore specifications in line 226 of this do file have been changed repeatedly to generate these counts for particular
@@ -8882,15 +9772,19 @@ C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/povlines.dta
 > **************************************************************************;
 . log close;
       {txt}name:  {res}<unnamed>
-       {txt}log:  {res}C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/rep/130_povmeas_flex.log
+       {txt}log:  {res}/home/bjvca/data/data/GAP/Haruna/rep/130_povmeas_flex.log
   {txt}log type:  {res}text
+<<<<<<< HEAD
  {txt}closed on:  {res}20 Jun 2013, 09:08:41
+=======
+ {txt}closed on:  {res}19 Jun 2013, 15:45:00
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 {txt}{.-}
 
 {com}. 
 {txt}end of do-file
 
-{com}.                                 do "$path/new/140_iterate_bjorn.do" $it_n $bottom       /* Flexible basket: Iterations */
+{com}. do "$path/new/140_iterate_bjorn.do" $it_n $bottom
 {txt}
 {com}. *global path "C:/user/gapp"
 . clear all
@@ -8903,9 +9797,13 @@ C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/povlines.dta
 {com}. log using "$path/rep/140_iterate.log", replace
 {txt}{.-}
       name:  {res}<unnamed>
-       {txt}log:  {res}C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/rep/140_iterate.log
+       {txt}log:  {res}/home/bjvca/data/data/GAP/Haruna/rep/140_iterate.log
   {txt}log type:  {res}text
+<<<<<<< HEAD
  {txt}opened on:  {res}20 Jun 2013, 09:08:41
+=======
+ {txt}opened on:  {res}19 Jun 2013, 15:45:08
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 {txt}
 {com}. clear
 {txt}
@@ -9023,8 +9921,13 @@ the master data
 {com}.         sort hhid;
 {txt}
 {com}. save `contpi', replace;
+<<<<<<< HEAD
 {txt}(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000001.tmp not found)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000001.tmp saved
+=======
+{txt}(note: file /tmp/St03924.000001 not found)
+file /tmp/St03924.000001 saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 
 {com}. save contpi_, replace;
 {txt}file contpi_.dta saved
@@ -9568,8 +10471,13 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000001.tmp saved
 {txt}287{com}.         local lastpass = `pass';
 {txt}288{com}.         local pass = `pass' + 1;
 {txt}289{com}.         {c )-};
+<<<<<<< HEAD
 {txt}(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp not found)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
+=======
+{txt}(note: file /tmp/St03924.000002 not found)
+file /tmp/St03924.000002 saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 file cutoff.dta saved
 {p 0 4 2}
 variable{txt} one
@@ -9589,7 +10497,7 @@ the master data
 {txt}          1 {c |}{res} 3,387.8895       50.01      100.00
 {txt}{hline 12}{c +}{hline 35}
       Total {c |}{res}      6,775      100.00
-{txt}file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/relpoor_it1.dta saved
+{txt}file /home/bjvca/data/data/GAP/Haruna/work/relpoor_it1.dta saved
 {p 0 4 2}
 variable{txt} hhid
 does not uniquely identify observations in
@@ -9622,10 +10530,17 @@ the master data
 {txt}(2 missing values generated)
 {res}    2
 {txt}(2 observations deleted)
+<<<<<<< HEAD
 (note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp not found)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
 (note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000004.tmp not found)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000004.tmp saved
+=======
+(note: file /tmp/St03924.000003 not found)
+file /tmp/St03924.000003 saved
+(note: file /tmp/St03924.000004 not found)
+file /tmp/St03924.000004 saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 {p 0 4 2}
 variable{txt} spdomain
 does not uniquely identify observations in
@@ -9639,6 +10554,7 @@ the master data
       Total {c |}{res}     28,435      100.00
   134
 {txt}(134 observations deleted)
+<<<<<<< HEAD
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
 41
 41
@@ -9646,6 +10562,15 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/codes_food_basket_f
 (1458 observations deleted)
 (note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000005.tmp not found)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000005.tmp saved
+=======
+file /tmp/St03924.000003 saved
+41
+41
+file /home/bjvca/data/data/GAP/Haruna/work/codes_food_basket_flex_it1.dta saved
+(1458 observations deleted)
+(note: file /tmp/St03924.000005 not found)
+file /tmp/St03924.000005 saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 {p 0 4 2}
 variable{txt} hhid
 does not uniquely identify observations in
@@ -9660,7 +10585,11 @@ the master data
 {txt}{hline 12}{c +}{hline 35}
       Total {c |}{res}     85,403      100.00
 {txt}(99 observations deleted)
+<<<<<<< HEAD
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000005.tmp saved
+=======
+file /tmp/St03924.000005 saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 {p 0 4 2}
 variable{txt} product
 does not uniquely identify observations in
@@ -9676,8 +10605,13 @@ the master data
       Total {c |}{res}     85,307      100.00
 {txt}(10553 observations deleted)
 (0 observations deleted)
+<<<<<<< HEAD
 (note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000007.tmp not found)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000007.tmp saved
+=======
+(note: file /tmp/St03924.000007 not found)
+file /tmp/St03924.000007 saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 product was {res}float{txt} now {res}int
 {txt}unit was {res}float{txt} now {res}byte
 {txt}food_cat was {res}float{txt} now {res}byte
@@ -9745,7 +10679,7 @@ product was {res}int{txt} now {res}float
       Total {c |}{res}        188      100.00
     3
 {txt}(3 observations deleted)
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/price_unit_flex_it1.dta saved
+file /home/bjvca/data/data/GAP/Haruna/work/price_unit_flex_it1.dta saved
 (label lspdomain already defined)
 
      _merge {c |}      Freq.     Percent        Cum.
@@ -9874,8 +10808,13 @@ Summary for variables: chkcal
  {res}      115  .0000419  .0000783 -.0000514  .0001413
 {txt}{hline 14}{c BT}{hline 50}
 (115 real changes made)
+<<<<<<< HEAD
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/quan_flex_it1.dta saved
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/povline_food_flex_it1.dta saved
+=======
+file /home/bjvca/data/data/GAP/Haruna/work/quan_flex_it1.dta saved
+file /home/bjvca/data/data/GAP/Haruna/work/povline_food_flex_it1.dta saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 {p 0 4 2}
 variable{txt} spdomain
 does not uniquely identify observations in
@@ -9891,8 +10830,13 @@ the master data
       Total {c |}{res}      6,776      100.00
 {txt}(667 real changes made)
 (1 missing value generated)
+<<<<<<< HEAD
 (note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000009.tmp not found)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000009.tmp saved
+=======
+(note: file /tmp/St03924.000009 not found)
+file /tmp/St03924.000009 saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 {p 0 4 2}
 variable{txt} spdomain
 does not uniquely identify observations in
@@ -9907,7 +10851,11 @@ the master data
 {txt}{hline 12}{c +}{hline 35}
       Total {c |}{res}      6,776      100.00
 {txt}(1 missing value generated)
+<<<<<<< HEAD
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/povlines_it1.dta saved
+=======
+file /home/bjvca/data/data/GAP/Haruna/work/povlines_it1.dta saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 {p 0 4 2}
 variable{txt} spdomain
 does not uniquely identify observations in
@@ -9916,7 +10864,7 @@ the master data
 {p 0 4 2}
 variable{txt} spdomain
 does not uniquely identify observations in
-C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/povlines_it1.dta
+/home/bjvca/data/data/GAP/Haruna/work/povlines_it1.dta
 {p_end}
 (label lspdomain already defined)
 
@@ -10198,13 +11146,18 @@ C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/povlines_it1.dta
 rural was {res}float{txt} now {res}byte
 {txt}spdomain was {res}float{txt} now {res}byte
 {txt}h_flex1 was {res}float{txt} now {res}byte
-{txt}file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/cons_real_it1.dta saved
+{txt}file /home/bjvca/data/data/GAP/Haruna/work/cons_real_it1.dta saved
 
     Variable {c |}     Obs      Weight        Mean   Std. Dev.       Min        Max
 {hline 13}{c +}{hline 65}
 {space 5}h_flex1 {c |}{res}    6775   200636622    24.71624   43.13938          0        100
+<<<<<<< HEAD
 {txt}file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/foodshares_it1.dta saved
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
+=======
+{txt}file /home/bjvca/data/data/GAP/Haruna/work/foodshares_it1.dta saved
+file /tmp/St03924.000002 saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 {p 0 4 2}
 variable{txt} one
 does not uniquely identify observations in
@@ -10223,7 +11176,7 @@ the master data
 {txt}          1 {c |}{res} 3,388.2181       50.01      100.00
 {txt}{hline 12}{c +}{hline 35}
       Total {c |}{res}      6,775      100.00
-{txt}file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/relpoor_it2.dta saved
+{txt}file /home/bjvca/data/data/GAP/Haruna/work/relpoor_it2.dta saved
 {p 0 4 2}
 variable{txt} hhid
 does not uniquely identify observations in
@@ -10256,10 +11209,17 @@ the master data
 {txt}(2 missing values generated)
 {res}    2
 {txt}(2 observations deleted)
+<<<<<<< HEAD
 (note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000a.tmp not found)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000a.tmp saved
 (note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000b.tmp not found)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000b.tmp saved
+=======
+(note: file /tmp/St03924.00000a not found)
+file /tmp/St03924.00000a saved
+(note: file /tmp/St03924.00000b not found)
+file /tmp/St03924.00000b saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 {p 0 4 2}
 variable{txt} spdomain
 does not uniquely identify observations in
@@ -10273,6 +11233,7 @@ the master data
       Total {c |}{res}     28,347      100.00
   137
 {txt}(137 observations deleted)
+<<<<<<< HEAD
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000a.tmp saved
 41
 41
@@ -10280,6 +11241,15 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/codes_food_basket_f
 (1458 observations deleted)
 (note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000c.tmp not found)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000c.tmp saved
+=======
+file /tmp/St03924.00000a saved
+41
+41
+file /home/bjvca/data/data/GAP/Haruna/work/codes_food_basket_flex_it2.dta saved
+(1458 observations deleted)
+(note: file /tmp/St03924.00000c not found)
+file /tmp/St03924.00000c saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 {p 0 4 2}
 variable{txt} hhid
 does not uniquely identify observations in
@@ -10294,7 +11264,11 @@ the master data
 {txt}{hline 12}{c +}{hline 35}
       Total {c |}{res}     85,403      100.00
 {txt}(99 observations deleted)
+<<<<<<< HEAD
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000c.tmp saved
+=======
+file /tmp/St03924.00000c saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 {p 0 4 2}
 variable{txt} product
 does not uniquely identify observations in
@@ -10310,8 +11284,13 @@ the master data
       Total {c |}{res}     85,307      100.00
 {txt}(10553 observations deleted)
 (0 observations deleted)
+<<<<<<< HEAD
 (note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000e.tmp not found)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000e.tmp saved
+=======
+(note: file /tmp/St03924.00000e not found)
+file /tmp/St03924.00000e saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 product was {res}float{txt} now {res}int
 {txt}unit was {res}float{txt} now {res}byte
 {txt}food_cat was {res}float{txt} now {res}byte
@@ -10378,7 +11357,7 @@ product was {res}int{txt} now {res}float
       Total {c |}{res}        189      100.00
     3
 {txt}(3 observations deleted)
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/price_unit_flex_it2.dta saved
+file /home/bjvca/data/data/GAP/Haruna/work/price_unit_flex_it2.dta saved
 (label lspdomain already defined)
 
      _merge {c |}      Freq.     Percent        Cum.
@@ -10507,8 +11486,13 @@ Summary for variables: chkcal
  {res}      121 -.0001182  .0000961 -.0002698  .0000257
 {txt}{hline 14}{c BT}{hline 50}
 (121 real changes made)
+<<<<<<< HEAD
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/quan_flex_it2.dta saved
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/povline_food_flex_it2.dta saved
+=======
+file /home/bjvca/data/data/GAP/Haruna/work/quan_flex_it2.dta saved
+file /home/bjvca/data/data/GAP/Haruna/work/povline_food_flex_it2.dta saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 {p 0 4 2}
 variable{txt} spdomain
 does not uniquely identify observations in
@@ -10524,8 +11508,13 @@ the master data
       Total {c |}{res}      6,776      100.00
 {txt}(664 real changes made)
 (1 missing value generated)
+<<<<<<< HEAD
 (note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000g.tmp not found)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000g.tmp saved
+=======
+(note: file /tmp/St03924.00000g not found)
+file /tmp/St03924.00000g saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 {p 0 4 2}
 variable{txt} spdomain
 does not uniquely identify observations in
@@ -10540,7 +11529,11 @@ the master data
 {txt}{hline 12}{c +}{hline 35}
       Total {c |}{res}      6,776      100.00
 {txt}(1 missing value generated)
+<<<<<<< HEAD
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/povlines_it2.dta saved
+=======
+file /home/bjvca/data/data/GAP/Haruna/work/povlines_it2.dta saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 {p 0 4 2}
 variable{txt} spdomain
 does not uniquely identify observations in
@@ -10549,7 +11542,7 @@ the master data
 {p 0 4 2}
 variable{txt} spdomain
 does not uniquely identify observations in
-C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/povlines_it2.dta
+/home/bjvca/data/data/GAP/Haruna/work/povlines_it2.dta
 {p_end}
 (label lspdomain already defined)
 
@@ -10831,13 +11824,18 @@ C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/povlines_it2.dta
 rural was {res}float{txt} now {res}byte
 {txt}spdomain was {res}float{txt} now {res}byte
 {txt}h_flex2 was {res}float{txt} now {res}byte
-{txt}file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/cons_real_it2.dta saved
+{txt}file /home/bjvca/data/data/GAP/Haruna/work/cons_real_it2.dta saved
 
     Variable {c |}     Obs      Weight        Mean   Std. Dev.       Min        Max
 {hline 13}{c +}{hline 65}
 {space 5}h_flex2 {c |}{res}    6775   200636622    24.60057   43.07137          0        100
+<<<<<<< HEAD
 {txt}file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/foodshares_it2.dta saved
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
+=======
+{txt}file /home/bjvca/data/data/GAP/Haruna/work/foodshares_it2.dta saved
+file /tmp/St03924.000002 saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 {p 0 4 2}
 variable{txt} one
 does not uniquely identify observations in
@@ -10856,7 +11854,7 @@ the master data
 {txt}          1 {c |}{res} 3,387.6946       50.00      100.00
 {txt}{hline 12}{c +}{hline 35}
       Total {c |}{res}      6,775      100.00
-{txt}file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/relpoor_it3.dta saved
+{txt}file /home/bjvca/data/data/GAP/Haruna/work/relpoor_it3.dta saved
 {p 0 4 2}
 variable{txt} hhid
 does not uniquely identify observations in
@@ -10889,10 +11887,17 @@ the master data
 {txt}(2 missing values generated)
 {res}    2
 {txt}(2 observations deleted)
+<<<<<<< HEAD
 (note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000h.tmp not found)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000h.tmp saved
 (note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000i.tmp not found)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000i.tmp saved
+=======
+(note: file /tmp/St03924.00000h not found)
+file /tmp/St03924.00000h saved
+(note: file /tmp/St03924.00000i not found)
+file /tmp/St03924.00000i saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 {p 0 4 2}
 variable{txt} spdomain
 does not uniquely identify observations in
@@ -10906,6 +11911,7 @@ the master data
       Total {c |}{res}     28,457      100.00
   135
 {txt}(135 observations deleted)
+<<<<<<< HEAD
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000h.tmp saved
 41
 41
@@ -10913,6 +11919,15 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/codes_food_basket_f
 (1458 observations deleted)
 (note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000j.tmp not found)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000j.tmp saved
+=======
+file /tmp/St03924.00000h saved
+41
+41
+file /home/bjvca/data/data/GAP/Haruna/work/codes_food_basket_flex_it3.dta saved
+(1458 observations deleted)
+(note: file /tmp/St03924.00000j not found)
+file /tmp/St03924.00000j saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 {p 0 4 2}
 variable{txt} hhid
 does not uniquely identify observations in
@@ -10927,7 +11942,11 @@ the master data
 {txt}{hline 12}{c +}{hline 35}
       Total {c |}{res}     85,403      100.00
 {txt}(99 observations deleted)
+<<<<<<< HEAD
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000j.tmp saved
+=======
+file /tmp/St03924.00000j saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 {p 0 4 2}
 variable{txt} product
 does not uniquely identify observations in
@@ -10943,8 +11962,13 @@ the master data
       Total {c |}{res}     85,307      100.00
 {txt}(10553 observations deleted)
 (0 observations deleted)
+<<<<<<< HEAD
 (note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000l.tmp not found)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000l.tmp saved
+=======
+(note: file /tmp/St03924.00000l not found)
+file /tmp/St03924.00000l saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 product was {res}float{txt} now {res}int
 {txt}unit was {res}float{txt} now {res}byte
 {txt}food_cat was {res}float{txt} now {res}byte
@@ -11011,7 +12035,7 @@ product was {res}int{txt} now {res}float
       Total {c |}{res}        189      100.00
     3
 {txt}(3 observations deleted)
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/price_unit_flex_it3.dta saved
+file /home/bjvca/data/data/GAP/Haruna/work/price_unit_flex_it3.dta saved
 (label lspdomain already defined)
 
      _merge {c |}      Freq.     Percent        Cum.
@@ -11140,8 +12164,13 @@ Summary for variables: chkcal
  {res}      122  .0000494  .0001135 -.0001156  .0002056
 {txt}{hline 14}{c BT}{hline 50}
 (122 real changes made)
+<<<<<<< HEAD
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/quan_flex_it3.dta saved
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/povline_food_flex_it3.dta saved
+=======
+file /home/bjvca/data/data/GAP/Haruna/work/quan_flex_it3.dta saved
+file /home/bjvca/data/data/GAP/Haruna/work/povline_food_flex_it3.dta saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 {p 0 4 2}
 variable{txt} spdomain
 does not uniquely identify observations in
@@ -11157,8 +12186,13 @@ the master data
       Total {c |}{res}      6,776      100.00
 {txt}(674 real changes made)
 (1 missing value generated)
+<<<<<<< HEAD
 (note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000n.tmp not found)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000n.tmp saved
+=======
+(note: file /tmp/St03924.00000n not found)
+file /tmp/St03924.00000n saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 {p 0 4 2}
 variable{txt} spdomain
 does not uniquely identify observations in
@@ -11173,7 +12207,11 @@ the master data
 {txt}{hline 12}{c +}{hline 35}
       Total {c |}{res}      6,776      100.00
 {txt}(1 missing value generated)
+<<<<<<< HEAD
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/povlines_it3.dta saved
+=======
+file /home/bjvca/data/data/GAP/Haruna/work/povlines_it3.dta saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 {p 0 4 2}
 variable{txt} spdomain
 does not uniquely identify observations in
@@ -11182,7 +12220,7 @@ the master data
 {p 0 4 2}
 variable{txt} spdomain
 does not uniquely identify observations in
-C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/povlines_it3.dta
+/home/bjvca/data/data/GAP/Haruna/work/povlines_it3.dta
 {p_end}
 (label lspdomain already defined)
 
@@ -11464,13 +12502,18 @@ C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/povlines_it3.dta
 rural was {res}float{txt} now {res}byte
 {txt}spdomain was {res}float{txt} now {res}byte
 {txt}h_flex3 was {res}float{txt} now {res}byte
-{txt}file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/cons_real_it3.dta saved
+{txt}file /home/bjvca/data/data/GAP/Haruna/work/cons_real_it3.dta saved
 
     Variable {c |}     Obs      Weight        Mean   Std. Dev.       Min        Max
 {hline 13}{c +}{hline 65}
 {space 5}h_flex3 {c |}{res}    6775   200636622    24.67302   43.11402          0        100
+<<<<<<< HEAD
 {txt}file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/foodshares_it3.dta saved
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
+=======
+{txt}file /home/bjvca/data/data/GAP/Haruna/work/foodshares_it3.dta saved
+file /tmp/St03924.000002 saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 {p 0 4 2}
 variable{txt} one
 does not uniquely identify observations in
@@ -11489,7 +12532,7 @@ the master data
 {txt}          1 {c |}{res} 3,396.0783       50.13      100.00
 {txt}{hline 12}{c +}{hline 35}
       Total {c |}{res}      6,775      100.00
-{txt}file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/relpoor_it4.dta saved
+{txt}file /home/bjvca/data/data/GAP/Haruna/work/relpoor_it4.dta saved
 {p 0 4 2}
 variable{txt} hhid
 does not uniquely identify observations in
@@ -11522,10 +12565,17 @@ the master data
 {txt}(2 missing values generated)
 {res}    2
 {txt}(2 observations deleted)
+<<<<<<< HEAD
 (note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000o.tmp not found)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000o.tmp saved
 (note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000p.tmp not found)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000p.tmp saved
+=======
+(note: file /tmp/St03924.00000o not found)
+file /tmp/St03924.00000o saved
+(note: file /tmp/St03924.00000p not found)
+file /tmp/St03924.00000p saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 {p 0 4 2}
 variable{txt} spdomain
 does not uniquely identify observations in
@@ -11539,6 +12589,7 @@ the master data
       Total {c |}{res}     28,410      100.00
   136
 {txt}(136 observations deleted)
+<<<<<<< HEAD
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000o.tmp saved
 42
 42
@@ -11546,6 +12597,15 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/codes_food_basket_f
 (1458 observations deleted)
 (note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000q.tmp not found)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000q.tmp saved
+=======
+file /tmp/St03924.00000o saved
+42
+42
+file /home/bjvca/data/data/GAP/Haruna/work/codes_food_basket_flex_it4.dta saved
+(1458 observations deleted)
+(note: file /tmp/St03924.00000q not found)
+file /tmp/St03924.00000q saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 {p 0 4 2}
 variable{txt} hhid
 does not uniquely identify observations in
@@ -11560,7 +12620,11 @@ the master data
 {txt}{hline 12}{c +}{hline 35}
       Total {c |}{res}     85,403      100.00
 {txt}(99 observations deleted)
+<<<<<<< HEAD
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000q.tmp saved
+=======
+file /tmp/St03924.00000q saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 {p 0 4 2}
 variable{txt} product
 does not uniquely identify observations in
@@ -11576,8 +12640,13 @@ the master data
       Total {c |}{res}     85,307      100.00
 {txt}(10404 observations deleted)
 (0 observations deleted)
+<<<<<<< HEAD
 (note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000s.tmp not found)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000s.tmp saved
+=======
+(note: file /tmp/St03924.00000s not found)
+file /tmp/St03924.00000s saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 product was {res}float{txt} now {res}int
 {txt}unit was {res}float{txt} now {res}byte
 {txt}food_cat was {res}float{txt} now {res}byte
@@ -11644,7 +12713,7 @@ product was {res}int{txt} now {res}float
       Total {c |}{res}        193      100.00
     3
 {txt}(3 observations deleted)
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/price_unit_flex_it4.dta saved
+file /home/bjvca/data/data/GAP/Haruna/work/price_unit_flex_it4.dta saved
 (label lspdomain already defined)
 
      _merge {c |}      Freq.     Percent        Cum.
@@ -11773,8 +12842,13 @@ Summary for variables: chkcal
  {res}      122 -.0000622  .0000602 -.0001413  .0000257
 {txt}{hline 14}{c BT}{hline 50}
 (122 real changes made)
+<<<<<<< HEAD
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/quan_flex_it4.dta saved
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/povline_food_flex_it4.dta saved
+=======
+file /home/bjvca/data/data/GAP/Haruna/work/quan_flex_it4.dta saved
+file /home/bjvca/data/data/GAP/Haruna/work/povline_food_flex_it4.dta saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 {p 0 4 2}
 variable{txt} spdomain
 does not uniquely identify observations in
@@ -11790,8 +12864,13 @@ the master data
       Total {c |}{res}      6,776      100.00
 {txt}(664 real changes made)
 (1 missing value generated)
+<<<<<<< HEAD
 (note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000u.tmp not found)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000u.tmp saved
+=======
+(note: file /tmp/St03924.00000u not found)
+file /tmp/St03924.00000u saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 {p 0 4 2}
 variable{txt} spdomain
 does not uniquely identify observations in
@@ -11806,7 +12885,11 @@ the master data
 {txt}{hline 12}{c +}{hline 35}
       Total {c |}{res}      6,776      100.00
 {txt}(1 missing value generated)
+<<<<<<< HEAD
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/povlines_it4.dta saved
+=======
+file /home/bjvca/data/data/GAP/Haruna/work/povlines_it4.dta saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 {p 0 4 2}
 variable{txt} spdomain
 does not uniquely identify observations in
@@ -11815,7 +12898,7 @@ the master data
 {p 0 4 2}
 variable{txt} spdomain
 does not uniquely identify observations in
-C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/povlines_it4.dta
+/home/bjvca/data/data/GAP/Haruna/work/povlines_it4.dta
 {p_end}
 (label lspdomain already defined)
 
@@ -12097,13 +13180,18 @@ C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/povlines_it4.dta
 rural was {res}float{txt} now {res}byte
 {txt}spdomain was {res}float{txt} now {res}byte
 {txt}h_flex4 was {res}float{txt} now {res}byte
-{txt}file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/cons_real_it4.dta saved
+{txt}file /home/bjvca/data/data/GAP/Haruna/work/cons_real_it4.dta saved
 
     Variable {c |}     Obs      Weight        Mean   Std. Dev.       Min        Max
 {hline 13}{c +}{hline 65}
 {space 5}h_flex4 {c |}{res}    6775   200636622    24.61746   43.08133          0        100
+<<<<<<< HEAD
 {txt}file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/foodshares_it4.dta saved
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
+=======
+{txt}file /home/bjvca/data/data/GAP/Haruna/work/foodshares_it4.dta saved
+file /tmp/St03924.000002 saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 {p 0 4 2}
 variable{txt} one
 does not uniquely identify observations in
@@ -12122,7 +13210,7 @@ the master data
 {txt}          1 {c |}{res} 3,389.3189       50.03      100.00
 {txt}{hline 12}{c +}{hline 35}
       Total {c |}{res}      6,775      100.00
-{txt}file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/relpoor_it5.dta saved
+{txt}file /home/bjvca/data/data/GAP/Haruna/work/relpoor_it5.dta saved
 {p 0 4 2}
 variable{txt} hhid
 does not uniquely identify observations in
@@ -12155,10 +13243,17 @@ the master data
 {txt}(2 missing values generated)
 {res}    2
 {txt}(2 observations deleted)
+<<<<<<< HEAD
 (note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000v.tmp not found)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000v.tmp saved
 (note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000w.tmp not found)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000w.tmp saved
+=======
+(note: file /tmp/St03924.00000v not found)
+file /tmp/St03924.00000v saved
+(note: file /tmp/St03924.00000w not found)
+file /tmp/St03924.00000w saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 {p 0 4 2}
 variable{txt} spdomain
 does not uniquely identify observations in
@@ -12172,6 +13267,7 @@ the master data
       Total {c |}{res}     28,445      100.00
   135
 {txt}(135 observations deleted)
+<<<<<<< HEAD
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000v.tmp saved
 41
 41
@@ -12179,6 +13275,15 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/codes_food_basket_f
 (1458 observations deleted)
 (note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000x.tmp not found)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000x.tmp saved
+=======
+file /tmp/St03924.00000v saved
+41
+41
+file /home/bjvca/data/data/GAP/Haruna/work/codes_food_basket_flex_it5.dta saved
+(1458 observations deleted)
+(note: file /tmp/St03924.00000x not found)
+file /tmp/St03924.00000x saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 {p 0 4 2}
 variable{txt} hhid
 does not uniquely identify observations in
@@ -12193,7 +13298,11 @@ the master data
 {txt}{hline 12}{c +}{hline 35}
       Total {c |}{res}     85,403      100.00
 {txt}(99 observations deleted)
+<<<<<<< HEAD
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000x.tmp saved
+=======
+file /tmp/St03924.00000x saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 {p 0 4 2}
 variable{txt} product
 does not uniquely identify observations in
@@ -12209,8 +13318,13 @@ the master data
       Total {c |}{res}     85,307      100.00
 {txt}(10553 observations deleted)
 (0 observations deleted)
+<<<<<<< HEAD
 (note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000011.tmp not found)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000011.tmp saved
+=======
+(note: file /tmp/St03924.000011 not found)
+file /tmp/St03924.000011 saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 product was {res}float{txt} now {res}int
 {txt}unit was {res}float{txt} now {res}byte
 {txt}food_cat was {res}float{txt} now {res}byte
@@ -12277,7 +13391,7 @@ product was {res}int{txt} now {res}float
       Total {c |}{res}        189      100.00
     3
 {txt}(3 observations deleted)
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/price_unit_flex_it5.dta saved
+file /home/bjvca/data/data/GAP/Haruna/work/price_unit_flex_it5.dta saved
 (label lspdomain already defined)
 
      _merge {c |}      Freq.     Percent        Cum.
@@ -12406,8 +13520,13 @@ Summary for variables: chkcal
  {res}      121  .0000411  .0000764 -.0000514  .0001413
 {txt}{hline 14}{c BT}{hline 50}
 (121 real changes made)
+<<<<<<< HEAD
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/quan_flex_it5.dta saved
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/povline_food_flex_it5.dta saved
+=======
+file /home/bjvca/data/data/GAP/Haruna/work/quan_flex_it5.dta saved
+file /home/bjvca/data/data/GAP/Haruna/work/povline_food_flex_it5.dta saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 {p 0 4 2}
 variable{txt} spdomain
 does not uniquely identify observations in
@@ -12423,8 +13542,13 @@ the master data
       Total {c |}{res}      6,776      100.00
 {txt}(671 real changes made)
 (1 missing value generated)
+<<<<<<< HEAD
 (note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000013.tmp not found)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000013.tmp saved
+=======
+(note: file /tmp/St03924.000013 not found)
+file /tmp/St03924.000013 saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 {p 0 4 2}
 variable{txt} spdomain
 does not uniquely identify observations in
@@ -12439,7 +13563,11 @@ the master data
 {txt}{hline 12}{c +}{hline 35}
       Total {c |}{res}      6,776      100.00
 {txt}(1 missing value generated)
+<<<<<<< HEAD
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/povlines_it5.dta saved
+=======
+file /home/bjvca/data/data/GAP/Haruna/work/povlines_it5.dta saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 {p 0 4 2}
 variable{txt} spdomain
 does not uniquely identify observations in
@@ -12448,7 +13576,7 @@ the master data
 {p 0 4 2}
 variable{txt} spdomain
 does not uniquely identify observations in
-C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/povlines_it5.dta
+/home/bjvca/data/data/GAP/Haruna/work/povlines_it5.dta
 {p_end}
 (label lspdomain already defined)
 
@@ -12730,12 +13858,16 @@ C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/povlines_it5.dta
 rural was {res}float{txt} now {res}byte
 {txt}spdomain was {res}float{txt} now {res}byte
 {txt}h_flex5 was {res}float{txt} now {res}byte
-{txt}file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/cons_real_it5.dta saved
+{txt}file /home/bjvca/data/data/GAP/Haruna/work/cons_real_it5.dta saved
 
     Variable {c |}     Obs      Weight        Mean   Std. Dev.       Min        Max
 {hline 13}{c +}{hline 65}
 {space 5}h_flex5 {c |}{res}    6775   200636622    24.69521   43.12704          0        100
+<<<<<<< HEAD
 {txt}file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/foodshares_it5.dta saved
+=======
+{txt}file /home/bjvca/data/data/GAP/Haruna/work/foodshares_it5.dta saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 
 {com}. **************************************************************************
 > * Send results to one big csv-file
@@ -12753,7 +13885,11 @@ rural was {res}float{txt} now {res}byte
 {com}. tempfile nat;
 {txt}
 {com}. save `nat';
+<<<<<<< HEAD
 {txt}file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000014.tmp saved
+=======
+{txt}file /tmp/St03924.000014 saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 
 {com}.         use "$path/work/cons_real_it`lastpass'.dta", clear ;
 {txt}
@@ -12766,7 +13902,11 @@ rural was {res}float{txt} now {res}byte
 {com}. tempfile rur;
 {txt}
 {com}. save `rur';
+<<<<<<< HEAD
 {txt}file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000015.tmp saved
+=======
+{txt}file /tmp/St03924.000015 saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 
 {com}. use "$path/work/cons_real_it`lastpass'.dta", clear ;
 {txt}
@@ -12779,7 +13919,11 @@ rural was {res}float{txt} now {res}byte
 {com}. tempfile new;
 {txt}
 {com}. save `new';
+<<<<<<< HEAD
 {txt}file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000016.tmp saved
+=======
+{txt}file /tmp/St03924.000016 saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 
 {com}. use "$path/work/cons_real_it`lastpass'.dta", clear ;
 {txt}
@@ -12792,7 +13936,11 @@ rural was {res}float{txt} now {res}byte
 {com}. tempfile rtp;
 {txt}
 {com}. save `rtp';
+<<<<<<< HEAD
 {txt}file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000017.tmp saved
+=======
+{txt}file /tmp/St03924.000017 saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 
 {com}. use "$path/work/cons_real_it`lastpass'.dta", clear ;
 {txt}
@@ -12805,7 +13953,11 @@ rural was {res}float{txt} now {res}byte
 {com}. tempfile str;
 {txt}
 {com}. save `str';
+<<<<<<< HEAD
 {txt}file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000018.tmp saved
+=======
+{txt}file /tmp/St03924.000018 saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 
 {com}. use "$path/work/cons_real_it`lastpass'.dta", clear ;
 {txt}
@@ -12818,7 +13970,11 @@ rural was {res}float{txt} now {res}byte
 {com}. tempfile r13;
 {txt}
 {com}. save `r13';
+<<<<<<< HEAD
 {txt}file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000019.tmp saved
+=======
+{txt}file /tmp/St03924.000019 saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 
 {com}. clear;
 {txt}
@@ -12830,7 +13986,11 @@ rural was {res}float{txt} now {res}byte
 {com}. tempfile one;
 {txt}
 {com}. save `one';
+<<<<<<< HEAD
 {txt}file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00001a.tmp saved
+=======
+{txt}file /tmp/St03924.00001a saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 
 {com}. use          `nat';
 {txt}
@@ -12876,7 +14036,11 @@ rural was {res}float{txt} now {res}byte
 {com}. tempfile converg
 {txt}
 {com}. save `converg'
+<<<<<<< HEAD
 {txt}file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00001b.tmp saved
+=======
+{txt}file /tmp/St03924.00001b saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 
 {com}. 
 . forvalues X = 1/`maxit' {c -(}
@@ -12893,6 +14057,7 @@ rural was {res}float{txt} now {res}byte
 {txt} 11{com}.                         {c )-}
 {txt} 12{com}.         save `converg', replace
 {txt} 13{com}.         {c )-}
+<<<<<<< HEAD
 {txt}file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00001b.tmp saved
 (label STRA already defined)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00001b.tmp saved
@@ -12902,6 +14067,17 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00001b.tmp saved
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00001b.tmp saved
 (label STRA already defined)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00001b.tmp saved
+=======
+{txt}file /tmp/St03924.00001b saved
+(label STRA already defined)
+file /tmp/St03924.00001b saved
+(label STRA already defined)
+file /tmp/St03924.00001b saved
+(label STRA already defined)
+file /tmp/St03924.00001b saved
+(label STRA already defined)
+file /tmp/St03924.00001b saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 
 {com}. 
 . use `converg', clear
@@ -12920,7 +14096,7 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00001b.tmp saved
 . twoway (connected h_flex iteration), by(, title(Convergence graph: Poverty rate. %) subtitle(After iterative procedure)) by(strata)
 {res}{txt}
 {com}. graph export "$path/work/converge_pov_rate.tif", replace
-{txt}(file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/converge_pov_rate.tif written in TIFF format)
+{txt}(file /home/bjvca/data/data/GAP/Haruna/work/converge_pov_rate.tif written in TIFF format)
 
 {com}. 
 . sort strata iteration
@@ -13015,12 +14191,83 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00001b.tmp saved
 {com}. 
 {txt}end of do-file
 
-{com}.                                 
-. $no_temp_rev    do "$path/new/150_price_unit_fix.do"    /* Fixed basket: Prices */
+{com}. $no_temp_revdo "$path/new/150_price_unit_fix.do"
+{err}unrecognized command:  "/home/bjvca/data/data/GAP/Harun invalid command name
+{txt}{search r(199):r(199);}
+
+{com}. do "$path/new/150_price_unit_fix.do"
 {txt}
-{com}. $no_temp_rev    do "$path/new/160_food_basket_fix.do"   /* Fixed food basket */
+{com}. *global path "C:\user\gapp"
+. clear all
 {txt}
-{com}.                                 do "$path/new/170_pref_r_price_bjorn.do"                /* Revealed preference tests */
+{com}. set mem 999m
+{txt}
+{com}. 
+. cap log close
+{txt}
+{com}. log using "$path\rep\150_price_unit_fix.log", replace
+{txt}(note: file /home/bjvca/data/data/GAP/Haruna\rep\150_price_unit_fix.log not found)
+{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/home/bjvca/data/data/GAP/Haruna\rep\150_price_unit_fix.log
+  {txt}log type:  {res}text
+ {txt}opened on:  {res}19 Jun 2013, 15:45:52
+{txt}
+{com}. clear
+{txt}
+{com}. set more off
+{txt}
+{com}. #delimit ;
+{txt}delimiter now ;
+{com}. ****************************************************************************************
+> * 150_price_unit_fix.do (start)
+> *
+> * Purpose: This file calculates present unit prices for goods in the fixed food basket
+> *          from the previous survey (year = t-1)
+> *
+> * So this do file creates a price_unit_fix.dta database with the unit prices of the goods
+> * of the fixed food basket (from last survey) in order to determine the fixed poverty
+> * lines per domain (region). It uses the work\daily.dta and work\own.dta file and try
+> * to draw unit prices by: sum of values and sum of quantities
+> *
+> * Generate price_unit, dividing values by quantity in each region.
+> * But for some goods like cereals, meats, beans and other beans the unit price
+> * will be obtained by an average. For the other with unmatched codes we try to 
+> * use their respective product codes in daily.
+> ****************************************************************************************;
+. /*
+> This file uses:
+>                 work\daily.dta
+>                 work\own.dta
+>                 in\match_t1_t2.dta
+>                 work\temp_index_reg_tpi.dta
+>                 work\bottom_basket.dta
+> 
+> This file creates:
+>             work\match_t1_t2.dta
+>             work\price_unit.dta
+> */
+> 
+> 
+> 
+> *global match_t1_t2 "$path\in\match_t1_t2.dta";
+. *global match_t1_t2 "$path\in\match96_02_iof.dta";
+. *global product        "codigo";
+. *global product_t1     "codigo96";
+. **************************************************************************************;
+. * Create sorted data set with daily and own and the matched codes;
+. **************************************************************************************;
+. use "$path/in/cons_cod_trans.dta", clear;
+{txt}
+{com}. drop if quantityd==0 ;
+{err}quantityd not found
+{txt}{search r(111):r(111);}
+
+end of do-file
+
+{search r(111):r(111);}
+
+{com}. do "$path/new/170_pref_r_price_bjorn.do"
 {txt}
 {com}. *global path "C:/user/gapp"
 . clear all
@@ -13033,9 +14280,13 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00001b.tmp saved
 {com}. log using "$path/rep/170_pref_r_price.log", replace
 {txt}{.-}
       name:  {res}<unnamed>
-       {txt}log:  {res}C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/rep/170_pref_r_price.log
+       {txt}log:  {res}/home/bjvca/data/data/GAP/Haruna/rep/170_pref_r_price.log
   {txt}log type:  {res}text
+<<<<<<< HEAD
  {txt}opened on:  {res}20 Jun 2013, 09:08:57
+=======
+ {txt}opened on:  {res}19 Jun 2013, 15:46:01
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 {txt}
 {com}. clear
 {txt}
@@ -13121,7 +14372,7 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00001b.tmp saved
 {txt}
 {com}. save "$path/work/pref_r_price.dta", replace;
 {txt}(note: dataset contains 0 observations)
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/pref_r_price.dta saved
+file /home/bjvca/data/data/GAP/Haruna/work/pref_r_price.dta saved
 
 {com}. forvalues i=1/$n_spdom {c -(}                ;
 {txt}  2{com}.         clear;
@@ -13214,28 +14465,49 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/pref_r_price.dta sa
 {txt} 61{com}.  *close i loop;
 . {c )-};
 {txt}(note: dataset contains 0 observations)
+<<<<<<< HEAD
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/revpref_price_1.dta saved
 (96 observations deleted)
 (note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000001.tmp not found)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000001.tmp saved
+=======
+file /home/bjvca/data/data/GAP/Haruna/work/revpref_price_1.dta saved
+(96 observations deleted)
+(note: file /tmp/St03924.000001 not found)
+file /tmp/St03924.000001 saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 (148 observations deleted)
 (label lspdomain already defined)
 (13 observations deleted)
 (0 real changes made)
 (0 real changes made)
+<<<<<<< HEAD
 (note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp not found)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
 (25 observations deleted)
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/revpref_price_1.dta saved
+=======
+(note: file /tmp/St03924.000002 not found)
+file /tmp/St03924.000002 saved
+(25 observations deleted)
+file /home/bjvca/data/data/GAP/Haruna/work/revpref_price_1.dta saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 (151 observations deleted)
 (label lspdomain already defined)
 (10 observations deleted)
 (0 real changes made)
 (2 real changes made)
+<<<<<<< HEAD
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
 (23 observations deleted)
 (note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp not found)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+=======
+file /tmp/St03924.000002 saved
+(23 observations deleted)
+(note: file /tmp/St03924.000003 not found)
+file /tmp/St03924.000003 saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 {p 0 4 2}
 variable{txt} product
 does not uniquely identify observations in
@@ -13251,7 +14523,11 @@ the master data
       Total {c |}{res}        186      100.00
 {txt}(177 observations deleted)
 (0 observations deleted)
+<<<<<<< HEAD
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+=======
+file /tmp/St03924.000003 saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 
      _merge {c |}      Freq.     Percent        Cum.
 {hline 12}{c +}{hline 35}
@@ -13260,24 +14536,41 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
 {txt}{hline 12}{c +}{hline 35}
       Total {c |}{res}         25      100.00
 {txt}(label lspdomain already defined)
+<<<<<<< HEAD
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/revpref_price_1.dta saved
+=======
+file /home/bjvca/data/data/GAP/Haruna/work/revpref_price_1.dta saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 (148 observations deleted)
 (label lspdomain already defined)
 (13 observations deleted)
 (0 real changes made)
 (0 real changes made)
+<<<<<<< HEAD
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
 (25 observations deleted)
 (label lspdomain already defined)
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/revpref_price_1.dta saved
+=======
+file /tmp/St03924.000002 saved
+(25 observations deleted)
+(label lspdomain already defined)
+file /home/bjvca/data/data/GAP/Haruna/work/revpref_price_1.dta saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 (149 observations deleted)
 (label lspdomain already defined)
 (13 observations deleted)
 (1 real change made)
 (3 real changes made)
+<<<<<<< HEAD
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
 (22 observations deleted)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+=======
+file /tmp/St03924.000002 saved
+(22 observations deleted)
+file /tmp/St03924.000003 saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 {p 0 4 2}
 variable{txt} product
 does not uniquely identify observations in
@@ -13293,7 +14586,11 @@ the master data
       Total {c |}{res}        186      100.00
 {txt}(172 observations deleted)
 (0 observations deleted)
+<<<<<<< HEAD
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+=======
+file /tmp/St03924.000003 saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 
      _merge {c |}      Freq.     Percent        Cum.
 {hline 12}{c +}{hline 35}
@@ -13303,55 +14600,95 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
       Total {c |}{res}         25      100.00
 {txt}(1 missing value generated)
 (label lspdomain already defined)
+<<<<<<< HEAD
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/revpref_price_1.dta saved
+=======
+file /home/bjvca/data/data/GAP/Haruna/work/revpref_price_1.dta saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 (148 observations deleted)
 (label lspdomain already defined)
 (13 observations deleted)
 (0 real changes made)
 (0 real changes made)
+<<<<<<< HEAD
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
+=======
+file /tmp/St03924.000002 saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 (25 observations deleted)
 (label lspdomain already defined)
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/revpref_price_1.dta saved
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/pref_r_price.dta saved
+file /home/bjvca/data/data/GAP/Haruna/work/revpref_price_1.dta saved
+file /home/bjvca/data/data/GAP/Haruna/work/pref_r_price.dta saved
 (note: dataset contains 0 observations)
+<<<<<<< HEAD
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/revpref_price_2.dta saved
 (103 observations deleted)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000001.tmp saved
+=======
+file /home/bjvca/data/data/GAP/Haruna/work/revpref_price_2.dta saved
+(103 observations deleted)
+file /tmp/St03924.000001 saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 (148 observations deleted)
 (label lspdomain already defined)
 (20 observations deleted)
 (0 real changes made)
 (0 real changes made)
+<<<<<<< HEAD
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
 (18 observations deleted)
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/revpref_price_2.dta saved
+=======
+file /tmp/St03924.000002 saved
+(18 observations deleted)
+file /home/bjvca/data/data/GAP/Haruna/work/revpref_price_2.dta saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 (151 observations deleted)
 (label lspdomain already defined)
 (17 observations deleted)
 (0 real changes made)
 (0 real changes made)
+<<<<<<< HEAD
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
 (18 observations deleted)
 (label lspdomain already defined)
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/revpref_price_2.dta saved
+=======
+file /tmp/St03924.000002 saved
+(18 observations deleted)
+(label lspdomain already defined)
+file /home/bjvca/data/data/GAP/Haruna/work/revpref_price_2.dta saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 (148 observations deleted)
 (label lspdomain already defined)
 (20 observations deleted)
 (0 real changes made)
 (0 real changes made)
+<<<<<<< HEAD
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
 (18 observations deleted)
 (label lspdomain already defined)
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/revpref_price_2.dta saved
+=======
+file /tmp/St03924.000002 saved
+(18 observations deleted)
+(label lspdomain already defined)
+file /home/bjvca/data/data/GAP/Haruna/work/revpref_price_2.dta saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 (149 observations deleted)
 (label lspdomain already defined)
 (19 observations deleted)
 (0 real changes made)
 (1 real change made)
+<<<<<<< HEAD
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
 (17 observations deleted)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+=======
+file /tmp/St03924.000002 saved
+(17 observations deleted)
+file /tmp/St03924.000003 saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 {p 0 4 2}
 variable{txt} product
 does not uniquely identify observations in
@@ -13367,7 +14704,11 @@ the master data
       Total {c |}{res}        186      100.00
 {txt}(181 observations deleted)
 (0 observations deleted)
+<<<<<<< HEAD
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+=======
+file /tmp/St03924.000003 saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 
      _merge {c |}      Freq.     Percent        Cum.
 {hline 12}{c +}{hline 35}
@@ -13376,38 +14717,64 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
 {txt}{hline 12}{c +}{hline 35}
       Total {c |}{res}         18      100.00
 {txt}(label lspdomain already defined)
+<<<<<<< HEAD
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/revpref_price_2.dta saved
+=======
+file /home/bjvca/data/data/GAP/Haruna/work/revpref_price_2.dta saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 (148 observations deleted)
 (label lspdomain already defined)
 (20 observations deleted)
 (0 real changes made)
 (0 real changes made)
+<<<<<<< HEAD
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
+=======
+file /tmp/St03924.000002 saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 (18 observations deleted)
 (label lspdomain already defined)
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/revpref_price_2.dta saved
+file /home/bjvca/data/data/GAP/Haruna/work/revpref_price_2.dta saved
 (label lspdomain already defined)
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/pref_r_price.dta saved
+file /home/bjvca/data/data/GAP/Haruna/work/pref_r_price.dta saved
 (note: dataset contains 0 observations)
+<<<<<<< HEAD
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/revpref_price_3.dta saved
 (95 observations deleted)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000001.tmp saved
+=======
+file /home/bjvca/data/data/GAP/Haruna/work/revpref_price_3.dta saved
+(95 observations deleted)
+file /tmp/St03924.000001 saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 (148 observations deleted)
 (label lspdomain already defined)
 (12 observations deleted)
 (0 real changes made)
 (0 real changes made)
+<<<<<<< HEAD
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
 (26 observations deleted)
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/revpref_price_3.dta saved
+=======
+file /tmp/St03924.000002 saved
+(26 observations deleted)
+file /home/bjvca/data/data/GAP/Haruna/work/revpref_price_3.dta saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 (151 observations deleted)
 (label lspdomain already defined)
 (10 observations deleted)
 (1 real change made)
 (4 real changes made)
+<<<<<<< HEAD
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
 (22 observations deleted)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+=======
+file /tmp/St03924.000002 saved
+(22 observations deleted)
+file /tmp/St03924.000003 saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 {p 0 4 2}
 variable{txt} product
 does not uniquely identify observations in
@@ -13423,7 +14790,11 @@ the master data
       Total {c |}{res}        186      100.00
 {txt}(167 observations deleted)
 (0 observations deleted)
+<<<<<<< HEAD
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+=======
+file /tmp/St03924.000003 saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 
      _merge {c |}      Freq.     Percent        Cum.
 {hline 12}{c +}{hline 35}
@@ -13433,24 +14804,41 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
       Total {c |}{res}         26      100.00
 {txt}(1 missing value generated)
 (label lspdomain already defined)
+<<<<<<< HEAD
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/revpref_price_3.dta saved
+=======
+file /home/bjvca/data/data/GAP/Haruna/work/revpref_price_3.dta saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 (148 observations deleted)
 (label lspdomain already defined)
 (12 observations deleted)
 (0 real changes made)
 (0 real changes made)
+<<<<<<< HEAD
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
 (26 observations deleted)
 (label lspdomain already defined)
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/revpref_price_3.dta saved
+=======
+file /tmp/St03924.000002 saved
+(26 observations deleted)
+(label lspdomain already defined)
+file /home/bjvca/data/data/GAP/Haruna/work/revpref_price_3.dta saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 (149 observations deleted)
 (label lspdomain already defined)
 (11 observations deleted)
 (0 real changes made)
 (2 real changes made)
+<<<<<<< HEAD
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
 (24 observations deleted)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+=======
+file /tmp/St03924.000002 saved
+(24 observations deleted)
+file /tmp/St03924.000003 saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 {p 0 4 2}
 variable{txt} product
 does not uniquely identify observations in
@@ -13466,7 +14854,11 @@ the master data
       Total {c |}{res}        186      100.00
 {txt}(176 observations deleted)
 (0 observations deleted)
+<<<<<<< HEAD
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+=======
+file /tmp/St03924.000003 saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 
      _merge {c |}      Freq.     Percent        Cum.
 {hline 12}{c +}{hline 35}
@@ -13475,30 +14867,50 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
 {txt}{hline 12}{c +}{hline 35}
       Total {c |}{res}         26      100.00
 {txt}(label lspdomain already defined)
+<<<<<<< HEAD
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/revpref_price_3.dta saved
+=======
+file /home/bjvca/data/data/GAP/Haruna/work/revpref_price_3.dta saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 (148 observations deleted)
 (label lspdomain already defined)
 (12 observations deleted)
 (0 real changes made)
 (0 real changes made)
+<<<<<<< HEAD
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
+=======
+file /tmp/St03924.000002 saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 (26 observations deleted)
 (label lspdomain already defined)
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/revpref_price_3.dta saved
+file /home/bjvca/data/data/GAP/Haruna/work/revpref_price_3.dta saved
 (label lspdomain already defined)
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/pref_r_price.dta saved
+file /home/bjvca/data/data/GAP/Haruna/work/pref_r_price.dta saved
 (note: dataset contains 0 observations)
+<<<<<<< HEAD
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/revpref_price_4.dta saved
 (97 observations deleted)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000001.tmp saved
+=======
+file /home/bjvca/data/data/GAP/Haruna/work/revpref_price_4.dta saved
+(97 observations deleted)
+file /tmp/St03924.000001 saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 (148 observations deleted)
 (label lspdomain already defined)
 (14 observations deleted)
 (0 real changes made)
 (3 real changes made)
+<<<<<<< HEAD
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
 (21 observations deleted)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+=======
+file /tmp/St03924.000002 saved
+(21 observations deleted)
+file /tmp/St03924.000003 saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 {p 0 4 2}
 variable{txt} product
 does not uniquely identify observations in
@@ -13514,7 +14926,11 @@ the master data
       Total {c |}{res}        186      100.00
 {txt}(172 observations deleted)
 (0 observations deleted)
+<<<<<<< HEAD
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+=======
+file /tmp/St03924.000003 saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 
      _merge {c |}      Freq.     Percent        Cum.
 {hline 12}{c +}{hline 35}
@@ -13522,15 +14938,25 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
 {txt}          3 {c |}{res}          3       12.50      100.00
 {txt}{hline 12}{c +}{hline 35}
       Total {c |}{res}         24      100.00
+<<<<<<< HEAD
 {txt}file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/revpref_price_4.dta saved
+=======
+{txt}file /home/bjvca/data/data/GAP/Haruna/work/revpref_price_4.dta saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 (151 observations deleted)
 (label lspdomain already defined)
 (13 observations deleted)
 (2 real changes made)
 (7 real changes made)
+<<<<<<< HEAD
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
 (17 observations deleted)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+=======
+file /tmp/St03924.000002 saved
+(17 observations deleted)
+file /tmp/St03924.000003 saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 {p 0 4 2}
 variable{txt} product
 does not uniquely identify observations in
@@ -13546,7 +14972,11 @@ the master data
       Total {c |}{res}        186      100.00
 {txt}(153 observations deleted)
 (0 observations deleted)
+<<<<<<< HEAD
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+=======
+file /tmp/St03924.000003 saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 
      _merge {c |}      Freq.     Percent        Cum.
 {hline 12}{c +}{hline 35}
@@ -13556,56 +14986,96 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
       Total {c |}{res}         24      100.00
 {txt}(2 missing values generated)
 (label lspdomain already defined)
+<<<<<<< HEAD
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/revpref_price_4.dta saved
+=======
+file /home/bjvca/data/data/GAP/Haruna/work/revpref_price_4.dta saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 (148 observations deleted)
 (label lspdomain already defined)
 (14 observations deleted)
 (0 real changes made)
 (0 real changes made)
+<<<<<<< HEAD
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
 (24 observations deleted)
 (label lspdomain already defined)
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/revpref_price_4.dta saved
+=======
+file /tmp/St03924.000002 saved
+(24 observations deleted)
+(label lspdomain already defined)
+file /home/bjvca/data/data/GAP/Haruna/work/revpref_price_4.dta saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 (149 observations deleted)
 (label lspdomain already defined)
 (13 observations deleted)
 (0 real changes made)
 (0 real changes made)
+<<<<<<< HEAD
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
 (24 observations deleted)
 (label lspdomain already defined)
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/revpref_price_4.dta saved
+=======
+file /tmp/St03924.000002 saved
+(24 observations deleted)
+(label lspdomain already defined)
+file /home/bjvca/data/data/GAP/Haruna/work/revpref_price_4.dta saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 (148 observations deleted)
 (label lspdomain already defined)
 (14 observations deleted)
 (0 real changes made)
 (0 real changes made)
+<<<<<<< HEAD
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
+=======
+file /tmp/St03924.000002 saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 (24 observations deleted)
 (label lspdomain already defined)
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/revpref_price_4.dta saved
+file /home/bjvca/data/data/GAP/Haruna/work/revpref_price_4.dta saved
 (label lspdomain already defined)
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/pref_r_price.dta saved
+file /home/bjvca/data/data/GAP/Haruna/work/pref_r_price.dta saved
 (note: dataset contains 0 observations)
+<<<<<<< HEAD
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/revpref_price_5.dta saved
 (93 observations deleted)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000001.tmp saved
+=======
+file /home/bjvca/data/data/GAP/Haruna/work/revpref_price_5.dta saved
+(93 observations deleted)
+file /tmp/St03924.000001 saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 (148 observations deleted)
 (label lspdomain already defined)
 (10 observations deleted)
 (0 real changes made)
 (0 real changes made)
+<<<<<<< HEAD
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
 (28 observations deleted)
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/revpref_price_5.dta saved
+=======
+file /tmp/St03924.000002 saved
+(28 observations deleted)
+file /home/bjvca/data/data/GAP/Haruna/work/revpref_price_5.dta saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 (151 observations deleted)
 (label lspdomain already defined)
 (8 observations deleted)
 (1 real change made)
 (5 real changes made)
+<<<<<<< HEAD
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
 (23 observations deleted)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+=======
+file /tmp/St03924.000002 saved
+(23 observations deleted)
+file /tmp/St03924.000003 saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 {p 0 4 2}
 variable{txt} product
 does not uniquely identify observations in
@@ -13621,7 +15091,11 @@ the master data
       Total {c |}{res}        186      100.00
 {txt}(163 observations deleted)
 (0 observations deleted)
+<<<<<<< HEAD
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+=======
+file /tmp/St03924.000003 saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 
      _merge {c |}      Freq.     Percent        Cum.
 {hline 12}{c +}{hline 35}
@@ -13631,24 +15105,41 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
       Total {c |}{res}         28      100.00
 {txt}(1 missing value generated)
 (label lspdomain already defined)
+<<<<<<< HEAD
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/revpref_price_5.dta saved
+=======
+file /home/bjvca/data/data/GAP/Haruna/work/revpref_price_5.dta saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 (148 observations deleted)
 (label lspdomain already defined)
 (10 observations deleted)
 (0 real changes made)
 (0 real changes made)
+<<<<<<< HEAD
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
 (28 observations deleted)
 (label lspdomain already defined)
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/revpref_price_5.dta saved
+=======
+file /tmp/St03924.000002 saved
+(28 observations deleted)
+(label lspdomain already defined)
+file /home/bjvca/data/data/GAP/Haruna/work/revpref_price_5.dta saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 (149 observations deleted)
 (label lspdomain already defined)
 (10 observations deleted)
 (1 real change made)
 (4 real changes made)
+<<<<<<< HEAD
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
 (24 observations deleted)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+=======
+file /tmp/St03924.000002 saved
+(24 observations deleted)
+file /tmp/St03924.000003 saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 {p 0 4 2}
 variable{txt} product
 does not uniquely identify observations in
@@ -13664,7 +15155,11 @@ the master data
       Total {c |}{res}        186      100.00
 {txt}(167 observations deleted)
 (0 observations deleted)
+<<<<<<< HEAD
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+=======
+file /tmp/St03924.000003 saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 
      _merge {c |}      Freq.     Percent        Cum.
 {hline 12}{c +}{hline 35}
@@ -13674,18 +15169,26 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
       Total {c |}{res}         28      100.00
 {txt}(1 missing value generated)
 (label lspdomain already defined)
+<<<<<<< HEAD
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/revpref_price_5.dta saved
+=======
+file /home/bjvca/data/data/GAP/Haruna/work/revpref_price_5.dta saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 (148 observations deleted)
 (label lspdomain already defined)
 (10 observations deleted)
 (0 real changes made)
 (0 real changes made)
+<<<<<<< HEAD
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
+=======
+file /tmp/St03924.000002 saved
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 (28 observations deleted)
 (label lspdomain already defined)
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/revpref_price_5.dta saved
+file /home/bjvca/data/data/GAP/Haruna/work/revpref_price_5.dta saved
 (label lspdomain already defined)
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/pref_r_price.dta saved
+file /home/bjvca/data/data/GAP/Haruna/work/pref_r_price.dta saved
 
 {com}. *bring in actual flexible bundle numbers;
 . use "$path/work/povline_food_flex_it$it_n.dta", clear;
@@ -13694,7 +15197,7 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/pref_r_price.dta sa
 {txt}{p 0 4 2}
 variable{txt} spdomain
 does not uniquely identify observations in
-C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/pref_r_price.dta
+/home/bjvca/data/data/GAP/Haruna/work/pref_r_price.dta
 {p_end}
 (label lspdomain already defined)
 
@@ -13814,7 +15317,7 @@ C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/pref_r_price.dta
 
 {txt}
 {com}. save "$path/work/pref_r_price.dta", replace;
-{txt}file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/pref_r_price.dta saved
+{txt}file /home/bjvca/data/data/GAP/Haruna/work/pref_r_price.dta saved
 
 {com}. *drop comparisons with Maputo ;
 . drop if spdomain>=11;
@@ -13858,14 +15361,19 @@ C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/work/pref_r_price.dta
 > **************************************************************************;
 . log close;
       {txt}name:  {res}<unnamed>
-       {txt}log:  {res}C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA/rep/170_pref_r_price.log
+       {txt}log:  {res}/home/bjvca/data/data/GAP/Haruna/rep/170_pref_r_price.log
   {txt}log type:  {res}text
+<<<<<<< HEAD
  {txt}closed on:  {res}20 Jun 2013, 09:08:58
+=======
+ {txt}closed on:  {res}19 Jun 2013, 15:46:01
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
 {txt}{.-}
 
 {com}. 
 {txt}end of do-file
 
+<<<<<<< HEAD
 {com}. $no_temp_rev    do "$path/new/180_povline_food_fix.do"  /* Inflating year t1's poverty lines to year t2 */
 {txt}
 {com}. 
@@ -15460,3 +16968,13 @@ obs was 0, now 1
 {txt}{.-}
 {smcl}
 {txt}{sf}{ul off}
+=======
+{com}. shell "$path/new/$revpref"
+{txt}
+/home/bjvca/data/data/GAP/Haruna/new/190_revpref13_r.bat: line 1: path: command not found
+/home/bjvca/data/data/GAP/Haruna/new/190_revpref13_r.bat: line 2: gams: command not found
+
+{com}. clear
+
+. exit, clear
+>>>>>>> dc1aea91268c83c62dd2d203499e4c64824cce16
