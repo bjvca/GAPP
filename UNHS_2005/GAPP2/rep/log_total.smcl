@@ -15739,4 +15739,4 @@ end of do-file
 
 {search r(601):r(601);}
 
-{com}. 
+{com}. exit, clear
