@@ -14,13 +14,13 @@ This file creates:
 $offtext
 
 SETS
- cod        2002 codes for products used in basket
+ cod        200910 codes for products used in basket
 /
 $include C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\product_flex.inc
 /
 
  reg        5 spatial domains /1*5/
- r(reg)     non maputo spatial regions /1*5/
+ r(reg)     all included spatial regions /1*5/
 
  ptit       price table titles
 /

@@ -1,9 +1,8 @@
------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------
       name:  <unnamed>
-       log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_20
-> 05\GAPP2/rep/110_price_unit_flex.log
+       log:  /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//rep/110_price_unit_flex.log
   log type:  text
- opened on:  11 Jun 2013, 12:42:46
+ opened on:  19 Jun 2013, 16:43:16
 
 . clear
 
@@ -11,19 +10,14 @@
 
 . #delimit ;
 delimiter now ;
-. *********************************************************************
-> *******************
+. ****************************************************************************************
 > * 110_price_unit_flex.do                (start)
 > *
-> * Purpose: This do file creates a price_unit_flex database with the u
-> nit prices of the
-> * goods of the flexible food basket in order to determine the poverty
->  lines per spatial
-> * domain. It uses the files work/daily.dta and work/own.dta file and 
-> draw unit prices
+> * Purpose: This do file creates a price_unit_flex database with the unit prices of the
+> * goods of the flexible food basket in order to determine the poverty lines per spatial
+> * domain. It uses the files work/daily.dta and work/own.dta file and draw unit prices
 > * by: sum of values and quantity
-> *********************************************************************
-> *******************;
+> ****************************************************************************************;
 . *CA modified to bring in work/hhdata.dta for bootstrap
 > *CA check for price calcs conditional on number of observations;
 . /*
@@ -45,11 +39,9 @@ delimiter now ;
 > 
 > 
 > *do "$path/new/010_initial.do";
-. *********************************************************************
-> *****************
+. **************************************************************************************
 > * Create sorted data set with daily and own and the matched codes
-> *********************************************************************
-> *****************;
+> **************************************************************************************;
 . use "$path/work/cons_cod_trans.dta", clear;
 
 . *use "$path/in/cons_cod_trans.dta", clear;
@@ -72,9 +64,8 @@ delimiter now ;
 .                 tempfile dd_acsort;
 
 . save `dd_acsort', replace;
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000001.tmp not fo
-> und)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000001.tmp saved
+(note: file /tmp/St04064.000001 not found)
+file /tmp/St04064.000001 saved
 
 . /*
 > use "$path/work/daily.dta";
@@ -112,16 +103,12 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000001.tmp saved
 > */
 > 
 > 
-> *********************************************************************
-> *****************;
-. * Merge the flexible food basket codes with the daily and own data se
-> ts
+> **************************************************************************************;
+. * Merge the flexible food basket codes with the daily and own data sets
 > * Drop all codes not a part of the flexible food basket
-> *********************************************************************
-> *****************;
+> **************************************************************************************;
 .         merge product using "$path/work/codes_food_basket_flex.dta";
-variable product does not uniquely identify observations in the
-    master data
+variable product does not uniquely identify observations in the master data
 product was int now float
 
 .         tab _merge;
@@ -139,17 +126,14 @@ product was int now float
 
 .         drop _merge;
 
-. *********************************************************************
-> *****************;
-. * Drop observations where product code or quantity or value informati
-> on is unavailable
-> *********************************************************************
-> *****************;
+. **************************************************************************************;
+. * Drop observations where product code or quantity or value information is unavailable
+> **************************************************************************************;
 .                                 codebook hhid;
 
------------------------------------------------------------------------
-hhid                                                       household id
------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------
+hhid                                                                                          household id
+----------------------------------------------------------------------------------------------------------
 
                   type:  numeric (double)
 
@@ -159,17 +143,15 @@ hhid                                                       household id
                   mean:   2.4e+09
               std. dev:   1.1e+09
 
-           percentiles:        10%       25%       50%       75%       
-> 90%
-                           1.1e+09   1.1e+09   2.1e+09   3.1e+09   4.1e
-> +09
+           percentiles:        10%       25%       50%       75%       90%
+                           1.1e+09   1.1e+09   2.1e+09   3.1e+09   4.1e+09
 
 . *        drop if product==. | value==. | quantity==.  ;
 .                                 codebook hhid;
 
------------------------------------------------------------------------
-hhid                                                       household id
------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------
+hhid                                                                                          household id
+----------------------------------------------------------------------------------------------------------
 
                   type:  numeric (double)
 
@@ -179,21 +161,16 @@ hhid                                                       household id
                   mean:   2.4e+09
               std. dev:   1.1e+09
 
-           percentiles:        10%       25%       50%       75%       
-> 90%
-                           1.1e+09   1.1e+09   2.1e+09   3.1e+09   4.1e
-> +09
+           percentiles:        10%       25%       50%       75%       90%
+                           1.1e+09   1.1e+09   2.1e+09   3.1e+09   4.1e+09
 
-. *********************************************************************
-> *****************;
+. **************************************************************************************;
 . * Convert non-KG quantities (units and liters) to kilograms;
-. *********************************************************************
-> *****************;
+. **************************************************************************************;
 . *do "$path/new/110a_conversions.do"
 > 
 > ********************************************************************
-> * There remain a few difficult to interpret observations such as lite
-> rs
+> * There remain a few difficult to interpret observations such as liters
 > * of fish and liters of pasta. These are dropped
 > ********************************************************************;
 . *        drop if unit~=2;
@@ -204,23 +181,22 @@ hhid                                                       household id
 
 .                 use "$path/work/hhdata.dta", clear;
 
-.                                                                      
->    keep hhid spdomain reg_tpi survquar;
+.                                                                         keep hhid spdomain reg_tpi survq
+> uar;
 
 .                         sort hhid;
 
 .                         tempfile spdomainreg_tpi;
 
 .                 save `spdomainreg_tpi', replace;
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000003.tmp not fo
-> und)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000003.tmp saved
+(note: file /tmp/St04064.000003 not found)
+file /tmp/St04064.000003 saved
 
 .                                 codebook hhid;
 
------------------------------------------------------------------------
-hhid                                                       Household ID
------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------
+hhid                                                                                          Household ID
+----------------------------------------------------------------------------------------------------------
 
                   type:  numeric (double)
 
@@ -230,18 +206,15 @@ hhid                                                       Household ID
                   mean:   2.5e+09
               std. dev:   1.1e+09
 
-           percentiles:        10%       25%       50%       75%       
-> 90%
-                           1.1e+09   1.1e+09   2.1e+09   3.1e+09   4.1e
-> +09
+           percentiles:        10%       25%       50%       75%       90%
+                           1.1e+09   1.1e+09   2.1e+09   3.1e+09   4.1e+09
 
 .         restore;
 
 .                 sort hhid;
 
 .         merge hhid using `spdomainreg_tpi';
-variable hhid does not uniquely identify observations in the master
-    data
+variable hhid does not uniquely identify observations in the master data
 
 .         tab _merge;
 
@@ -260,9 +233,9 @@ variable hhid does not uniquely identify observations in the master
 
 . codebook hhid;
 
------------------------------------------------------------------------
-hhid                                                       household id
------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------
+hhid                                                                                          household id
+----------------------------------------------------------------------------------------------------------
 
                   type:  numeric (double)
 
@@ -272,10 +245,8 @@ hhid                                                       household id
                   mean:   2.4e+09
               std. dev:   1.1e+09
 
-           percentiles:        10%       25%       50%       75%       
-> 90%
-                           1.1e+09   1.1e+09   2.1e+09   3.1e+09   4.1e
-> +09
+           percentiles:        10%       25%       50%       75%       90%
+                           1.1e+09   1.1e+09   2.1e+09   3.1e+09   4.1e+09
 
 . tab spd;
 
@@ -316,8 +287,7 @@ Northern rural |     11,551       14.64       76.52
      reg_tpi |     72858    2.486233    1.107807          1          4
     spdomain |     72858    5.786008    2.167128          3          9
 
-. table spdomain, content(mean quantity count quantity count hhid) row 
-> missing;
+. table spdomain, content(mean quantity count quantity count hhid) row missing;
 
 ---------------------------------------------------------------
 Spatial        |
@@ -344,9 +314,9 @@ Northern rural |       .7789626          11,551          11,551
 
 . codebook hhid;
 
------------------------------------------------------------------------
-hhid                                                       household id
------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------
+hhid                                                                                          household id
+----------------------------------------------------------------------------------------------------------
 
                   type:  numeric (double)
 
@@ -356,10 +326,8 @@ hhid                                                       household id
                   mean:   2.4e+09
               std. dev:   1.1e+09
 
-           percentiles:        10%       25%       50%       75%       
-> 90%
-                           1.1e+09   1.1e+09   2.1e+09   3.1e+09   4.1e
-> +09
+           percentiles:        10%       25%       50%       75%       90%
+                           1.1e+09   1.1e+09   2.1e+09   3.1e+09   4.1e+09
 
 . tab spd;
 
@@ -386,10 +354,8 @@ Northern rural |     11,551       14.64       76.52
 > ********************************************************************;
 .         sort reg_tpi survquar;
 
-.         merge reg_tpi survquar using "$path/work/temp_index_reg_tpi.d
-> ta";
-variables reg_tpi survquar do not uniquely identify observations in
-    the master data
+.         merge reg_tpi survquar using "$path/work/temp_index_reg_tpi.dta";
+variables reg_tpi survquar do not uniquely identify observations in the master data
 (label lsurvquar already defined)
 (label region already defined)
 
@@ -408,15 +374,11 @@ variables reg_tpi survquar do not uniquely identify observations in
 
 .         gen value_r=value/tpi_trim;
 
-. *********************************************************************
-> *****;
-. * Identify relatively poor households, based on nominal temporally ad
-> justed
-> * consumption per capita. Only work with these households for the pri
-> ce
+. **************************************************************************;
+. * Identify relatively poor households, based on nominal temporally adjusted
+> * consumption per capita. Only work with these households for the price
 > * calculations.
-> *********************************************************************
-> *****;
+> **************************************************************************;
 .                 preserve;
 
 .                         use "$path/work/conpc.dta", clear;
@@ -439,8 +401,7 @@ variables reg_tpi survquar do not uniquely identify observations in
 .       drop _m;
 
 . *CA modified to keep bswt;
-.                                 keep hhid hhweight hhsize cons_pc_nom
->  bswt ;
+.                                 keep hhid hhweight hhsize cons_pc_nom bswt ;
 
 .                                 sort hhid;
 
@@ -464,10 +425,8 @@ variables reg_tpi survquar do not uniquely identify observations in
 
 .                                 cap drop _merge;
 
-.                                 merge reg_tpi survquar using "$path/w
-> ork/temp_index_reg_tpi.dta";
-variables reg_tpi survquar do not uniquely identify observations in
-    the master data
+.                                 merge reg_tpi survquar using "$path/work/temp_index_reg_tpi.dta";
+variables reg_tpi survquar do not uniquely identify observations in the master data
 (label lsurvquar already defined)
 (label region already defined)
 
@@ -484,8 +443,7 @@ variables reg_tpi survquar do not uniquely identify observations in
 
 .                                 sort hhid;
 
-.                                 merge hhid using "$path/work/conpc.dt
-> a";
+.                                 merge hhid using "$path/work/conpc.dta";
 
 .                                 tab _merge;
 
@@ -497,33 +455,26 @@ variables reg_tpi survquar do not uniquely identify observations in
 
 .                                 drop _merge;
 
-.                                 gen food_pc_tpi  = food_pc_nom /tpi_t
-> rim;
+.                                 gen food_pc_tpi  = food_pc_nom /tpi_trim;
 (12 missing values generated)
 
-.                                 lab var food_pc_tpi "Temp-adjusted pe
-> r capita food consumption/day";
+.                                 lab var food_pc_tpi "Temp-adjusted per capita food consumption/day";
 
-.                                                                 * Non
-> -food not TPI adjusted ;
-.                                 gen cons_pc_tpi = food_pc_tpi + nf_pc
-> _nom;
+.                                                                 * Non-food not TPI adjusted ;
+.                                 gen cons_pc_tpi = food_pc_tpi + nf_pc_nom;
 (13 missing values generated)
 
-.                                 lab var cons_pc_tpi "Temp adjusted to
-> tal consumption/day";
+.                                 lab var cons_pc_tpi "Temp adjusted total consumption/day";
 
 .                                 gen one=1;
 
 .                                 tempfile contpi;
 
 .                                 save `contpi', replace;
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000005.tmp not fo
-> und)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000005.tmp saved
+(note: file /tmp/St04064.000005 not found)
+file /tmp/St04064.000005 saved
 
-.                                 collapse (p$bottom) one cons_pc_tpi [
-> aw=hhsize*hhweight], by(spdomain) ;
+.                                 collapse (p$bottom) one cons_pc_tpi [aw=hhsize*hhweight], by(spdomain) ;
 
 .                                 rename cons_pc_tpi pctile_60;
 
@@ -532,17 +483,15 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000005.tmp saved
 .                                 sort spdomain;
 
 .                                 save `60pct', replace;
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000006.tmp not fo
-> und)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000006.tmp saved
+(note: file /tmp/St04064.000006 not found)
+file /tmp/St04064.000006 saved
 
 .                                 use `contpi';
 
 .                                         sort spdomain;
 
 .                                         merge spdomain using `60pct';
-variable spdomain does not uniquely identify observations in the
-    master data
+variable spdomain does not uniquely identify observations in the master data
 (label lspdomain already defined)
 
 .                                         tab _merge;
@@ -560,13 +509,11 @@ variable spdomain does not uniquely identify observations in the
 
 .                                         sort spdomain;
 
-.                                         gen bottom_basket=cons_pc_tpi
-> < pctile_60;
+.                                         gen bottom_basket=cons_pc_tpi< pctile_60;
 
-.                                         by spdomain: tab bottom_baske
-> t [aw=hhsize*hhweight];
+.                                         by spdomain: tab bottom_basket [aw=hhsize*hhweight];
 
------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------
 -> spdomain = Kampala
 
 bottom_bask |
@@ -577,7 +524,7 @@ bottom_bask |
 ------------+-----------------------------------
       Total |        324      100.00
 
------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------
 -> spdomain = Central urban
 
 bottom_bask |
@@ -588,7 +535,7 @@ bottom_bask |
 ------------+-----------------------------------
       Total |        192      100.00
 
------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------
 -> spdomain = Central rural
 
 bottom_bask |
@@ -599,7 +546,7 @@ bottom_bask |
 ------------+-----------------------------------
       Total |      1,584      100.00
 
------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------
 -> spdomain = Eastern urban
 
 bottom_bask |
@@ -610,7 +557,7 @@ bottom_bask |
 ------------+-----------------------------------
       Total |        406      100.00
 
------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------
 -> spdomain = Eastern rural
 
 bottom_bask |
@@ -621,7 +568,7 @@ bottom_bask |
 ------------+-----------------------------------
       Total |      1,517      100.00
 
------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------
 -> spdomain = Northern urban
 
 bottom_bask |
@@ -632,7 +579,7 @@ bottom_bask |
 ------------+-----------------------------------
       Total |        344      100.00
 
------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------
 -> spdomain = Northern rural
 
 bottom_bask |
@@ -643,7 +590,7 @@ bottom_bask |
 ------------+-----------------------------------
       Total |      1,278      100.00
 
------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------
 -> spdomain = Western urban
 
 bottom_bask |
@@ -654,7 +601,7 @@ bottom_bask |
 ------------+-----------------------------------
       Total |        425      100.00
 
------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------
 -> spdomain = Western rural
 
 bottom_bask |
@@ -665,28 +612,26 @@ bottom_bask |
 ------------+-----------------------------------
       Total |      1,345      100.00
 
------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------
 -> spdomain = .
 no observations
 
 
-.                                         lab var bottom_basket "=1 if 
-> in bottom (60%) of PCE";
+.                                         lab var bottom_basket "=1 if in bottom (60%) of PCE";
 
 .                                         sort hhid;
 
-.                                                                 save 
-> "$path/work/bottom_basket.dta", replace;
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\GAPP2
-> /work/bottom_basket.dta saved
+.                                                                 save "$path/work/bottom_basket.dta", rep
+> lace;
+(note: file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/bottom_basket.dta not found)
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/bottom_basket.dta saved
 
 .         restore;
 
 .         sort hhid;
 
 .         merge hhid using "$path/work/bottom_basket.dta";
-variable hhid does not uniquely identify observations in the master
-    data
+variable hhid does not uniquely identify observations in the master data
 (label region already defined)
 (label lsurvquar already defined)
 (label lspdomain already defined)
@@ -706,23 +651,18 @@ variable hhid does not uniquely identify observations in the master
 .         keep if bottom_basket==1;
 (47250 observations deleted)
 
-.         *************************************************************
-> *************;
+.         **************************************************************************;
 . * Toss out the bottom 5% and top 5% of the HH-LEVEL prices per kg in
-> * for each spdomain & product combination. This should eliminate outl
-> iers
+> * for each spdomain & product combination. This should eliminate outliers
 > * that may have an undue influence on the price calculation. 
-> *********************************************************************
-> *****;
+> **************************************************************************;
 .                 gen hhppkg=value_r/quantity;
 (39 missing values generated)
 
-.                 egen lower5=pctile(hhppkg), p(5) by(spdomain product)
-> ;
+.                 egen lower5=pctile(hhppkg), p(5) by(spdomain product);
 (39 missing values generated)
 
-.                 egen upper5=pctile(hhppkg), p(95) by(spdomain product
-> );
+.                 egen upper5=pctile(hhppkg), p(95) by(spdomain product);
 (39 missing values generated)
 
 . sum;
@@ -765,71 +705,48 @@ bottom_bas~t |     31897           1           0          1          1
 
 . describe;
 
-Contains data from C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000001.tmp
+Contains data from /tmp/St04064.000001
   obs:        31,897                          
- vars:            28                          11 Jun 2013 12:42
+ vars:            28                          19 Jun 2013 16:43
  size:     3,859,537                          
------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------
               storage  display     value
 variable name   type   format      label      variable label
------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------
 hhid            double %9.0g                  household id
-product         float  %10.0g      H14AQ2     Food product code:
-                                                numerical
-quantity        float  %9.0g                  daily household food
-                                                consumption
-value           float  %9.0g                  daily value of
-                                                consumption in UGX per
-                                                per household
-unit            float  %10.0g                 set equal to one since
-                                                all observations are
-                                                converted into kg
-food_cat        float  %9.0g                  food category equals 1,
-                                                if product is food and
-                                                0 if non food
+product         float  %10.0g      H14AQ2     Food product code: numerical
+quantity        float  %9.0g                  daily household food consumption
+value           float  %9.0g                  daily value of consumption in UGX per per household
+unit            float  %10.0g                 set equal to one since all observations are converted into
+                                                kg
+food_cat        float  %9.0g                  food category equals 1, if product is food and 0 if non food
 count           float  %9.0g                  
-descript        float  %9.0g       descrip    product description
-                                                including product code
-                                                but equals 2 for all
-                                                non-foods
-numreg          double %9.0g                  number of goods in the
-                                                basket
+descript        float  %9.0g       descrip    product description including product code but equals 2 for
+                                                all non-foods
+numreg          double %9.0g                  number of goods in the basket
 survquar        float  %12.0g      lsurvquar
-                                              Sequential Survey Quarter
-                                                (May-Jul 05=1)
-reg_tpi         float  %9.0g       region     Regions used for temporal
-                                                price index
-                                                calculations
+                                              Sequential Survey Quarter (May-Jul 05=1)
+reg_tpi         float  %9.0g       region     Regions used for temporal price index calculations
 spdomain        float  %14.0g      lspdomain
-                                              Spatial domains: each
-                                                with own poverty line
-                                                (they are 9)
-tpi_trim        float  %9.0g                  TRIMMED Temporal price
-                                                index (Q4=1)
+                                              Spatial domains: each with own poverty line (they are 9)
+tpi_trim        float  %9.0g                  TRIMMED Temporal price index (Q4=1)
 value_r         float  %9.0g                  
 cons_pc_nom     float  %9.0g                  
 hhsize          byte   %8.0g                  Household Size
 hhweight        float  %9.0g                  Household sample weight
-bswt            float  %9.0g                  bootstrap weights; and
-                                                all equal to 1 for all
-                                                households, as a
-                                                toolkit requireme
+bswt            float  %9.0g                  bootstrap weights; and all equal to 1 for all households, as
+                                                a toolkit requireme
 cons_hh_nom     double %9.0g                  (sum) cod_hh_nom
-food_pc_nom     float  %9.0g                  nominal food consumption
-                                                per capita
-nf_pc_nom       float  %9.0g                  nominal non-food
-                                                consumption per capita
-food_pc_tpi     float  %9.0g                  Temp-adjusted per capita
-                                                food consumption/day
-cons_pc_tpi     float  %9.0g                  Temp adjusted total
-                                                consumption/day
+food_pc_nom     float  %9.0g                  nominal food consumption per capita
+nf_pc_nom       float  %9.0g                  nominal non-food consumption per capita
+food_pc_tpi     float  %9.0g                  Temp-adjusted per capita food consumption/day
+cons_pc_tpi     float  %9.0g                  Temp adjusted total consumption/day
 pctile_60       float  %9.0g                  (p 50) cons_pc_tpi
-bottom_basket   float  %9.0g                  =1 if in bottom (60%) of
-                                                PCE
+bottom_basket   float  %9.0g                  =1 if in bottom (60%) of PCE
 hhppkg          float  %9.0g                  
 lower5          float  %9.0g                  
 upper5          float  %9.0g                  
------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------
 Sorted by:  
      Note:  dataset has changed since last saved
 
@@ -837,17 +754,12 @@ Sorted by:
 (2305 observations deleted)
 
 . *********************************************************************
-> * Note that we do prices in three ways. First, by summing quantity an
-> d value 
-> * This average price price_unitw is thus quantity/value weighted. Sec
-> ond, we
-> * calculate the price and take simple means for a transaction weighte
-> d
-> * price, price_unitt. Last we take the median, price_unitm. But in th
-> e end
+> * Note that we do prices in three ways. First, by summing quantity and value 
+> * This average price price_unitw is thus quantity/value weighted. Second, we
+> * calculate the price and take simple means for a transaction weighted
+> * price, price_unitt. Last we take the median, price_unitm. But in the end
 > * we only use price_unitw
-> *********************************************************************
-> ;
+> *********************************************************************;
 .         gen price_unitt=value_r/(quantity*1000);
 
 .         gen price_unitm=price_unitt;
@@ -855,8 +767,7 @@ Sorted by:
 .                 *CA modified to count the boot sample weight bswt;
 .         collapse (sum) quantity value_r count bswt 
 >                  (mean) price_unitt 
->                  (median) price_unitm [aw=hhweight], by(spdomain prod
-> uct);
+>                  (median) price_unitm [aw=hhweight], by(spdomain product);
 
 .         *Generate weighted price per gram ;
 .         gen price_unitw=value_r/(quantity*1000);
@@ -865,8 +776,7 @@ Sorted by:
 
 .         sort spdomain product;
 
-.         lab var price_unitt "simple average of calculated prices - tr
-> ansaction weighted";
+.         lab var price_unitt "simple average of calculated prices - transaction weighted";
 
 .         lab var price_unitm "median of prices";
 
@@ -887,8 +797,7 @@ Sorted by:
 .         sort product;
 
 .         merge product using "$path/work/codes_food_basket_flex.dta";
-variable product does not uniquely identify observations in the
-    master data
+variable product does not uniquely identify observations in the master data
 
 .         tab _m;
 
@@ -910,12 +819,10 @@ variable product does not uniquely identify observations in the
 .         sort product spdomain;
 
 . save "$path/work/price_unit_flex.dta", replace;
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\GAPP2
-> /work/price_unit_flex.dta saved
+(note: file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/price_unit_flex.dta not found)
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/price_unit_flex.dta saved
 
-. *********************************************************************
-> *******************
+. ****************************************************************************************
 > * 110_price_unit_flex.do                (end)
-> *********************************************************************
-> *******************;
+> ****************************************************************************************;
 . cap log close;

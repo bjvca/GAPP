@@ -1,25 +1,21 @@
------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------
       name:  <unnamed>
-       log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_20
-> 05\GAPP2/rep/080_conpc.log
+       log:  /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//rep/080_conpc.log
   log type:  text
- opened on:  11 Jun 2013, 12:42:28
+ opened on:  19 Jun 2013, 16:43:08
 
 . set more off
 
 . 
 . 
-. *********************************************************************
-> ******
+. ***************************************************************************
 . * 080_conpc.do          (start)
 . *
-. * Creates a file with per capita nominal consumption divided between 
-> food
+. * Creates a file with per capita nominal consumption divided between food
 . * and non-food categories based on the calorie definition of food
 . * rather than the COICOP (INE) definition of food. ready for 
 . * temporal deflation when necessary
-. *********************************************************************
-> ******* 
+. **************************************************************************** 
 . 
 . /*
 > This file uses:
@@ -32,14 +28,12 @@
 . 
 . 
 . 
-. *********************************************************************
-> ******
+. ***************************************************************************
 . * Food expenditure
-. *********************************************************************
-> ******* 
-. *use "$path/in/cons_cod.dta" 
-. use "$path/work/cons_cod.dta" 
+. **************************************************************************** 
+. use "$path/in/cons_cod.dta" 
 
+. *use "$path/work/cons_cod.dta" 
 .             *sort product 
 .             *merge product using "$path/work/food_cat.dta" 
 .             *tab _m 
@@ -58,17 +52,15 @@
 .             tempfile foodexp 
 
 . save `foodexp' 
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000001.tmp saved
+file /tmp/St04064.000001 saved
 
 . 
-. *********************************************************************
-> ******
+. ***************************************************************************
 . * Food expenditure merged with all expenditure
-. *********************************************************************
-> ******* 
-. use "$path/work/cons_cod.dta" 
+. **************************************************************************** 
+. *use "$path/work/cons_cod.dta" 
+. use "$path/in/cons_cod.dta" 
 
-. *use "$path/in/cons_cod.dta" 
 . *use "$path/in/cons_cat.dta" 
 . sum 
 
@@ -151,14 +143,12 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000001.tmp saved
 (13 missing values generated)
 
 .  
-.             keep hhid cons_hh_nom food_pc_nom nf_pc_nom cons_pc_nom s
-> urvquar spdomain news reg_tpi rural hhweight hhsize 
+.             keep hhid cons_hh_nom food_pc_nom nf_pc_nom cons_pc_nom survquar spdomain news reg_tpi rural
+>  hhweight hhsize 
 
-.             lab var food_pc_nom "nominal food consumption per capita"
->  
+.             lab var food_pc_nom "nominal food consumption per capita" 
 
-.             lab var nf_pc_nom "nominal non-food consumption per capit
-> a" 
+.             lab var nf_pc_nom "nominal non-food consumption per capita" 
 
 . keep hhid cons_hh_nom cons_pc_nom food_pc_nom nf_pc_nom 
 
@@ -167,22 +157,18 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000001.tmp saved
 . 
 . * MAH   sum  codebook hhid 
 . save "$path/work/conpc.dta", replace 
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\GAPP2
-> /work/conpc.dta saved
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/conpc.dta saved
 
 . 
 . 
-. *********************************************************************
-> ******
+. ***************************************************************************
 . * 080_conpc.do          (end)
-. *********************************************************************
-> ******* 
+. **************************************************************************** 
 . 
 . 
 . log close 
       name:  <unnamed>
-       log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_20
-> 05\GAPP2/rep/080_conpc.log
+       log:  /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//rep/080_conpc.log
   log type:  text
- closed on:  11 Jun 2013, 12:42:28
------------------------------------------------------------------------
+ closed on:  19 Jun 2013, 16:43:08
+----------------------------------------------------------------------------------------------------------

@@ -16,7 +16,7 @@ $offtext
 SETS
  cod        200910 codes for products used in basket
 /
-$include C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\product_flex.inc
+$include D:\data\GAP\Haruna\UNHS_2005\GAPP2\work\product_flex.inc
 /
 
  reg        5 spatial domains /1*5/
@@ -61,12 +61,12 @@ PARAMETERS
 
 Table  price(cod,reg,ptit)  price and related information
                         count   price_uw5
-$include C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\price_unit_flex.inc
+$include D:\data\GAP\Haruna\UNHS_2005\GAPP2\work\price_unit_flex.inc
 ;
 
 Table   quan(cod,reg,qtit)   quantity and related information
                            calperg          quan5           calpp      povline_a_flex5
-$include C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\quan_flex.inc
+$includeD:\data\GAP\Haruna\UNHS_2005\GAPP2\work\quan_flex.inc
 ;
 
   shr(cod,reg)$quan(cod,reg,'povline_a_flex5')
@@ -161,7 +161,7 @@ Equations
   display povline.l;
 
 *print the revealed preference matrix prior to optimisation;
-file povline_rp /C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\povline_rp_inout.csv/;
+file povline_rp /D:\data\GAP\Haruna\UNHS_2005\GAPP2\work\povline_rp_inout.csv/;
 put povline_rp;
 povline_rp.pc=5;
 povline_rp.nd=0;
@@ -250,7 +250,7 @@ PARAMETERS
        );
    );
 
-   file lin /C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\work\povline_food_ent.csv/;
+   file lin /D:\data\GAP\Haruna\UNHS_2005\GAPP2\work\povline_food_ent.csv/;
 
    put lin;
    lin.pc=5;

@@ -31,8 +31,8 @@ This file creates:
 ***************************************************************************
 * Food expenditure
 **************************************************************************** 
-*use "$path/in/cons_cod.dta" 
-use "$path/work/cons_cod.dta" 
+use "$path/in/cons_cod.dta" 
+*use "$path/work/cons_cod.dta" 
             *sort product 
             *merge product using "$path/work/food_cat.dta" 
             *tab _m 
@@ -48,8 +48,8 @@ save `foodexp'
 ***************************************************************************
 * Food expenditure merged with all expenditure
 **************************************************************************** 
-use "$path/work/cons_cod.dta" 
-*use "$path/in/cons_cod.dta" 
+*use "$path/work/cons_cod.dta" 
+use "$path/in/cons_cod.dta" 
 *use "$path/in/cons_cat.dta" 
 sum 
 collapse (sum) cod_hh_nom, by(hhid) 

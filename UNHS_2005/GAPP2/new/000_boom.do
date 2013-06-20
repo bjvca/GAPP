@@ -1,7 +1,7 @@
 
 
 if c(os)=="Unix" {
-global path "/home/bjvca/data/data/GAP/Haruna_2005"
+global path "/home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2/"
 }
 else{
 global path "C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\GAPP2"

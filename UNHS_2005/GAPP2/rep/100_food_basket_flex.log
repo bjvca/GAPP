@@ -1,9 +1,8 @@
------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------
       name:  <unnamed>
-       log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_20
-> 05\GAPP2/rep/100_food_basket_flex.log
+       log:  /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//rep/100_food_basket_flex.log
   log type:  text
- opened on:  11 Jun 2013, 12:42:45
+ opened on:  19 Jun 2013, 16:43:15
 
 . clear
 
@@ -11,12 +10,10 @@
 
 . #delimit ;
 delimiter now ;
-. *********************************************************************
-> *****
+. **************************************************************************
 > * 100_food_basket_flex.do     (start)
 > *
-> * This file is to get the data from the cons_cod.dta in work and then
->  
+> * This file is to get the data from the cons_cod.dta in work and then 
 > * to create the do file with the 90% of the consumption expenditures 
 > * using a flexible basket of goods.
 > *
@@ -24,15 +21,12 @@ delimiter now ;
 > * in order to facilitate dropping of some goods (such as rats) where
 > * quantity and nutrition information is unknown.
 > *
-> * We base our basket on the bottom 60 percent of consumption per capi
-> ta
+> * We base our basket on the bottom 60 percent of consumption per capita
 > * (weighted by hhweight*hhsize). We use the TEMPORALLY-ADJUSTED
 > * NOMINAL consumption because we don't have a spatial adjustment yet.
 > *
-> * (Then we iterate this process to arrive at a final food bundle in l
-> ater code)
-> *********************************************************************
-> *****;
+> * (Then we iterate this process to arrive at a final food bundle in later code)
+> **************************************************************************;
 . *CA modified to bring in hhdata into bootstrap;
 . /*
 > This file uses:
@@ -51,14 +45,12 @@ delimiter now ;
 > 
 > 
 > *do "$path/new/010_initial.do";
-. *********************************************************************
-> *****;
+. **************************************************************************;
 . * First, make a small temp file that has the temporally adjusted 
 > * nominal consumption per capita, using work/consump_nom and 
 > * work/temp_index_reg_tpi.dta. Make a dummy variable indicating
 > * whether they are in the bottom 60%.
-> *********************************************************************
-> *****;
+> **************************************************************************;
 . use "$path/work/conpc.dta", clear;
 
 . *use "$path/work/consump_nom.dta", clear;
@@ -84,10 +76,8 @@ delimiter now ;
 
 .         cap drop _merge;
 
-.         merge reg_tpi survquar using "$path/work/temp_index_reg_tpi.d
-> ta";
-variables reg_tpi survquar do not uniquely identify observations in
-    the master data
+.         merge reg_tpi survquar using "$path/work/temp_index_reg_tpi.dta";
+variables reg_tpi survquar do not uniquely identify observations in the master data
 (label lsurvquar already defined)
 (label region already defined)
 
@@ -119,8 +109,7 @@ variables reg_tpi survquar do not uniquely identify observations in
 .                 gen food_pc_tpi  = food_pc_nom /tpi_trim;
 (12 missing values generated)
 
-.         lab var food_pc_tpi "Temp-adjusted per capita food consumptio
-> n/day";
+.         lab var food_pc_tpi "Temp-adjusted per capita food consumption/day";
 
 .         gen cons_pc_tpi = food_pc_tpi + nf_pc_nom;
 (13 missing values generated)
@@ -132,9 +121,8 @@ variables reg_tpi survquar do not uniquely identify observations in
 .         tempfile contpi;
 
 .         save `contpi', replace;
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000001.tmp not fo
-> und)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000001.tmp saved
+(note: file /tmp/St04064.000001 not found)
+file /tmp/St04064.000001 saved
 
 .         collapse (p$bottom) one cons_pc_tpi [aw=hhsize*hhweight] ;
 
@@ -145,17 +133,15 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000001.tmp saved
 .         sort one;
 
 .         save `60pct', replace;
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000002.tmp not fo
-> und)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000002.tmp saved
+(note: file /tmp/St04064.000002 not found)
+file /tmp/St04064.000002 saved
 
 .                 use `contpi';
 
 .                 sort one;
 
 .                 merge one using `60pct';
-variable one does not uniquely identify observations in the master
-    data
+variable one does not uniquely identify observations in the master data
 
 .                 tab _merge;
 
@@ -186,15 +172,12 @@ bottom_bask |
 .                                 sort hhid;
 
 . save `contpi' , replace;
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000001.tmp saved
+file /tmp/St04064.000001 saved
 
-. *********************************************************************
-> *****;
-. * Next, need to keep only the food products in order to calculate the
->  
+. **************************************************************************;
+. * Next, need to keep only the food products in order to calculate the 
 > * food poverty line, and then calculate the food expenses by code.
-> *********************************************************************
-> *****;
+> **************************************************************************;
 . use "$path/work/cons_cod.dta";
 
 . /*
@@ -210,9 +193,9 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000001.tmp saved
 
 .         codebook hhid;
 
------------------------------------------------------------------------
-hhid                                                        (unlabeled)
------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------
+hhid                                                                                           (unlabeled)
+----------------------------------------------------------------------------------------------------------
 
                   type:  numeric (double)
 
@@ -222,23 +205,17 @@ hhid                                                        (unlabeled)
                   mean:   2.4e+09
               std. dev:   1.1e+09
 
-           percentiles:        10%       25%       50%       75%       
-> 90%
-                           1.1e+09   1.1e+09   2.1e+09   3.1e+09   4.1e
-> +09
+           percentiles:        10%       25%       50%       75%       90%
+                           1.1e+09   1.1e+09   2.1e+09   3.1e+09   4.1e+09
 
 .         sort hhid;
 
-. *********************************************************************
-> *****;
-. * Next, merge in the consumption information, and select those in bot
-> tom
+. **************************************************************************;
+. * Next, merge in the consumption information, and select those in bottom
 > * 60% of nominal distribution, after making temporal adjustment. 
-> *********************************************************************
-> *****;
+> **************************************************************************;
 .         merge hhid using `contpi';
-variable hhid does not uniquely identify observations in the master
-    data
+variable hhid does not uniquely identify observations in the master data
 
 .         tab _merge;
 
@@ -257,16 +234,14 @@ variable hhid does not uniquely identify observations in the master
 .         keep if bottom_basket==1;
 (61846 observations deleted)
 
-.      ****************************************************************
-> **********;
+.      **************************************************************************;
 . * Calculate food shares. Since we're only doing shares here, we can
 > * work with the expenditures without doing temporal adjustment.
-> *********************************************************************
-> *****;
+> **************************************************************************;
 .           gen  food_expenditure= cod_hh_nom;
 
-.                             *gen  food_expenditure= own_valued + dail
-> y_valued + monthly_valued + educ_valued;
+.                             *gen  food_expenditure= own_valued + daily_valued + monthly_valued + educ_va
+> lued;
 .           egen tot_food_expen= sum (food_expen), by (hhid) ;
 
 .           count if food_expenditure==.;
@@ -288,19 +263,14 @@ variable hhid does not uniquely identify observations in the master
 .                         tempfile food_basket_flex;
 
 . save `food_basket_flex', replace;
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000003.tmp not fo
-> und)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000003.tmp saved
+(note: file /tmp/St04064.000003 not found)
+file /tmp/St04064.000003 saved
 
-. *********************************************************************
-> ***********;
-. * Now prepare to get the variable spdomain to the using dataset, and 
-> then find the 
-> * total shares by each product in order to select the most important 
-> goods in the 
+. ********************************************************************************;
+. * Now prepare to get the variable spdomain to the using dataset, and then find the 
+> * total shares by each product in order to select the most important goods in the 
 > * basket.
-> *********************************************************************
-> ***********;
+> ********************************************************************************;
 .                 preserve;
 
 .                 use "$path/work/hhdata.dta", clear;
@@ -312,9 +282,8 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000003.tmp saved
 .                         tempfile spdomain;
 
 .                 save `spdomain' , replace;
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000005.tmp not fo
-> und)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000005.tmp saved
+(note: file /tmp/St04064.000005 not found)
+file /tmp/St04064.000005 saved
 
 .                 restore;
 
@@ -345,15 +314,14 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000005.tmp saved
 .            tempfile tothhweight;
 
 . save `tothhweight';
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000006.tmp saved
+file /tmp/St04064.000006 saved
 
 . use `food_basket_flex';
 
 .           sort hhid;
 
 .           merge hhid using `spdomain';
-variable hhid does not uniquely identify observations in the master
-    data
+variable hhid does not uniquely identify observations in the master data
 
 .           tab _merge;
 
@@ -374,8 +342,7 @@ variable hhid does not uniquely identify observations in the master
 .           sort spdomain;
 
 .             merge spdomain using `tothhweight';
-variable spdomain does not uniquely identify observations in the
-    master data
+variable spdomain does not uniquely identify observations in the master data
 (label lspdomain already defined)
 
 .           tab _merge;
@@ -406,12 +373,11 @@ variable spdomain does not uniquely identify observations in the
 .           drop if cumshr<=.075;
 (251 observations deleted)
 
-.             lab var f_share_w "average food share for the 13 regions"
-> ;
+.             lab var f_share_w "average food share for the 13 regions";
 
 . save "$path/work/food_basket_flex.dta", replace;
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\GAPP2
-> /work/food_basket_flex.dta saved
+(note: file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/food_basket_flex.dta not found)
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/food_basket_flex.dta saved
 
 . * List first spatial region to get an idea about contents;
 . list product spdomain f_share_w cumshr if spdomain==1;
@@ -460,12 +426,10 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\GAPP2
 43
 
 .   save "$path/work/codes_food_basket_flex.dta", replace;
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\GAPP2
-> /work/codes_food_basket_flex.dta saved
+(note: file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/codes_food_basket_flex.dta not found)
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/codes_food_basket_flex.dta saved
 
-. *********************************************************************
-> *****
+. **************************************************************************
 > * 100_food_basket_flex.do     (end)
-> *********************************************************************
-> *****;
+> **************************************************************************;
 . cap log close;

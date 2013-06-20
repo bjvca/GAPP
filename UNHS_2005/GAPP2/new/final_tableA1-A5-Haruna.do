@@ -29,13 +29,19 @@ set logtype text
 capture log close
 set more off
 
+if c(os)=="Unix" {
+global path "/home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2/"
+}
+else{
 global path "C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\GAPP2"
+}
+
 
 **************************************************************
 * Table A1: Household Characteristics and interview details
 **************************************************************
 
-use "$path\in\hsec1b.dta" 
+use "$path/in/hsec1b.dta" 
 *keep
 
 ***------- Primary Sampling Unit
@@ -78,12 +84,11 @@ replace survmon=7 if monsurve==11 & yrsurve==2005
 replace survmon=8 if monsurve==12 & yrsurve==2005
 replace survmon=9 if monsurve==1 & yrsurve==2006
 replace survmon=10 if monsurve==2 & yrsurve==2006
-replace survmon=11 if monsurve==3 & yrsurve==2006
+replace survmon=11 if monsurve==3 & yrsurve==2006				
 replace survmon=12 if monsurve==4 & yrsurve==2006
-#delim;
-label define lsurvmon 1 "May 05" 2 "Jun 05" 3 "Jul 05" 4 "Aug 05" 5 " Sep 05" 6 "Oct 05"
-						7 "Nov 05" 8 "Dec 05" 9 "Jan 06" 10 "Feb 06" 11 "Mar 06" 12 "Apr 06";
-#delim cr
+
+label define lsurvmon 1 "May 05" 2 "Jun 05" 3 "Jul 05" 4 "Aug 05" 5 " Sep 05" 6 "Oct 05" 7 "Nov 05" 8 "Dec 05" 9 "Jan 06" 10 "Feb 06" 11 "Mar 06" 12 "Apr 06"
+
 label values survmon lsurvmon
 tab survmon,m
 label variable survmon "Sequential Survey Month (May 2005=1)"
@@ -239,9 +244,9 @@ gen float bswt=1
 label variable bswt "bootstrap weights; and all equal to 1 for all households, as a toolkit requirement"
  
 sort hhid
-save "$path\out\hhdata.dta",replace
-save "$path\in\hhdata.dta",replace
-save "$path\work\hhdata.dta",replace
+save "$path/out/hhdata.dta",replace
+save "$path/in/hhdata.dta",replace
+save "$path/work/hhdata.dta",replace
 
 
 ************************************************************
@@ -250,24 +255,24 @@ save "$path\work\hhdata.dta",replace
 
 clear
 
-use "$path\in\hsec2.dta" 
+use "$path/in/hsec2.dta" 
 
 
 ***----- Household members
-/* According to the enumerator manual of 2005/06, Usual and Regular household members are defined as follows:
+*According to the enumerator manual of 2005/06, Usual and Regular household members are defined as follows:
 
-Usual members are defined as those persons who have been living in the household for 6 months or
-more during the last 12 months. However, members who have come to stay in the household permanently
-are to be included as usual members, even though they have lived in this household for less than 6
-months. Furthermore, children born to usual members on any date during the last 12 months will be taken
-as usual members. Both these categories will be given code "1" or "2" depending upon whether they are
-present or absent on the date of the interview.
+*Usual members are defined as those persons who have been living in the household for 6 months or
+*more during the last 12 months. However, members who have come to stay in the household permanently
+*are to be included as usual members, even though they have lived in this household for less than 6
+*months. Furthermore, children born to usual members on any date during the last 12 months will be taken
+*as usual members. Both these categories will be given code "1" or "2" depending upon whether they are
+*present or absent on the date of the interview.
 
-Regular members refer to those persons who would have been usual members of this household, but
-have been away for more than six months during the last 12 months, for education purposes, search of
-employment, business transactions etc. and living in boarding schools, lodging houses or hostels etc.
-These categories will be given code "3" or "4" depending upon presence or absence on the date of the
-interview. */
+*Regular members refer to those persons who would have been usual members of this household, but
+*have been away for more than six months during the last 12 months, for education purposes, search of
+*employment, business transactions etc. and living in boarding schools, lodging houses or hostels etc.
+*These categories will be given code "3" or "4" depending upon presence or absence on the date of the
+*interview. */
 
 /* 
 * For the purposes of the calculation of a poverty line we'll exclude from the household the members who have left 
@@ -299,10 +304,10 @@ label variable age "Age in years"
 
 * In order to have the information on whether the mother resides in the house or not we need the file "hsec3"
 sort indid
-save "$path\in\temp_A2_1.dta",replace
+save "$path/in/temp_A2_1.dta",replace
 
 clear
-use "$path\in\hsec3.dta" 
+use "$path/in/hsec3.dta" 
 
 ***------ Individual ID
 rename hh hhid
@@ -325,7 +330,7 @@ label values motherhh lmoth
 
 keep indid motherhh
 sort indid
-merge 1:1 indid using "$path\in\temp_A2_1.dta"
+merge 1:1 indid using "$path/in/temp_A2_1.dta"
 tab _merge
 	* There are some obs coming only from the using data. The explanation is that Section 3 of the questionnaire 
 	* is administered only to usual and regular household members, as is confirmed by the cross tab below
@@ -334,9 +339,9 @@ tab _merge
 drop _merge
 
 keep hhid indid sex age motherhh
-save "$path\out\indata.dta",replace
-save "$path\in\indata.dta",replace
-save "$path\work\indata.dta",replace
+save "$path/out/indata.dta",replace
+save "$path/in/indata.dta",replace
+save "$path/work/indata.dta",replace
 
 **********************************************
 * Table A3: Calorie content of food items
@@ -345,7 +350,7 @@ save "$path\work\indata.dta",replace
 * The excel file (with more detailed information, inculding the sources) is in the "in" folder
 
 clear
-use "$path\in\foodcomp_uganda_HHsurvey2005.dta", replace
+use "$path/in/foodcomp_uganda_HHsurvey2005.dta", replace
 
 * Since they did not include edible portions in the file I assume that the calorie per gram is only for the edible portion.
 * I will therefore compute calperg that way
@@ -357,9 +362,9 @@ label variable descript "Product Description: incl. product code in the beginnin
 label variable calperg "Calorie content of food product: calories per gram"
 destring product, replace
 sort product
-save "$path\out\calperg.dta",replace
-save "$path\in\calperg.dta",replace
-save "$path\work\calperg.dta",replace
+save "$path/out/calperg.dta",replace
+save "$path/in/calperg.dta",replace
+save "$path/work/calperg.dta",replace
 
 clear
 ***************************************************************************

@@ -1,9 +1,8 @@
------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------
       name:  <unnamed>
-       log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_20
-> 05\GAPP2/rep/070_calpp.log
+       log:  /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//rep/070_calpp.log
   log type:  text
- opened on:  11 Jun 2013, 12:42:26
+ opened on:  19 Jun 2013, 16:43:07
 
 . clear
 
@@ -12,14 +11,11 @@
 . #delimit ;
 delimiter now ;
 . *global fert_rate "fert_rate";
-. *********************************************************************
-> **
+. ***********************************************************************
 > * 070_calpp.do          (start)
 > *
-> * Purpose: Determine calories required for each person per domain per
->  day.
-> *********************************************************************
-> **;
+> * Purpose: Determine calories required for each person per domain per day.
+> ***********************************************************************;
 . /*
 > This file uses:
 >         work/indata.dta
@@ -29,27 +25,24 @@ delimiter now ;
 >         work/calpp.dta
 > */
 > 
-> *--------------------------------------------------------------------
-> -----*
+> *-------------------------------------------------------------------------*
 > * Include fertility rates from csv-file
-> *--------------------------------------------------------------------
-> -----*;
+> *-------------------------------------------------------------------------*;
 . clear;
 
-. insheet sex rural age fert_rate using "$path/in/fert_rate_Uganda.csv"
-> ;
+. insheet sex rural age fert_rate using "$path/in/fert_rate_Uganda.csv";
 (4 vars, 96 obs)
 
-. ***************************************** check for Ugandan fertility
->  rates *************************************
-> *********************************************************************
-> ****************************************;
+. ***************************************** check for Ugandan fertility rates ****************************
+> *********
+> ********************************************************************************************************
+> *****;
 . sort sex rural age;
 
 . tempfile fert_rate;
 
 . save `fert_rate';
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000001.tmp saved
+file /tmp/St04064.000001 saved
 
 . list;
 
@@ -173,19 +166,16 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000001.tmp saved
  96. |   2       1    59       .006 |
      +------------------------------+
 
-. *--------------------------------------------------------------------
-> -----*
+. *-------------------------------------------------------------------------*
 > * Now do the calorie needs for individuals
-> *--------------------------------------------------------------------
-> -----*;
+> *-------------------------------------------------------------------------*;
 . use "$path/work/indata.dta";
 
 . * CA bootstrap modification;
 . sort hhid;
 
 . merge hhid using "$path/work/hhdata.dta";
-variable hhid does not uniquely identify observations in the master
-    data
+variable hhid does not uniquely identify observations in the master data
 
 . tab _m;
 
@@ -264,8 +254,7 @@ variable hhid does not uniquely identify observations in the master
 . sort sex rural age;
 
 . merge sex rural age using `fert_rate';
-variables sex rural age do not uniquely identify observations in the
-    master data
+variables sex rural age do not uniquely identify observations in the master data
 
 . sum;
 
@@ -337,18 +326,15 @@ variables sex rural age do not uniquely identify observations in the
 .     gen cal = .;
 (41902 missing values generated)
 
-. * Same assumptions about sex/age specific calories need in IAF 1997, 
-> IAF 2003 and IOF 2009;
+. * Same assumptions about sex/age specific calories need in IAF 1997, IAF 2003 and IOF 2009;
 . * Children (no difference between boys and girls)   ;
 .      replace cal =  820 if age < 1;
 (1505 real changes made)
 
-. * Add 500 cal per day for mothers in first six months of breast feedi
-> ng
+. * Add 500 cal per day for mothers in first six months of breast feeding
 > * We assume that 60% of children under 1 are under six months old
 > * And that all of them breast feed
-> * We add these mother requirements of 300 on average to each child un
-> der 1 whose mother is alive;
+> * We add these mother requirements of 300 on average to each child under 1 whose mother is alive;
 .     replace cal = 1120 if age <  1 & motherhh==1;
 (1425 real changes made)
 
@@ -399,48 +385,36 @@ variables sex rural age do not uniquely identify observations in the
 .     replace cal = 1950 if age >= 10 & age <12 & sex==2;
 (1 real change made)
 
-. * Women with a correction for pregnancy. We add 285 calories per for 
-> the final trimester.
-> * To do this we find the probability that rural and urban women are p
-> regnant from
-> * live births data in the 1997 census over the past 12 months (no cor
-> rection for still births).
-> * 3/4*probability of birth gives probability of preganancy. Probabili
-> ty of final trimester is one
+. * Women with a correction for pregnancy. We add 285 calories per for the final trimester.
+> * To do this we find the probability that rural and urban women are pregnant from
+> * live births data in the 1997 census over the past 12 months (no correction for still births).
+> * 3/4*probability of birth gives probability of preganancy. Probability of final trimester is one
 > * third of that of that or 1/4 of the probability of birth
 > 
 > * Women urban;
-.     replace cal = 2100 + (fert_rate*285)/4 if age >= 12 & age <14 & s
-> ex==2 & rural==0;
+.     replace cal = 2100 + (fert_rate*285)/4 if age >= 12 & age <14 & sex==2 & rural==0;
 (2 real changes made)
 
-.     replace cal = 2150 + (fert_rate*285)/4 if age >= 14 & age <18 & s
-> ex==2 & rural==0;
+.     replace cal = 2150 + (fert_rate*285)/4 if age >= 14 & age <18 & sex==2 & rural==0;
 (4 real changes made)
 
-.     replace cal = 2100 + (fert_rate*285)/4 if age >= 18 & age <30 & s
-> ex==2 & rural==0;
+.     replace cal = 2100 + (fert_rate*285)/4 if age >= 18 & age <30 & sex==2 & rural==0;
 (12 real changes made)
 
-.     replace cal = 2150 + (fert_rate*285)/4 if age >= 30 & age <60 & s
-> ex==2 & rural==0;
+.     replace cal = 2150 + (fert_rate*285)/4 if age >= 30 & age <60 & sex==2 & rural==0;
 (30 real changes made)
 
 . * Women rural;
-.     replace cal = 2100 + (fert_rate*285)/4 if age >= 12 & age <14 & s
-> ex==2 & rural==1;
+.     replace cal = 2100 + (fert_rate*285)/4 if age >= 12 & age <14 & sex==2 & rural==1;
 (2 real changes made)
 
-.     replace cal = 2150 + (fert_rate*285)/4 if age >= 14 & age <18 & s
-> ex==2 & rural==1;
+.     replace cal = 2150 + (fert_rate*285)/4 if age >= 14 & age <18 & sex==2 & rural==1;
 (4 real changes made)
 
-.     replace cal = 2100 + (fert_rate*285)/4 if age >= 18 & age <30 & s
-> ex==2 & rural==1;
+.     replace cal = 2100 + (fert_rate*285)/4 if age >= 18 & age <30 & sex==2 & rural==1;
 (12 real changes made)
 
-.     replace cal = 2150 + (fert_rate*285)/4 if age >= 30 & age <60 & s
-> ex==2 & rural==1;
+.     replace cal = 2150 + (fert_rate*285)/4 if age >= 30 & age <60 & sex==2 & rural==1;
 (30 real changes made)
 
 . * Women 60+ are not pregnant ;
@@ -455,8 +429,7 @@ variables sex rural age do not uniquely identify observations in the
 .     *replace cal = 1500 if cal ==. & age==.;
 .     * 2) this one is 21 years old;
 .     *replace cal = 2500 if cal ==. & b2==.;
-.     collapse (sum) cal num (max) psu hhsize hhweight strata rural spd
-> omain, by (hhid);
+.     collapse (sum) cal num (max) psu hhsize hhweight strata rural spdomain, by (hhid);
 
 .     gen chk=hhsize - num;
 (12 missing values generated)
@@ -509,9 +482,9 @@ variables sex rural age do not uniquely identify observations in the
 
 .  codebook hhid;
 
------------------------------------------------------------------------
-hhid                                                       Household ID
------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------
+hhid                                                                                          Household ID
+----------------------------------------------------------------------------------------------------------
 
                   type:  numeric (double)
 
@@ -521,28 +494,22 @@ hhid                                                       Household ID
                   mean:   2.5e+09
               std. dev:   1.1e+09
 
-           percentiles:        10%       25%       50%       75%       
-> 90%
-                           1.1e+09   1.1e+09   2.1e+09   3.1e+09   4.1e
-> +09
+           percentiles:        10%       25%       50%       75%       90%
+                           1.1e+09   1.1e+09   2.1e+09   3.1e+09   4.1e+09
 
 . collapse (mean) calpp[aw=hhsize*hhweight], by (spdomain);
 
 . sort spdomain;
 
 . save "$path/work/calpp.dta",replace;
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\GAPP2
-> /work/calpp.dta saved
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/calpp.dta saved
 
-. *********************************************************************
-> **
+. ***********************************************************************
 > * 070_calpp.do          (end)
-> *********************************************************************
-> **;
+> ***********************************************************************;
 . log close;
       name:  <unnamed>
-       log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_20
-> 05\GAPP2/rep/070_calpp.log
+       log:  /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//rep/070_calpp.log
   log type:  text
- closed on:  11 Jun 2013, 12:42:28
------------------------------------------------------------------------
+ closed on:  19 Jun 2013, 16:43:08
+----------------------------------------------------------------------------------------------------------
