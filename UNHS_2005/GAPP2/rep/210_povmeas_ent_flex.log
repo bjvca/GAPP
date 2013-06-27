@@ -1,9 +1,9 @@
------------------------------------------------------------------------
+------------------------------------------------------------------
       name:  <unnamed>
-       log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_20
-> 05\GAPP2/rep/210_povmeas_ent_flex.log
+       log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UN
+> HS_2005\GAPP2/rep/210_povmeas_ent_flex.log
   log type:  text
- opened on:  11 Jun 2013, 12:43:18
+ opened on:  25 Jun 2013, 11:33:41
 
 . clear
 
@@ -11,27 +11,28 @@
 
 . #delimit ;
 delimiter now ;
-. *********************************************************************
-> ************
+. ****************************************************************
+> *****************
 > * 210_povmeas_ent_flex.do               (start)
 > *
-> * This file produces poverty measures taking the entropy adjusted pov
-> erty 
-> * lines as a base. It produces two sets of poverty measures. In one, 
-> * Maputo is treated with the logic of the fixed bundle. In the second
-> , the revealed preference logic
-> * is maintained. Here, the flexible bundle is viewed as being determi
-> ned by the 
-> * lower constraint on the value of the food bundle dictated by P_t2*Q
-> _t1. In this case,
+> * This file produces poverty measures taking the entropy adjuste
+> d poverty 
+> * lines as a base. It produces two sets of poverty measures. In 
+> one, 
+> * Maputo is treated with the logic of the fixed bundle. In the s
+> econd, the revealed preference logic
+> * is maintained. Here, the flexible bundle is viewed as being de
+> termined by the 
+> * lower constraint on the value of the food bundle dictated by P
+> _t2*Q_t1. In this case,
 > * the year t2 food shares are calculated and applied.
 > *
-> * Fixed poverty lines/etc. are mentioned here and there. But there ar
-> e NO fixed
+> * Fixed poverty lines/etc. are mentioned here and there. But the
+> re are NO fixed
 > * calculations for Maputo (or other provinces) anymore
 > *
-> *********************************************************************
-> ************;
+> ****************************************************************
+> *****************;
 . /*
 > This file uses:
 >         work\povline_food_ent.csv
@@ -55,21 +56,21 @@ delimiter now ;
 > 
 > 
 > 
-> *********************************************************************
-> *****;
-. * Bring in data file with nominal consumption per capita, and deflate
->  it
+> ****************************************************************
+> **********;
+. * Bring in data file with nominal consumption per capita, and de
+> flate it
 > * by temporal price index.
-> *********************************************************************
-> *****;
+> ****************************************************************
+> **********;
 . use "$path/work/hhdata.dta", clear;
 
 .         sort reg_tpi survquar;
 
-.         merge reg_tpi survquar using "$path/work/temp_index_reg_tpi.d
-> ta";
-variables reg_tpi survquar do not uniquely identify observations in
-    the master data
+.         merge reg_tpi survquar using "$path/work/temp_index_reg_
+> tpi.dta";
+variables reg_tpi survquar do not uniquely identify observations
+    in the master data
 (label lsurvquar already defined)
 (label region already defined)
 
@@ -101,42 +102,342 @@ variables reg_tpi survquar do not uniquely identify observations in
 .         gen food_pc_tpi  = food_pc_nom /tpi_trim;
 (12 missing values generated)
 
-.         lab var food_pc_tpi "Temp-adjusted per capita food consumptio
-> n/day";
+.         lab var food_pc_tpi "Temp-adjusted per capita food consu
+> mption/day";
 
 .         gen cons_pc_tpi = food_pc_tpi + nf_pc_nom;
 (13 missing values generated)
 
-.         lab var cons_pc_tpi "Temp adjusted total consumption/day";
+.         lab var cons_pc_tpi "Temp adjusted total consumption/day
+> ";
 
 .         gen one=1;
 
 .         tempfile contpi;
 
 . save `contpi', replace;
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000001.tmp not fo
-> und)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0k000001.tmp saved
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000001.tmp n
+> ot found)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000001.tmp saved
 
-. *********************************************************************
-> *****;
-. * Calculate the food shares for people near the food poverty line
-> *********************************************************************
-> *****;
+. ****************************************************************
+> **********;
+. * Calculate the food shares for people near the food poverty lin
+> e
+> ****************************************************************
+> **********;
 . *Bring in entropy estimated flexible lines;
 . clear;
 
 . insheet using "$path\work\povline_food_ent.csv";
-file
-    C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\GAPP
-    > 2\work\povline_food_ent.csv not found
-r(601);
+(3 vars, 9 obs)
+
+.         rename ent food_povline_ent;
+
+.      keep spdomain food_povline_ent;
+
+.      sort spdomain;
+
+. *Bring in fixed bundle poverty lines for Maputo ;
+. *This is the same level for both entropy and fixed bundle analys
+> is;
+. *since the Q02*P02<=Q96*P02 constraint is binding;
+. *$no_temp_rev   merge spdomain using "$path\work\povline_food_fi
+> x.dta";
+. *$no_temp_rev    replace food_povline_ent=food_povline_w if spdo
+> main>10;
+.       keep spdomain food_povline_ent;
+
+.       sort spdomain;
+
+.       tempfile food_povline_ent;
+
+. save `food_povline_ent';
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
+
+. clear;
+
+. use `contpi';
+
+.         sort spdomain;
+
+.         merge spdomain using `food_povline_ent';
+variable spdomain does not uniquely identify observations in the
+    master data
+
+.         tab _merge;
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |          6        0.08        0.08
+          3 |      7,421       99.92      100.00
+------------+-----------------------------------
+      Total |      7,427      100.00
+
+.         drop _merge;
+
+. gen     triwt = 0 ;
+
+. replace triwt = 11 - round(50*abs(cons_pc_tpi/food_povline_ent-1
+> )+0.5)
+>                 if abs(cons_pc_tpi/food_povline_ent-1)<=0.2;
+(53 real changes made)
+
+.         gen tripopwt=triwt*hhweight*hhsize;
+(12 missing values generated)
+
+.         collapse (mean) nf_pc_nom food_povline_ent [aw=tripopwt]
+>  ,
+>         by(spdomain);
+
+.         rename nf_pc_nom povline_nf;
+
+.         lab var povline_nf "Nonfood poverty line";
+
+.         sort spdomain;
+
+. *       merge spdomain using "$foodshr_pastSurvey", keep(spdomai
+> n $fdshr_t1);
+. *       tab _m;
+. *       drop _m;
+. *       gen fdshr_t1 = $fdshr_t1;
+. *       drop $fdshr_t1;
+. *       lab var fdshr_t1 "year t1 (e.g. 1996) poverty line food 
+> share";
+.      *calculate line for all provinces with flexible food shares
+> ;
+.                         gen povline_ent_m=food_povline_ent + pov
+> line_nf;
+
+.         gen fdshr=food_povline_ent/povline_ent;
+
+.         lab var fdshr "year t2 (e.g. 2002) poverty line food sha
+> re";
+
+.       *redo for maputo inserting the fixed food share;
+.  *     gen povline_ent=povline_ent_m;
+. *MAH;
+. *$no_temp_rev   replace povline_ent=food_povline_ent/fdshr_t1 if
+>  spdomain >=11;
+. *       lab var povline_ent   "poverty lines with Maputo regions
+>  calculated using fixed bundle non-food shares";
+.     lab var povline_ent   "poverty lines with all regions calcul
+> ated using flexible bundle non-food shares";
+
+. *    lab var povline_ent_m "poverty lines with Maputo regions ca
+> lculated using flexible bundle non-food shares";
+.         sort spdomain;
+
+. tempfile povlines_ent;
+
+. save `povlines_ent', replace;
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp n
+> ot found)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+
+. clear;
+
+. ****************************************************************
+> **********;
+. * Calculate poverty measures with all regions using flexible yea
+> r t2 food shares
+> ****************************************************************
+> **********;
+. use `contpi';
+
+.         sort spdomain;
+
+.         merge spdomain using `povlines_ent';
+variable spdomain does not uniquely identify observations in the
+    master data
+(label llspdomain already defined)
+
+.         tab _merge;
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |        522        7.03        7.03
+          3 |      6,905       92.97      100.00
+------------+-----------------------------------
+      Total |      7,427      100.00
+
+.         drop _merge;
+
+. ****************************************************************
+> **********;
+. * Create spatial price index, based on the total poverty line, w
+> ith
+> * adjustment so that mean (and total) nominal consumption equals
+> * mean (and total) spatially deflated consumption.
+> *
+> * Choose arbitrary strata to be the base at first. The middle of
+>  the 13
+> * codes is code 7 -- that's arbirtary enough.
+> ****************************************************************
+> **********;
+.         gen cr= cons_pc_tpi ;
+(13 missing values generated)
+
+.         gen linpob=povline_ent;
+(522 missing values generated)
+
+. *MAH;
+.  *Now only 6 regions, so base is chosen as the 1;
+.         *qui sum linpob if spdomain==7, meanonly;
+.         qui sum linpob if spdomain==1, meanonly;
+
+.         global spi_base=r(mean);
+
+.         gen spi=linpob/$spi_base;
+(7427 missing values generated)
+
+.         gen cr2=cr/spi;
+(7427 missing values generated)
+
+.         qui sum cr [aw=hhweight*hhsize];
+
+.         global sumcr=r(sum);
+
+.         qui sum cr2 [aw=hhweight*hhsize];
+
+.         global sumcr2=r(sum);
+
+.         replace spi=spi*$sumcr2/$sumcr;
+(0 real changes made)
+
+.         gen linpobr=linpob/spi;
+(7427 missing values generated)
+
+.         replace cr2=cr/spi;
+(0 real changes made)
+
+.         sum cr cr2 linpob linpobr [aw=hhweight*hhsize];
+
+    Variable |     Obs      Weight        Mean   Std. Dev.       M
+> in        Max
+-------------+----------------------------------------------------
+> -------------
+          cr |    7414  30109848.2    1106.447   1372.576   61.851
+> 36   113681.6
+         cr2 |       0           0
+      linpob |    6894  27425862.7    252.1669   72.45442   111.82
+> 55   338.3173
+     linpobr |       0           0
+
+.         lab var cr      "Temporally-adjusted cons pc";
+
+.         lab var cr2     "Spatially & temporally adjusted cons pc
+> ";
+
+.         lab var linpob  "Poverty line";
+
+.         lab var linpobr "Real poverty line";
+
+.         lab var spi     "Spatial price index";
+
+.         *calculate poverty measures;
+.         gen h = 100     if cr2 <=(linpobr);
+
+.         replace  h = 0  if cr2 > (linpobr);
+(0 real changes made)
+
+.         gen             pg      = ((linpobr - cr2 )/linpobr) *10
+> 0;
+(7427 missing values generated)
+
+.         replace         pg      = 0             if h==0;
+(0 real changes made)
+
+.         gen             spg     = ((( linpobr - cr2 )/ linpobr )
+> ^2)*100;
+(7427 missing values generated)
+
+.         replace         spg     = 0             if h==0;
+(0 real changes made)
+
+.         gen h_ent  =h;
+
+.         gen pg_ent =pg;
+(7427 missing values generated)
+
+.         gen spg_ent=spg;
+(7427 missing values generated)
+
+.         lab var h_ent   "Poverty headcount entropy bundle with M
+> aputo food share fixed";
+
+.         lab var pg_ent  "Poverty gap entropy bundle with Maputo 
+> food share fixed";
+
+.         lab var spg_ent "Squared poverty gap entropy bundle with
+>  Maputo food share fixed";
+
+.         sort hhid;
+
+.         merge hhid using "$path\work\hhdata.dta";
+(label region already defined)
+(label DISTRICT already defined)
+(label lbur already defined)
+(label lbidp already defined)
+(label lbregs already defined)
+(label lbpoor already defined)
+(label lsurvmon already defined)
+(label lsurvquar already defined)
+(label VERIFIER already defined)
+(label ENTRANT already defined)
+(label OUR_RESP already defined)
+(label RESPCODE already defined)
+(label EDITCODE already defined)
+(label SCODE already defined)
+(label INIDPCMP already defined)
+(label SUBSTRAT already defined)
+(label llstrata already defined)
+(label llrural already defined)
+(label llspdomain already defined)
+
+.         tab _merge;
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |          1        0.01        0.01
+          3 |      7,426       99.99      100.00
+------------+-----------------------------------
+      Total |      7,427      100.00
+
+.         drop if _merge~=3;
+(1 observation deleted)
+
+.         drop _merge;
+
+.         gen popwt=hhsize*hhweight;
+(11 missing values generated)
+
+.         lab var popwt "Population weights = hhsize X hhweight";
+
+.                 * Stata 10.1 syntax ;
+.         svyset , clear;
+
+.         svyset [pweight=popwt] , str(strata) psu(psu);
+
+      pweight: popwt
+          VCE: linearized
+  Single unit: missing
+     Strata 1: strata
+         SU 1: psu
+        FPC 1: <zero>
+
+. *MAH: Below at various places the original reg13 has been change
+> d into spdomain or spdomain ;
+.                 svy: mean h_ent pg_ent spg_ent;
+(running mean on estimation sample)
+no observations
+r(2000);
 
 end of do-file
-r(601);
+r(2000);
 
 end of do-file
 
-r(601);
+r(2000);
 
 . exit, clear

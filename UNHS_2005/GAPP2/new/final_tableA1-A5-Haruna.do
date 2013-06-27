@@ -109,19 +109,21 @@ label variable hhsize "Household Size"
 ***------- Geographical Stratification during sampling
 * this was not there as was with 2009, therefore we shall generate "strata" from the distict and region variables here. the 2009 UBOS 
 ** has explanations for what districts belong to which sub regions, so we shall use that to build our strata variable. UBOS 2009/10 report had described them
-** as follows: Notes: Sub-region of North East includes the districts of Kotido, Abim, Moroto, Kaabong,Nakapiripiriti, Katwaki, Amuria, Bukedea, Soroti, Kumi and Kaberamaido; Mid-Northern
-** included Gulu, Amuru, Kitgum, Pader, Apac, Oyam, Lira, Amolatar and Dokolo; West Nile includes Moyo, Adjumani, Yumbe, Arua, Koboko, Nyadri, and Nebbi; Mid-Western includes
-** Masindi, Bullisa, Hoima, Kibaale, Bundibugyo, Kabarole, Kasese, Kyenjojo and Kamwenge; South Western includes Bushenyi, Rukungiri, Kanungu, Kabale, Kisoro, Mbarara, Ibanda,
-** Isingiro, Kiruhura and Ntungamo; Eastern includes Kapchorwa, Bukwa, Mbale, Bududa, Manafwa, Tororo, Butaleja, Sironko, Paliisa, Budaka and Busia; Central 1 includes Kalangala,
-** Masaka, Mpigi, Rakai, Lyantonde, Sembabule and Wakiso; Central 2 includes Kayunga, Kiboga, Luwero, Nakaseke, Mubende, Mityana, Mukono and Nakasongola; East Central
-** includes Jinja, Iganga, Namutumba, Kamuli, Kaliro, Bugiri and Mayuge; and Kampala. We have used the same nomenclature
+** as follows: Notes: Sub-region of North East includes the districts of Kotido, Moroto, Nakapiripiriti, Katwaki, Amuria, Soroti, Kumi
+** and Kaberamaido; Mid-Northern included Gulu, Kitgum, Pader, Apac, and Lira; West Nile includes Moyo, Adjumani, Yumbe, Arua, 
+**Koboko, and Nebbi; Mid-Western includes Masindi, Hoima, Kibaale, Bundibugyo, Kabarole, Kasese, Kyenjojo and Kamwenge; South Western includes 
+**  Bushenyi, Rukungiri, Kanungu, Kabale, Kisoro, Mbarara, and Ntungamo; Eastern includes Kapchorwa, Mbale,
+** Tororo, Sironko, Paliisa, and Busia; Central 1 includes Kalangala, Masaka, Mpigi, Rakai, Sembabule and Wakiso; Central 2 includes
+** Kayunga, Kiboga, Luwero, Mubende, Mukono and Nakasongola; East Central includes Jinja, Iganga, Kamuli, Bugiri and 
+** Mayuge; and Kampala. We have used the same nomenclature
 
 tab district
 tab district, nolabel
 
-gen float strata=1 if (district==102)
-replace strata=2 if (district==101|district==106|district==110|district==111|district==113)
-replace strata=3 if (district==103|district==104|district==105|district==107|district==108|district==109|district==112)
+
+gen float strata=2 if (district==101|district==105|district==106|district==110|district==111|district==113)
+replace strata=1 if (district==102)
+replace strata=3 if (district==103|district==104|district==107|district==108|district==109|district==112)
 replace strata=4 if (district==201|district==203|district==204|district==205|district==214)
 replace strata=5 if (district==202|district==206|district==209|district==210|district==212|district==215)
 replace strata=6 if (district==302|district==304|district==305|district==307|district==312)
@@ -130,7 +132,7 @@ replace strata=8 if (district==301|district==303|district==309|district==310|dis
 replace strata=9 if (district==401|district==403|district==405|district==406|district==407|district==409|district==413|district==415)
 replace strata=10 if (district==402|district==404|district==408|district==410|district==411|district==412|district==414)
 
-label define lstrata 1 "Kampala" 2 "Central 1" 3 "Central 2" 4 "East Central" 5 "Eastern" 6 "Mid Northern" 7 "North East" 8 "West Nile" 9 "Mid Western" 10 "South Western"
+label define lstrata  1 "Kampala" 2 "Central 1" 3 "Central 2" 4 "East Central" 5 "Eastern" 6 "Mid Northern" 7 "North East" 8 "West Nile" 9 "Mid Western" 10 "South Western"
 label values strata lstrata
 label variable strata "Geographical stratification variable during sampling (ranging from 1 to 10 sub regions)"
 * to ensure that the right districts had been used for the right sub-regions (strata), we checked this by tabbing these sub-regions with rural/urban description and then

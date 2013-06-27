@@ -1,21 +1,26 @@
-----------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------
       name:  <unnamed>
-       log:  /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//rep/080_conpc.log
+       log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UN
+> HS_2005\GAPP2/rep/080_conpc.log
   log type:  text
- opened on:  19 Jun 2013, 16:43:08
+ opened on:  25 Jun 2013, 11:33:03
 
 . set more off
 
 . 
 . 
-. ***************************************************************************
+. ****************************************************************
+> ***********
 . * 080_conpc.do          (start)
 . *
-. * Creates a file with per capita nominal consumption divided between food
-. * and non-food categories based on the calorie definition of food
+. * Creates a file with per capita nominal consumption divided bet
+> ween food
+. * and non-food categories based on the calorie definition of foo
+> d
 . * rather than the COICOP (INE) definition of food. ready for 
 . * temporal deflation when necessary
-. **************************************************************************** 
+. ****************************************************************
+> ************ 
 . 
 . /*
 > This file uses:
@@ -28,9 +33,11 @@
 . 
 . 
 . 
-. ***************************************************************************
+. ****************************************************************
+> ***********
 . * Food expenditure
-. **************************************************************************** 
+. ****************************************************************
+> ************ 
 . use "$path/in/cons_cod.dta" 
 
 . *use "$path/work/cons_cod.dta" 
@@ -52,30 +59,44 @@
 .             tempfile foodexp 
 
 . save `foodexp' 
-file /tmp/St04064.000001 saved
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000001.tmp saved
 
 . 
-. ***************************************************************************
+. ****************************************************************
+> ***********
 . * Food expenditure merged with all expenditure
-. **************************************************************************** 
+. ****************************************************************
+> ************ 
 . *use "$path/work/cons_cod.dta" 
 . use "$path/in/cons_cod.dta" 
 
 . *use "$path/in/cons_cat.dta" 
 . sum 
 
-    Variable |       Obs        Mean    Std. Dev.       Min        Max
--------------+--------------------------------------------------------
-        hhid |     99617    2.42e+09    1.14e+09   1.01e+09   4.15e+09
-     product |     99744    195.1728    228.4847        100        999
-    food_cat |     99617    1.074535    .2626416          1          2
-    prod_cat |     99750    1.074436    .2624806          1          2
-    descript |     99750    1.074436    .2624806          1          2
--------------+--------------------------------------------------------
-   quantityd |     92192    .6260744    4.070446          0   857.1429
-      valuez |     92192    250.8346    477.1331          0      40000
-    quantity |     84735    2.410407     54.5909          0   14942.86
-  cod_hh_nom |     99750    472.7854     2940.77          0   680353.7
+    Variable |       Obs        Mean    Std. Dev.       Min       
+>  Max
+-------------+----------------------------------------------------
+> ----
+        hhid |     99617    2.42e+09    1.14e+09   1.01e+09   4.15
+> e+09
+     product |     99744    195.1728    228.4847        100       
+>  999
+    food_cat |     99617    1.074535    .2626416          1       
+>    2
+    prod_cat |     99750    1.074436    .2624806          1       
+>    2
+    descript |     99750    1.074436    .2624806          1       
+>    2
+-------------+----------------------------------------------------
+> ----
+   quantityd |     92192    .6260744    4.070446          0   857.
+> 1429
+      valuez |     92192    250.8346    477.1331          0      4
+> 0000
+    quantity |     84735    2.410407     54.5909          0   1494
+> 2.86
+  cod_hh_nom |     99750    472.7854     2940.77          0   6803
+> 53.7
 
 . collapse (sum) cod_hh_nom, by(hhid) 
 
@@ -143,12 +164,14 @@ file /tmp/St04064.000001 saved
 (13 missing values generated)
 
 .  
-.             keep hhid cons_hh_nom food_pc_nom nf_pc_nom cons_pc_nom survquar spdomain news reg_tpi rural
->  hhweight hhsize 
+.             keep hhid cons_hh_nom food_pc_nom nf_pc_nom cons_pc_
+> nom survquar spdomain news reg_tpi rural hhweight hhsize 
 
-.             lab var food_pc_nom "nominal food consumption per capita" 
+.             lab var food_pc_nom "nominal food consumption per ca
+> pita" 
 
-.             lab var nf_pc_nom "nominal non-food consumption per capita" 
+.             lab var nf_pc_nom "nominal non-food consumption per 
+> capita" 
 
 . keep hhid cons_hh_nom cons_pc_nom food_pc_nom nf_pc_nom 
 
@@ -157,18 +180,22 @@ file /tmp/St04064.000001 saved
 . 
 . * MAH   sum  codebook hhid 
 . save "$path/work/conpc.dta", replace 
-file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/conpc.dta saved
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
+> GAPP2/work/conpc.dta saved
 
 . 
 . 
-. ***************************************************************************
+. ****************************************************************
+> ***********
 . * 080_conpc.do          (end)
-. **************************************************************************** 
+. ****************************************************************
+> ************ 
 . 
 . 
 . log close 
       name:  <unnamed>
-       log:  /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//rep/080_conpc.log
+       log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UN
+> HS_2005\GAPP2/rep/080_conpc.log
   log type:  text
- closed on:  19 Jun 2013, 16:43:08
-----------------------------------------------------------------------------------------------------------
+ closed on:  25 Jun 2013, 11:33:04
+------------------------------------------------------------------
