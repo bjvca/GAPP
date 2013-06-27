@@ -80,7 +80,7 @@ save `contpi', replace;
 *Bring in entropy estimated flexible lines;
 clear;
 
-insheet using "$path\work\povline_food_ent.csv";
+insheet using "$path/work/povline_food_ent.csv";
 	rename ent food_povline_ent;
 
      keep spdomain food_povline_ent;
@@ -90,7 +90,7 @@ insheet using "$path\work\povline_food_ent.csv";
 *This is the same level for both entropy and fixed bundle analysis;
 *since the Q02*P02<=Q96*P02 constraint is binding;
 
-*$no_temp_rev	merge spdomain using "$path\work\povline_food_fix.dta";
+*$no_temp_rev	merge spdomain using "$path/work/povline_food_fix.dta";
 *$no_temp_rev    replace food_povline_ent=food_povline_w if spdomain>10;
       keep spdomain food_povline_ent;
       sort spdomain;
@@ -235,7 +235,7 @@ use `contpi';
 
 	*set aside the spatial price index;
       tempfile spi;
-*      use "$path\work\povmeas_ent.dta", clear;
+*      use "$path/work/povmeas_ent.dta", clear;
       collapse (mean) spi, by(spdomain);
       sort spdomain;
 save `spi', replace;
@@ -322,7 +322,7 @@ drop bswt one h pg spg;
 	compress;
 label data "Final data set. Official published poverty rates are calculated from this data set";
 	sort hhid;
-	save "$path\work\povmeas_ent_flex.dta", replace;
+	save "$path/work/povmeas_ent_flex.dta", replace;
 
 gen dum=1;
 
@@ -334,7 +334,7 @@ tempfile nat;
 save `nat';
 
 	*output the rural/urban measures;
-	use "$path\work\povmeas_ent_flex.dta", clear;
+	use "$path/work/povmeas_ent_flex.dta", clear;
 	collapse  (mean) h_ent_m pg_ent_m spg_ent_m [aw=hhweight*hhsize], by(rural);
 gen geo="Rural/Urban";
 gen geono=rural;
@@ -342,7 +342,7 @@ tempfile rur;
 save `rur';
 
 	*output the North South Center measures;
-	use "$path\work\povmeas_ent_flex.dta", clear;
+	use "$path/work/povmeas_ent_flex.dta", clear;
 	collapse  (mean) h_ent_m pg_ent_m spg_ent_m [aw=hhweight*hhsize], by(news);
 gen geo="North/Center/South";
 gen geono=news;
@@ -350,7 +350,7 @@ tempfile new;
 save `new';
 
 	*output the North South Center rural/urban measures;
-	use "$path\work\povmeas_ent_flex.dta", clear;
+	use "$path/work/povmeas_ent_flex.dta", clear;
 	collapse  (mean) h_ent_m pg_ent_m spg_ent_m [aw=hhweight*hhsize], by(reg_tpi);
 gen geo="TPI - 6 regions";
 gen geono=reg_tpi;
@@ -358,7 +358,7 @@ tempfile rtp;
 save `rtp';
 
 	*output the provincial measures;
-	use "$path\work\povmeas_ent_flex.dta", clear;
+	use "$path/work/povmeas_ent_flex.dta", clear;
 	collapse  (mean) h_ent_m pg_ent_m spg_ent_m [aw=hhweight*hhsize], by(strata);
 gen geo="Provinces";
 gen geono=strata;
@@ -366,7 +366,7 @@ tempfile str;
 save `str';
 	
 	*output the dominios espaciais measures;
-	use "$path\work\povmeas_ent_flex.dta", clear;
+	use "$path/work/povmeas_ent_flex.dta", clear;
 	collapse  (mean) h_ent_m pg_ent_m spg_ent_m [aw=hhweight*hhsize], by(spdomain);
 gen geo="Spatial domains";
 gen geono=spdomain;
@@ -397,7 +397,7 @@ outsheet geo geono h_ent_m pg_ent_m spg_ent_m dum rural news reg_tpi strata spdo
 
 	*set aside the spatial price index;
       tempfile spi_m;
-      use "$path\work\povmeas_ent_flex.dta", clear;
+      use "$path/work/povmeas_ent_flex.dta", clear;
       collapse (mean) spi, by(spdomain);
       rename spi spi_m;
       sort spdomain;
@@ -410,9 +410,9 @@ use `povlines_ent';
        sort spdomain;
        merge spdomain using `spi_m';
 	tab _m; drop _m;
-save "$path\work\povlines.dta", replace;
+save "$path/work/povlines.dta", replace;
 
-outsheet spdomain food_povline_ent povline_ent fdshr using "$path\work\povlines.csv", replace c; 
+outsheet spdomain food_povline_ent povline_ent fdshr using "$path/work/povlines.csv", replace c; 
 
 *********************************************************************************
 * 210_povmeas_ent_flex.do		(end)
