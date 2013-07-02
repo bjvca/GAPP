@@ -1,0 +1,36 @@
+geo,geono,h_flex5,pg_flex5,spg_flex5,dum,rural,news,reg_tpi,strata,spdomain
+"National",1,10.21124,2.749779,1.142706,1,,,,,
+" ",,,,,,,,,,
+"Rural/Urban",0,32.41903,10.59597,4.890794,,"Urban",,,,
+"Rural/Urban",1,6.036564,1.27483,.4381309,,"Rural",,,,
+" ",,,,,,,,,,
+"North/Center/South",1,17.51481,5.05336,2.216112,,,"Central",,,
+"North/Center/South",2,6.037508,1.724699,.7503167,,,"Eastern",,,
+"North/Center/South",3,.6571775,.0816136,.0292846,,,"Northern",,,
+"North/Center/South",4,13.01132,3.086254,1.11767,,,"Western",,,
+" ",,,,,,,,,,
+"TPI - 6 regions",1,17.51481,5.05336,2.216112,,,,"Central",,
+"TPI - 6 regions",2,6.037508,1.724699,.7503167,,,,"Eastern",,
+"TPI - 6 regions",3,.6571775,.0816136,.0292846,,,,"Northern",,
+"TPI - 6 regions",4,13.01132,3.086254,1.11767,,,,"Western",,
+" ",,,,,,,,,,
+"Provinces",1,46.13317,15.21858,7.070736,,,,,"Kampala",
+"Provinces",2,8.933059,2.036801,.6943299,,,,,"Central 1",
+"Provinces",3,12.17984,3.128208,1.374016,,,,,"Central 2",
+"Provinces",4,5.426034,1.445724,.5876318,,,,,"East Central",
+"Provinces",5,5.839485,1.81501,.852264,,,,,"Eastern",
+"Provinces",6,.5069209,.0467245,.0143778,,,,,"Mid Northern",
+"Provinces",7,7.204746,1.941809,.8187301,,,,,"North East",
+"Provinces",8,.7736243,.1554614,.0691172,,,,,"West Nile",
+"Provinces",9,12.85824,3.150963,1.207234,,,,,"Mid Western",
+"Provinces",10,13.10823,3.045293,1.060977,,,,,"South Western",
+" ",,,,,,,,,,
+"Spatial domains",1,46.13317,15.21858,7.070736,,,,,,"Kampala"
+"Spatial domains",2,45.11826,14.23931,6.496571,,,,,,"Central urban"
+"Spatial domains",3,5.56959,.9005157,.2483351,,,,,,"Central rural"
+"Spatial domains",4,48.49135,16.78846,7.826701,,,,,,"Eastern urban"
+"Spatial domains",5,2.35479,.4179716,.1364659,,,,,,"Eastern rural"
+"Spatial domains",6,.3341999,.1412443,.0596947,,,,,,"Northern urban"
+"Spatial domains",7,.7142307,.07108,.0239127,,,,,,"Northern rural"
+"Spatial domains",8,4.138667,.742637,.2557744,,,,,,"Western urban"
+"Spatial domains",9,13.77526,3.288038,1.191879,,,,,,"Western rural"

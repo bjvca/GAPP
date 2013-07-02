@@ -107,6 +107,7 @@ do "$path/new/010_initial.do"
 	* This set of files takes the raw data and creates more handy data 
 	* sets in the work-folder
 	do "$path/new/020_in_2_work_folder.do"
+	do "$path/new/final_tableA1-A5-Haruna.do"
 	
 /*
 	* All kind of raw expenditure is handled: daily, own and monthly, rent and use value, education etc.
@@ -138,7 +139,11 @@ $no_temp_rev	do "$path/new/160_food_basket_fix.do"	/* Fixed food basket */
 				do "$path/new/170_pref_r_price_bjorn.do"		/* Revealed preference tests */
 $no_temp_rev	do "$path/new/180_povline_food_fix.do"	/* Inflating year t1's poverty lines to year t2 */
 
-				shell "$path/new/$revpref"				/* Adjusting flexible basket: inside pref. constraints */
+*** execute as super user:
+sudo ./gams "/home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2/new/190a_revpref13_r_bjorn.gms o=""/home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2/new/list.lst"
+
+
+/* Adjusting flexible basket: inside pref. constraints */
 
 $no_temp_rev	do "$path/new/200_povmeas_fix.do"		/* Fixed basket: Poverty rates */
 				do "$path/new/210_povmeas_ent_flex.do"	/* Flexible basket, adjusted: Poverty rates */

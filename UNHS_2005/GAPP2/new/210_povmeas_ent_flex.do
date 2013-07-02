@@ -107,8 +107,8 @@ use `contpi';
 
 
 gen     triwt = 0 ;
-replace triwt = 11 - round(50*abs(cons_pc_tpi/food_povline_ent-1)+0.5)
-                if abs(cons_pc_tpi/food_povline_ent-1)<=0.2;
+replace triwt = 10 - round(abs(cons_pc_tpi/food_povline_ent-1))
+                if abs(cons_pc_tpi/food_povline_ent-1)<=10;
 
 
 	gen tripopwt=triwt*hhweight*hhsize;
@@ -208,7 +208,7 @@ use `contpi';
 	lab var spg_ent "Squared poverty gap entropy bundle with Maputo food share fixed";
 
 	sort hhid;
-	merge hhid using "$path\work\hhdata.dta";
+	merge hhid using "$path/work/hhdata.dta";
 	tab _merge;
 	drop if _merge~=3;
 	drop _merge;
@@ -299,7 +299,7 @@ use `contpi';
 	lab var spg_ent_m "Squared poverty gap entropy. Food share flexible. Flexible bundle";
 
 	sort hhid;
-	merge hhid using "$path\work\hhdata.dta";
+	merge hhid using "$path/work/hhdata.dta";
 	tab _merge;
 	drop if _merge~=3;
 	drop _merge;

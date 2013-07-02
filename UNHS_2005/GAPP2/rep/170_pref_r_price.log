@@ -1,9 +1,12 @@
-------------------------------------------------------------------
+--------------------------------------------------------------------------------------------
       name:  <unnamed>
-       log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UN
-> HS_2005\GAPP2/rep/170_pref_r_price.log
+       log:  /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//rep/170_pref_r_price.log
   log type:  text
+<<<<<<< HEAD
  opened on:   2 Jul 2013, 12:33:21
+=======
+ opened on:   2 Jul 2013, 11:50:34
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 
 . clear
 
@@ -11,18 +14,15 @@
 
 . #delimit ;
 delimiter now ;
-. ****************************************************************
-> **********
+. **************************************************************************
 > * 170_pref_r_price.do           (start)
 > *
 > * This file conducts revealed preference comparisons so that
 > * we can check the quality of the regional baskets.
 > * It also exports the price and quantity data for work in GAMS
-> * Rather than make up for missing prices with shares, we estimat
-> e
+> * Rather than make up for missing prices with shares, we estimate
 > * a missing price in this case
-> ****************************************************************
-> **********;
+> **************************************************************************;
 . *global n_spdom "13";
 . *global it_n "5";
 . /*
@@ -41,11 +41,9 @@ delimiter now ;
 > 
 > 
 > 
-> ****************************************************************
-> ***********;
+> ***************************************************************************;
 . * Export price, codes and quantity data to text
-> ****************************************************************
-> ***********;
+> ***************************************************************************;
 . use "$path/work/price_unit_flex_it$it_n.dta";
 
 . gen reg=spdomain ;
@@ -57,13 +55,16 @@ delimiter now ;
 
 .  lab val crap crap;
 
-. outsheet product crap reg bswt price_uw$it_n using "$path/work/p
-> rice_unit_flex.inc",  noquote noname replace ;
+. outsheet product crap reg bswt price_uw$it_n using "$path/work/price_unit_flex.inc",  noqu
+> ote noname replace ;
+(note: file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/price_unit_flex.inc not f
+> ound)
 
 . collapse (min) spdomain, by(product);
 
-. outsheet product  using "$path/work/product_flex.inc", noname re
-> place;
+. outsheet product  using "$path/work/product_flex.inc", noname replace;
+(note: file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/product_flex.inc not foun
+> d)
 
 . use "$path/work/quan_flex_it$it_n.dta", clear;
 
@@ -78,18 +79,16 @@ delimiter now ;
 
 . format calperg quan$it_n calpp %14.9e;
 
-. outsheet  product crap reg calperg quan$it_n  calpp povline_f_fl
-> ex90_$it_n using "$path/work/quan_flex.inc", noname noquote repl
-> ace;
+. outsheet  product crap reg calperg quan$it_n  calpp povline_f_flex90_$it_n using "$path/wo
+> rk/quan_flex.inc", noname noquote replace;
+(note: file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/quan_flex.inc not found)
 
 . clear;
 
-. ****************************************************************
-> **********;
+. **************************************************************************;
 . * Revealed preference calculations
 > * get the basket for the region we want to test
-> ****************************************************************
-> **********;
+> **************************************************************************;
 . tempfile quanreg;
 
 . tempfile getmiss;
@@ -100,93 +99,82 @@ delimiter now ;
 
 . save "$path/work/pref_r_price.dta", replace;
 (note: dataset contains 0 observations)
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
-> GAPP2/work/pref_r_price.dta saved
+(note: file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/pref_r_price.dta not foun
+> d)
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/pref_r_price.dta saved
 
 . forvalues i=1/$n_spdom {                ;
   2.         clear;
   3.         gen crap=0;
   4.         save "$path/work/revpref_price_`i'.dta", replace;
   5.         clear;
-  6.                 use "$path/work/quan_flex_it$it_n.dta", clear
-> ;
-  7.                 keep product spdomain quan$it_n price_uw$it_n
->  val_ir$it_n povline_f_flex90_$it_n calpp;
+  6.                 use "$path/work/quan_flex_it$it_n.dta", clear;
+  7.                 keep product spdomain quan$it_n price_uw$it_n val_ir$it_n povline_f_fle
+> x90_$it_n calpp;
   8.         gen share=val_ir$it_n/povline_f_flex90_$it_n;
   9.         rename price_uw$it_n pquanreg;
  10.         rename spdomain spdomainq;
  11.         drop if spdomainq~= `i';
  12.         sort product;
- 13.                                 *rescale quantities to hit co
-> nstant calorie target;
+ 13.                                 *rescale quantities to hit constant calorie target;
 .                 gen ratquan=2150/calpp;
  14.             gen quan_s=quan$it_n*ratquan;
- 15.             lab var quan_s "quantities rescaled to hit 2150 c
-> alories pp";
+ 15.             lab var quan_s "quantities rescaled to hit 2150 calories pp";
  16.         save `quanreg', replace;
- 17. *************************************************************
-> *************;
+ 17. **************************************************************************;
 . * Now get the prices in other regions so that you can use them 
 > * to build  a new poverty line
-> ****************************************************************
-> **********;
+> **************************************************************************;
 .         forvalues j= 1/$n_spdom {               ;
  18.                 use "$path/work/price_unit_flex_it$it_n.dta";
- 19.                                 keep product spdomain price_u
-> w$it_n descript count bswt;
+ 19.                                 keep product spdomain price_uw$it_n descript count bswt
+> ;
  20.                         sort product;
  21.                 keep if spdomain==`j';
  22.                 sort product;
  23.                 merge product using `quanreg';
- 24.                     *here we have to deal with the fact that 
-> not all commodities are consumed in every region;
-.                 *so we might have a quantity from region i but n
-> o price in region j;
+ 24.                     *here we have to deal with the fact that not all commodities are co
+> nsumed in every region;
+.                 *so we might have a quantity from region i but no price in region j;
 .                 *these will have _merge value=2;
-.                 *alternatively the number of observations might 
-> be too small;
-.                 *deal with these problems by TAKING THE MAX PRIC
-> E OBSERVED ELSEWHERE (excluding Maputo)
+.                 *alternatively the number of observations might be too small;
+.                 *deal with these problems by TAKING THE MAX PRICE OBSERVED ELSEWHERE (excl
+> uding Maputo)
 >                         
 >                 tab _m;
 .                 drop if _m==1;
- 25.                                 *CA modified to handle the co
-> unting of bswt instead of count
+ 25.                                 *CA modified to handle the counting of bswt instead of 
+> count
 >                   replace price_uw$it_n=. if round(bswt)<5;
 .                         gen pricemiss=0;
  26.                   replace spdomain=`j' if _m==2 ;
- 27.                   replace pricemiss=1 if _m==2 | round(bswt)<
-> 5;
- 28.                         lab var pricemiss "identify those ite
-> ms with no price observation";
+ 27.                   replace pricemiss=1 if _m==2 | round(bswt)<5;
+ 28.                         lab var pricemiss "identify those items with no price observati
+> on";
  29.                   drop _m;
  30.                         sort product;
  31. *browse;
-.                *this is the tempfile containing observed quans a
-> nd prices;
+.                *this is the tempfile containing observed quans and prices;
 .              save `getmiss', replace;
  32.                         keep if pricemiss==1;
  33.                         if _N>0 {
 >                             keep product;
  34.                                             sort product;
- 35.                                             *this file contai
-> ns the price codes that are missing for the region in question;
+ 35.                                             *this file contains the price codes that ar
+> e missing for the region in question;
 .                             save `codmiss', replace;
  36. *browse;
-.                                   use "$path/work/price_unit_fle
-> x_it$it_n.dta", clear;
+.                                   use "$path/work/price_unit_flex_it$it_n.dta", clear;
  37.                         sort product;
  38. *browse;
 .                         merge product using `codmiss';
  39.                                                 tab _m;
  40.                         keep if _m==3 ;
- 41.                                 *exclude Maputo province and 
-> city from other price calculation;
+ 41.                                 *exclude Maputo province and city from other price calc
+> ulation;
 .                                 drop if spdomain>10;
- 42.                         collapse (max) price_uw$it_n, by(prod
-> uct);
- 43.                   *this file contains the code and the max pr
-> ice;
+ 42.                         collapse (max) price_uw$it_n, by(product);
+ 43.                   *this file contains the code and the max price;
 .                   save `codmiss', replace;
  44. *browse;
 .                         use `getmiss';
@@ -196,18 +184,15 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
  47.                         drop _m;
  48.                         *end if;
 .                  };
- 49.                                                             e
-> lse use `getmiss', clear;
+ 49.                                                             else use `getmiss', clear;
  50.                         gen val_q=quan_s*price_uw$it_n;
- 51.                                                 collapse (sum
-> ) val_q pricemiss (mean) spdomainq ratquan, by(spdomain);
+ 51.                                                 collapse (sum) val_q pricemiss (mean) s
+> pdomainq ratquan, by(spdomain);
  52.                   gen linf_q=val_q/.9;
  53.                   drop val_q;
- 54.                         append using "$path/work/revpref_pric
-> e_`i'.dta";
+ 54.                         append using "$path/work/revpref_price_`i'.dta";
  55.                         sort spdomain;
- 56.                 save "$path/work/revpref_price_`i'.dta", repl
-> ace;
+ 56.                 save "$path/work/revpref_price_`i'.dta", replace;
  57.    *browse;
 .         *close j loop;
 .         };
@@ -218,6 +203,7 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
  61.  *close i loop;
 . };
 (note: dataset contains 0 observations)
+<<<<<<< HEAD
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
 > GAPP2/work/revpref_price_1.dta saved
 (192 observations deleted)
@@ -225,14 +211,23 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
 > ot found)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000001.tmp saved
 (353 observations deleted)
+=======
+(note: file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_1.dta not f
+> ound)
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_1.dta saved
+(188 observations deleted)
+(note: file /tmp/St03872.000001 not found)
+file /tmp/St03872.000001 saved
+(347 observations deleted)
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (label lspdomain already defined)
 (20 observations deleted)
 (0 real changes made)
 (0 real changes made)
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp n
-> ot found)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
+(note: file /tmp/St03872.000002 not found)
+file /tmp/St03872.000002 saved
 (26 observations deleted)
+<<<<<<< HEAD
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
 > GAPP2/work/revpref_price_1.dta saved
 (363 observations deleted)
@@ -247,10 +242,24 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
 variable product does not uniquely identify observations in the
     master data
+=======
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_1.dta saved
+(361 observations deleted)
+(label lspdomain already defined)
+(10 observations deleted)
+(4 real changes made)
+(14 real changes made)
+file /tmp/St03872.000002 saved
+(12 observations deleted)
+(note: file /tmp/St03872.000003 not found)
+file /tmp/St03872.000003 saved
+variable product does not uniquely identify observations in the master data
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (label lspdomain already defined)
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
+<<<<<<< HEAD
           1 |        316       79.20       79.20
           3 |         83       20.80      100.00
 ------------+-----------------------------------
@@ -270,46 +279,89 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
 > GAPP2/work/revpref_price_1.dta saved
 (353 observations deleted)
+=======
+          1 |        277       70.48       70.48
+          3 |        116       29.52      100.00
+------------+-----------------------------------
+      Total |        393      100.00
+(277 observations deleted)
+(0 observations deleted)
+file /tmp/St03872.000003 saved
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |         12       46.15       46.15
+          3 |         14       53.85      100.00
+------------+-----------------------------------
+      Total |         26      100.00
+(4 missing values generated)
+(label lspdomain already defined)
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_1.dta saved
+(347 observations deleted)
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (label lspdomain already defined)
 (20 observations deleted)
 (0 real changes made)
 (0 real changes made)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
+file /tmp/St03872.000002 saved
 (26 observations deleted)
 (label lspdomain already defined)
+<<<<<<< HEAD
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
 > GAPP2/work/revpref_price_1.dta saved
 (353 observations deleted)
+=======
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_1.dta saved
+(347 observations deleted)
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (label lspdomain already defined)
 (20 observations deleted)
 (0 real changes made)
 (0 real changes made)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
+file /tmp/St03872.000002 saved
 (26 observations deleted)
 (label lspdomain already defined)
+<<<<<<< HEAD
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
 > GAPP2/work/revpref_price_1.dta saved
 (353 observations deleted)
+=======
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_1.dta saved
+(348 observations deleted)
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (label lspdomain already defined)
 (20 observations deleted)
 (0 real changes made)
 (1 real change made)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
+file /tmp/St03872.000002 saved
 (25 observations deleted)
+<<<<<<< HEAD
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
 variable product does not uniquely identify observations in the
     master data
+=======
+file /tmp/St03872.000003 saved
+variable product does not uniquely identify observations in the master data
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (label lspdomain already defined)
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
+<<<<<<< HEAD
           1 |        390       97.74       97.74
           3 |          9        2.26      100.00
 ------------+-----------------------------------
       Total |        399      100.00
 (390 observations deleted)
+=======
+          1 |        385       97.96       97.96
+          3 |          8        2.04      100.00
+------------+-----------------------------------
+      Total |        393      100.00
+(385 observations deleted)
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (0 observations deleted)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+file /tmp/St03872.000003 saved
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
@@ -317,30 +369,52 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
           3 |          1        3.85      100.00
 ------------+-----------------------------------
       Total |         26      100.00
+<<<<<<< HEAD
 (label lspdomain already defined)
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
 > GAPP2/work/revpref_price_1.dta saved
 (354 observations deleted)
+=======
+(1 missing value generated)
+(label lspdomain already defined)
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_1.dta saved
+(348 observations deleted)
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (label lspdomain already defined)
 (20 observations deleted)
 (1 real change made)
 (4 real changes made)
+<<<<<<< HEAD
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
 (22 observations deleted)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
 variable product does not uniquely identify observations in the
     master data
+=======
+file /tmp/St03872.000002 saved
+(22 observations deleted)
+file /tmp/St03872.000003 saved
+variable product does not uniquely identify observations in the master data
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (label lspdomain already defined)
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
+<<<<<<< HEAD
           1 |        368       92.23       92.23
           3 |         31        7.77      100.00
 ------------+-----------------------------------
       Total |        399      100.00
 (368 observations deleted)
+=======
+          1 |        363       92.37       92.37
+          3 |         30        7.63      100.00
+------------+-----------------------------------
+      Total |        393      100.00
+(363 observations deleted)
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (0 observations deleted)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+file /tmp/St03872.000003 saved
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
@@ -350,29 +424,47 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
       Total |         26      100.00
 (1 missing value generated)
 (label lspdomain already defined)
+<<<<<<< HEAD
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
 > GAPP2/work/revpref_price_1.dta saved
 (357 observations deleted)
+=======
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_1.dta saved
+(352 observations deleted)
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (label lspdomain already defined)
 (20 observations deleted)
-(4 real changes made)
+(5 real changes made)
 (12 real changes made)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
+file /tmp/St03872.000002 saved
 (14 observations deleted)
+<<<<<<< HEAD
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
 variable product does not uniquely identify observations in the
     master data
+=======
+file /tmp/St03872.000003 saved
+variable product does not uniquely identify observations in the master data
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (label lspdomain already defined)
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
+<<<<<<< HEAD
           1 |        298       74.69       74.69
           3 |        101       25.31      100.00
 ------------+-----------------------------------
       Total |        399      100.00
 (298 observations deleted)
+=======
+          1 |        295       75.06       75.06
+          3 |         98       24.94      100.00
+------------+-----------------------------------
+      Total |        393      100.00
+(295 observations deleted)
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (0 observations deleted)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+file /tmp/St03872.000003 saved
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
@@ -380,31 +472,53 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
           3 |         12       46.15      100.00
 ------------+-----------------------------------
       Total |         26      100.00
+<<<<<<< HEAD
 (4 missing values generated)
 (label lspdomain already defined)
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
 > GAPP2/work/revpref_price_1.dta saved
 (353 observations deleted)
+=======
+(5 missing values generated)
+(label lspdomain already defined)
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_1.dta saved
+(347 observations deleted)
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (label lspdomain already defined)
 (20 observations deleted)
 (0 real changes made)
 (1 real change made)
+<<<<<<< HEAD
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
 (25 observations deleted)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
 variable product does not uniquely identify observations in the
     master data
+=======
+file /tmp/St03872.000002 saved
+(25 observations deleted)
+file /tmp/St03872.000003 saved
+variable product does not uniquely identify observations in the master data
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (label lspdomain already defined)
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
+<<<<<<< HEAD
           1 |        391       97.99       97.99
           3 |          8        2.01      100.00
 ------------+-----------------------------------
       Total |        399      100.00
 (391 observations deleted)
+=======
+          1 |        385       97.96       97.96
+          3 |          8        2.04      100.00
+------------+-----------------------------------
+      Total |        393      100.00
+(385 observations deleted)
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (0 observations deleted)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+file /tmp/St03872.000003 saved
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
@@ -413,16 +527,22 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
 ------------+-----------------------------------
       Total |         26      100.00
 (label lspdomain already defined)
+<<<<<<< HEAD
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
 > GAPP2/work/revpref_price_1.dta saved
 (353 observations deleted)
+=======
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_1.dta saved
+(347 observations deleted)
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (label lspdomain already defined)
 (20 observations deleted)
 (0 real changes made)
 (0 real changes made)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
+file /tmp/St03872.000002 saved
 (26 observations deleted)
 (label lspdomain already defined)
+<<<<<<< HEAD
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
 > GAPP2/work/revpref_price_1.dta saved
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
@@ -442,10 +562,30 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
 > GAPP2/work/revpref_price_2.dta saved
 (363 observations deleted)
+=======
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_1.dta saved
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/pref_r_price.dta saved
+(note: dataset contains 0 observations)
+(note: file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_2.dta not f
+> ound)
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_2.dta saved
+(208 observations deleted)
+file /tmp/St03872.000001 saved
+(347 observations deleted)
+(label lspdomain already defined)
+(40 observations deleted)
+(0 real changes made)
+(0 real changes made)
+file /tmp/St03872.000002 saved
+(6 observations deleted)
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_2.dta saved
+(361 observations deleted)
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (label lspdomain already defined)
 (26 observations deleted)
 (0 real changes made)
 (0 real changes made)
+<<<<<<< HEAD
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
 (10 observations deleted)
 (label lspdomain already defined)
@@ -552,12 +692,91 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
 (192 observations deleted)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000001.tmp saved
 (353 observations deleted)
+=======
+file /tmp/St03872.000002 saved
+(6 observations deleted)
+(label lspdomain already defined)
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_2.dta saved
+(347 observations deleted)
+(label lspdomain already defined)
+(40 observations deleted)
+(0 real changes made)
+(0 real changes made)
+file /tmp/St03872.000002 saved
+(6 observations deleted)
+(label lspdomain already defined)
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_2.dta saved
+(347 observations deleted)
+(label lspdomain already defined)
+(40 observations deleted)
+(0 real changes made)
+(0 real changes made)
+file /tmp/St03872.000002 saved
+(6 observations deleted)
+(label lspdomain already defined)
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_2.dta saved
+(348 observations deleted)
+(label lspdomain already defined)
+(39 observations deleted)
+(0 real changes made)
+(0 real changes made)
+file /tmp/St03872.000002 saved
+(6 observations deleted)
+(label lspdomain already defined)
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_2.dta saved
+(348 observations deleted)
+(label lspdomain already defined)
+(39 observations deleted)
+(0 real changes made)
+(0 real changes made)
+file /tmp/St03872.000002 saved
+(6 observations deleted)
+(label lspdomain already defined)
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_2.dta saved
+(352 observations deleted)
+(label lspdomain already defined)
+(35 observations deleted)
+(0 real changes made)
+(0 real changes made)
+file /tmp/St03872.000002 saved
+(6 observations deleted)
+(label lspdomain already defined)
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_2.dta saved
+(347 observations deleted)
+(label lspdomain already defined)
+(40 observations deleted)
+(0 real changes made)
+(0 real changes made)
+file /tmp/St03872.000002 saved
+(6 observations deleted)
+(label lspdomain already defined)
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_2.dta saved
+(347 observations deleted)
+(label lspdomain already defined)
+(40 observations deleted)
+(0 real changes made)
+(0 real changes made)
+file /tmp/St03872.000002 saved
+(6 observations deleted)
+(label lspdomain already defined)
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_2.dta saved
+(label lspdomain already defined)
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/pref_r_price.dta saved
+(note: dataset contains 0 observations)
+(note: file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_3.dta not f
+> ound)
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_3.dta saved
+(188 observations deleted)
+file /tmp/St03872.000001 saved
+(347 observations deleted)
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (label lspdomain already defined)
 (20 observations deleted)
 (0 real changes made)
 (0 real changes made)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
+file /tmp/St03872.000002 saved
 (26 observations deleted)
+<<<<<<< HEAD
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
 > GAPP2/work/revpref_price_3.dta saved
 (363 observations deleted)
@@ -570,20 +789,41 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
 variable product does not uniquely identify observations in the
     master data
+=======
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_3.dta saved
+(361 observations deleted)
+(label lspdomain already defined)
+(8 observations deleted)
+(2 real changes made)
+(13 real changes made)
+file /tmp/St03872.000002 saved
+(13 observations deleted)
+file /tmp/St03872.000003 saved
+variable product does not uniquely identify observations in the master data
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (label lspdomain already defined)
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
+<<<<<<< HEAD
           1 |        334       83.71       83.71
           3 |         65       16.29      100.00
 ------------+-----------------------------------
       Total |        399      100.00
 (334 observations deleted)
+=======
+          1 |        283       72.01       72.01
+          3 |        110       27.99      100.00
+------------+-----------------------------------
+      Total |        393      100.00
+(283 observations deleted)
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (0 observations deleted)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+file /tmp/St03872.000003 saved
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
+<<<<<<< HEAD
           1 |         18       69.23       69.23
           3 |          8       30.77      100.00
 ------------+-----------------------------------
@@ -593,33 +833,56 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
 > GAPP2/work/revpref_price_3.dta saved
 (353 observations deleted)
+=======
+          1 |         13       50.00       50.00
+          3 |         13       50.00      100.00
+------------+-----------------------------------
+      Total |         26      100.00
+(2 missing values generated)
+(label lspdomain already defined)
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_3.dta saved
+(347 observations deleted)
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (label lspdomain already defined)
 (20 observations deleted)
 (0 real changes made)
 (0 real changes made)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
+file /tmp/St03872.000002 saved
 (26 observations deleted)
 (label lspdomain already defined)
+<<<<<<< HEAD
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
+> GAPP2/work/revpref_price_3.dta saved
+(353 observations deleted)
+=======
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_3.dta saved
+(347 observations deleted)
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
+(label lspdomain already defined)
+(20 observations deleted)
+(0 real changes made)
+(0 real changes made)
+file /tmp/St03872.000002 saved
+(26 observations deleted)
+(label lspdomain already defined)
+<<<<<<< HEAD
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
 > GAPP2/work/revpref_price_3.dta saved
 (353 observations deleted)
 (label lspdomain already defined)
 (20 observations deleted)
+=======
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_3.dta saved
+(348 observations deleted)
+(label lspdomain already defined)
+(19 observations deleted)
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (0 real changes made)
 (0 real changes made)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
+file /tmp/St03872.000002 saved
 (26 observations deleted)
 (label lspdomain already defined)
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
-> GAPP2/work/revpref_price_3.dta saved
-(353 observations deleted)
-(label lspdomain already defined)
-(20 observations deleted)
-(0 real changes made)
-(0 real changes made)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
-(26 observations deleted)
-(label lspdomain already defined)
+<<<<<<< HEAD
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
 > GAPP2/work/revpref_price_3.dta saved
 (354 observations deleted)
@@ -632,49 +895,92 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
 variable product does not uniquely identify observations in the
     master data
+=======
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_3.dta saved
+(348 observations deleted)
+(label lspdomain already defined)
+(20 observations deleted)
+(1 real change made)
+(3 real changes made)
+file /tmp/St03872.000002 saved
+(23 observations deleted)
+file /tmp/St03872.000003 saved
+variable product does not uniquely identify observations in the master data
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (label lspdomain already defined)
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
+<<<<<<< HEAD
           1 |        369       92.48       92.48
           3 |         30        7.52      100.00
 ------------+-----------------------------------
       Total |        399      100.00
 (369 observations deleted)
+=======
+          1 |        371       94.40       94.40
+          3 |         22        5.60      100.00
+------------+-----------------------------------
+      Total |        393      100.00
+(371 observations deleted)
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (0 observations deleted)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+file /tmp/St03872.000003 saved
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
+<<<<<<< HEAD
           1 |         22       84.62       84.62
           3 |          4       15.38      100.00
+=======
+          1 |         23       88.46       88.46
+          3 |          3       11.54      100.00
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 ------------+-----------------------------------
       Total |         26      100.00
 (1 missing value generated)
 (label lspdomain already defined)
+<<<<<<< HEAD
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
 > GAPP2/work/revpref_price_3.dta saved
 (357 observations deleted)
+=======
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_3.dta saved
+(352 observations deleted)
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (label lspdomain already defined)
 (20 observations deleted)
-(4 real changes made)
+(5 real changes made)
 (8 real changes made)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
+file /tmp/St03872.000002 saved
 (18 observations deleted)
+<<<<<<< HEAD
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
 variable product does not uniquely identify observations in the
     master data
+=======
+file /tmp/St03872.000003 saved
+variable product does not uniquely identify observations in the master data
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (label lspdomain already defined)
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
+<<<<<<< HEAD
           1 |        335       83.96       83.96
           3 |         64       16.04      100.00
 ------------+-----------------------------------
       Total |        399      100.00
 (335 observations deleted)
+=======
+          1 |        329       83.72       83.72
+          3 |         64       16.28      100.00
+------------+-----------------------------------
+      Total |        393      100.00
+(329 observations deleted)
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (0 observations deleted)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+file /tmp/St03872.000003 saved
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
@@ -682,31 +988,51 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
           3 |          8       30.77      100.00
 ------------+-----------------------------------
       Total |         26      100.00
+<<<<<<< HEAD
 (4 missing values generated)
 (label lspdomain already defined)
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
 > GAPP2/work/revpref_price_3.dta saved
 (353 observations deleted)
+=======
+(5 missing values generated)
+(label lspdomain already defined)
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_3.dta saved
+(347 observations deleted)
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (label lspdomain already defined)
 (20 observations deleted)
 (0 real changes made)
 (1 real change made)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
+file /tmp/St03872.000002 saved
 (25 observations deleted)
+<<<<<<< HEAD
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
 variable product does not uniquely identify observations in the
     master data
+=======
+file /tmp/St03872.000003 saved
+variable product does not uniquely identify observations in the master data
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (label lspdomain already defined)
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
+<<<<<<< HEAD
           1 |        391       97.99       97.99
           3 |          8        2.01      100.00
 ------------+-----------------------------------
       Total |        399      100.00
 (391 observations deleted)
+=======
+          1 |        385       97.96       97.96
+          3 |          8        2.04      100.00
+------------+-----------------------------------
+      Total |        393      100.00
+(385 observations deleted)
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (0 observations deleted)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+file /tmp/St03872.000003 saved
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
@@ -715,16 +1041,22 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
 ------------+-----------------------------------
       Total |         26      100.00
 (label lspdomain already defined)
+<<<<<<< HEAD
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
 > GAPP2/work/revpref_price_3.dta saved
 (353 observations deleted)
+=======
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_3.dta saved
+(347 observations deleted)
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (label lspdomain already defined)
 (20 observations deleted)
 (0 real changes made)
 (0 real changes made)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
+file /tmp/St03872.000002 saved
 (26 observations deleted)
 (label lspdomain already defined)
+<<<<<<< HEAD
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
 > GAPP2/work/revpref_price_3.dta saved
 (label lspdomain already defined)
@@ -736,26 +1068,51 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
 (187 observations deleted)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000001.tmp saved
 (353 observations deleted)
+=======
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_3.dta saved
+(label lspdomain already defined)
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/pref_r_price.dta saved
+(note: dataset contains 0 observations)
+(note: file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_4.dta not f
+> ound)
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_4.dta saved
+(183 observations deleted)
+file /tmp/St03872.000001 saved
+(347 observations deleted)
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (label lspdomain already defined)
 (15 observations deleted)
 (0 real changes made)
 (2 real changes made)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
+file /tmp/St03872.000002 saved
 (29 observations deleted)
+<<<<<<< HEAD
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
 variable product does not uniquely identify observations in the
     master data
+=======
+file /tmp/St03872.000003 saved
+variable product does not uniquely identify observations in the master data
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (label lspdomain already defined)
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
+<<<<<<< HEAD
           1 |        382       95.74       95.74
           3 |         17        4.26      100.00
 ------------+-----------------------------------
       Total |        399      100.00
 (382 observations deleted)
+=======
+          1 |        377       95.93       95.93
+          3 |         16        4.07      100.00
+------------+-----------------------------------
+      Total |        393      100.00
+(377 observations deleted)
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (0 observations deleted)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+file /tmp/St03872.000003 saved
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
@@ -763,6 +1120,7 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
           3 |          2        6.45      100.00
 ------------+-----------------------------------
       Total |         31      100.00
+<<<<<<< HEAD
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
 > GAPP2/work/revpref_price_4.dta saved
 (363 observations deleted)
@@ -775,20 +1133,41 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
 variable product does not uniquely identify observations in the
     master data
+=======
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_4.dta saved
+(361 observations deleted)
+(label lspdomain already defined)
+(8 observations deleted)
+(7 real changes made)
+(17 real changes made)
+file /tmp/St03872.000002 saved
+(14 observations deleted)
+file /tmp/St03872.000003 saved
+variable product does not uniquely identify observations in the master data
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (label lspdomain already defined)
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
+<<<<<<< HEAD
           1 |        297       74.44       74.44
           3 |        102       25.56      100.00
 ------------+-----------------------------------
       Total |        399      100.00
 (297 observations deleted)
+=======
+          1 |        249       63.36       63.36
+          3 |        144       36.64      100.00
+------------+-----------------------------------
+      Total |        393      100.00
+(249 observations deleted)
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (0 observations deleted)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+file /tmp/St03872.000003 saved
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
+<<<<<<< HEAD
           1 |         19       61.29       61.29
           3 |         12       38.71      100.00
 ------------+-----------------------------------
@@ -829,46 +1208,92 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
 > GAPP2/work/revpref_price_4.dta saved
 (353 observations deleted)
+=======
+          1 |         14       45.16       45.16
+          3 |         17       54.84      100.00
+------------+-----------------------------------
+      Total |         31      100.00
+(7 missing values generated)
+(label lspdomain already defined)
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_4.dta saved
+(347 observations deleted)
 (label lspdomain already defined)
 (15 observations deleted)
 (0 real changes made)
 (0 real changes made)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
+file /tmp/St03872.000002 saved
 (31 observations deleted)
 (label lspdomain already defined)
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_4.dta saved
+(347 observations deleted)
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
+(label lspdomain already defined)
+(15 observations deleted)
+(0 real changes made)
+(0 real changes made)
+file /tmp/St03872.000002 saved
+(31 observations deleted)
+(label lspdomain already defined)
+<<<<<<< HEAD
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
 > GAPP2/work/revpref_price_4.dta saved
 (353 observations deleted)
 (label lspdomain already defined)
 (15 observations deleted)
+=======
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_4.dta saved
+(348 observations deleted)
+(label lspdomain already defined)
+(14 observations deleted)
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (0 real changes made)
 (0 real changes made)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
+file /tmp/St03872.000002 saved
 (31 observations deleted)
 (label lspdomain already defined)
+<<<<<<< HEAD
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
 > GAPP2/work/revpref_price_4.dta saved
 (354 observations deleted)
+=======
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_4.dta saved
+(348 observations deleted)
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (label lspdomain already defined)
 (14 observations deleted)
 (0 real changes made)
 (1 real change made)
+<<<<<<< HEAD
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
 (30 observations deleted)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
 variable product does not uniquely identify observations in the
     master data
+=======
+file /tmp/St03872.000002 saved
+(30 observations deleted)
+file /tmp/St03872.000003 saved
+variable product does not uniquely identify observations in the master data
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (label lspdomain already defined)
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
+<<<<<<< HEAD
           1 |        391       97.99       97.99
           3 |          8        2.01      100.00
 ------------+-----------------------------------
       Total |        399      100.00
 (391 observations deleted)
+=======
+          1 |        385       97.96       97.96
+          3 |          8        2.04      100.00
+------------+-----------------------------------
+      Total |        393      100.00
+(385 observations deleted)
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (0 observations deleted)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+file /tmp/St03872.000003 saved
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
@@ -877,6 +1302,7 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
 ------------+-----------------------------------
       Total |         31      100.00
 (label lspdomain already defined)
+<<<<<<< HEAD
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
 > GAPP2/work/revpref_price_4.dta saved
 (357 observations deleted)
@@ -889,17 +1315,37 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
 variable product does not uniquely identify observations in the
     master data
+=======
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_4.dta saved
+(352 observations deleted)
+(label lspdomain already defined)
+(13 observations deleted)
+(3 real changes made)
+(7 real changes made)
+file /tmp/St03872.000002 saved
+(24 observations deleted)
+file /tmp/St03872.000003 saved
+variable product does not uniquely identify observations in the master data
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (label lspdomain already defined)
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
+<<<<<<< HEAD
           1 |        348       87.22       87.22
           3 |         51       12.78      100.00
 ------------+-----------------------------------
       Total |        399      100.00
 (348 observations deleted)
+=======
+          1 |        335       85.24       85.24
+          3 |         58       14.76      100.00
+------------+-----------------------------------
+      Total |        393      100.00
+(335 observations deleted)
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (0 observations deleted)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+file /tmp/St03872.000003 saved
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
@@ -907,31 +1353,51 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
           3 |          6       19.35      100.00
 ------------+-----------------------------------
       Total |         31      100.00
+<<<<<<< HEAD
 (2 missing values generated)
 (label lspdomain already defined)
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
 > GAPP2/work/revpref_price_4.dta saved
 (353 observations deleted)
+=======
+(3 missing values generated)
+(label lspdomain already defined)
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_4.dta saved
+(347 observations deleted)
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (label lspdomain already defined)
 (15 observations deleted)
 (0 real changes made)
 (2 real changes made)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
+file /tmp/St03872.000002 saved
 (29 observations deleted)
+<<<<<<< HEAD
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
 variable product does not uniquely identify observations in the
     master data
+=======
+file /tmp/St03872.000003 saved
+variable product does not uniquely identify observations in the master data
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (label lspdomain already defined)
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
+<<<<<<< HEAD
           1 |        383       95.99       95.99
           3 |         16        4.01      100.00
 ------------+-----------------------------------
       Total |        399      100.00
 (383 observations deleted)
+=======
+          1 |        377       95.93       95.93
+          3 |         16        4.07      100.00
+------------+-----------------------------------
+      Total |        393      100.00
+(377 observations deleted)
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (0 observations deleted)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+file /tmp/St03872.000003 saved
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
@@ -940,16 +1406,22 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
 ------------+-----------------------------------
       Total |         31      100.00
 (label lspdomain already defined)
+<<<<<<< HEAD
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
 > GAPP2/work/revpref_price_4.dta saved
 (353 observations deleted)
+=======
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_4.dta saved
+(347 observations deleted)
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (label lspdomain already defined)
 (15 observations deleted)
 (0 real changes made)
 (0 real changes made)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
+file /tmp/St03872.000002 saved
 (31 observations deleted)
 (label lspdomain already defined)
+<<<<<<< HEAD
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
 > GAPP2/work/revpref_price_4.dta saved
 (label lspdomain already defined)
@@ -961,26 +1433,51 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
 (190 observations deleted)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000001.tmp saved
 (353 observations deleted)
+=======
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_4.dta saved
+(label lspdomain already defined)
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/pref_r_price.dta saved
+(note: dataset contains 0 observations)
+(note: file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_5.dta not f
+> ound)
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_5.dta saved
+(186 observations deleted)
+file /tmp/St03872.000001 saved
+(347 observations deleted)
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (label lspdomain already defined)
 (18 observations deleted)
 (0 real changes made)
 (2 real changes made)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
+file /tmp/St03872.000002 saved
 (26 observations deleted)
+<<<<<<< HEAD
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
 variable product does not uniquely identify observations in the
     master data
+=======
+file /tmp/St03872.000003 saved
+variable product does not uniquely identify observations in the master data
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (label lspdomain already defined)
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
+<<<<<<< HEAD
           1 |        383       95.99       95.99
           3 |         16        4.01      100.00
 ------------+-----------------------------------
       Total |        399      100.00
 (383 observations deleted)
+=======
+          1 |        377       95.93       95.93
+          3 |         16        4.07      100.00
+------------+-----------------------------------
+      Total |        393      100.00
+(377 observations deleted)
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (0 observations deleted)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+file /tmp/St03872.000003 saved
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
@@ -988,6 +1485,7 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
           3 |          2        7.14      100.00
 ------------+-----------------------------------
       Total |         28      100.00
+<<<<<<< HEAD
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
 > GAPP2/work/revpref_price_5.dta saved
 (363 observations deleted)
@@ -1032,20 +1530,41 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
 variable product does not uniquely identify observations in the
     master data
+=======
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_5.dta saved
+(361 observations deleted)
+(label lspdomain already defined)
+(10 observations deleted)
+(6 real changes made)
+(16 real changes made)
+file /tmp/St03872.000002 saved
+(12 observations deleted)
+file /tmp/St03872.000003 saved
+variable product does not uniquely identify observations in the master data
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (label lspdomain already defined)
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
+<<<<<<< HEAD
           1 |        391       97.99       97.99
           3 |          8        2.01      100.00
 ------------+-----------------------------------
       Total |        399      100.00
 (391 observations deleted)
+=======
+          1 |        258       65.65       65.65
+          3 |        135       34.35      100.00
+------------+-----------------------------------
+      Total |        393      100.00
+(258 observations deleted)
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (0 observations deleted)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+file /tmp/St03872.000003 saved
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
+<<<<<<< HEAD
           1 |         27       96.43       96.43
           3 |          1        3.57      100.00
 ------------+-----------------------------------
@@ -1054,33 +1573,54 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
 > GAPP2/work/revpref_price_5.dta saved
 (353 observations deleted)
+=======
+          1 |         12       42.86       42.86
+          3 |         16       57.14      100.00
+------------+-----------------------------------
+      Total |         28      100.00
+(6 missing values generated)
+(label lspdomain already defined)
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_5.dta saved
+(347 observations deleted)
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (label lspdomain already defined)
 (18 observations deleted)
 (0 real changes made)
 (0 real changes made)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
+file /tmp/St03872.000002 saved
 (28 observations deleted)
 (label lspdomain already defined)
+<<<<<<< HEAD
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
 > GAPP2/work/revpref_price_5.dta saved
 (353 observations deleted)
+=======
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_5.dta saved
+(347 observations deleted)
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (label lspdomain already defined)
 (18 observations deleted)
 (0 real changes made)
 (0 real changes made)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
+file /tmp/St03872.000002 saved
 (28 observations deleted)
 (label lspdomain already defined)
+<<<<<<< HEAD
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
 > GAPP2/work/revpref_price_5.dta saved
 (354 observations deleted)
+=======
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_5.dta saved
+(348 observations deleted)
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (label lspdomain already defined)
 (17 observations deleted)
 (0 real changes made)
 (0 real changes made)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
+file /tmp/St03872.000002 saved
 (28 observations deleted)
 (label lspdomain already defined)
+<<<<<<< HEAD
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
 > GAPP2/work/revpref_price_5.dta saved
 (357 observations deleted)
@@ -1093,49 +1633,122 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
 variable product does not uniquely identify observations in the
     master data
+=======
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_5.dta saved
+(348 observations deleted)
+(label lspdomain already defined)
+(18 observations deleted)
+(1 real change made)
+(1 real change made)
+file /tmp/St03872.000002 saved
+(27 observations deleted)
+file /tmp/St03872.000003 saved
+variable product does not uniquely identify observations in the master data
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (label lspdomain already defined)
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
+<<<<<<< HEAD
           1 |        373       93.48       93.48
           3 |         26        6.52      100.00
 ------------+-----------------------------------
       Total |        399      100.00
 (373 observations deleted)
+=======
+          1 |        386       98.22       98.22
+          3 |          7        1.78      100.00
+------------+-----------------------------------
+      Total |        393      100.00
+(386 observations deleted)
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (0 observations deleted)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+file /tmp/St03872.000003 saved
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
+<<<<<<< HEAD
           1 |         25       89.29       89.29
           3 |          3       10.71      100.00
+=======
+          1 |         27       96.43       96.43
+          3 |          1        3.57      100.00
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 ------------+-----------------------------------
       Total |         28      100.00
 (1 missing value generated)
 (label lspdomain already defined)
+<<<<<<< HEAD
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
 > GAPP2/work/revpref_price_5.dta saved
 (353 observations deleted)
+=======
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_5.dta saved
+(352 observations deleted)
 (label lspdomain already defined)
-(18 observations deleted)
-(0 real changes made)
+(16 observations deleted)
 (3 real changes made)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
-(25 observations deleted)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
-variable product does not uniquely identify observations in the
-    master data
+(6 real changes made)
+file /tmp/St03872.000002 saved
+(22 observations deleted)
+file /tmp/St03872.000003 saved
+variable product does not uniquely identify observations in the master data
 (label lspdomain already defined)
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
+          1 |        345       87.79       87.79
+          3 |         48       12.21      100.00
+------------+-----------------------------------
+      Total |        393      100.00
+(345 observations deleted)
+(0 observations deleted)
+file /tmp/St03872.000003 saved
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |         22       78.57       78.57
+          3 |          6       21.43      100.00
+------------+-----------------------------------
+      Total |         28      100.00
+(3 missing values generated)
+(label lspdomain already defined)
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_5.dta saved
+(347 observations deleted)
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
+(label lspdomain already defined)
+(18 observations deleted)
+(0 real changes made)
+(3 real changes made)
+file /tmp/St03872.000002 saved
+(25 observations deleted)
+<<<<<<< HEAD
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+variable product does not uniquely identify observations in the
+    master data
+=======
+file /tmp/St03872.000003 saved
+variable product does not uniquely identify observations in the master data
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
+(label lspdomain already defined)
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+<<<<<<< HEAD
           1 |        375       93.98       93.98
           3 |         24        6.02      100.00
 ------------+-----------------------------------
       Total |        399      100.00
 (375 observations deleted)
+=======
+          1 |        369       93.89       93.89
+          3 |         24        6.11      100.00
+------------+-----------------------------------
+      Total |        393      100.00
+(369 observations deleted)
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (0 observations deleted)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+file /tmp/St03872.000003 saved
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
@@ -1144,16 +1757,22 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
 ------------+-----------------------------------
       Total |         28      100.00
 (label lspdomain already defined)
+<<<<<<< HEAD
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
 > GAPP2/work/revpref_price_5.dta saved
 (353 observations deleted)
+=======
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_5.dta saved
+(347 observations deleted)
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (label lspdomain already defined)
 (18 observations deleted)
 (0 real changes made)
 (0 real changes made)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
+file /tmp/St03872.000002 saved
 (28 observations deleted)
 (label lspdomain already defined)
+<<<<<<< HEAD
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
 > GAPP2/work/revpref_price_5.dta saved
 (label lspdomain already defined)
@@ -1174,20 +1793,49 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
 variable product does not uniquely identify observations in the
     master data
+=======
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_5.dta saved
+(label lspdomain already defined)
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/pref_r_price.dta saved
+(note: dataset contains 0 observations)
+(note: file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_6.dta not f
+> ound)
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_6.dta saved
+(189 observations deleted)
+file /tmp/St03872.000001 saved
+(347 observations deleted)
+(label lspdomain already defined)
+(21 observations deleted)
+(0 real changes made)
+(3 real changes made)
+file /tmp/St03872.000002 saved
+(22 observations deleted)
+file /tmp/St03872.000003 saved
+variable product does not uniquely identify observations in the master data
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (label lspdomain already defined)
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
+<<<<<<< HEAD
           1 |        382       95.74       95.74
           3 |         17        4.26      100.00
 ------------+-----------------------------------
       Total |        399      100.00
 (382 observations deleted)
+=======
+          1 |        369       93.89       93.89
+          3 |         24        6.11      100.00
+------------+-----------------------------------
+      Total |        393      100.00
+(369 observations deleted)
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (0 observations deleted)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+file /tmp/St03872.000003 saved
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
+<<<<<<< HEAD
           1 |         22       91.67       91.67
           3 |          2        8.33      100.00
 ------------+-----------------------------------
@@ -1204,20 +1852,45 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
 variable product does not uniquely identify observations in the
     master data
+=======
+          1 |         22       88.00       88.00
+          3 |          3       12.00      100.00
+------------+-----------------------------------
+      Total |         25      100.00
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_6.dta saved
+(361 observations deleted)
+(label lspdomain already defined)
+(15 observations deleted)
+(8 real changes made)
+(13 real changes made)
+file /tmp/St03872.000002 saved
+(12 observations deleted)
+file /tmp/St03872.000003 saved
+variable product does not uniquely identify observations in the master data
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (label lspdomain already defined)
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
+<<<<<<< HEAD
           1 |        303       75.94       75.94
           3 |         96       24.06      100.00
 ------------+-----------------------------------
       Total |        399      100.00
 (303 observations deleted)
+=======
+          1 |        284       72.26       72.26
+          3 |        109       27.74      100.00
+------------+-----------------------------------
+      Total |        393      100.00
+(284 observations deleted)
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (0 observations deleted)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+file /tmp/St03872.000003 saved
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
+<<<<<<< HEAD
           1 |         13       54.17       54.17
           3 |         11       45.83      100.00
 ------------+-----------------------------------
@@ -1236,20 +1909,47 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
 variable product does not uniquely identify observations in the
     master data
+=======
+          1 |         12       48.00       48.00
+          3 |         13       52.00      100.00
+------------+-----------------------------------
+      Total |         25      100.00
+(8 missing values generated)
+(label lspdomain already defined)
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_6.dta saved
+(347 observations deleted)
+(label lspdomain already defined)
+(21 observations deleted)
+(0 real changes made)
+(2 real changes made)
+file /tmp/St03872.000002 saved
+(23 observations deleted)
+file /tmp/St03872.000003 saved
+variable product does not uniquely identify observations in the master data
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (label lspdomain already defined)
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
+<<<<<<< HEAD
           1 |        374       93.73       93.73
           3 |         25        6.27      100.00
 ------------+-----------------------------------
       Total |        399      100.00
 (374 observations deleted)
+=======
+          1 |        377       95.93       95.93
+          3 |         16        4.07      100.00
+------------+-----------------------------------
+      Total |        393      100.00
+(377 observations deleted)
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (0 observations deleted)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+file /tmp/St03872.000003 saved
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
+<<<<<<< HEAD
           1 |         21       87.50       87.50
           3 |          3       12.50      100.00
 ------------+-----------------------------------
@@ -1297,10 +1997,55 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
 variable product does not uniquely identify observations in the
     master data
+=======
+          1 |         23       92.00       92.00
+          3 |          2        8.00      100.00
+------------+-----------------------------------
+      Total |         25      100.00
+(label lspdomain already defined)
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_6.dta saved
+(347 observations deleted)
+(label lspdomain already defined)
+(21 observations deleted)
+(0 real changes made)
+(0 real changes made)
+file /tmp/St03872.000002 saved
+(25 observations deleted)
+(label lspdomain already defined)
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_6.dta saved
+(348 observations deleted)
+(label lspdomain already defined)
+(20 observations deleted)
+(0 real changes made)
+(0 real changes made)
+file /tmp/St03872.000002 saved
+(25 observations deleted)
+(label lspdomain already defined)
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_6.dta saved
+(348 observations deleted)
+(label lspdomain already defined)
+(20 observations deleted)
+(0 real changes made)
+(0 real changes made)
+file /tmp/St03872.000002 saved
+(25 observations deleted)
+(label lspdomain already defined)
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_6.dta saved
+(352 observations deleted)
+(label lspdomain already defined)
+(16 observations deleted)
+(0 real changes made)
+(2 real changes made)
+file /tmp/St03872.000002 saved
+(23 observations deleted)
+file /tmp/St03872.000003 saved
+variable product does not uniquely identify observations in the master data
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (label lspdomain already defined)
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
+<<<<<<< HEAD
           1 |        381       95.49       95.49
           3 |         18        4.51      100.00
 ------------+-----------------------------------
@@ -1328,20 +2073,56 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
 variable product does not uniquely identify observations in the
     master data
+=======
+          1 |        376       95.67       95.67
+          3 |         17        4.33      100.00
+------------+-----------------------------------
+      Total |        393      100.00
+(376 observations deleted)
+(0 observations deleted)
+file /tmp/St03872.000003 saved
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |         23       92.00       92.00
+          3 |          2        8.00      100.00
+------------+-----------------------------------
+      Total |         25      100.00
+(label lspdomain already defined)
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_6.dta saved
+(347 observations deleted)
+(label lspdomain already defined)
+(21 observations deleted)
+(0 real changes made)
+(2 real changes made)
+file /tmp/St03872.000002 saved
+(23 observations deleted)
+file /tmp/St03872.000003 saved
+variable product does not uniquely identify observations in the master data
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (label lspdomain already defined)
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
+<<<<<<< HEAD
           1 |        383       95.99       95.99
           3 |         16        4.01      100.00
 ------------+-----------------------------------
       Total |        399      100.00
 (383 observations deleted)
+=======
+          1 |        377       95.93       95.93
+          3 |         16        4.07      100.00
+------------+-----------------------------------
+      Total |        393      100.00
+(377 observations deleted)
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (0 observations deleted)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+file /tmp/St03872.000003 saved
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
+<<<<<<< HEAD
           1 |         22       91.67       91.67
           3 |          2        8.33      100.00
 ------------+-----------------------------------
@@ -1377,23 +2158,66 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
 variable product does not uniquely identify observations in the
     master data
+=======
+          1 |         23       92.00       92.00
+          3 |          2        8.00      100.00
+------------+-----------------------------------
+      Total |         25      100.00
+(label lspdomain already defined)
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_6.dta saved
+(347 observations deleted)
+(label lspdomain already defined)
+(21 observations deleted)
+(0 real changes made)
+(0 real changes made)
+file /tmp/St03872.000002 saved
+(25 observations deleted)
+(label lspdomain already defined)
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_6.dta saved
+(label lspdomain already defined)
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/pref_r_price.dta saved
+(note: dataset contains 0 observations)
+(note: file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_7.dta not f
+> ound)
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_7.dta saved
+(195 observations deleted)
+file /tmp/St03872.000001 saved
+(347 observations deleted)
+(label lspdomain already defined)
+(27 observations deleted)
+(0 real changes made)
+(2 real changes made)
+file /tmp/St03872.000002 saved
+(17 observations deleted)
+file /tmp/St03872.000003 saved
+variable product does not uniquely identify observations in the master data
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (label lspdomain already defined)
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
+<<<<<<< HEAD
           1 |        383       95.99       95.99
           3 |         16        4.01      100.00
 ------------+-----------------------------------
       Total |        399      100.00
 (383 observations deleted)
+=======
+          1 |        377       95.93       95.93
+          3 |         16        4.07      100.00
+------------+-----------------------------------
+      Total |        393      100.00
+(377 observations deleted)
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (0 observations deleted)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+file /tmp/St03872.000003 saved
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
           1 |         18       90.00       90.00
           3 |          2       10.00      100.00
 ------------+-----------------------------------
+<<<<<<< HEAD
       Total |         20      100.00
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
 > GAPP2/work/revpref_price_7.dta saved
@@ -1407,20 +2231,42 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
 variable product does not uniquely identify observations in the
     master data
+=======
+      Total |         19      100.00
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_7.dta saved
+(361 observations deleted)
+(label lspdomain already defined)
+(18 observations deleted)
+(5 real changes made)
+(9 real changes made)
+file /tmp/St03872.000002 saved
+(10 observations deleted)
+file /tmp/St03872.000003 saved
+variable product does not uniquely identify observations in the master data
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (label lspdomain already defined)
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
+<<<<<<< HEAD
           1 |        321       80.45       80.45
           3 |         78       19.55      100.00
 ------------+-----------------------------------
       Total |        399      100.00
 (321 observations deleted)
+=======
+          1 |        317       80.66       80.66
+          3 |         76       19.34      100.00
+------------+-----------------------------------
+      Total |        393      100.00
+(317 observations deleted)
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (0 observations deleted)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+file /tmp/St03872.000003 saved
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
+<<<<<<< HEAD
           1 |         11       55.00       55.00
           3 |          9       45.00      100.00
 ------------+-----------------------------------
@@ -1439,23 +2285,50 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
 variable product does not uniquely identify observations in the
     master data
+=======
+          1 |         10       52.63       52.63
+          3 |          9       47.37      100.00
+------------+-----------------------------------
+      Total |         19      100.00
+(5 missing values generated)
+(label lspdomain already defined)
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_7.dta saved
+(347 observations deleted)
+(label lspdomain already defined)
+(27 observations deleted)
+(0 real changes made)
+(2 real changes made)
+file /tmp/St03872.000002 saved
+(17 observations deleted)
+file /tmp/St03872.000003 saved
+variable product does not uniquely identify observations in the master data
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (label lspdomain already defined)
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
+<<<<<<< HEAD
           1 |        374       93.73       93.73
           3 |         25        6.27      100.00
 ------------+-----------------------------------
       Total |        399      100.00
 (374 observations deleted)
+=======
+          1 |        377       95.93       95.93
+          3 |         16        4.07      100.00
+------------+-----------------------------------
+      Total |        393      100.00
+(377 observations deleted)
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (0 observations deleted)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+file /tmp/St03872.000003 saved
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
           1 |         17       85.00       85.00
           3 |          3       15.00      100.00
 ------------+-----------------------------------
+<<<<<<< HEAD
       Total |         20      100.00
 (label lspdomain already defined)
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
@@ -1471,10 +2344,26 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
 > GAPP2/work/revpref_price_7.dta saved
 (353 observations deleted)
+=======
+      Total |         19      100.00
+(label lspdomain already defined)
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_7.dta saved
+(347 observations deleted)
+(label lspdomain already defined)
+(27 observations deleted)
+(0 real changes made)
+(0 real changes made)
+file /tmp/St03872.000002 saved
+(19 observations deleted)
+(label lspdomain already defined)
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_7.dta saved
+(348 observations deleted)
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (label lspdomain already defined)
 (26 observations deleted)
 (0 real changes made)
 (0 real changes made)
+<<<<<<< HEAD
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
 (20 observations deleted)
 (label lspdomain already defined)
@@ -1491,10 +2380,27 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
 > GAPP2/work/revpref_price_7.dta saved
 (357 observations deleted)
+=======
+file /tmp/St03872.000002 saved
+(19 observations deleted)
+(label lspdomain already defined)
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_7.dta saved
+(348 observations deleted)
+(label lspdomain already defined)
+(26 observations deleted)
+(0 real changes made)
+(0 real changes made)
+file /tmp/St03872.000002 saved
+(19 observations deleted)
+(label lspdomain already defined)
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_7.dta saved
+(352 observations deleted)
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (label lspdomain already defined)
 (22 observations deleted)
 (0 real changes made)
 (0 real changes made)
+<<<<<<< HEAD
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
 (20 observations deleted)
 (label lspdomain already defined)
@@ -1510,23 +2416,47 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
 variable product does not uniquely identify observations in the
     master data
+=======
+file /tmp/St03872.000002 saved
+(19 observations deleted)
+(label lspdomain already defined)
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_7.dta saved
+(347 observations deleted)
+(label lspdomain already defined)
+(27 observations deleted)
+(0 real changes made)
+(1 real change made)
+file /tmp/St03872.000002 saved
+(18 observations deleted)
+file /tmp/St03872.000003 saved
+variable product does not uniquely identify observations in the master data
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (label lspdomain already defined)
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
+<<<<<<< HEAD
           1 |        391       97.99       97.99
           3 |          8        2.01      100.00
 ------------+-----------------------------------
       Total |        399      100.00
 (391 observations deleted)
+=======
+          1 |        385       97.96       97.96
+          3 |          8        2.04      100.00
+------------+-----------------------------------
+      Total |        393      100.00
+(385 observations deleted)
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (0 observations deleted)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+file /tmp/St03872.000003 saved
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
           1 |         19       95.00       95.00
           3 |          1        5.00      100.00
 ------------+-----------------------------------
+<<<<<<< HEAD
       Total |         20      100.00
 (label lspdomain already defined)
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
@@ -1550,10 +2480,34 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
 (192 observations deleted)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000001.tmp saved
 (353 observations deleted)
+=======
+      Total |         19      100.00
+(label lspdomain already defined)
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_7.dta saved
+(347 observations deleted)
+(label lspdomain already defined)
+(27 observations deleted)
+(0 real changes made)
+(0 real changes made)
+file /tmp/St03872.000002 saved
+(19 observations deleted)
+(label lspdomain already defined)
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_7.dta saved
+(label lspdomain already defined)
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/pref_r_price.dta saved
+(note: dataset contains 0 observations)
+(note: file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_8.dta not f
+> ound)
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_8.dta saved
+(188 observations deleted)
+file /tmp/St03872.000001 saved
+(347 observations deleted)
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (label lspdomain already defined)
 (20 observations deleted)
 (0 real changes made)
 (0 real changes made)
+<<<<<<< HEAD
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
 (26 observations deleted)
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
@@ -1568,10 +2522,25 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
 variable product does not uniquely identify observations in the
     master data
+=======
+file /tmp/St03872.000002 saved
+(26 observations deleted)
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_8.dta saved
+(361 observations deleted)
+(label lspdomain already defined)
+(8 observations deleted)
+(2 real changes made)
+(14 real changes made)
+file /tmp/St03872.000002 saved
+(12 observations deleted)
+file /tmp/St03872.000003 saved
+variable product does not uniquely identify observations in the master data
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (label lspdomain already defined)
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
+<<<<<<< HEAD
           1 |        322       80.70       80.70
           3 |         77       19.30      100.00
 ------------+-----------------------------------
@@ -1591,10 +2560,40 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
 > GAPP2/work/revpref_price_8.dta saved
 (353 observations deleted)
+=======
+          1 |        273       69.47       69.47
+          3 |        120       30.53      100.00
+------------+-----------------------------------
+      Total |        393      100.00
+(273 observations deleted)
+(0 observations deleted)
+file /tmp/St03872.000003 saved
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |         12       46.15       46.15
+          3 |         14       53.85      100.00
+------------+-----------------------------------
+      Total |         26      100.00
+(2 missing values generated)
+(label lspdomain already defined)
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_8.dta saved
+(347 observations deleted)
 (label lspdomain already defined)
 (20 observations deleted)
 (0 real changes made)
 (0 real changes made)
+file /tmp/St03872.000002 saved
+(26 observations deleted)
+(label lspdomain already defined)
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_8.dta saved
+(347 observations deleted)
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
+(label lspdomain already defined)
+(20 observations deleted)
+(0 real changes made)
+(0 real changes made)
+<<<<<<< HEAD
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
 (26 observations deleted)
 (label lspdomain already defined)
@@ -1630,17 +2629,49 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
 variable product does not uniquely identify observations in the
     master data
+=======
+file /tmp/St03872.000002 saved
+(26 observations deleted)
+(label lspdomain already defined)
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_8.dta saved
+(348 observations deleted)
+(label lspdomain already defined)
+(19 observations deleted)
+(0 real changes made)
+(0 real changes made)
+file /tmp/St03872.000002 saved
+(26 observations deleted)
+(label lspdomain already defined)
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_8.dta saved
+(348 observations deleted)
+(label lspdomain already defined)
+(20 observations deleted)
+(1 real change made)
+(1 real change made)
+file /tmp/St03872.000002 saved
+(25 observations deleted)
+file /tmp/St03872.000003 saved
+variable product does not uniquely identify observations in the master data
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (label lspdomain already defined)
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
+<<<<<<< HEAD
           1 |        392       98.25       98.25
           3 |          7        1.75      100.00
 ------------+-----------------------------------
       Total |        399      100.00
 (392 observations deleted)
+=======
+          1 |        386       98.22       98.22
+          3 |          7        1.78      100.00
+------------+-----------------------------------
+      Total |        393      100.00
+(386 observations deleted)
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (0 observations deleted)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+file /tmp/St03872.000003 saved
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
@@ -1650,6 +2681,7 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
       Total |         26      100.00
 (1 missing value generated)
 (label lspdomain already defined)
+<<<<<<< HEAD
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
 > GAPP2/work/revpref_price_8.dta saved
 (357 observations deleted)
@@ -1662,20 +2694,41 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
 variable product does not uniquely identify observations in the
     master data
+=======
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_8.dta saved
+(352 observations deleted)
+(label lspdomain already defined)
+(19 observations deleted)
+(4 real changes made)
+(8 real changes made)
+file /tmp/St03872.000002 saved
+(18 observations deleted)
+file /tmp/St03872.000003 saved
+variable product does not uniquely identify observations in the master data
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (label lspdomain already defined)
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
+<<<<<<< HEAD
           1 |        340       85.21       85.21
           3 |         59       14.79      100.00
 ------------+-----------------------------------
       Total |        399      100.00
 (340 observations deleted)
+=======
+          1 |        327       83.21       83.21
+          3 |         66       16.79      100.00
+------------+-----------------------------------
+      Total |        393      100.00
+(327 observations deleted)
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (0 observations deleted)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+file /tmp/St03872.000003 saved
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
+<<<<<<< HEAD
           1 |         19       73.08       73.08
           3 |          7       26.92      100.00
 ------------+-----------------------------------
@@ -1685,20 +2738,39 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
 > GAPP2/work/revpref_price_8.dta saved
 (353 observations deleted)
+=======
+          1 |         18       69.23       69.23
+          3 |          8       30.77      100.00
+------------+-----------------------------------
+      Total |         26      100.00
+(4 missing values generated)
+(label lspdomain already defined)
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_8.dta saved
+(347 observations deleted)
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (label lspdomain already defined)
 (20 observations deleted)
 (0 real changes made)
 (0 real changes made)
+<<<<<<< HEAD
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
 (26 observations deleted)
 (label lspdomain already defined)
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
 > GAPP2/work/revpref_price_8.dta saved
 (353 observations deleted)
+=======
+file /tmp/St03872.000002 saved
+(26 observations deleted)
+(label lspdomain already defined)
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_8.dta saved
+(347 observations deleted)
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (label lspdomain already defined)
 (20 observations deleted)
 (0 real changes made)
 (0 real changes made)
+<<<<<<< HEAD
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
 (26 observations deleted)
 (label lspdomain already defined)
@@ -1713,26 +2785,54 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
 (191 observations deleted)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000001.tmp saved
 (353 observations deleted)
+=======
+file /tmp/St03872.000002 saved
+(26 observations deleted)
+(label lspdomain already defined)
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_8.dta saved
+(label lspdomain already defined)
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/pref_r_price.dta saved
+(note: dataset contains 0 observations)
+(note: file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_9.dta not f
+> ound)
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_9.dta saved
+(187 observations deleted)
+file /tmp/St03872.000001 saved
+(347 observations deleted)
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (label lspdomain already defined)
 (19 observations deleted)
 (0 real changes made)
 (1 real change made)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
+file /tmp/St03872.000002 saved
 (26 observations deleted)
+<<<<<<< HEAD
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
 variable product does not uniquely identify observations in the
     master data
+=======
+file /tmp/St03872.000003 saved
+variable product does not uniquely identify observations in the master data
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (label lspdomain already defined)
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
+<<<<<<< HEAD
           1 |        390       97.74       97.74
           3 |          9        2.26      100.00
 ------------+-----------------------------------
       Total |        399      100.00
 (390 observations deleted)
+=======
+          1 |        385       97.96       97.96
+          3 |          8        2.04      100.00
+------------+-----------------------------------
+      Total |        393      100.00
+(385 observations deleted)
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (0 observations deleted)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+file /tmp/St03872.000003 saved
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
@@ -1740,6 +2840,7 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
           3 |          1        3.70      100.00
 ------------+-----------------------------------
       Total |         27      100.00
+<<<<<<< HEAD
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
 > GAPP2/work/revpref_price_9.dta saved
 (363 observations deleted)
@@ -1752,20 +2853,41 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
 variable product does not uniquely identify observations in the
     master data
+=======
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_9.dta saved
+(361 observations deleted)
+(label lspdomain already defined)
+(10 observations deleted)
+(5 real changes made)
+(16 real changes made)
+file /tmp/St03872.000002 saved
+(11 observations deleted)
+file /tmp/St03872.000003 saved
+variable product does not uniquely identify observations in the master data
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (label lspdomain already defined)
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
+<<<<<<< HEAD
           1 |        307       76.94       76.94
           3 |         92       23.06      100.00
 ------------+-----------------------------------
       Total |        399      100.00
 (307 observations deleted)
+=======
+          1 |        259       65.90       65.90
+          3 |        134       34.10      100.00
+------------+-----------------------------------
+      Total |        393      100.00
+(259 observations deleted)
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (0 observations deleted)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+file /tmp/St03872.000003 saved
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
+<<<<<<< HEAD
           1 |         16       59.26       59.26
           3 |         11       40.74      100.00
 ------------+-----------------------------------
@@ -1775,56 +2897,98 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
 > GAPP2/work/revpref_price_9.dta saved
 (353 observations deleted)
+=======
+          1 |         11       40.74       40.74
+          3 |         16       59.26      100.00
+------------+-----------------------------------
+      Total |         27      100.00
+(5 missing values generated)
+(label lspdomain already defined)
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_9.dta saved
+(347 observations deleted)
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (label lspdomain already defined)
 (19 observations deleted)
 (0 real changes made)
 (0 real changes made)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
+file /tmp/St03872.000002 saved
 (27 observations deleted)
 (label lspdomain already defined)
+<<<<<<< HEAD
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
+> GAPP2/work/revpref_price_9.dta saved
+(353 observations deleted)
+=======
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_9.dta saved
+(347 observations deleted)
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
+(label lspdomain already defined)
+(19 observations deleted)
+(0 real changes made)
+(0 real changes made)
+file /tmp/St03872.000002 saved
+(27 observations deleted)
+(label lspdomain already defined)
+<<<<<<< HEAD
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
 > GAPP2/work/revpref_price_9.dta saved
 (353 observations deleted)
 (label lspdomain already defined)
 (19 observations deleted)
+=======
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_9.dta saved
+(348 observations deleted)
+(label lspdomain already defined)
+(18 observations deleted)
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (0 real changes made)
 (0 real changes made)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
+file /tmp/St03872.000002 saved
 (27 observations deleted)
 (label lspdomain already defined)
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
-> GAPP2/work/revpref_price_9.dta saved
-(353 observations deleted)
-(label lspdomain already defined)
-(19 observations deleted)
-(0 real changes made)
-(0 real changes made)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
-(27 observations deleted)
-(label lspdomain already defined)
+<<<<<<< HEAD
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
 > GAPP2/work/revpref_price_9.dta saved
 (354 observations deleted)
+=======
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_9.dta saved
+(348 observations deleted)
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (label lspdomain already defined)
 (19 observations deleted)
 (1 real change made)
 (2 real changes made)
+<<<<<<< HEAD
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
 (25 observations deleted)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
 variable product does not uniquely identify observations in the
     master data
+=======
+file /tmp/St03872.000002 saved
+(25 observations deleted)
+file /tmp/St03872.000003 saved
+variable product does not uniquely identify observations in the master data
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (label lspdomain already defined)
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
+<<<<<<< HEAD
           1 |        385       96.49       96.49
           3 |         14        3.51      100.00
 ------------+-----------------------------------
       Total |        399      100.00
 (385 observations deleted)
+=======
+          1 |        379       96.44       96.44
+          3 |         14        3.56      100.00
+------------+-----------------------------------
+      Total |        393      100.00
+(379 observations deleted)
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (0 observations deleted)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+file /tmp/St03872.000003 saved
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
@@ -1834,6 +2998,7 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
       Total |         27      100.00
 (1 missing value generated)
 (label lspdomain already defined)
+<<<<<<< HEAD
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
 > GAPP2/work/revpref_price_9.dta saved
 (357 observations deleted)
@@ -1846,17 +3011,37 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
 variable product does not uniquely identify observations in the
     master data
+=======
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_9.dta saved
+(352 observations deleted)
+(label lspdomain already defined)
+(19 observations deleted)
+(5 real changes made)
+(8 real changes made)
+file /tmp/St03872.000002 saved
+(19 observations deleted)
+file /tmp/St03872.000003 saved
+variable product does not uniquely identify observations in the master data
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (label lspdomain already defined)
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
+<<<<<<< HEAD
           1 |        342       85.71       85.71
           3 |         57       14.29      100.00
 ------------+-----------------------------------
       Total |        399      100.00
 (342 observations deleted)
+=======
+          1 |        329       83.72       83.72
+          3 |         64       16.28      100.00
+------------+-----------------------------------
+      Total |        393      100.00
+(329 observations deleted)
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (0 observations deleted)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+file /tmp/St03872.000003 saved
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
@@ -1864,31 +3049,51 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
           3 |          7       25.93      100.00
 ------------+-----------------------------------
       Total |         27      100.00
+<<<<<<< HEAD
 (4 missing values generated)
 (label lspdomain already defined)
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
 > GAPP2/work/revpref_price_9.dta saved
 (353 observations deleted)
+=======
+(5 missing values generated)
+(label lspdomain already defined)
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_9.dta saved
+(347 observations deleted)
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (label lspdomain already defined)
 (19 observations deleted)
 (0 real changes made)
 (1 real change made)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
+file /tmp/St03872.000002 saved
 (26 observations deleted)
+<<<<<<< HEAD
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
 variable product does not uniquely identify observations in the
     master data
+=======
+file /tmp/St03872.000003 saved
+variable product does not uniquely identify observations in the master data
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (label lspdomain already defined)
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
+<<<<<<< HEAD
           1 |        391       97.99       97.99
           3 |          8        2.01      100.00
 ------------+-----------------------------------
       Total |        399      100.00
 (391 observations deleted)
+=======
+          1 |        385       97.96       97.96
+          3 |          8        2.04      100.00
+------------+-----------------------------------
+      Total |        393      100.00
+(385 observations deleted)
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (0 observations deleted)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+file /tmp/St03872.000003 saved
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
@@ -1897,29 +3102,44 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
 ------------+-----------------------------------
       Total |         27      100.00
 (label lspdomain already defined)
+<<<<<<< HEAD
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
 > GAPP2/work/revpref_price_9.dta saved
 (353 observations deleted)
+=======
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_9.dta saved
+(347 observations deleted)
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (label lspdomain already defined)
 (19 observations deleted)
 (0 real changes made)
 (0 real changes made)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
+file /tmp/St03872.000002 saved
 (27 observations deleted)
 (label lspdomain already defined)
+<<<<<<< HEAD
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
 > GAPP2/work/revpref_price_9.dta saved
 (label lspdomain already defined)
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
 > GAPP2/work/pref_r_price.dta saved
+=======
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/revpref_price_9.dta saved
+(label lspdomain already defined)
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/pref_r_price.dta saved
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 
 . *bring in actual flexible bundle numbers;
 . use "$path/work/povline_food_flex_it$it_n.dta", clear;
 
 .         merge spdomain using "$path/work/pref_r_price.dta";
 variable spdomain does not uniquely identify observations in
+<<<<<<< HEAD
     C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005
     > \GAPP2/work/pref_r_price.dta
+=======
+    /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/pref_r_price.dta
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 (label lspdomain already defined)
 
 .         tab _m;
@@ -1959,8 +3179,7 @@ pricemiss was double now byte
 .       lab var pref_r "Fails or passes revealed preference test";
 
 .       lab def pref_r
->                         0 "comparison of the same region with it
-> self"
+>                         0 "comparison of the same region with itself"
 >                         1 "passes revealed preference test"
 >                         2 "fails revealed preference test" ;
 
@@ -1972,6 +3191,7 @@ pricemiss was double now byte
 .         tab pref_r;
 
     Fails or passes revealed preference |
+<<<<<<< HEAD
                                    test |      Freq.     Percent  
 >       Cum.
 ----------------------------------------+-------------------------
@@ -1982,32 +3202,35 @@ pricemiss was double now byte
 >     100.00
 ----------------------------------------+-------------------------
 > ----------
+=======
+                                   test |      Freq.     Percent        Cum.
+----------------------------------------+-----------------------------------
+        passes revealed preference test |         38       52.78       52.78
+         fails revealed preference test |         34       47.22      100.00
+----------------------------------------+-----------------------------------
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
                                   Total |         72      100.00
 
 .              sort spdomainq ;
 
 .       by spdomainq: tab pref_r;
 
-------------------------------------------------------------------
+--------------------------------------------------------------------------------------------
 -> spdomainq = 1
 
     Fails or passes revealed preference |
-                                   test |      Freq.     Percent  
->       Cum.
-----------------------------------------+-------------------------
-> ----------
-        passes revealed preference test |          5       62.50  
->      62.50
-         fails revealed preference test |          3       37.50  
->     100.00
-----------------------------------------+-------------------------
-> ----------
+                                   test |      Freq.     Percent        Cum.
+----------------------------------------+-----------------------------------
+        passes revealed preference test |          5       62.50       62.50
+         fails revealed preference test |          3       37.50      100.00
+----------------------------------------+-----------------------------------
                                   Total |          8      100.00
 
-------------------------------------------------------------------
+--------------------------------------------------------------------------------------------
 -> spdomainq = 2
 
     Fails or passes revealed preference |
+<<<<<<< HEAD
                                    test |      Freq.     Percent  
 >       Cum.
 ----------------------------------------+-------------------------
@@ -2018,28 +3241,30 @@ pricemiss was double now byte
 >     100.00
 ----------------------------------------+-------------------------
 > ----------
+=======
+                                   test |      Freq.     Percent        Cum.
+----------------------------------------+-----------------------------------
+         fails revealed preference test |          8      100.00      100.00
+----------------------------------------+-----------------------------------
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
                                   Total |          8      100.00
 
-------------------------------------------------------------------
+--------------------------------------------------------------------------------------------
 -> spdomainq = 3
 
     Fails or passes revealed preference |
-                                   test |      Freq.     Percent  
->       Cum.
-----------------------------------------+-------------------------
-> ----------
-        passes revealed preference test |          6       75.00  
->      75.00
-         fails revealed preference test |          2       25.00  
->     100.00
-----------------------------------------+-------------------------
-> ----------
+                                   test |      Freq.     Percent        Cum.
+----------------------------------------+-----------------------------------
+        passes revealed preference test |          6       75.00       75.00
+         fails revealed preference test |          2       25.00      100.00
+----------------------------------------+-----------------------------------
                                   Total |          8      100.00
 
-------------------------------------------------------------------
+--------------------------------------------------------------------------------------------
 -> spdomainq = 4
 
     Fails or passes revealed preference |
+<<<<<<< HEAD
                                    test |      Freq.     Percent  
 >       Cum.
 ----------------------------------------+-------------------------
@@ -2050,12 +3275,20 @@ pricemiss was double now byte
 >     100.00
 ----------------------------------------+-------------------------
 > ----------
+=======
+                                   test |      Freq.     Percent        Cum.
+----------------------------------------+-----------------------------------
+        passes revealed preference test |          3       37.50       37.50
+         fails revealed preference test |          5       62.50      100.00
+----------------------------------------+-----------------------------------
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
                                   Total |          8      100.00
 
-------------------------------------------------------------------
+--------------------------------------------------------------------------------------------
 -> spdomainq = 5
 
     Fails or passes revealed preference |
+<<<<<<< HEAD
                                    test |      Freq.     Percent  
 >       Cum.
 ----------------------------------------+-------------------------
@@ -2066,12 +3299,20 @@ pricemiss was double now byte
 >     100.00
 ----------------------------------------+-------------------------
 > ----------
+=======
+                                   test |      Freq.     Percent        Cum.
+----------------------------------------+-----------------------------------
+        passes revealed preference test |          4       50.00       50.00
+         fails revealed preference test |          4       50.00      100.00
+----------------------------------------+-----------------------------------
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
                                   Total |          8      100.00
 
-------------------------------------------------------------------
+--------------------------------------------------------------------------------------------
 -> spdomainq = 6
 
     Fails or passes revealed preference |
+<<<<<<< HEAD
                                    test |      Freq.     Percent  
 >       Cum.
 ----------------------------------------+-------------------------
@@ -2082,12 +3323,20 @@ pricemiss was double now byte
 >     100.00
 ----------------------------------------+-------------------------
 > ----------
+=======
+                                   test |      Freq.     Percent        Cum.
+----------------------------------------+-----------------------------------
+        passes revealed preference test |          3       37.50       37.50
+         fails revealed preference test |          5       62.50      100.00
+----------------------------------------+-----------------------------------
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
                                   Total |          8      100.00
 
-------------------------------------------------------------------
+--------------------------------------------------------------------------------------------
 -> spdomainq = 7
 
     Fails or passes revealed preference |
+<<<<<<< HEAD
                                    test |      Freq.     Percent  
 >       Cum.
 ----------------------------------------+-------------------------
@@ -2098,42 +3347,39 @@ pricemiss was double now byte
 >     100.00
 ----------------------------------------+-------------------------
 > ----------
+=======
+                                   test |      Freq.     Percent        Cum.
+----------------------------------------+-----------------------------------
+        passes revealed preference test |          2       25.00       25.00
+         fails revealed preference test |          6       75.00      100.00
+----------------------------------------+-----------------------------------
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
                                   Total |          8      100.00
 
-------------------------------------------------------------------
+--------------------------------------------------------------------------------------------
 -> spdomainq = 8
 
     Fails or passes revealed preference |
-                                   test |      Freq.     Percent  
->       Cum.
-----------------------------------------+-------------------------
-> ----------
-        passes revealed preference test |          7       87.50  
->      87.50
-         fails revealed preference test |          1       12.50  
->     100.00
-----------------------------------------+-------------------------
-> ----------
+                                   test |      Freq.     Percent        Cum.
+----------------------------------------+-----------------------------------
+        passes revealed preference test |          7       87.50       87.50
+         fails revealed preference test |          1       12.50      100.00
+----------------------------------------+-----------------------------------
                                   Total |          8      100.00
 
-------------------------------------------------------------------
+--------------------------------------------------------------------------------------------
 -> spdomainq = 9
 
     Fails or passes revealed preference |
-                                   test |      Freq.     Percent  
->       Cum.
-----------------------------------------+-------------------------
-> ----------
-        passes revealed preference test |          8      100.00  
->     100.00
-----------------------------------------+-------------------------
-> ----------
+                                   test |      Freq.     Percent        Cum.
+----------------------------------------+-----------------------------------
+        passes revealed preference test |          8      100.00      100.00
+----------------------------------------+-----------------------------------
                                   Total |          8      100.00
 
 
 . save "$path/work/pref_r_price.dta", replace;
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
-> GAPP2/work/pref_r_price.dta saved
+file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/pref_r_price.dta saved
 
 . *drop comparisons with Maputo ;
 . drop if spdomain>=11;
@@ -2148,6 +3394,7 @@ this is with maputo dropped
 . tab pref_r;
 
     Fails or passes revealed preference |
+<<<<<<< HEAD
                                    test |      Freq.     Percent  
 >       Cum.
 ----------------------------------------+-------------------------
@@ -2158,20 +3405,28 @@ this is with maputo dropped
 >     100.00
 ----------------------------------------+-------------------------
 > ----------
+=======
+                                   test |      Freq.     Percent        Cum.
+----------------------------------------+-----------------------------------
+        passes revealed preference test |         38       52.78       52.78
+         fails revealed preference test |         34       47.22      100.00
+----------------------------------------+-----------------------------------
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
                                   Total |         72      100.00
 
 . *further drop Nampula rural and urban;
 . drop if spdomain==3 | spdomain==4;
 (16 observations deleted)
 
-. display "this is with maputo and nampula dropped (MAH: Actually 
-> not - experimenting with 6 spatial domains)";
-this is with maputo and nampula dropped (MAH: Actually not - exper
-> imenting with 6 spatial domains)
+. display "this is with maputo and nampula dropped (MAH: Actually not - experimenting with 6
+>  spatial domains)";
+this is with maputo and nampula dropped (MAH: Actually not - experimenting with 6 spatial do
+> mains)
 
 . tab pref_r;
 
     Fails or passes revealed preference |
+<<<<<<< HEAD
                                    test |      Freq.     Percent  
 >       Cum.
 ----------------------------------------+-------------------------
@@ -2182,17 +3437,26 @@ this is with maputo and nampula dropped (MAH: Actually not - exper
 >     100.00
 ----------------------------------------+-------------------------
 > ----------
+=======
+                                   test |      Freq.     Percent        Cum.
+----------------------------------------+-----------------------------------
+        passes revealed preference test |         29       51.79       51.79
+         fails revealed preference test |         27       48.21      100.00
+----------------------------------------+-----------------------------------
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
                                   Total |         56      100.00
 
-. ****************************************************************
-> **********
+. **************************************************************************
 > * 170_pref_r_price.do           (end)
-> ****************************************************************
-> **********;
+> **************************************************************************;
 . log close;
       name:  <unnamed>
-       log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UN
-> HS_2005\GAPP2/rep/170_pref_r_price.log
+       log:  /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//rep/170_pref_r_price.log
   log type:  text
+<<<<<<< HEAD
  closed on:   2 Jul 2013, 12:33:22
 ------------------------------------------------------------------
+=======
+ closed on:   2 Jul 2013, 11:50:35
+--------------------------------------------------------------------------------------------
+>>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
