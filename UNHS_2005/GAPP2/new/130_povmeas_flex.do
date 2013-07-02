@@ -107,8 +107,8 @@ use `contpi';
 	drop _merge;
 
 gen     triwt = 0 ;
-replace triwt = 11 - round(50*abs(cons_pc_tpi/povline_f_flex-1)+0.5)
-                if abs(cons_pc_tpi/povline_f_flex-1)<=0.2;
+replace triwt = 10 - round(abs(cons_pc_tpi/povline_f_flex-1))
+                if abs(cons_pc_tpi/povline_f_flex-1)<=10;
 				
 	* Nearness to poverty line and population weights ;
 	gen tripopwt=triwt*hhweight*hhsize;
@@ -134,7 +134,7 @@ replace triwt = 11 - round(50*abs(cons_pc_tpi/povline_f_flex-1)+0.5)
 **************************************************************************;
 * Poverty line is the sum of the food and non-food poverty lines
 **************************************************************************;
-	gen povline_flex=povline_f_flex + povline_na_flex;
+	gen povline_flex= povline_f_flex+ povline_na_flex;
 	lab var povline_flex "Poverty line. Flexible bundle";
 
 	sort spdomain;
