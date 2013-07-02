@@ -3,7 +3,7 @@
        log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UN
 > HS_2005\GAPP2/rep/100_food_basket_flex.log
   log type:  text
- opened on:  25 Jun 2013, 11:33:14
+ opened on:   2 Jul 2013, 13:42:58
 
 . clear
 
@@ -390,7 +390,7 @@ variable hhid does not uniquely identify observations in the
 .             merge spdomain using `tothhweight';
 variable spdomain does not uniquely identify observations in the
     master data
-(label llspdomain already defined)
+(label lspdomain already defined)
 
 .           tab _merge;
 

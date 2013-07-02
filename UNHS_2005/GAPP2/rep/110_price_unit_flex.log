@@ -3,7 +3,7 @@
        log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UN
 > HS_2005\GAPP2/rep/110_price_unit_flex.log
   log type:  text
- opened on:  25 Jun 2013, 11:33:15
+ opened on:   2 Jul 2013, 13:42:58
 
 . clear
 
@@ -227,7 +227,7 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
 .                                 codebook hhid;
 
 ------------------------------------------------------------------
-hhid                                                   (unlabeled)
+hhid                                                  Household ID
 ------------------------------------------------------------------
 
                   type:  numeric (double)
@@ -475,7 +475,7 @@ variables reg_tpi survquar do not uniquely identify observations
 
 .                                 merge hhid using `spdomainreg_tp
 > i';
-(label llspdomain already defined)
+(label lspdomain already defined)
 (label lsurvquar already defined)
 (label region already defined)
 
@@ -574,13 +574,14 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000006.tmp saved
 > pct';
 variable spdomain does not uniquely identify observations in the
     master data
-(label llspdomain already defined)
+(label lspdomain already defined)
 
 .                                         tab _merge;
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          3 |      7,427      100.00      100.00
+          1 |          1        0.01        0.01
+          3 |      7,426       99.99      100.00
 ------------+-----------------------------------
       Total |      7,427      100.00
 
@@ -646,10 +647,10 @@ bottom_bask |
 bottom_bask |
          et |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          0 | 758.213134       50.05       50.05
-          1 | 756.786866       49.95      100.00
+          0 |  759.45168       50.06       50.06
+          1 |  757.54832       49.94      100.00
 ------------+-----------------------------------
-      Total |      1,515      100.00
+      Total |      1,517      100.00
 
 ------------------------------------------------------------------
 -> spdomain = Northern urban
@@ -668,10 +669,10 @@ bottom_bask |
 bottom_bask |
          et |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          0 | 638.817551       50.02       50.02
-          1 | 638.182449       49.98      100.00
+          0 | 639.056014       50.00       50.00
+          1 | 638.943986       50.00      100.00
 ------------+-----------------------------------
-      Total |      1,277      100.00
+      Total |      1,278      100.00
 
 ------------------------------------------------------------------
 -> spdomain = Western urban
@@ -679,10 +680,10 @@ bottom_bask |
 bottom_bask |
          et |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          0 | 213.931781       50.46       50.46
-          1 | 210.068219       49.54      100.00
+          0 | 213.071648       50.13       50.13
+          1 | 211.928352       49.87      100.00
 ------------+-----------------------------------
-      Total |        424      100.00
+      Total |        425      100.00
 
 ------------------------------------------------------------------
 -> spdomain = Western rural
@@ -690,21 +691,14 @@ bottom_bask |
 bottom_bask |
          et |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          0 |672.1541239       50.01       50.01
-          1 |671.8458761       49.99      100.00
+          0 |673.1982471       50.05       50.05
+          1 |671.8017529       49.95      100.00
 ------------+-----------------------------------
-      Total |      1,344      100.00
+      Total |      1,345      100.00
 
 ------------------------------------------------------------------
 -> spdomain = .
-
-bottom_bask |
-         et |      Freq.     Percent        Cum.
-------------+-----------------------------------
-          0 | 3.94242251       78.85       78.85
-          1 | 1.05757749       21.15      100.00
-------------+-----------------------------------
-      Total |          5      100.00
+no observations
 
 
 .                                         lab var bottom_basket "=
@@ -726,7 +720,7 @@ variable hhid does not uniquely identify observations in the
     master data
 (label region already defined)
 (label lsurvquar already defined)
-(label llspdomain already defined)
+(label lspdomain already defined)
 
 .         tab _merge;
 
@@ -742,7 +736,7 @@ variable hhid does not uniquely identify observations in the
 .                         * Only keep price observations for the p
 > oor ;
 .         keep if bottom_basket==1;
-(47241 observations deleted)
+(47250 observations deleted)
 
 .         ********************************************************
 > ******************;
@@ -754,15 +748,15 @@ variable hhid does not uniquely identify observations in the
 > ****************************************************************
 > **********;
 .                 gen hhppkg=value_r/quantity;
-(37 missing values generated)
+(39 missing values generated)
 
 .                 egen lower5=pctile(hhppkg), p(5) by(spdomain pro
 > duct);
-(37 missing values generated)
+(39 missing values generated)
 
 .                 egen upper5=pctile(hhppkg), p(95) by(spdomain pr
 > oduct);
-(37 missing values generated)
+(39 missing values generated)
 
 . sum;
 
@@ -770,80 +764,80 @@ variable hhid does not uniquely identify observations in the
 >  Max
 -------------+----------------------------------------------------
 > ----
-        hhid |     31906    2.44e+09    1.15e+09   1.01e+09   4.15
+        hhid |     31897    2.44e+09    1.15e+09   1.01e+09   4.15
 > e+09
-     product |     31869    128.4977    15.59195        101       
+     product |     31858    128.4992    15.59144        101       
 >  154
-    quantity |     31869    .6929812    6.281089   .0014286   857.
+    quantity |     31858      .69304     6.28217   .0014286   857.
 > 1429
-       value |     31869     210.094    295.5781          0       
+       value |     31858    210.0754    295.6091          0       
 > 7000
-        unit |     31869           1           0          1       
+        unit |     31858           1           0          1       
 >    1
 -------------+----------------------------------------------------
 > ----
-    food_cat |     31869           1           0          1       
+    food_cat |     31858           1           0          1       
 >    1
-       count |     31869           1           0          1       
+       count |     31858           1           0          1       
 >    1
-    descript |     31869           1           0          1       
+    descript |     31858           1           0          1       
 >    1
-      numreg |     31869     5.91076    2.957367          1       
+      numreg |     31858    5.911168    2.957286          1       
 >    9
-    survquar |     31906    2.503416    1.068242          1       
+    survquar |     31897    2.503652    1.068389          1       
 >    4
 -------------+----------------------------------------------------
 > ----
-     reg_tpi |     31906    2.371654    1.151233          1       
+     reg_tpi |     31897    2.371195    1.151071          1       
 >    4
-    spdomain |     31904    5.427564    2.437448          1       
+    spdomain |     31897     5.42656    2.436954          1       
 >    9
-    tpi_trim |     31906    .9737759    .0778926   .8029115   1.11
+    tpi_trim |     31897    .9737847    .0779077   .8029115   1.11
 > 7961
-     value_r |     31869     215.819    301.7114          0       
+     value_r |     31858    215.7989    301.7422          0       
 > 7000
- cons_pc_nom |     31906    622.5672     318.406   61.85135   2052
+ cons_pc_nom |     31897    622.5245    318.4524   61.85135   2052
 > .475
 -------------+----------------------------------------------------
 > ----
-      hhsize |     31906    6.719739    3.023877          1       
+      hhsize |     31897    6.720413    3.024317          1       
 >   29
-    hhweight |     31906    702.8173    364.5624      60.97    440
+    hhweight |     31897    702.7202    364.5882      60.97    440
 > 4.13
-        bswt |     31906           1           0          1       
+        bswt |     31897           1           0          1       
 >    1
- cons_hh_nom |     31906    4053.409    2705.492   95.65753    306
+ cons_hh_nom |     31897    4053.695    2706.421   95.65753    306
 > 78.9
- food_pc_nom |     31906    375.9164    180.0312          0   1657
+ food_pc_nom |     31897    375.8222     180.041          0   1657
 > .143
 -------------+----------------------------------------------------
 > ----
-   nf_pc_nom |     31906    246.6508    190.9808          0   1676
+   nf_pc_nom |     31897    246.7023    191.0718          0   1676
 > .589
- food_pc_tpi |     31906     386.805    182.4515          0   1657
+ food_pc_tpi |     31897    386.7063    182.4589          0   1657
 > .143
- cons_pc_tpi |     31906    633.4558    319.5238   61.85136   2059
+ cons_pc_tpi |     31897    633.4086    319.5682   61.85136   2059
 > .777
-   pctile_60 |     31906     901.457    393.1057   425.9435   2065
+   pctile_60 |     31897    901.4479    393.1792   425.9435   2065
 > .205
-bottom_bas~t |     31906           1           0          1       
+bottom_bas~t |     31897           1           0          1       
 >    1
 -------------+----------------------------------------------------
 > ----
-      hhppkg |     31869    675.9777    1001.164          0   6163
+      hhppkg |     31858    675.9831     1001.29          0   6163
 > 3.35
-      lower5 |     31869     254.587    391.3673          0   7237
+      lower5 |     31858    254.5654    391.3447          0   7237
 > .665
-      upper5 |     31869    1433.411    1308.745   95.74071   8003
+      upper5 |     31858    1433.265     1308.63   95.74071   8003
 > .091
 
 . describe;
 
 Contains data from C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000
 > 1.tmp
-  obs:        31,906                          
- vars:            28                          25 Jun 2013 11:33
- size:     3,860,626                          
+  obs:        31,897                          
+ vars:            28                          2 Jul 2013 13:42
+ size:     3,859,537                          
 ------------------------------------------------------------------
               storage  display     value
 variable name   type   format      label      variable label
@@ -878,7 +872,7 @@ survquar        float  %12.0g      lsurvquar
 reg_tpi         float  %9.0g       region     Regions used for
                                               temporal price index
                                               calculations
-spdomain        float  %14.0g      llspdomain
+spdomain        float  %14.0g      lspdomain
                                               Spatial domains:
                                               each with own
                                               poverty line (they
@@ -969,9 +963,9 @@ Sorted by:
 >  Max
 -------------+----------------------------------------------------
 > ----
-     ratiotw |       353    1.528047    3.015267   .7079509    46.
+     ratiotw |       353    1.528122    3.015264   .7079509    46.
 > 2839
-     ratiomw |       353    1.257421    2.987633   .3004157   44.5
+     ratiomw |       353    1.257484    2.987627   .3004157   44.5
 > 9536
 
 .         sort product;

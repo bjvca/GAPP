@@ -3,7 +3,7 @@
        log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UN
 > HS_2005\GAPP2/rep/120_povline_food_flex.log
   log type:  text
- opened on:  25 Jun 2013, 11:33:17
+ opened on:   2 Jul 2013, 13:43:01
 
 . clear
 
@@ -44,17 +44,17 @@ delimiter now ;
 .         * merge in price information;
 .         merge product spdomain using "$path/work/price_unit_flex
 > .dta";
-(label llspdomain already defined)
+(label lspdomain already defined)
 
 .         tab _merge;
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          1 |         22        5.87        5.87
-          2 |        175       46.67       52.53
-          3 |        178       47.47      100.00
+          1 |         21        5.61        5.61
+          2 |        175       46.79       52.41
+          3 |        178       47.59      100.00
 ------------+-----------------------------------
-      Total |        375      100.00
+      Total |        374      100.00
 
 .         list product spdomain descript if _merge==1;
 
@@ -86,11 +86,10 @@ delimiter now ;
 198. |     999    Western urban          2 |
      |-------------------------------------|
 199. |     999    Western rural          2 |
-200. |     999                .          2 |
      +-------------------------------------+
 
 .         drop if _merge ~=3;
-(197 observations deleted)
+(196 observations deleted)
 
 .         drop _merge;
 
@@ -223,8 +222,8 @@ variable product does not uniquely identify observations in the
 >  Max
 -------------+----------------------------------------------------
 > ----
-     baskshr |        25      .56168           0     .56168     .5
-> 6168
+     baskshr |        25    .5608011           0   .5608011   .560
+> 8011
 
 ------------------------------------------------------------------
 -> spdomain = Northern urban
@@ -243,8 +242,8 @@ variable product does not uniquely identify observations in the
 >  Max
 -------------+----------------------------------------------------
 > ----
-     baskshr |        20    .5383102           0   .5383102   .538
-> 3102
+     baskshr |        20    .5378048           0   .5378048   .537
+> 8048
 
 ------------------------------------------------------------------
 -> spdomain = Western urban
@@ -263,8 +262,8 @@ variable product does not uniquely identify observations in the
 >  Max
 -------------+----------------------------------------------------
 > ----
-     baskshr |        24    .5750901           0   .5750901   .575
-> 0901
+     baskshr |        24    .5740203           0   .5740203   .574
+> 0203
 
 
 .         * obtain quantities and calories provided by these quant
@@ -292,17 +291,15 @@ variable spdomain does not uniquely identify observations in the
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          2 |          1        0.57        0.57
-          3 |        174       99.43      100.00
+          3 |        174      100.00      100.00
 ------------+-----------------------------------
-      Total |        175      100.00
+      Total |        174      100.00
 
 .         drop _merge;
 
 .         * get the expansion factor to hit 95% of calorie require
 > ments;
 .         gen ratio=.95*calpp/calreg;
-(1 missing value generated)
 
 .                         replace quan=quan*ratio;
 (174 real changes made)
@@ -316,7 +313,7 @@ variable spdomain does not uniquely identify observations in the
 .         by spdomain: egen chkcal=sum(cal_ir);
 
 .         replace chkcal=chkcal/.95-calpp ;
-(175 real changes made)
+(174 real changes made)
 
 .                         * these values should be about zero;
 .         by spdomain: sum chkcal;
@@ -368,8 +365,8 @@ variable spdomain does not uniquely identify observations in the
 >  Max
 -------------+----------------------------------------------------
 > ----
-      chkcal |        25    .0000514           0   .0000514   .000
-> 0514
+      chkcal |        25    .0000385           0   .0000385   .000
+> 0385
 
 ------------------------------------------------------------------
 -> spdomain = Northern urban
@@ -388,8 +385,8 @@ variable spdomain does not uniquely identify observations in the
 >  Max
 -------------+----------------------------------------------------
 > ----
-      chkcal |        20   -.0000899           0  -.0000899  -.000
-> 0899
+      chkcal |        20     .000045           0    .000045    .00
+> 0045
 
 ------------------------------------------------------------------
 -> spdomain = Western urban
@@ -398,8 +395,8 @@ variable spdomain does not uniquely identify observations in the
 >  Max
 -------------+----------------------------------------------------
 > ----
-      chkcal |        21    .0000193           0   .0000193   .000
-> 0193
+      chkcal |        21    -.000045           0   -.000045   -.00
+> 0045
 
 ------------------------------------------------------------------
 -> spdomain = Western rural
@@ -408,23 +405,12 @@ variable spdomain does not uniquely identify observations in the
 >  Max
 -------------+----------------------------------------------------
 > ----
-      chkcal |        24   -.0001156           0  -.0001156  -.000
-> 1156
-
-------------------------------------------------------------------
--> spdomain = .
-
-    Variable |       Obs        Mean    Std. Dev.       Min       
->  Max
--------------+----------------------------------------------------
-> ----
-      chkcal |         1   -1253.315           .  -1253.315  -1253
-> .315
+      chkcal |        24    .0000385           0   .0000385   .000
+> 0385
 
 
 .         * obtain the value of each good in the bundle;
 .         gen val_ir=quan*price_unitw;
-(1 missing value generated)
 
 .         * the sum of the value of the goods in the bundle is ass
 > umed to represent 90% of expenditure;
@@ -463,5 +449,5 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
        log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UN
 > HS_2005\GAPP2/rep/120_povline_food_flex.log
   log type:  text
- closed on:  25 Jun 2013, 11:33:17
+ closed on:   2 Jul 2013, 13:43:01
 ------------------------------------------------------------------

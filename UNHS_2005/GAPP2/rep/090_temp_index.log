@@ -3,7 +3,7 @@
        log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UN
 > HS_2005\GAPP2/rep/090_temp_index.log
   log type:  text
- opened on:  25 Jun 2013, 11:33:04
+ opened on:   2 Jul 2013, 13:42:46
 
 . clear
 
@@ -1138,13 +1138,13 @@ quantityd_~t |     67270    .6858805    4.521992   .0014286   857.
 >   12
       strata |     67510    5.546141    2.838808          1       
 >   10
-       rural |     67505    .7545515     .430356          0       
+       rural |     67510    .7545549     .430354          0       
 >    1
 -------------+----------------------------------------------------
 > ----
      reg_tpi |     67510    2.372863    1.134435          1       
 >    4
-    spdomain |     67505    5.453774    2.388395          1       
+    spdomain |     67510    5.453874    2.388375          1       
 >    9
         news |     67510    2.372863    1.134435          1       
 >    4
@@ -1277,13 +1277,13 @@ quantityd_~t |     27099    .7596566    6.534098   .0014286   857.
 >   12
       strata |     27129    5.952265     2.36511          1       
 >   10
-       rural |     27126    .8801519    .3247898          0       
+       rural |     27129    .8801651    .3247743          0       
 >    1
 -------------+----------------------------------------------------
 > ----
      reg_tpi |     27129    2.539533    .9638453          1       
 >    4
-    spdomain |     27126    5.956278    1.935743          1       
+    spdomain |     27129    5.956394    1.935744          1       
 >    9
         news |     27129    2.539533    .9638453          1       
 >    4
@@ -5115,7 +5115,7 @@ variable hhid does not uniquely identify observations in the
 (240 real changes made)
 
 .         replace rural   =cc_rur     if _merge==2;
-(235 real changes made)
+(240 real changes made)
 
 .         replace news    =cc_news        if _merge==2;
 (240 real changes made)
@@ -5156,10 +5156,10 @@ variable hhid does not uniquely identify observations in the
 ->  drop tmp
 
 ->  egen tmp=mean(rural), by(hhid)
-(180 missing values generated)
+(30 missing values generated)
 
 ->  replace rural=tmp if _fillin
-(155125 real changes made)
+(155270 real changes made)
 
 ->  drop tmp
 
@@ -5305,7 +5305,7 @@ quantityd_~t |    222810    .6809861    3.148585          0   857.
 >   12
       strata |    222780    5.644762    2.836299          1       
 >   10
-       rural |    222630    .7711899    .4200677          0       
+       rural |    222780    .7712093    .4200551          0       
 >    1
 -------------+----------------------------------------------------
 > ----
@@ -5377,7 +5377,7 @@ quantityd_~t |    111150    .7678122    4.199467          0   857.
 >   12
       strata |    111150    6.015655    2.428535          1       
 >   10
-       rural |    111060    .8878984    .3154928          0       
+       rural |    111150    .8879892    .3153812          0       
 >    1
 -------------+----------------------------------------------------
 > ----

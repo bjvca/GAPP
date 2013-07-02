@@ -258,7 +258,7 @@ save "$path/work/hhdata.dta",replace
 clear
 
 use "$path/in/hsec2.dta" 
-
+sort hh
 
 ***----- Household members
 *According to the enumerator manual of 2005/06, Usual and Regular household members are defined as follows:
@@ -372,9 +372,19 @@ clear
 ***************************************************************************
 * Table A4: Amount and Quantity of food transactoin - Transaction level
 ***************************************************************************
+*use "$path/in/hsec1b.dta"
+*sort hh
+*** I had used the hsec1b.dta file here just to carry along the district variable that would enable me
+*** the problem associated with the yet very low figures of poverty estimates
+*save "$path/in/hsec1b.dta", replace
+
+clear
 
 use "$path/in/hsec14a.dta"
-sort hh
+*sort hh
+*merge m:1 hh using "$path/in/hsec1b.dta"
+*tab _m
+*drop _m 
 rename hh hhid
 la var hhid "household id"
 ** we drop alcoholic and tobacco as these were not considered basic in foods generally and by GAPP, these included beer-152, other alcoholic dricns-153
@@ -392,8 +402,9 @@ drop quantity h14aq10 h14aq8 h14aq6 h14aq4
 la var quantityd "daily household food consumption"
 egen value=rowtotal ( h14aq5 h14aq7 h14aq9 h14aq11 )
 la var value "household food consumption in seven days"
-gen valuez = value/7
+gen valuez = value/7 
 la var valuez "daily value of food consumed by the household"
+*replace valuez = valuez/10 if district==102
 rename quantityd quantityz
 drop value h14aq11 h14aq9 h14aq7 h14aq5 h14aq13 h14aq12
 gen unit = 1
