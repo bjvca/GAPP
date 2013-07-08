@@ -139,6 +139,10 @@ $no_temp_rev	do "$path/new/160_food_basket_fix.do"	/* Fixed food basket */
 $no_temp_rev	do "$path/new/180_povline_food_fix.do"	/* Inflating year t1's poverty lines to year t2 */
 
 				shell "$path/new/$revpref"				/* Adjusting flexible basket: inside pref. constraints */
+*** execute as super user:
+sudo ./gams "/home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3/new/190a_revpref13_r_bjorn.gms" o="/home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3/new/list.lst"				
+				
+				
 
 $no_temp_rev	do "$path/new/200_povmeas_fix.do"		/* Fixed basket: Poverty rates */
 				do "$path/new/210_povmeas_ent_flex.do"	/* Flexible basket, adjusted: Poverty rates */

@@ -2,12 +2,12 @@
 \lyxformat 413
 \begin_document
 \begin_header
-\textclass article
+\textclass ifpri
 \use_default_options true
 \maintain_unincluded_children false
 \language english
 \language_package default
-\inputencoding auto
+\inputencoding default
 \fontencoding global
 \font_roman default
 \font_sans default
@@ -33,7 +33,7 @@
 \use_esint 1
 \use_mhchem 1
 \use_mathdots 1
-\cite_engine jurabib
+\cite_engine natbib_authoryear
 \use_bibtopic false
 \use_indices false
 \paperorientation portrait
@@ -69,7 +69,38 @@ The Role of Price and Consumption Bundle Aggregation in Poverty Measurement:
 Bjorn Van Campenhout, Haruna Sekabira and Dede Houeto Aduayom
 \end_layout
 
-\begin_layout Section*
+\begin_layout Author
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+division{Development Strategy and Governance Division}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+cpauthor{Bjorn Van Campenhout, International Food Policy Research Institute
+\backslash
+
+\backslash
+ Research Fellow, Development Strategy and Governance Division
+\backslash
+
+\backslash
+{b.vancampenhout@cgiar.org}}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
 Introduction
 \end_layout
 
@@ -96,18 +127,59 @@ Uganda has been using the same CBN basket for over two decades now.
  population.
  While price heterogeneity has been incorporated in poverty measurement
  from the start, consensus is building that specificity also requires different
- bundles for different spatial or temporal domains 
+ bundles for different spatial or temporal domains .
+ Explain why this is going to be the case especially in Uganda.
+\end_layout
+
+\begin_layout Standard
+The issue of specificity of the poverty line is especially important in
+ Uganda.
+ Uganda has large regional variations in diet within the country, with no
+ less than six major food staples being eaten 
 \begin_inset CommandInset citation
 LatexCommand citep
-key "RePEc:eee:wdevel:v:31:y:2003:i:2:p:339-358,RePEc:ucp:ecdecc:v:51:y:2002:i:1:p:77-108"
+key "RePEc:oup:jafrec:v:12:y:2003:i:4:p:598-624"
 
 \end_inset
 
 .
- Explain why this is going to be the case especially in Uganda.
+ For instance, matooke, or cooking banans, is mainly eaten in the West,
+ and to a lesser extend in Central region.
+ Households living in the dryer North, however, obtain a substantial share
+ of their calories throught sorghum and sesame.
+ These diets are not only determined by custom, they are also related to
+ the agro-geological characteristics, such as the dry North that is more
+ suited for cassava then matooke.
+ 
 \end_layout
 
-\begin_layout Section*
+\begin_layout Standard
+While differences in consumption baskets are interesting in its own right,
+ they only become relevant in the context of poverty measurement and analysis
+ when we evaluate the cost of these basic need.
+ Indeed, what matters for poverty comparisons is that different diets may
+ provide the same basic needs (usually a given amount of kcal per day per
+ adult equivalent) at significanlty differnt cost.
+ It is especially in this regard that Uganda is an interesting case.
+ Cassava, the main ingredient in the diet of households in the West is a
+ very expensive source of food energy, almost three times as expensive as
+ sorghum that is consumed in the North.
+ As such, to compare the West to the North on the basis of the same daily
+ nutritional requirements, the West will need a much higher poverty line.
+\end_layout
+
+\begin_layout Standard
+While there are probably many more countries that would benefit from regional
+ poverty lines becouse of geogrpahic differences in customs of production
+ systems
+\end_layout
+
+\begin_layout Standard
+, the fact that these different diets provided the same amout of calories
+ at very different costs is 
+\end_layout
+
+\begin_layout Section
 Poverty in Uganda - Recent Trends and Controversies
 \end_layout
 
@@ -120,23 +192,202 @@ Refer to the World Bank paper on poverty estimates.
  Also refer to Lisa Daniels her paper.
 \end_layout
 
-\begin_layout Section*
+\begin_layout Standard
+One reason why poverty estimates do not seem to reflect reality may be due
+ to the fact that the national poverty line only allows for differences
+ in prices over space.
+ However, it is well known that Uganda has a very diversified set of staples,
+ in part reflecting the cultural and geographical diversity of the coutnry.
+ Most of these staple foods are not widely traded.
+ Table XXX, reproduced from 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "RePEc:oup:jafrec:v:12:y:2003:i:4:p:598-624"
+
+\end_inset
+
+, shows that sweet potatoes, and cassava to a lesser extend, are consumed
+ throughout the country.
+ Matooke, on the other hand, is mainly consumed in Western and Central Uganda.
+ Sorghum is an important staple in the rural areas in the North.
+\end_layout
+
+\begin_layout Standard
+The reason why differences in diets are important for poverty measurement
+ is because these diets may have a different cost for each calorie they
+ provide.
+ For example, one kcal obtained from matooke consumption costs almost three
+ times as much as a kcal obtained from sorghum.
+ Given this observations, 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "RePEc:oup:jafrec:v:12:y:2003:i:4:p:598-624"
+
+\end_inset
+
+ calculates simple regional poverty lines by calculating the cost (at national
+ median prices) of 3000 kcal per day per adult given the typical food basket
+ of the poor in each region
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+It is important to realize that the regional poverty lines do not stem from
+ regional differences in prices, but rather from differences in diets which
+ have different cost.
+ Poverty lines adjusted for price levels is what people normally have in
+ mind if they think of regional poverty lines.
+\end_layout
+
+\end_inset
+
+.
+ Not surprisingly, this leads to significantly higer poverty lines in West,
+ where diets are composed of the expensive matooke for a considerable part.
+ 
+\end_layout
+
+\begin_layout Standard
+An interesting observation form 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "RePEc:oup:jafrec:v:12:y:2003:i:4:p:598-624"
+
+\end_inset
+
+ is that when he allows for differences in income, Western region becomes
+ the poorest region instead of the North.
+\end_layout
+
+\begin_layout Section
 Utility Consistent Poverty Lines - Theory
 \end_layout
 
-\begin_layout Section*
+\begin_layout Section
 A Reassesment of Poverty in Uganda
 \end_layout
 
-\begin_layout Section*
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Original Food and Non-food Poverty Lines in Uganda
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Revealed Preference Tests for the Food Poverty Lines in Uganda, 2009/10
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Revealed Preferences Consistent Poverty lines for Uganda, 2009/10
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Poverty Headcount Ratios
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
 Conclusion
 \end_layout
 
 \begin_layout Standard
 \begin_inset CommandInset bibtex
 LatexCommand bibtex
-bibfiles "poverty"
-options "jurabib"
+bibfiles "gap_paper"
+options "plainnat"
 
 \end_inset
 

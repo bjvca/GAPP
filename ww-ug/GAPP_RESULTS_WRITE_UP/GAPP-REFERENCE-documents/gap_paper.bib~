@@ -1,0 +1,16 @@
+@comment{x-kbibtex-personnameformatting=<%l><, %f>}
+
+@article{RePEc:bla:agecon:v:39:y:2008:i:s1:p:513-524,
+	abstract = "This study assesses the potential impact of rising world food prices on the welfare of Ugandan households. While Uganda experienced sharply higher food prices in 2008, as a landlocked, food-exporting country the causes of those price changes were mainly regional and indirect rather than directly transmitted from global markets. Using trade volumes, food prices, and household survey data we describe how Uganda, unlike some other countries, is partially shielded from direct impacts of global food price movements. Although the majority of Ugandans are net food buyers, the adverse impact at household-level of rising global prices is moderated by the relatively large quantity and range of staples consumed that come from home production. Moreover, several of these are not widely traded. Some population groups in Uganda are vulnerable to rising food prices, however, primarily those for whom maize is an important staple, including those dependent upon humanitarian relief and the urban poor. Only a relatively small group of Ugandan households will benefit directly and immediately from rising food prices-the significant net sellers of food crops constituting between 12\% and 27\% of the population. In this assessment we do not estimate the level and extent of wider second round effects from these higher prices. Copyright (c) 2008 International Association of Agricultural Economists.",
+	author = "Benson, Todd and Mugarura, Samuel and Wanda, Kelly",
+	journal = "Agricultural Economics",
+	keywords = "",
+	month = "November",
+	number = "s1",
+	pages = "513--524",
+	title = "Impacts in Uganda of rising global food prices: the role of diversified staples and limited price transmission",
+	url = "http://ideas.repec.org/a/bla/agecon/v39y2008is1p513-524.html",
+	volume = "39",
+	year = 2008
+}
+
