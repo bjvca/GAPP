@@ -1,12 +1,9 @@
---------------------------------------------------------------------------------------------
+------------------------------------------------------------------
       name:  <unnamed>
-       log:  /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//rep/020_hhdata.log
+       log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UN
+> HS_2005\GAPP2/rep/020_hhdata.log
   log type:  text
-<<<<<<< HEAD
- opened on:   2 Jul 2013, 13:42:45
-=======
- opened on:   2 Jul 2013, 10:14:24
->>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
+ opened on:   2 Jul 2013, 15:04:12
 
 . clear
 
@@ -14,28 +11,36 @@
 
 . #delimit ;
 delimiter now ;
-. **************************************************************************
+. ****************************************************************
+> **********
 > * 020_hhdata.do         (start)
 > *
-> * Organize the hhid identifier in the HHData file the same way, and keep
+> * Organize the hhid identifier in the HHData file the same way, 
+> and keep
 > * only the relevant variables.
 > *
 > * This file sets:
 > * - interview month, quarter and year
-> * - regions: make all needed regions. But in the end only the one specified
+> * - regions: make all needed regions. But in the end only the on
+> e specified
 > *            in initial.do are kept. These are
 > *            - rural: 0=urban, 1=rural
-> *            - news: speficifying North, East, West, South. But combinations
-> *                    are also possible, eg. North-East, Center,...
+> *            - news: speficifying North, East, West, South. But 
+> combinations
+> *                    are also possible, eg. North-East, Center,.
+> ..
 > *            - reg_tpi: regions with own TPI
 > *            - strata: strata regions
-> *            - spdomain: spatial domains (regions with own poverty line)
+> *            - spdomain: spatial domains (regions with own pover
+> ty line)
 > *            - news_ru_ur: combination of news and rural
-> **************************************************************************;
+> ****************************************************************
+> **********;
 . use "$path/in/hhdata.dta", clear;
 
-. *recode spdomain 10=1 11=2 20=3 30=4 40=5 these have been set to five for Uganda to ensure
->  hwe have at least 1000 households per domain;
+. *recode spdomain 10=1 11=2 20=3 30=4 40=5 these have been set to
+>  five for Uganda to ensure hwe have at least 1000 households per
+>  domain;
 . tab spdomain, missing;
 
        Spatial |
@@ -59,12 +64,11 @@ Northern rural |      1,280       17.24       76.16
 .         sort hhid;
 
 .         save "$path/work/hhdata.dta", replace;
-(note: file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/hhdata.dta not found)
-file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/hhdata.dta saved
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
+> GAPP2/work/hhdata.dta saved
 
 .         sum;
 
-<<<<<<< HEAD
     Variable |       Obs        Mean    Std. Dev.       Min       
 >  Max
 -------------+----------------------------------------------------
@@ -173,107 +177,65 @@ file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/hhdata.dta saved
 >    4
         bswt |      7426           1           0          1       
 >    1
-=======
-    Variable |       Obs        Mean    Std. Dev.       Min        Max
--------------+--------------------------------------------------------
-        hhid |      7426    2.48e+09    1.13e+09   1.01e+09   4.15e+09
-        comm |      7422    2.48e+07    1.13e+07   1.01e+07   4.15e+07
-      region |      7426    2.412604    1.133499          1          4
-    district |      7426    247.8391    113.3708        101        415
-    substrat |      7426    2.542419     .840165          1          3
--------------+--------------------------------------------------------
-         psu |      7426    12.43307    9.843949          1         39
-        snum |      7426     5.99219    3.213011          1         17
-       vtype |      7071    1.487767    .5001685          1          3
-      gpsnsa |      7421    130231.5    138688.1         34    3400000
-      gpsnsb |      7420     3149466     1515975       4522   8.03e+07
--------------+--------------------------------------------------------
-    inidpcmp |      7426    1.959601    .1969055          1          2
-    daysurve |      7409    17.17303    6.229309          1         31
-    monsurve |      7426    6.489362    3.436694          1         12
-     yrsurve |      7426    2005.335    .4721769       2005       2006
-       scode |      6990    42.41159    21.68829          3         98
--------------+--------------------------------------------------------
-     daychks |      6960    17.52744    6.375368          1         72
-     monchks |      6961    5.121822    4.233872          1         30
-    yearchks |      6967    2005.855    14.31612       2005       3200
-    editcode |      2816     48.2951    25.71762          1         89
-     dayedit |      2796    18.27825    6.935107          1         72
--------------+--------------------------------------------------------
-     monedit |      2801    9.271332    3.841028          1         30
-    yearedit |      2807    2005.634    22.55493       2005       3200
-     strthrs |      6362    10.69239    2.177149          6         61
-     strtmin |      6358    25.79412     17.5706          0         59
-    respcode |      7424    1.011045    .1287743          1          8
--------------+--------------------------------------------------------
-    our_resp |      7410    1.412011    .4941459          1          3
-     entrant |      7288    12.28224    5.929164          1         19
-    dayentry |      7288     15.6674    8.075122          1         31
-    monentry |      7288    3.868551    2.079063          0         12
-     yrentry |      7288     2006.38    37.41513       2005       5200
--------------+--------------------------------------------------------
-    verifier |       167    6.538922    3.487928          1         15
-    dayverif |       148    16.77703    8.431251          2         30
-    monverif |       148    4.141892    2.501728          1         11
-    yrverify |       157    2005.898    .3034991       2005       2006
-      hhsize |      7415    5.782738    3.284401          1         33
--------------+--------------------------------------------------------
-    hhweight |      7426    704.6189    339.0242      60.97    4404.13
-    survquar |      7426     2.50983    1.074578          1          4
-     survmon |      7426    6.514678    3.303603          1         12
-      strata |      7426    5.644762    2.836484          1         10
-       rural |      7426    .7712093    .4200825          0          1
--------------+--------------------------------------------------------
-     reg_tpi |      7426    2.412604    1.133499          1          4
-    spdomain |      7426    5.552788    2.384061          1          9
-        news |      7426    2.412604    1.133499          1          4
-        bswt |      7426           1           0          1          1
->>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 
 . use "$path/in/indata.dta", clear;
 
 .         *sort hhid;
 .         save "$path/work/indata.dta", replace;
-(note: file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/indata.dta not found)
-file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/indata.dta saved
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
+> GAPP2/work/indata.dta saved
 
 .         sum;
 
-    Variable |       Obs        Mean    Std. Dev.       Min        Max
--------------+--------------------------------------------------------
-       indid |     41810    2.50e+11    1.12e+11   1.01e+11   4.15e+11
-    motherhh |     39374    .5007111    .5000058          0          1
-        hhid |     41797    2.50e+09    1.12e+09   1.01e+09   4.15e+09
-         sex |     41797    .5243199    .5348987          0          2
-         age |     40470    19.68325    17.41645          0        110
+    Variable |       Obs        Mean    Std. Dev.       Min       
+>  Max
+-------------+----------------------------------------------------
+> ----
+       indid |     41810    2.50e+11    1.12e+11   1.01e+11   4.15
+> e+11
+    motherhh |     39374    .5007111    .5000058          0       
+>    1
+        hhid |     41797    2.50e+09    1.12e+09   1.01e+09   4.15
+> e+09
+         sex |     41797    .5243199    .5348987          0       
+>    2
+         age |     40470    19.68325    17.41645          0       
+>  110
 
 . use "$path/in/calperg.dta", clear;
 
 .         *sort hhid;
 .         save "$path/work/calperg.dta", replace;
-(note: file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/calperg.dta not found)
-file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/calperg.dta saved
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
+> GAPP2/work/calperg.dta saved
 
 .         sum;
 
-    Variable |       Obs        Mean    Std. Dev.       Min        Max
--------------+--------------------------------------------------------
-     product |        62       130.5    18.04162        100        161
+    Variable |       Obs        Mean    Std. Dev.       Min       
+>  Max
+-------------+----------------------------------------------------
+> ----
+     product |        62       130.5    18.04162        100       
+>  161
     descript |         0
-     calperg |        62    1.980935    2.136932          0       8.84
+     calperg |        62    1.980935    2.136932          0       
+> 8.84
 
 . /*
 > use "$path/in/cons_cod_trans.dta", clear;
 >         *sort hhid;
 >         sum;
-> for var value quantityd cod_hh_nom cod_hh_nom2 cod_hh_nom3: replace X=0 if X==.;
-> collapse food_cat prod_cat (sum) value quantityd cod_hh_nom cod_hh_nom2 cod_hh_nom3, by(hh
-> id product descript);
+> for var value quantityd cod_hh_nom cod_hh_nom2 cod_hh_nom3: repl
+> ace X=0 if X==.;
+> collapse food_cat prod_cat (sum) value quantityd cod_hh_nom cod_
+> hh_nom2 cod_hh_nom3, by(hhid product descript);
 >         save "$path/work/cons_cod.dta", replace;
 >         sum;
 > */
 >  
-> **************************************************************************
+> ****************************************************************
+> **********
 > * 020_hhdata.do         (end)
-> **************************************************************************;
+> ****************************************************************
+> **********;
 . cap log close;

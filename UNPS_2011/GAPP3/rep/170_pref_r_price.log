@@ -1,0 +1,1131 @@
+-----------------------------------------------------------------------
+      name:  <unnamed>
+       log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_20
+> 11\GAPP3/rep/170_pref_r_price.log
+  log type:  text
+ opened on:   8 Jul 2013, 14:28:46
+
+. clear
+
+. set more off
+
+. #delimit ;
+delimiter now ;
+. *********************************************************************
+> *****
+> * 170_pref_r_price.do           (start)
+> *
+> * This file conducts revealed preference comparisons so that
+> * we can check the quality of the regional baskets.
+> * It also exports the price and quantity data for work in GAMS
+> * Rather than make up for missing prices with shares, we estimate
+> * a missing price in this case
+> *********************************************************************
+> *****;
+. *global n_spdom "13";
+. *global it_n "5";
+. /*
+> This file uses:
+>         work/quan_flex_it$it_n.dta
+>         work/povline_food_flex_it$it_n.dta
+>         work/price_unit_flex_it$it_n.dta
+>                 
+> This file creates:
+>         work/pref_r_price.dta
+>         work/revpref_price_`i'.dta
+>         work/product_flex.inc
+>         work/price_unit_flex.inc
+>         work/quan_flex.inc
+> */
+> 
+> 
+> 
+> *********************************************************************
+> ******;
+. * Export price, codes and quantity data to text
+> *********************************************************************
+> ******;
+. use "$path/work/price_unit_flex_it$it_n.dta";
+(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
+>  + T6AEQ3))
+
+. gen reg=spdomain ;
+
+. gen crap=1;
+
+.  lab def crap
+>          1  ".";
+
+.  lab val crap crap;
+
+. outsheet product crap reg bswt price_uw$it_n using "$path/work/price_
+> unit_flex.inc",  noquote noname replace ;
+
+. collapse (min) spdomain, by(product);
+
+. outsheet product  using "$path/work/product_flex.inc", noname replace
+> ;
+
+. use "$path/work/quan_flex_it$it_n.dta", clear;
+
+. gen reg=spdomain;
+(1 missing value generated)
+
+. gen crap=1;
+
+.  lab def crap
+>          1  ".";
+
+.  lab val crap crap;
+
+. format calperg quan$it_n calpp %14.9e;
+
+. outsheet  product crap reg calperg quan$it_n  calpp povline_f_flex90_
+> $it_n using "$path/work/quan_flex.inc", noname noquote replace;
+
+. clear;
+
+. *********************************************************************
+> *****;
+. * Revealed preference calculations
+> * get the basket for the region we want to test
+> *********************************************************************
+> *****;
+. tempfile quanreg;
+
+. tempfile getmiss;
+
+. tempfile codmiss;
+
+. gen crap=0;
+
+. save "$path/work/pref_r_price.dta", replace;
+(note: dataset contains 0 observations)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
+> /work/pref_r_price.dta saved
+
+. forvalues i=1/$n_spdom {                ;
+  2.         clear;
+  3.         gen crap=0;
+  4.         save "$path/work/revpref_price_`i'.dta", replace;
+  5.         clear;
+  6.                 use "$path/work/quan_flex_it$it_n.dta", clear;
+  7.                 keep product spdomain quan$it_n price_uw$it_n val_
+> ir$it_n povline_f_flex90_$it_n calpp;
+  8.         gen share=val_ir$it_n/povline_f_flex90_$it_n;
+  9.         rename price_uw$it_n pquanreg;
+ 10.         rename spdomain spdomainq;
+ 11.         drop if spdomainq~= `i';
+ 12.         sort product;
+ 13.                                 *rescale quantities to hit constan
+> t calorie target;
+.                 gen ratquan=2150/calpp;
+ 14.             gen quan_s=quan$it_n*ratquan;
+ 15.             lab var quan_s "quantities rescaled to hit 2150 calori
+> es pp";
+ 16.         save `quanreg', replace;
+ 17. ******************************************************************
+> ********;
+. * Now get the prices in other regions so that you can use them 
+> * to build  a new poverty line
+> *********************************************************************
+> *****;
+.         forvalues j= 1/$n_spdom {               ;
+ 18.                 use "$path/work/price_unit_flex_it$it_n.dta";
+ 19.                                 keep product spdomain price_uw$it_
+> n descript count bswt;
+ 20.                         sort product;
+ 21.                 keep if spdomain==`j';
+ 22.                 sort product;
+ 23.                 merge product using `quanreg';
+ 24.                     *here we have to deal with the fact that not a
+> ll commodities are consumed in every region;
+.                 *so we might have a quantity from region i but no pri
+> ce in region j;
+.                 *these will have _merge value=2;
+.                 *alternatively the number of observations might be to
+> o small;
+.                 *deal with these problems by TAKING THE MAX PRICE OBS
+> ERVED ELSEWHERE (excluding Maputo)
+>                         
+>                 tab _m;
+.                 drop if _m==1;
+ 25.                                 *CA modified to handle the countin
+> g of bswt instead of count
+>                   replace price_uw$it_n=. if round(bswt)<5;
+.                         gen pricemiss=0;
+ 26.                   replace spdomain=`j' if _m==2 ;
+ 27.                   replace pricemiss=1 if _m==2 | round(bswt)<5;
+ 28.                         lab var pricemiss "identify those items wi
+> th no price observation";
+ 29.                   drop _m;
+ 30.                         sort product;
+ 31. *browse;
+.                *this is the tempfile containing observed quans and pr
+> ices;
+.              save `getmiss', replace;
+ 32.                         keep if pricemiss==1;
+ 33.                         if _N>0 {
+>                             keep product;
+ 34.                                             sort product;
+ 35.                                             *this file contains th
+> e price codes that are missing for the region in question;
+.                             save `codmiss', replace;
+ 36. *browse;
+.                                   use "$path/work/price_unit_flex_it$
+> it_n.dta", clear;
+ 37.                         sort product;
+ 38. *browse;
+.                         merge product using `codmiss';
+ 39.                                                 tab _m;
+ 40.                         keep if _m==3 ;
+ 41.                                 *exclude Maputo province and city 
+> from other price calculation;
+.                                 drop if spdomain>10;
+ 42.                         collapse (max) price_uw$it_n, by(product);
+ 43.                   *this file contains the code and the max price;
+.                   save `codmiss', replace;
+ 44. *browse;
+.                         use `getmiss';
+ 45.                               merge product using `codmiss';
+ 46. *browse;
+.                         tab _m;
+ 47.                         drop _m;
+ 48.                         *end if;
+.                  };
+ 49.                                                             else u
+> se `getmiss', clear;
+ 50.                         gen val_q=quan_s*price_uw$it_n;
+ 51.                                                 collapse (sum) val
+> _q pricemiss (mean) spdomainq ratquan, by(spdomain);
+ 52.                   gen linf_q=val_q/.9;
+ 53.                   drop val_q;
+ 54.                         append using "$path/work/revpref_price_`i'
+> .dta";
+ 55.                         sort spdomain;
+ 56.                 save "$path/work/revpref_price_`i'.dta", replace;
+ 57.    *browse;
+.         *close j loop;
+.         };
+ 58.         *aggregate into a big data set;
+.         append using "$path/work/pref_r_price.dta";
+ 59.       sort spdomain spdomainq;
+ 60.       save "$path/work/pref_r_price.dta", replace;
+ 61.  *close i loop;
+. };
+(note: dataset contains 0 observations)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
+> /work/revpref_price_1.dta saved
+(1 missing value generated)
+(103 observations deleted)
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000001.tmp not fo
+> und)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000001.tmp saved
+(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
+>  + T6AEQ3))
+(173 observations deleted)
+(label lspdomain already defined)
+(19 observations deleted)
+(0 real changes made)
+(0 real changes made)
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp not fo
+> und)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
+(25 observations deleted)
+(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
+>  + T6AEQ3))
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
+> /work/revpref_price_1.dta saved
+(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
+>  + T6AEQ3))
+(174 observations deleted)
+(label lspdomain already defined)
+(18 observations deleted)
+(0 real changes made)
+(0 real changes made)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
+(25 observations deleted)
+(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
+>  + T6AEQ3))
+(label lspdomain already defined)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
+> /work/revpref_price_1.dta saved
+(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
+>  + T6AEQ3))
+(174 observations deleted)
+(label lspdomain already defined)
+(18 observations deleted)
+(0 real changes made)
+(3 real changes made)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
+(22 observations deleted)
+(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp not fo
+> und)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
+>  + T6AEQ3))
+variable product does not uniquely identify observations in the
+    master data
+(label lspdomain already defined)
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |        202       93.09       93.09
+          3 |         15        6.91      100.00
+------------+-----------------------------------
+      Total |        217      100.00
+(202 observations deleted)
+(0 observations deleted)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
+>  + T6AEQ3))
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |         22       88.00       88.00
+          3 |          3       12.00      100.00
+------------+-----------------------------------
+      Total |         25      100.00
+(label lspdomain already defined)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
+> /work/revpref_price_1.dta saved
+(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
+>  + T6AEQ3))
+(174 observations deleted)
+(label lspdomain already defined)
+(18 observations deleted)
+(0 real changes made)
+(3 real changes made)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
+(22 observations deleted)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
+>  + T6AEQ3))
+variable product does not uniquely identify observations in the
+    master data
+(label lspdomain already defined)
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |        202       93.09       93.09
+          3 |         15        6.91      100.00
+------------+-----------------------------------
+      Total |        217      100.00
+(202 observations deleted)
+(0 observations deleted)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
+>  + T6AEQ3))
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |         22       88.00       88.00
+          3 |          3       12.00      100.00
+------------+-----------------------------------
+      Total |         25      100.00
+(label lspdomain already defined)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
+> /work/revpref_price_1.dta saved
+(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
+>  + T6AEQ3))
+(173 observations deleted)
+(label lspdomain already defined)
+(19 observations deleted)
+(0 real changes made)
+(2 real changes made)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
+(23 observations deleted)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
+>  + T6AEQ3))
+variable product does not uniquely identify observations in the
+    master data
+(label lspdomain already defined)
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |        207       95.39       95.39
+          3 |         10        4.61      100.00
+------------+-----------------------------------
+      Total |        217      100.00
+(207 observations deleted)
+(0 observations deleted)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
+>  + T6AEQ3))
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |         23       92.00       92.00
+          3 |          2        8.00      100.00
+------------+-----------------------------------
+      Total |         25      100.00
+(label lspdomain already defined)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
+> /work/revpref_price_1.dta saved
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
+> /work/pref_r_price.dta saved
+(note: dataset contains 0 observations)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
+> /work/revpref_price_2.dta saved
+(1 missing value generated)
+(102 observations deleted)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000001.tmp saved
+(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
+>  + T6AEQ3))
+(173 observations deleted)
+(label lspdomain already defined)
+(18 observations deleted)
+(0 real changes made)
+(0 real changes made)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
+(26 observations deleted)
+(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
+>  + T6AEQ3))
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
+> /work/revpref_price_2.dta saved
+(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
+>  + T6AEQ3))
+(174 observations deleted)
+(label lspdomain already defined)
+(17 observations deleted)
+(0 real changes made)
+(0 real changes made)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
+(26 observations deleted)
+(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
+>  + T6AEQ3))
+(label lspdomain already defined)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
+> /work/revpref_price_2.dta saved
+(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
+>  + T6AEQ3))
+(174 observations deleted)
+(label lspdomain already defined)
+(17 observations deleted)
+(0 real changes made)
+(0 real changes made)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
+(26 observations deleted)
+(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
+>  + T6AEQ3))
+(label lspdomain already defined)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
+> /work/revpref_price_2.dta saved
+(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
+>  + T6AEQ3))
+(174 observations deleted)
+(label lspdomain already defined)
+(17 observations deleted)
+(0 real changes made)
+(2 real changes made)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
+(24 observations deleted)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
+>  + T6AEQ3))
+variable product does not uniquely identify observations in the
+    master data
+(label lspdomain already defined)
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |        207       95.39       95.39
+          3 |         10        4.61      100.00
+------------+-----------------------------------
+      Total |        217      100.00
+(207 observations deleted)
+(0 observations deleted)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
+>  + T6AEQ3))
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |         24       92.31       92.31
+          3 |          2        7.69      100.00
+------------+-----------------------------------
+      Total |         26      100.00
+(label lspdomain already defined)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
+> /work/revpref_price_2.dta saved
+(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
+>  + T6AEQ3))
+(173 observations deleted)
+(label lspdomain already defined)
+(18 observations deleted)
+(0 real changes made)
+(0 real changes made)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
+(26 observations deleted)
+(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
+>  + T6AEQ3))
+(label lspdomain already defined)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
+> /work/revpref_price_2.dta saved
+(label lspdomain already defined)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
+> /work/pref_r_price.dta saved
+(note: dataset contains 0 observations)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
+> /work/revpref_price_3.dta saved
+(1 missing value generated)
+(101 observations deleted)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000001.tmp saved
+(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
+>  + T6AEQ3))
+(173 observations deleted)
+(label lspdomain already defined)
+(17 observations deleted)
+(0 real changes made)
+(3 real changes made)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
+(24 observations deleted)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
+>  + T6AEQ3))
+variable product does not uniquely identify observations in the
+    master data
+(label lspdomain already defined)
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |        203       93.55       93.55
+          3 |         14        6.45      100.00
+------------+-----------------------------------
+      Total |        217      100.00
+(203 observations deleted)
+(0 observations deleted)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
+>  + T6AEQ3))
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |         24       88.89       88.89
+          3 |          3       11.11      100.00
+------------+-----------------------------------
+      Total |         27      100.00
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
+> /work/revpref_price_3.dta saved
+(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
+>  + T6AEQ3))
+(174 observations deleted)
+(label lspdomain already defined)
+(17 observations deleted)
+(1 real change made)
+(1 real change made)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
+(26 observations deleted)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
+>  + T6AEQ3))
+variable product does not uniquely identify observations in the
+    master data
+(label lspdomain already defined)
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |        213       98.16       98.16
+          3 |          4        1.84      100.00
+------------+-----------------------------------
+      Total |        217      100.00
+(213 observations deleted)
+(0 observations deleted)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
+>  + T6AEQ3))
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |         26       96.30       96.30
+          3 |          1        3.70      100.00
+------------+-----------------------------------
+      Total |         27      100.00
+(1 missing value generated)
+(label lspdomain already defined)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
+> /work/revpref_price_3.dta saved
+(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
+>  + T6AEQ3))
+(174 observations deleted)
+(label lspdomain already defined)
+(16 observations deleted)
+(0 real changes made)
+(0 real changes made)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
+(27 observations deleted)
+(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
+>  + T6AEQ3))
+(label lspdomain already defined)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
+> /work/revpref_price_3.dta saved
+(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
+>  + T6AEQ3))
+(174 observations deleted)
+(label lspdomain already defined)
+(16 observations deleted)
+(0 real changes made)
+(1 real change made)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
+(26 observations deleted)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
+>  + T6AEQ3))
+variable product does not uniquely identify observations in the
+    master data
+(label lspdomain already defined)
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |        212       97.70       97.70
+          3 |          5        2.30      100.00
+------------+-----------------------------------
+      Total |        217      100.00
+(212 observations deleted)
+(0 observations deleted)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
+>  + T6AEQ3))
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |         26       96.30       96.30
+          3 |          1        3.70      100.00
+------------+-----------------------------------
+      Total |         27      100.00
+(label lspdomain already defined)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
+> /work/revpref_price_3.dta saved
+(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
+>  + T6AEQ3))
+(173 observations deleted)
+(label lspdomain already defined)
+(17 observations deleted)
+(0 real changes made)
+(0 real changes made)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
+(27 observations deleted)
+(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
+>  + T6AEQ3))
+(label lspdomain already defined)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
+> /work/revpref_price_3.dta saved
+(label lspdomain already defined)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
+> /work/pref_r_price.dta saved
+(note: dataset contains 0 observations)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
+> /work/revpref_price_4.dta saved
+(1 missing value generated)
+(102 observations deleted)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000001.tmp saved
+(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
+>  + T6AEQ3))
+(173 observations deleted)
+(label lspdomain already defined)
+(18 observations deleted)
+(0 real changes made)
+(4 real changes made)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
+(22 observations deleted)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
+>  + T6AEQ3))
+variable product does not uniquely identify observations in the
+    master data
+(label lspdomain already defined)
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |        198       91.24       91.24
+          3 |         19        8.76      100.00
+------------+-----------------------------------
+      Total |        217      100.00
+(198 observations deleted)
+(0 observations deleted)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
+>  + T6AEQ3))
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |         22       84.62       84.62
+          3 |          4       15.38      100.00
+------------+-----------------------------------
+      Total |         26      100.00
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
+> /work/revpref_price_4.dta saved
+(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
+>  + T6AEQ3))
+(174 observations deleted)
+(label lspdomain already defined)
+(18 observations deleted)
+(1 real change made)
+(2 real changes made)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
+(24 observations deleted)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
+>  + T6AEQ3))
+variable product does not uniquely identify observations in the
+    master data
+(label lspdomain already defined)
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |        208       95.85       95.85
+          3 |          9        4.15      100.00
+------------+-----------------------------------
+      Total |        217      100.00
+(208 observations deleted)
+(0 observations deleted)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
+>  + T6AEQ3))
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |         24       92.31       92.31
+          3 |          2        7.69      100.00
+------------+-----------------------------------
+      Total |         26      100.00
+(1 missing value generated)
+(label lspdomain already defined)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
+> /work/revpref_price_4.dta saved
+(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
+>  + T6AEQ3))
+(174 observations deleted)
+(label lspdomain already defined)
+(17 observations deleted)
+(0 real changes made)
+(0 real changes made)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
+(26 observations deleted)
+(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
+>  + T6AEQ3))
+(label lspdomain already defined)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
+> /work/revpref_price_4.dta saved
+(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
+>  + T6AEQ3))
+(174 observations deleted)
+(label lspdomain already defined)
+(17 observations deleted)
+(0 real changes made)
+(0 real changes made)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
+(26 observations deleted)
+(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
+>  + T6AEQ3))
+(label lspdomain already defined)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
+> /work/revpref_price_4.dta saved
+(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
+>  + T6AEQ3))
+(173 observations deleted)
+(label lspdomain already defined)
+(18 observations deleted)
+(0 real changes made)
+(2 real changes made)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
+(24 observations deleted)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
+>  + T6AEQ3))
+variable product does not uniquely identify observations in the
+    master data
+(label lspdomain already defined)
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |        207       95.39       95.39
+          3 |         10        4.61      100.00
+------------+-----------------------------------
+      Total |        217      100.00
+(207 observations deleted)
+(0 observations deleted)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
+>  + T6AEQ3))
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |         24       92.31       92.31
+          3 |          2        7.69      100.00
+------------+-----------------------------------
+      Total |         26      100.00
+(label lspdomain already defined)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
+> /work/revpref_price_4.dta saved
+(label lspdomain already defined)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
+> /work/pref_r_price.dta saved
+(note: dataset contains 0 observations)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
+> /work/revpref_price_5.dta saved
+(1 missing value generated)
+(105 observations deleted)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000001.tmp saved
+(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
+>  + T6AEQ3))
+(173 observations deleted)
+(label lspdomain already defined)
+(21 observations deleted)
+(0 real changes made)
+(2 real changes made)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
+(21 observations deleted)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
+>  + T6AEQ3))
+variable product does not uniquely identify observations in the
+    master data
+(label lspdomain already defined)
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |        208       95.85       95.85
+          3 |          9        4.15      100.00
+------------+-----------------------------------
+      Total |        217      100.00
+(208 observations deleted)
+(0 observations deleted)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
+>  + T6AEQ3))
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |         21       91.30       91.30
+          3 |          2        8.70      100.00
+------------+-----------------------------------
+      Total |         23      100.00
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
+> /work/revpref_price_5.dta saved
+(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
+>  + T6AEQ3))
+(174 observations deleted)
+(label lspdomain already defined)
+(21 observations deleted)
+(1 real change made)
+(1 real change made)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
+(22 observations deleted)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
+>  + T6AEQ3))
+variable product does not uniquely identify observations in the
+    master data
+(label lspdomain already defined)
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |        213       98.16       98.16
+          3 |          4        1.84      100.00
+------------+-----------------------------------
+      Total |        217      100.00
+(213 observations deleted)
+(0 observations deleted)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
+>  + T6AEQ3))
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |         22       95.65       95.65
+          3 |          1        4.35      100.00
+------------+-----------------------------------
+      Total |         23      100.00
+(1 missing value generated)
+(label lspdomain already defined)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
+> /work/revpref_price_5.dta saved
+(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
+>  + T6AEQ3))
+(174 observations deleted)
+(label lspdomain already defined)
+(20 observations deleted)
+(0 real changes made)
+(0 real changes made)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
+(23 observations deleted)
+(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
+>  + T6AEQ3))
+(label lspdomain already defined)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
+> /work/revpref_price_5.dta saved
+(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
+>  + T6AEQ3))
+(174 observations deleted)
+(label lspdomain already defined)
+(20 observations deleted)
+(0 real changes made)
+(2 real changes made)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
+(21 observations deleted)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
+>  + T6AEQ3))
+variable product does not uniquely identify observations in the
+    master data
+(label lspdomain already defined)
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |        207       95.39       95.39
+          3 |         10        4.61      100.00
+------------+-----------------------------------
+      Total |        217      100.00
+(207 observations deleted)
+(0 observations deleted)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
+>  + T6AEQ3))
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |         21       91.30       91.30
+          3 |          2        8.70      100.00
+------------+-----------------------------------
+      Total |         23      100.00
+(label lspdomain already defined)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
+> /work/revpref_price_5.dta saved
+(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
+>  + T6AEQ3))
+(173 observations deleted)
+(label lspdomain already defined)
+(21 observations deleted)
+(0 real changes made)
+(0 real changes made)
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
+(23 observations deleted)
+(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
+>  + T6AEQ3))
+(label lspdomain already defined)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
+> /work/revpref_price_5.dta saved
+(label lspdomain already defined)
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
+> /work/pref_r_price.dta saved
+
+. *bring in actual flexible bundle numbers;
+. use "$path/work/povline_food_flex_it$it_n.dta", clear;
+
+.         merge spdomain using "$path/work/pref_r_price.dta";
+variable spdomain does not uniquely identify observations in
+    C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP
+    > 3/work/pref_r_price.dta
+(label lspdomain already defined)
+
+.         tab _m;
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |          1        3.85        3.85
+          3 |         25       96.15      100.00
+------------+-----------------------------------
+      Total |         26      100.00
+
+.          drop crap;
+
+.         drop _m;
+
+.         order spdomainq spdomain;
+
+.       sort spdomainq spdomain;
+
+.         *rescale expenditures to hit a constant calorie target;
+.         gen povline_f5_s=ratquan*povline_f_flex90_$it_n;
+(1 missing value generated)
+
+.       compress;
+spdomainq was float now byte
+spdomain was float now byte
+pricemiss was double now byte
+
+. *browse;
+.         *categorize revealed preference performance;
+.       gen pref_r=0;
+
+.       replace pref_r=1 if float(linf_q)>float(povline_f5_s);
+(12 real changes made)
+
+.       replace pref_r=2 if float(linf_q)<float(povline_f5_s);
+(9 real changes made)
+
+.       lab var pref_r "Fails or passes revealed preference test";
+
+.       lab def pref_r
+>                         0 "comparison of the same region with itself"
+>                         1 "passes revealed preference test"
+>                         2 "fails revealed preference test" ;
+
+.         lab val pref_r pref_r;
+
+.       drop if spdomainq==spdomain;
+(6 observations deleted)
+
+.         tab pref_r;
+
+    Fails or passes revealed preference |
+                                   test |      Freq.     Percent       
+>  Cum.
+----------------------------------------+------------------------------
+> -----
+        passes revealed preference test |         11       55.00       
+> 55.00
+         fails revealed preference test |          9       45.00      1
+> 00.00
+----------------------------------------+------------------------------
+> -----
+                                  Total |         20      100.00
+
+.              sort spdomainq ;
+
+.       by spdomainq: tab pref_r;
+
+-----------------------------------------------------------------------
+-> spdomainq = 1
+
+    Fails or passes revealed preference |
+                                   test |      Freq.     Percent       
+>  Cum.
+----------------------------------------+------------------------------
+> -----
+         fails revealed preference test |          4      100.00      1
+> 00.00
+----------------------------------------+------------------------------
+> -----
+                                  Total |          4      100.00
+
+-----------------------------------------------------------------------
+-> spdomainq = 2
+
+    Fails or passes revealed preference |
+                                   test |      Freq.     Percent       
+>  Cum.
+----------------------------------------+------------------------------
+> -----
+        passes revealed preference test |          3       75.00       
+> 75.00
+         fails revealed preference test |          1       25.00      1
+> 00.00
+----------------------------------------+------------------------------
+> -----
+                                  Total |          4      100.00
+
+-----------------------------------------------------------------------
+-> spdomainq = 3
+
+    Fails or passes revealed preference |
+                                   test |      Freq.     Percent       
+>  Cum.
+----------------------------------------+------------------------------
+> -----
+        passes revealed preference test |          2       50.00       
+> 50.00
+         fails revealed preference test |          2       50.00      1
+> 00.00
+----------------------------------------+------------------------------
+> -----
+                                  Total |          4      100.00
+
+-----------------------------------------------------------------------
+-> spdomainq = 4
+
+    Fails or passes revealed preference |
+                                   test |      Freq.     Percent       
+>  Cum.
+----------------------------------------+------------------------------
+> -----
+        passes revealed preference test |          2       50.00       
+> 50.00
+         fails revealed preference test |          2       50.00      1
+> 00.00
+----------------------------------------+------------------------------
+> -----
+                                  Total |          4      100.00
+
+-----------------------------------------------------------------------
+-> spdomainq = 5
+
+    Fails or passes revealed preference |
+                                   test |      Freq.     Percent       
+>  Cum.
+----------------------------------------+------------------------------
+> -----
+        passes revealed preference test |          4      100.00      1
+> 00.00
+----------------------------------------+------------------------------
+> -----
+                                  Total |          4      100.00
+
+
+. save "$path/work/pref_r_price.dta", replace;
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
+> /work/pref_r_price.dta saved
+
+. *drop comparisons with Maputo ;
+. drop if spdomain>=11;
+(0 observations deleted)
+
+. drop if spdomainq>=11;
+(0 observations deleted)
+
+. display "this is with maputo dropped";
+this is with maputo dropped
+
+. tab pref_r;
+
+    Fails or passes revealed preference |
+                                   test |      Freq.     Percent       
+>  Cum.
+----------------------------------------+------------------------------
+> -----
+        passes revealed preference test |         11       55.00       
+> 55.00
+         fails revealed preference test |          9       45.00      1
+> 00.00
+----------------------------------------+------------------------------
+> -----
+                                  Total |         20      100.00
+
+. *further drop Nampula rural and urban;
+. drop if spdomain==3 | spdomain==4;
+(8 observations deleted)
+
+. display "this is with maputo and nampula dropped (MAH: Actually not -
+>  experimenting with 6 spatial domains)";
+this is with maputo and nampula dropped (MAH: Actually not - experiment
+> ing with 6 spatial domains)
+
+. tab pref_r;
+
+    Fails or passes revealed preference |
+                                   test |      Freq.     Percent       
+>  Cum.
+----------------------------------------+------------------------------
+> -----
+        passes revealed preference test |          5       41.67       
+> 41.67
+         fails revealed preference test |          7       58.33      1
+> 00.00
+----------------------------------------+------------------------------
+> -----
+                                  Total |         12      100.00
+
+. *********************************************************************
+> *****
+> * 170_pref_r_price.do           (end)
+> *********************************************************************
+> *****;
+. log close;
+      name:  <unnamed>
+       log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_20
+> 11\GAPP3/rep/170_pref_r_price.log
+  log type:  text
+ closed on:   8 Jul 2013, 14:28:47
+-----------------------------------------------------------------------

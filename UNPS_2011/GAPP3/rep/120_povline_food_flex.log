@@ -1,0 +1,337 @@
+-----------------------------------------------------------------------
+      name:  <unnamed>
+       log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_20
+> 11\GAPP3/rep/120_povline_food_flex.log
+  log type:  text
+ opened on:   8 Jul 2013, 14:28:35
+
+. clear
+
+. set more off
+
+. #delimit ;
+delimiter now ;
+. *********************************************************************
+> *****
+> * 120_povline_food_flex.do      (start)
+> *
+> * Use the file with the food basket (food_basket_flex), which is in s
+> hares. 
+> * Then merge it with the prices file, and then with the calories file
+> .
+> * Along the way, drop those observations where we have no price infor
+> mation
+> * or no calorie information.
+> *********************************************************************
+> *****;
+. /*
+> This file uses:
+>         work/food_basket_flex.dta
+>         work/price_unit_flex.dta
+>         work/calperg.dta
+>         work/calpp.dta
+> 
+> This file creates:
+>         work/povline_flex.dta
+> */
+> 
+> 
+> * start with the quantity information;
+. use "$path/work/food_basket_flex.dta";
+
+.         sort product spdomain;
+
+.         * merge in price information;
+.         merge product spdomain using "$path/work/price_unit_flex.dta"
+> ;
+(label lspdomain already defined)
+
+.         tab _merge;
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |         12        5.97        5.97
+          2 |         77       38.31       44.28
+          3 |        112       55.72      100.00
+------------+-----------------------------------
+      Total |        201      100.00
+
+.         list product spdomain descript if _merge==1;
+
+     +------------------------------------+
+     | product        spdomain   descript |
+     |------------------------------------|
+111. |     157   Central Urban          1 |
+112. |     157   Central Rural          1 |
+113. |     157         Eastern          1 |
+114. |     157        Northern          1 |
+115. |     157         Western          1 |
+     |------------------------------------|
+118. |     999   Central Urban          2 |
+119. |     999   Central Rural          2 |
+120. |     999         Eastern          2 |
+121. |     999        Northern          2 |
+122. |     999         Western          2 |
+     |------------------------------------|
+123. |       .   Central Urban          1 |
+124. |       .   Central Rural          1 |
+     +------------------------------------+
+
+.         drop if _merge ~=3;
+(89 observations deleted)
+
+.         drop _merge;
+
+.         sort product;
+
+.         * merge in information on calories per gram;
+.         merge product using "$path/work/calperg.dta";
+variable product does not uniquely identify observations in the
+    master data
+(note: descript is str26 in using data but will be float now)
+
+.         tab _merge;
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |          2        1.45        1.45
+          2 |         26       18.84       20.29
+          3 |        110       79.71      100.00
+------------+-----------------------------------
+      Total |        138      100.00
+
+.         * This tells where we are lacking calorie info or are lacking
+>  quantity info due to 
+>         * missing price info above;
+.         list product spdomain descript if _merge==1;
+
+     +------------------------------------+
+     | product        spdomain   descript |
+     |------------------------------------|
+111. |     166         Western          1 |
+112. |     171   Central Rural          1 |
+     +------------------------------------+
+
+.         drop if _merge~=3;
+(28 observations deleted)
+
+.         drop _merge;
+
+.         sort spdomain f_share_w;
+
+.                 * CA modified to handle bootstrap counting;
+.         * determine if any quantity has fewer than 10 price observati
+> ons;
+.         by spdomain: count if round(bswt)<10;
+
+-----------------------------------------------------------------------
+-> spdomain = Central Urban
+    2
+-----------------------------------------------------------------------
+-> spdomain = Central Rural
+    0
+-----------------------------------------------------------------------
+-> spdomain = Eastern
+    0
+-----------------------------------------------------------------------
+-> spdomain = Northern
+    0
+-----------------------------------------------------------------------
+-> spdomain = Western
+    0
+
+.         drop if round(bswt) < 10;
+(2 observations deleted)
+
+.         by spdomain: egen baskshr=sum(f_share_w);
+
+.         by spdomain: gen cumshr1=sum(f_share_w);
+
+.         * bundle was cut at 92.5 percent- cut back to 90 percent if n
+> ecessary;
+.         drop if cumshr1<=baskshr-.9;
+(0 observations deleted)
+
+.         * reobtain the share represented from the average basket- sho
+> uld be slightly more than 90;
+.         drop baskshr;
+
+.         by spdomain: egen baskshr=sum(f_share_w);
+
+.         by spdomain: sum baskshr;
+
+-----------------------------------------------------------------------
+-> spdomain = Central Urban
+
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+     baskshr |        19    .4246981           0   .4246981   .4246981
+
+-----------------------------------------------------------------------
+-> spdomain = Central Rural
+
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+     baskshr |        21    .4414165           0   .4414165   .4414165
+
+-----------------------------------------------------------------------
+-> spdomain = Eastern
+
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+     baskshr |        25    .5149055           0   .5149055   .5149055
+
+-----------------------------------------------------------------------
+-> spdomain = Northern
+
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+     baskshr |        26    .4605806           0   .4605806   .4605806
+
+-----------------------------------------------------------------------
+-> spdomain = Western
+
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+     baskshr |        17    .4971784           0   .4971784   .4971784
+
+
+.         * obtain quantities and calories provided by these quantities
+> ;
+.         gen quan=f_share_w/price_unitw;
+
+.                         /* how many g in 1 MT exp on food item */
+>         gen cal_ir=quan*calperg;
+
+.                                 /* how many cal in 1 MT exp on food i
+> tem */
+>         by spdomain: egen calreg=sum(cal_ir);
+
+.         /* how many cal in 1 MT exp in food basket*/
+> 
+>         * merge in calorie requirements;
+.         sort spdomain;
+
+.         merge spdomain using "$path/work/calpp.dta";
+variable spdomain does not uniquely identify observations in the
+    master data
+
+.         tab _merge;
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          2 |          1        0.92        0.92
+          3 |        108       99.08      100.00
+------------+-----------------------------------
+      Total |        109      100.00
+
+.         drop _merge;
+
+.         * get the expansion factor to hit 95% of calorie requirements
+> ;
+.         gen ratio=.95*calpp/calreg;
+(1 missing value generated)
+
+.                         replace quan=quan*ratio;
+(108 real changes made)
+
+.         replace cal_ir=quan*calperg;
+(105 real changes made)
+
+.         * do a consistency check;
+.         sort spdomain;
+
+.         by spdomain: egen chkcal=sum(cal_ir);
+
+.         replace chkcal=chkcal/.95-calpp ;
+(109 real changes made)
+
+.                         * these values should be about zero;
+.         by spdomain: sum chkcal;
+
+-----------------------------------------------------------------------
+-> spdomain = Central Urban
+
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+      chkcal |        19   -.0000578           0  -.0000578  -.0000578
+
+-----------------------------------------------------------------------
+-> spdomain = Central Rural
+
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+      chkcal |        21   -.0000385           0  -.0000385  -.0000385
+
+-----------------------------------------------------------------------
+-> spdomain = Eastern
+
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+      chkcal |        25   -.0000257           0  -.0000257  -.0000257
+
+-----------------------------------------------------------------------
+-> spdomain = Northern
+
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+      chkcal |        26   -.0000964           0  -.0000964  -.0000964
+
+-----------------------------------------------------------------------
+-> spdomain = Western
+
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+      chkcal |        17    .0000578           0   .0000578   .0000578
+
+-----------------------------------------------------------------------
+-> spdomain = .
+
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+      chkcal |         1   -1346.905           .  -1346.905  -1346.905
+
+
+.         * obtain the value of each good in the bundle;
+.         gen val_ir=quan*price_unitw;
+(1 missing value generated)
+
+.         * the sum of the value of the goods in the bundle is assumed 
+> to represent 90% of expenditure;
+.         by spdomain: egen povline_f_flex90=sum(val_ir);
+
+.         replace povline_f_flex=povline_f_flex90/.9;
+(108 real changes made)
+
+.         collapse (mean) povline_f_flex, by (spdomain);
+
+.                 lab var povline_f_flex "Food poverty line. Flexible b
+> asket";
+
+.         sort spdomain;
+
+.         keep spdomain povline_f_flex;
+
+. save "$path/work/povline_food_flex.dta", replace;
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
+> /work/povline_food_flex.dta saved
+
+. /*
+> * To be used in 140_iterate.do;
+> gen cutoff = 1.5 * povline_f_flex;
+> keep spdomain cutoff;
+> save "$path/work/povlines_first_iterate.dta", replace;
+> */
+> 
+> *********************************************************************
+> *****
+> * 120_povline_food_flex.do      (end)
+> *********************************************************************
+> *****;
+. log close;
+      name:  <unnamed>
+       log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_20
+> 11\GAPP3/rep/120_povline_food_flex.log
+  log type:  text
+ closed on:   8 Jul 2013, 14:28:35
+-----------------------------------------------------------------------

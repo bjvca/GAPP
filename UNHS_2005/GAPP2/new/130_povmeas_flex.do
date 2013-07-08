@@ -223,7 +223,7 @@ use `contpi';
 	sort hhid;
 save "$path/work/cons_real.dta" , replace;
 
-	collapse  (mean) h_flex pg_flex spg_flex [aw=hhweight*hhsize];
+	collapse  (mean) h_flex pg_flex spg_flex [aw=hhweight*hhsize], by (strata);
 
 save "$path/work/povmeas.dta", replace;
 

@@ -1,12 +1,9 @@
---------------------------------------------------------------------------------------------
+------------------------------------------------------------------
       name:  <unnamed>
-       log:  /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//rep/070_calpp.log
+       log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UN
+> HS_2005\GAPP2/rep/070_calpp.log
   log type:  text
-<<<<<<< HEAD
- opened on:   2 Jul 2013, 13:42:45
-=======
- opened on:   2 Jul 2013, 10:14:30
->>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
+ opened on:   2 Jul 2013, 15:04:19
 
 . clear
 
@@ -15,11 +12,14 @@
 . #delimit ;
 delimiter now ;
 . *global fert_rate "fert_rate";
-. ***********************************************************************
+. ****************************************************************
+> *******
 > * 070_calpp.do          (start)
 > *
-> * Purpose: Determine calories required for each person per domain per day.
-> ***********************************************************************;
+> * Purpose: Determine calories required for each person per domai
+> n per day.
+> ****************************************************************
+> *******;
 . /*
 > This file uses:
 >         work/indata.dta
@@ -29,24 +29,27 @@ delimiter now ;
 >         work/calpp.dta
 > */
 > 
-> *-------------------------------------------------------------------------*
+> *---------------------------------------------------------------
+> ----------*
 > * Include fertility rates from csv-file
-> *-------------------------------------------------------------------------*;
+> *---------------------------------------------------------------
+> ----------*;
 . clear;
 
-. insheet sex rural age fert_rate using "$path/in/fert_rate_Uganda.csv";
+. insheet sex rural age fert_rate using "$path/in/fert_rate_Uganda
+> .csv";
 (4 vars, 96 obs)
 
-. ***************************************** check for Ugandan fertility rates **************
-> ***********************
-> ******************************************************************************************
-> *******************;
+. ***************************************** check for Ugandan fert
+> ility rates *************************************
+> ****************************************************************
+> *********************************************;
 . sort sex rural age;
 
 . tempfile fert_rate;
 
 . save `fert_rate';
-file /tmp/St03872.000001 saved
+file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000001.tmp saved
 
 . list;
 
@@ -170,16 +173,19 @@ file /tmp/St03872.000001 saved
  96. |   2       1    59       .006 |
      +------------------------------+
 
-. *-------------------------------------------------------------------------*
+. *---------------------------------------------------------------
+> ----------*
 > * Now do the calorie needs for individuals
-> *-------------------------------------------------------------------------*;
+> *---------------------------------------------------------------
+> ----------*;
 . use "$path/work/indata.dta";
 
 . * CA bootstrap modification;
 . sort hhid;
 
 . merge hhid using "$path/work/hhdata.dta";
-variable hhid does not uniquely identify observations in the master data
+variable hhid does not uniquely identify observations in the
+    master data
 
 . tab _m;
 
@@ -194,7 +200,6 @@ variable hhid does not uniquely identify observations in the master data
 
 . sum;
 
-<<<<<<< HEAD
     Variable |       Obs        Mean    Std. Dev.       Min       
 >  Max
 -------------+----------------------------------------------------
@@ -313,77 +318,16 @@ variable hhid does not uniquely identify observations in the master data
 >    4
         bswt |     41797           1           0          1       
 >    1
-=======
-    Variable |       Obs        Mean    Std. Dev.       Min        Max
--------------+--------------------------------------------------------
-       indid |     41810    2.50e+11    1.12e+11   1.01e+11   4.15e+11
-    motherhh |     39374    .5007111    .5000058          0          1
-        hhid |     41797    2.50e+09    1.12e+09   1.01e+09   4.15e+09
-         sex |     41797    .5243199    .5348987          0          2
-         age |     40470    19.68325    17.41645          0        110
--------------+--------------------------------------------------------
-        comm |     41769    2.50e+07    1.12e+07   1.01e+07   4.15e+07
-      region |     41797    2.432974    1.120305          1          4
-    district |     41797    249.8793     112.023        101        415
-    substrat |     41797    2.569826    .8217755          1          3
-         psu |     41797    12.52817    9.868414          1         39
--------------+--------------------------------------------------------
-        snum |     41797    6.278202    3.161775          1         17
-       vtype |     39961    1.528741    .4993299          1          3
-      gpsnsa |     41769    132836.4    135310.7         34    3400000
-      gpsnsb |     41764     3143840     1709632       4522   8.03e+07
-    inidpcmp |     41797    1.962414    .1901961          1          2
--------------+--------------------------------------------------------
-    daysurve |     41712    17.22658    6.202464          1         31
-    monsurve |     41797     6.36182    3.512427          1         12
-     yrsurve |     41797     2005.36    .4799714       2005       2006
-       scode |     39542    42.14665    21.97753          3         98
-     daychks |     39328    17.55452    6.340026          1         72
--------------+--------------------------------------------------------
-     monchks |     39335    5.222652    4.288041          1         30
-    yearchks |     39378    2005.734    8.524417       2005       3200
-    editcode |     16167    47.80095    25.98742          1         89
-     dayedit |     16064    18.29071    6.849501          1         72
-     monedit |     16096    9.424826    3.752378          1         30
--------------+--------------------------------------------------------
-    yearedit |     16111    2005.342     13.3177       2005       3200
-     strthrs |     36529    10.62167    2.092694          6         61
-     strtmin |     36506    25.95088    17.61905          0         59
-    respcode |     41783    1.007659    .0980336          1          8
-    our_resp |     41684    1.461928    .5003317          1          3
--------------+--------------------------------------------------------
-     entrant |     40995    12.27838    5.949383          1         19
-    dayentry |     40995    15.56104    8.096496          1         31
-    monentry |     40995    3.814026    2.044584          0         12
-     yrentry |     40995    2006.099    22.31054       2005       5200
-    verifier |       954    6.873166      3.6039          1         15
--------------+--------------------------------------------------------
-    dayverif |       846    15.91962    8.499811          2         30
-    monverif |       846    4.166667    2.578817          1         11
-    yrverify |       892    2005.885    .3197686       2005       2006
-      hhsize |     41748    7.637276    3.687256          1         33
-    hhweight |     41797    701.3982    328.8969      60.97    4404.13
--------------+--------------------------------------------------------
-    survquar |     41797    2.566428     1.08261          1          4
-     survmon |     41797    6.680408    3.333466          1         12
-      strata |     41797    5.707898    2.797051          1         10
-       rural |     41797    .7849128    .4108877          0          1
-     reg_tpi |     41797    2.432974    1.120305          1          4
--------------+--------------------------------------------------------
-    spdomain |     41797    5.614398    2.340276          1          9
-        news |     41797    2.432974    1.120305          1          4
-        bswt |     41797           1           0          1          1
->>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 
 . * Include fertility rates;
 . sort sex rural age;
 
 . merge sex rural age using `fert_rate';
-variables sex rural age do not uniquely identify observations in the master data
+variables sex rural age do not uniquely identify observations in
+    the master data
 
 . sum;
 
-<<<<<<< HEAD
     Variable |       Obs        Mean    Std. Dev.       Min       
 >  Max
 -------------+----------------------------------------------------
@@ -506,69 +450,6 @@ variables sex rural age do not uniquely identify observations in the master data
 > .313
       _merge |     41902    1.002387     .050713          1       
 >    3
-=======
-    Variable |       Obs        Mean    Std. Dev.       Min        Max
--------------+--------------------------------------------------------
-       indid |     41810    2.50e+11    1.12e+11   1.01e+11   4.15e+11
-    motherhh |     39374    .5007111    .5000058          0          1
-        hhid |     41797    2.50e+09    1.12e+09   1.01e+09   4.15e+09
-         sex |     41889    .5275609    .5387583          0          2
-         age |     40562    19.72023    17.42655          0        110
--------------+--------------------------------------------------------
-        comm |     41769    2.50e+07    1.12e+07   1.01e+07   4.15e+07
-      region |     41797    2.432974    1.120305          1          4
-    district |     41797    249.8793     112.023        101        415
-    substrat |     41797    2.569826    .8217755          1          3
-         psu |     41797    12.52817    9.868414          1         39
--------------+--------------------------------------------------------
-        snum |     41797    6.278202    3.161775          1         17
-       vtype |     39961    1.528741    .4993299          1          3
-      gpsnsa |     41769    132836.4    135310.7         34    3400000
-      gpsnsb |     41764     3143840     1709632       4522   8.03e+07
-    inidpcmp |     41797    1.962414    .1901961          1          2
--------------+--------------------------------------------------------
-    daysurve |     41712    17.22658    6.202464          1         31
-    monsurve |     41797     6.36182    3.512427          1         12
-     yrsurve |     41797     2005.36    .4799714       2005       2006
-       scode |     39542    42.14665    21.97753          3         98
-     daychks |     39328    17.55452    6.340026          1         72
--------------+--------------------------------------------------------
-     monchks |     39335    5.222652    4.288041          1         30
-    yearchks |     39378    2005.734    8.524417       2005       3200
-    editcode |     16167    47.80095    25.98742          1         89
-     dayedit |     16064    18.29071    6.849501          1         72
-     monedit |     16096    9.424826    3.752378          1         30
--------------+--------------------------------------------------------
-    yearedit |     16111    2005.342     13.3177       2005       3200
-     strthrs |     36529    10.62167    2.092694          6         61
-     strtmin |     36506    25.95088    17.61905          0         59
-    respcode |     41783    1.007659    .0980336          1          8
-    our_resp |     41684    1.461928    .5003317          1          3
--------------+--------------------------------------------------------
-     entrant |     40995    12.27838    5.949383          1         19
-    dayentry |     40995    15.56104    8.096496          1         31
-    monentry |     40995    3.814026    2.044584          0         12
-     yrentry |     40995    2006.099    22.31054       2005       5200
-    verifier |       954    6.873166      3.6039          1         15
--------------+--------------------------------------------------------
-    dayverif |       846    15.91962    8.499811          2         30
-    monverif |       846    4.166667    2.578817          1         11
-    yrverify |       892    2005.885    .3197686       2005       2006
-      hhsize |     41748    7.637276    3.687256          1         33
-    hhweight |     41797    701.3982    328.8969      60.97    4404.13
--------------+--------------------------------------------------------
-    survquar |     41797    2.566428     1.08261          1          4
-     survmon |     41797    6.680408    3.333466          1         12
-      strata |     41797    5.707898    2.797051          1         10
-       rural |     41889     .784287    .4113209          0          1
-     reg_tpi |     41797    2.432974    1.120305          1          4
--------------+--------------------------------------------------------
-    spdomain |     41797    5.614398    2.340276          1          9
-        news |     41797    2.432974    1.120305          1          4
-        bswt |     41797           1           0          1          1
-   fert_rate |        96    .1308125    .1150995       .006       .313
-      _merge |     41902    1.002387     .050713          1          3
->>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 
 . * Do calorie calculations ;
 .     gen num=1;
@@ -576,17 +457,19 @@ variables sex rural age do not uniquely identify observations in the master data
 .     gen cal = .;
 (41902 missing values generated)
 
-. * Same assumptions about sex/age specific calories need in IAF 1997, IAF 2003 and IOF 2009
-> ;
+. * Same assumptions about sex/age specific calories need in IAF 1
+> 997, IAF 2003 and IOF 2009;
 . * Children (no difference between boys and girls)   ;
 .      replace cal =  820 if age < 1;
 (1505 real changes made)
 
-. * Add 500 cal per day for mothers in first six months of breast feeding
-> * We assume that 60% of children under 1 are under six months old
+. * Add 500 cal per day for mothers in first six months of breast 
+> feeding
+> * We assume that 60% of children under 1 are under six months ol
+> d
 > * And that all of them breast feed
-> * We add these mother requirements of 300 on average to each child under 1 whose mother is
->  alive;
+> * We add these mother requirements of 300 on average to each chi
+> ld under 1 whose mother is alive;
 .     replace cal = 1120 if age <  1 & motherhh==1;
 (1425 real changes made)
 
@@ -637,38 +520,48 @@ variables sex rural age do not uniquely identify observations in the master data
 .     replace cal = 1950 if age >= 10 & age <12 & sex==2;
 (1 real change made)
 
-. * Women with a correction for pregnancy. We add 285 calories per for the final trimester.
-> * To do this we find the probability that rural and urban women are pregnant from
-> * live births data in the 1997 census over the past 12 months (no correction for still bir
-> ths).
-> * 3/4*probability of birth gives probability of preganancy. Probability of final trimester
->  is one
+. * Women with a correction for pregnancy. We add 285 calories per
+>  for the final trimester.
+> * To do this we find the probability that rural and urban women 
+> are pregnant from
+> * live births data in the 1997 census over the past 12 months (n
+> o correction for still births).
+> * 3/4*probability of birth gives probability of preganancy. Prob
+> ability of final trimester is one
 > * third of that of that or 1/4 of the probability of birth
 > 
 > * Women urban;
-.     replace cal = 2100 + (fert_rate*285)/4 if age >= 12 & age <14 & sex==2 & rural==0;
+.     replace cal = 2100 + (fert_rate*285)/4 if age >= 12 & age <1
+> 4 & sex==2 & rural==0;
 (2 real changes made)
 
-.     replace cal = 2150 + (fert_rate*285)/4 if age >= 14 & age <18 & sex==2 & rural==0;
+.     replace cal = 2150 + (fert_rate*285)/4 if age >= 14 & age <1
+> 8 & sex==2 & rural==0;
 (4 real changes made)
 
-.     replace cal = 2100 + (fert_rate*285)/4 if age >= 18 & age <30 & sex==2 & rural==0;
+.     replace cal = 2100 + (fert_rate*285)/4 if age >= 18 & age <3
+> 0 & sex==2 & rural==0;
 (12 real changes made)
 
-.     replace cal = 2150 + (fert_rate*285)/4 if age >= 30 & age <60 & sex==2 & rural==0;
+.     replace cal = 2150 + (fert_rate*285)/4 if age >= 30 & age <6
+> 0 & sex==2 & rural==0;
 (30 real changes made)
 
 . * Women rural;
-.     replace cal = 2100 + (fert_rate*285)/4 if age >= 12 & age <14 & sex==2 & rural==1;
+.     replace cal = 2100 + (fert_rate*285)/4 if age >= 12 & age <1
+> 4 & sex==2 & rural==1;
 (2 real changes made)
 
-.     replace cal = 2150 + (fert_rate*285)/4 if age >= 14 & age <18 & sex==2 & rural==1;
+.     replace cal = 2150 + (fert_rate*285)/4 if age >= 14 & age <1
+> 8 & sex==2 & rural==1;
 (4 real changes made)
 
-.     replace cal = 2100 + (fert_rate*285)/4 if age >= 18 & age <30 & sex==2 & rural==1;
+.     replace cal = 2100 + (fert_rate*285)/4 if age >= 18 & age <3
+> 0 & sex==2 & rural==1;
 (12 real changes made)
 
-.     replace cal = 2150 + (fert_rate*285)/4 if age >= 30 & age <60 & sex==2 & rural==1;
+.     replace cal = 2150 + (fert_rate*285)/4 if age >= 30 & age <6
+> 0 & sex==2 & rural==1;
 (30 real changes made)
 
 . * Women 60+ are not pregnant ;
@@ -683,16 +576,20 @@ variables sex rural age do not uniquely identify observations in the master data
 .     *replace cal = 1500 if cal ==. & age==.;
 .     * 2) this one is 21 years old;
 .     *replace cal = 2500 if cal ==. & b2==.;
-.     collapse (sum) cal num (max) psu hhsize hhweight strata rural spdomain, by (hhid);
+.     collapse (sum) cal num (max) psu hhsize hhweight strata rura
+> l spdomain, by (hhid);
 
 .     gen chk=hhsize - num;
 (12 missing values generated)
 
 .     sum chk;
 
-    Variable |       Obs        Mean    Std. Dev.       Min        Max
--------------+--------------------------------------------------------
-         chk |      7415    .1525287    .5954247        -11         10
+    Variable |       Obs        Mean    Std. Dev.       Min       
+>  Max
+-------------+----------------------------------------------------
+> ----
+         chk |      7415    .1525287    .5954247        -11       
+>   10
 
 .     drop chk;
 
@@ -703,7 +600,6 @@ variables sex rural age do not uniquely identify observations in the master data
 
 . sum;
 
-<<<<<<< HEAD
     Variable |       Obs        Mean    Std. Dev.       Min       
 >  Max
 -------------+----------------------------------------------------
@@ -730,26 +626,10 @@ variables sex rural age do not uniquely identify observations in the master data
 >    9
        calpp |      7415    1273.419    682.3688          0      1
 > 7550
-=======
-    Variable |       Obs        Mean    Std. Dev.       Min        Max
--------------+--------------------------------------------------------
-        hhid |      7426    2.48e+09    1.13e+09   1.01e+09   4.15e+09
-         cal |      7427    7008.596    5086.838          0   197325.6
-         num |      7427    5.641847    3.433554          1        105
-         psu |      7426    12.43307    9.843949          1         39
-      hhsize |      7415    5.782738    3.284401          1         33
--------------+--------------------------------------------------------
-    hhweight |      7426    704.6189    339.0242      60.97    4404.13
-      strata |      7426    5.644762    2.836484          1         10
-       rural |      7427    .7712401    .4200626          0          1
-    spdomain |      7426    5.552788    2.384061          1          9
-       calpp |      7415    1273.419    682.3688          0      17550
->>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 
 . * MAH ;
 .  sum;
 
-<<<<<<< HEAD
     Variable |       Obs        Mean    Std. Dev.       Min       
 >  Max
 -------------+----------------------------------------------------
@@ -776,58 +656,44 @@ variables sex rural age do not uniquely identify observations in the master data
 >    9
        calpp |      7415    1273.419    682.3688          0      1
 > 7550
-=======
-    Variable |       Obs        Mean    Std. Dev.       Min        Max
--------------+--------------------------------------------------------
-        hhid |      7426    2.48e+09    1.13e+09   1.01e+09   4.15e+09
-         cal |      7427    7008.596    5086.838          0   197325.6
-         num |      7427    5.641847    3.433554          1        105
-         psu |      7426    12.43307    9.843949          1         39
-      hhsize |      7415    5.782738    3.284401          1         33
--------------+--------------------------------------------------------
-    hhweight |      7426    704.6189    339.0242      60.97    4404.13
-      strata |      7426    5.644762    2.836484          1         10
-       rural |      7427    .7712401    .4200626          0          1
-    spdomain |      7426    5.552788    2.384061          1          9
-       calpp |      7415    1273.419    682.3688          0      17550
->>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
 
 .  codebook hhid;
 
---------------------------------------------------------------------------------------------
-hhid                                                                            Household ID
---------------------------------------------------------------------------------------------
+------------------------------------------------------------------
+hhid                                                  Household ID
+------------------------------------------------------------------
 
                   type:  numeric (double)
 
                  range:  [1.013e+09,4.153e+09]        units:  1
-         unique values:  7426                     missing .:  1/7427
+         unique values:  7426                     missing .:  1/74
+> 27
 
                   mean:   2.5e+09
               std. dev:   1.1e+09
 
-           percentiles:        10%       25%       50%       75%       90%
-                           1.1e+09   1.1e+09   2.1e+09   3.1e+09   4.1e+09
+           percentiles:        10%       25%       50%       75%  
+>      90%
+                           1.1e+09   1.1e+09   2.1e+09   3.1e+09  
+>  4.1e+09
 
 . collapse (mean) calpp[aw=hhsize*hhweight], by (spdomain);
 
 . sort spdomain;
 
 . save "$path/work/calpp.dta",replace;
-(note: file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/calpp.dta not found)
-file /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//work/calpp.dta saved
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
+> GAPP2/work/calpp.dta saved
 
-. ***********************************************************************
+. ****************************************************************
+> *******
 > * 070_calpp.do          (end)
-> ***********************************************************************;
+> ****************************************************************
+> *******;
 . log close;
       name:  <unnamed>
-       log:  /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2//rep/070_calpp.log
+       log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UN
+> HS_2005\GAPP2/rep/070_calpp.log
   log type:  text
-<<<<<<< HEAD
- closed on:   2 Jul 2013, 13:42:46
+ closed on:   2 Jul 2013, 15:04:20
 ------------------------------------------------------------------
-=======
- closed on:   2 Jul 2013, 10:14:31
---------------------------------------------------------------------------------------------
->>>>>>> cdd622ff8e7d1c7afbf6ff9e7ca979bf65198a76
