@@ -1,25 +1,21 @@
------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
       name:  <unnamed>
-       log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_20
-> 11\GAPP3/rep/080_conpc.log
+       log:  /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//rep/080_conpc.log
   log type:  text
- opened on:   8 Jul 2013, 14:28:27
+ opened on:   8 Jul 2013, 20:13:56
 
 . set more off
 
 . 
 . 
-. *********************************************************************
-> ******
+. ***************************************************************************
 . * 080_conpc.do          (start)
 . *
-. * Creates a file with per capita nominal consumption divided between 
-> food
+. * Creates a file with per capita nominal consumption divided between food
 . * and non-food categories based on the calorie definition of food
 . * rather than the COICOP (INE) definition of food. ready for 
 . * temporal deflation when necessary
-. *********************************************************************
-> ******* 
+. **************************************************************************** 
 . 
 . /*
 > This file uses:
@@ -32,11 +28,9 @@
 . 
 . 
 . 
-. *********************************************************************
-> ******
+. ***************************************************************************
 . * Food expenditure
-. *********************************************************************
-> ******* 
+. **************************************************************************** 
 . *use "$path/in/cons_cod.dta" 
 . use "$path/work/cons_cod.dta" 
 
@@ -58,14 +52,12 @@
 .             tempfile foodexp 
 
 . save `foodexp' 
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000001.tmp saved
+file /tmp/St02337.000001 saved
 
 . 
-. *********************************************************************
-> ******
+. ***************************************************************************
 . * Food expenditure merged with all expenditure
-. *********************************************************************
-> ******* 
+. **************************************************************************** 
 . use "$path/work/cons_cod.dta" 
 
 . *use "$path/in/cons_cod.dta" 
@@ -163,14 +155,12 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000001.tmp saved
 (6 missing values generated)
 
 .  
-.             keep hhid cons_hh_nom food_pc_nom nf_pc_nom cons_pc_nom s
-> urvquar spdomain news reg_tpi rural hhweight hhsize 
-
-.             lab var food_pc_nom "nominal food consumption per capita"
+.             keep hhid cons_hh_nom food_pc_nom nf_pc_nom cons_pc_nom survquar spdomain news reg_tpi rural hhweight hhsize
 >  
 
-.             lab var nf_pc_nom "nominal non-food consumption per capit
-> a" 
+.             lab var food_pc_nom "nominal food consumption per capita" 
+
+.             lab var nf_pc_nom "nominal non-food consumption per capita" 
 
 . keep hhid cons_hh_nom cons_pc_nom food_pc_nom nf_pc_nom 
 
@@ -179,22 +169,19 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000001.tmp saved
 . 
 . * MAH   sum  codebook hhid 
 . save "$path/work/conpc.dta", replace 
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
-> /work/conpc.dta saved
+(note: file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/conpc.dta not found)
+file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/conpc.dta saved
 
 . 
 . 
-. *********************************************************************
-> ******
+. ***************************************************************************
 . * 080_conpc.do          (end)
-. *********************************************************************
-> ******* 
+. **************************************************************************** 
 . 
 . 
 . log close 
       name:  <unnamed>
-       log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_20
-> 11\GAPP3/rep/080_conpc.log
+       log:  /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//rep/080_conpc.log
   log type:  text
- closed on:   8 Jul 2013, 14:28:27
------------------------------------------------------------------------
+ closed on:   8 Jul 2013, 20:13:56
+--------------------------------------------------------------------------------------------------------------------------

@@ -1,9 +1,8 @@
------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
       name:  <unnamed>
-       log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_20
-> 11\GAPP3/rep/140_iterate.log
+       log:  /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//rep/140_iterate.log
   log type:  text
- opened on:   8 Jul 2013, 14:28:35
+ opened on:   8 Jul 2013, 20:16:10
 
 . clear
 
@@ -12,31 +11,25 @@
 . #delimit ;
 delimiter now ;
 . *global povline_initial "$path/in/povlines_first_iof.dta";
-. *********************************************************************
-> *****
+. **************************************************************************
 > * 140_iterate.do        (start)
 > *
-> * Purpose: Create flexible food basket and poverty line with iterativ
-> e procedure
+> * Purpose: Create flexible food basket and poverty line with iterative procedure
 > *
 > * This program will take the results from the first pass at the
 > * poverty lines and applies the corresponding spatial deflator to
 > * re-select the relatively poor, their consumption bundles, and
 > * their prices.
 > *
-> * Welfare indicator is here always temporally and spatially adjusted 
-> per capita
+> * Welfare indicator is here always temporally and spatially adjusted per capita
 > * expenditure. Here called cr_it< >.
 > *
-> * We will iterate this process 5 times which here assures convergence
-> .
+> * We will iterate this process 5 times which here assures convergence.
 > *
-> * CA, Mar 2010: Relatively poor are those below last iterated poverty
->  line
+> * CA, Mar 2010: Relatively poor are those below last iterated poverty line
 > * MAH, Apr 2010: Cleaning
 > * URB, feb 2012: Commented out "drop if unit~=2"
-> *********************************************************************
-> *****;
+> **************************************************************************;
 . /*
 > This file uses:
 >             in/povlines_first_new.dta
@@ -67,14 +60,11 @@ delimiter now ;
 >         work/reg_tpi_pov_flex.csv
 > */
 > 
-> *********************************************************************
-> *****;
+> **************************************************************************;
 . * Make a key file that will be used over and over, without change
-> * in every iteration. This will include the TEMPORALLY deflated consu
-> mption
+> * in every iteration. This will include the TEMPORALLY deflated consumption
 > * and various HH data such as hhweight, spdomain, etc.
-> *********************************************************************
-> *****;
+> **************************************************************************;
 . use "$path/work/conpc.dta";
 
 .         sort hhid;
@@ -94,10 +84,8 @@ delimiter now ;
 
 .         sort reg_tpi survquar;
 
-.         merge reg_tpi survquar using "$path/work/temp_index_reg_tpi.d
-> ta";
-variables reg_tpi survquar do not uniquely identify observations in
-    the master data
+.         merge reg_tpi survquar using "$path/work/temp_index_reg_tpi.dta";
+variables reg_tpi survquar do not uniquely identify observations in the master data
 (label lsurvquar already defined)
 (label lbreg already defined)
 
@@ -118,8 +106,7 @@ variables reg_tpi survquar do not uniquely identify observations in
 .         gen cons_pc_tpi = food_pc_tpi + nf_pc_nom;
 (225 missing values generated)
 
-.         lab var food_pc_tpi "Temp-adjusted per capita food consumptio
-> n/day";
+.         lab var food_pc_tpi "Temp-adjusted per capita food consumption/day";
 
 .         lab var cons_pc_tpi "Temp adjusted total consumption/day";
 
@@ -128,23 +115,19 @@ variables reg_tpi survquar do not uniquely identify observations in
 .         sort hhid;
 
 . save `contpi', replace;
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000001.tmp not fo
-> und)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000001.tmp saved
+(note: file /tmp/St02337.000001 not found)
+file /tmp/St02337.000001 saved
 
 . save contpi_, replace;
 file contpi_.dta saved
 
 . *use "$path/in/povlines_first_iterate.dta", clear;
 . *save "$path/work/povlines_first.dta", replace;
-. *********************************************************************
-> *****;
-. * Now set some information pertaining to the iterations. For now we'l
-> l
+. **************************************************************************;
+. * Now set some information pertaining to the iterations. For now we'll
 > * manually set the number of iterations. Also specify the percentile
 > * cutpoint that we will use for defining the relatively poor.
-> *********************************************************************
-> *****;
+> **************************************************************************;
 . local lastpass=0;
 
 . local pass=1;
@@ -154,14 +137,11 @@ file contpi_.dta saved
 .   *local maxit=5;
 .   *local cutpt=50;
 . * Use these few lines if you want to specify the number of iterations
-> * and percentile cutpoint by passing them as parameters on the comman
-> d
+> * and percentile cutpoint by passing them as parameters on the command
 > * line, e.g.:   wstata do new/iterate1.do 5 50;
 . if "`1'"=="" | "`2'"=="" {      ;
-.         di in red "Error: you need to specify number of iterations as
->  first parameter";
-.         di in red "       and percentile cutpoint as second parameter
->  on command line.";
+.         di in red "Error: you need to specify number of iterations as first parameter";
+.         di in red "       and percentile cutpoint as second parameter on command line.";
 . };
 
 . local maxit `1';
@@ -170,30 +150,22 @@ file contpi_.dta saved
 
 . tempfile cutoff;
 
-. di "*****************************************************************
-> *****";
+. di "**********************************************************************";
 **********************************************************************
 
 . while `pass' <= `maxit' {;
-  2.         **********************************************************
-> ****************;
-. *********************************************************************
-> *****;
+  2.         **************************************************************************;
+. **************************************************************************;
 . * Pick out the bottom X percent in real consumption per capita 
-> * (temporally & spatially adjusted), as ranked by the previous iterat
-> ion.
-> * The percentile to use is defined by "cutpt". This produces a file t
-> hat
-> * has the hhid, and a dummy variable indicating if they were below th
-> e
+> * (temporally & spatially adjusted), as ranked by the previous iteration.
+> * The percentile to use is defined by "cutpt". This produces a file that
+> * has the hhid, and a dummy variable indicating if they were below the
 > * cutpoint on the last iteration.
-> *********************************************************************
-> *****;
-. *********************************************************************
-> *****;
+> **************************************************************************;
+. **************************************************************************;
 . /*
-> * Comment out if IOF 2008/09. (This code included instead of below co
-> de in order to replicate published figures 2002/03). ( START ) ;
+> * Comment out if IOF 2008/09. (This code included instead of below code in order to replicate published figures 2002/03)
+> . ( START ) ;
 > 
 >         if "`pass'"=="1" {      ;
 >               use `contpi', clear;
@@ -211,30 +183,27 @@ file contpi_.dta saved
 >         };
 >         
 > 
-> * Comment out if IOF 2008/09. (This code included instead of below co
-> de in order to replicate published figures 2002/03). ( END ) ;
+> * Comment out if IOF 2008/09. (This code included instead of below code in order to replicate published figures 2002/03)
+> . ( END ) ;
 > */
 > 
 > 
 > 
-> * Comment out if IAF 2002/03. (This code below excluded in order to r
-> eplicate published figures 2002/03). ( START ) ;
+> * Comment out if IAF 2002/03. (This code below excluded in order to replicate published figures 2002/03). ( START ) ;
 .         if "`pass'"=="1" { ;
   3. * Find real income at cut point initially;
 .                 use "$path/work/cons_real.dta", clear;
   4.                                     gen cr_it0=cr2;
   5.                         cap drop one;
   6.             gen one=1;
-  7.                                     collapse (p`cutpt') one cr_it`
-> lastpass' [aw=popwt] ;
+  7.                                     collapse (p`cutpt') one cr_it`lastpass' [aw=popwt] ;
   8.                                     rename cr_it`lastpass' cutoff;
   9.                                     sort one;
  10.             save `cutoff', replace;
  11.             save cutoff, replace;
  12.  * Find relatively poor initially;
 .             use "$path/work/cons_real.dta", clear;
- 13.                                                 gen cr_it`lastpass
-> '=cr2;
+ 13.                                                 gen cr_it`lastpass'=cr2;
  14.             cap drop one;
  15.             cap drop cutoff;
  16.             gen one=1;
@@ -243,28 +212,23 @@ file contpi_.dta saved
  19.             tab _merge;
  20.             drop _merge;
  21.                                     drop one;
- 22.                            gen relpoor`pass'=cr_it`lastpass'<=cuto
-> ff;
+ 22.                            gen relpoor`pass'=cr_it`lastpass'<=cutoff;
  23.             *lab var relpoor`pass' "=1 if in bottom of PCE";
 .                                     tab relpoor`pass' [aw=popwt];
- 24.                                     keep hhid cr_it`lastpass' relp
-> oor`pass' popwt;
+ 24.                                     keep hhid cr_it`lastpass' relpoor`pass' popwt;
  25.             sort hhid;
  26.         save "$path/work/relpoor_it`pass'.dta", replace;
  27.         };
- 28. * Comment out if IAF 2002/03. (This code below excluded in order t
-> o replicate published figures 2002/03). ( END ) ;
+ 28. * Comment out if IAF 2002/03. (This code below excluded in order to replicate published figures 2002/03). ( END ) ;
 .                 if `pass'>1 {   ;
  29. * Find real income at cut point in iteration number `pass' ;
 .                 use "$path/work/cons_real_it`lastpass'.dta" , clear;
  30.                                                 cap drop one;
  31.                 gen one=1;
- 32.                                                                 *C
-> A modified from hhweight*hhsize to popwt;
+ 32.                                                                 *CA modified from hhweight*hhsize to popwt;
 .                 collapse (p`cutpt') one cr_it`lastpass' [aw=popwt] ;
  33.                         rename cr_it`lastpass' cutoff;
- 34.                                                                   
->       sort one;
+ 34.                                                                         sort one;
  35.         save `cutoff', replace;
  36.         * Find relatively poor in iteration number `pass' ;
 .                 use "$path/work/cons_real_it`lastpass'.dta", clear;
@@ -277,20 +241,16 @@ file contpi_.dta saved
  43.                                                 drop one;
  44.                 gen relpoor`pass'=cr_it`lastpass'<=cutoff;
  45.                 *lab var relpoor`pass' "=1 if in bottom of PCE";
-.                                                 tab relpoor`pass' [aw
-> =popwt];
+.                                                 tab relpoor`pass' [aw=popwt];
  46. *CA modified to popwt above and to keep popwt below;
 .                 keep hhid cr_it`lastpass' relpoor`pass' popwt;
  47.                 sort hhid;
  48.         save "$path/work/relpoor_it`pass'.dta", replace;
  49.         };
- 50.         **********************************************************
-> ****************;
-. * Get the consumption file, and select only those codes that are food
-> ,
+ 50.         **************************************************************************;
+. * Get the consumption file, and select only those codes that are food,
 > * using our definition of "food", which includes alcoholic beverages.
-> *********************************************************************
-> *****;
+> **************************************************************************;
 .         use "$path/work/cons_cod.dta", clear;
  51. *CA modified to merge in work/hhdata.dta for bootstrap;
 .     sort hhid;
@@ -308,31 +268,22 @@ file contpi_.dta saved
 >                                 * Only food transactions ;
 .                 keep if food_cat==1;
  56.                 sort hhid;
- 57. ******************************************************************
-> ********;
-. * Merge with file that has temporally AND spatially adjusted consumpt
-> ion
-> * per capita from the previous iteration, and also identifies those b
-> elow 
+ 57. **************************************************************************;
+. * Merge with file that has temporally AND spatially adjusted consumption
+> * per capita from the previous iteration, and also identifies those below 
 > * the cutoff. Then select only those who are below the cutoff.
-> *********************************************************************
-> *****;
+> **************************************************************************;
 .                 merge hhid using "$path/work/relpoor_it`pass'.dta";
  58.                 tab _merge;
  59.                 drop _merge;
- 60.                                 * Keep only transactions by the po
-> or ;
+ 60.                                 * Keep only transactions by the poor ;
 .                 keep if relpoor`pass';
- 61. ******************************************************************
-> ********;
-. * Calculate HH level food shares. Since we're only doing shares here,
->  we can
+ 61. **************************************************************************;
+. * Calculate HH level food shares. Since we're only doing shares here, we can
 > * work with the expenditures without doing temporal adjustment.
-> *********************************************************************
-> *****;
+> **************************************************************************;
 .                 gen  food_expenditure = cod_hh_nom;
- 62.                 *gen  food_expenditure= own_valued + daily_valued 
-> + monthly_valued + educ_valued;
+ 62.                 *gen  food_expenditure= own_valued + daily_valued + monthly_valued + educ_valued;
 .                 egen tot_food_expen= sum (food_expen), by (hhid) ;
  63.                 count if food_expenditure==.;
  64.                 count if tot_food_expen==.;
@@ -342,13 +293,10 @@ file contpi_.dta saved
  68.                 sort hhid product;
  69.                 tempfile foodshares;
  70.         save `foodshares', replace;
- 71. ******************************************************************
-> **************;
-. * Now find the total (economy wise, e.g. not by HH) shares by each pr
-> oduct in
+ 71. ********************************************************************************;
+. * Now find the total (economy wise, e.g. not by HH) shares by each product in
 > * order to select the most important goods in each domain's basket.
-> *********************************************************************
-> ***********;
+> ********************************************************************************;
 .                 collapse (mean) hhweight spdomain, by (hhid);
  72.                 sort hhid ;
  73.                  collapse (sum) hhweight , by(spdomain);
@@ -362,23 +310,17 @@ file contpi_.dta saved
  81.                 tab _merge;
  82.                 drop _merge;
  83.                 sort spdomain product;
- 84.                 gen f_share_w`pass'=(food_share*hhweight)/tothhwei
-> ght;
- 85.                 collapse (sum) f_share_w`pass', by(spdomain produc
-> t descript);
+ 84.                 gen f_share_w`pass'=(food_share*hhweight)/tothhweight;
+ 85.                 collapse (sum) f_share_w`pass', by(spdomain product descript);
  86.                                sort spdomain f_share_w`pass';
- 87.                 by spdomain: gen cumshr`pass'= sum(f_share_w`pass'
-> );
+ 87.                 by spdomain: gen cumshr`pass'= sum(f_share_w`pass');
  88.                 count if cumshr`pass'<=.075;
  89.                 drop if cumshr`pass'<=.075;
- 90.                 lab var f_share_w`pass' "average food share for th
-> e 13 spatial domains";
+ 90.                 lab var f_share_w`pass' "average food share for the 13 spatial domains";
  91.         save `foodshares', replace;
- 92.                                                 * Number of spatia
-> ls domains a food product appears ;
+ 92.                                                 * Number of spatials domains a food product appears ;
 .                 gen numreg=1;
- 93.                 collapse (sum) numreg cumshr`pass', by (product de
-> script);
+ 93.                 collapse (sum) numreg cumshr`pass', by (product descript);
  94.                 keep product numreg descript;
  95.                 display _N;
  96.                 sort product;
@@ -389,28 +331,18 @@ file contpi_.dta saved
 .                 keep product descript numreg;
  98.                   sort product;
  99.                      display _N;
-100.           save "$path/work/codes_food_basket_flex_it`pass'.dta", r
-> eplace;
-101. ******************************************************************
-> ********;
-. *********************************************************************
-> *****;
-. * That is pretty much the part equivalent to "100_food_basket_flex.do
-> ",
-> * which figures out the food shares for the relevant reference group.
->  Now
+100.           save "$path/work/codes_food_basket_flex_it`pass'.dta", replace;
+101. **************************************************************************;
+. **************************************************************************;
+. * That is pretty much the part equivalent to "100_food_basket_flex.do",
+> * which figures out the food shares for the relevant reference group. Now
 > * we figure out the prices with a code stream that is adapted from
 > * "110_price_unit_flex.do".
-> *********************************************************************
-> *****;
-. *********************************************************************
-> *****;
-. *********************************************************************
-> *****************
-> * Create sorted data set with daily + own expenditure and the matched
->  codes
-> *********************************************************************
-> *****************;
+> **************************************************************************;
+. **************************************************************************;
+. **************************************************************************************
+> * Create sorted data set with daily + own expenditure and the matched codes
+> **************************************************************************************;
 . use "$path/in/cons_cod_trans.dta", clear;
 102. *save "$path/work/cons_cod_trans.dta", replace;
 . *drop value   ;
@@ -449,50 +381,36 @@ file contpi_.dta saved
 113.                                 sort product;
 114.                 gen count=1;
 115.         save `dd_acsort', replace;
-116.         **********************************************************
-> ****************;
+116.         **************************************************************************;
 . * Merge the basket codes with the dd  and own data sets.
 > * Drop all codes not a part of the flexible food basket
-> *********************************************************************
-> *****;
-.                 merge product using "$path/work/codes_food_basket_fle
-> x_it`pass'.dta";
+> **************************************************************************;
+.                 merge product using "$path/work/codes_food_basket_flex_it`pass'.dta";
 117.                         tab _merge;
 118.                 drop if _merge~=3;
 119.                 drop _merge;
-120. ******************************************************************
-> ********************
-> * Drop observations where product code, quantity or value information
->  is unavailable
-> *********************************************************************
-> *****************;
+120. **************************************************************************************
+> * Drop observations where product code, quantity or value information is unavailable
+> **************************************************************************************;
 .                 drop if product==. | value==. | quantity==.  ;
-121.         **********************************************************
-> ****************************
+121.         **************************************************************************************
 > * Convert non-KG quantities (units, liters) into kilograms
-> *********************************************************************
-> *****************;
+> **************************************************************************************;
 . *do "$path/new/110a_conversions.do"
 > 
 > ********************************************************************
-> * There remain a few difficult to interpret observations such as lite
-> rs
+> * There remain a few difficult to interpret observations such as liters
 > * of fish and liters of pasta. These are dropped.
 > ********************************************************************;
 . *                $MZ drop if unit~=2;
-.         *************************************************************
-> *************;
-. * Bring in the spdomain and reg_tpi variables, and also the informati
-> on on
+.         **************************************************************************;
+. * Bring in the spdomain and reg_tpi variables, and also the information on
 > * relatively poor households.
-> *********************************************************************
-> *****;
+> **************************************************************************;
 .                 preserve;
-122.                                                 * Temporally adjus
-> ted expenditure ;
+122.                                                 * Temporally adjusted expenditure ;
 .                         use `contpi', clear;
-123.                                 keep hhid hhweight spdomain reg_tp
-> i survquar tpi_trim cons_pc_tpi ;
+123.                                 keep hhid hhweight spdomain reg_tpi survquar tpi_trim cons_pc_tpi ;
 124.                                 sort hhid;
 125.                                 tempfile hhd2;
 126.                         save `hhd2', replace;
@@ -503,111 +421,82 @@ file contpi_.dta saved
 131.                 tab _merge;
 132.                 drop _merge;
 133.                 sort hhid;
-134.                 merge hhid using "$path/work/relpoor_it`pass'.dta"
-> ;
+134.                 merge hhid using "$path/work/relpoor_it`pass'.dta";
 135.                 tab _merge;
 136.                 drop _merge;
-137.                                                 * Keep nominal foo
-> d transactions by poor people ;
+137.                                                 * Keep nominal food transactions by poor people ;
 .                 keep if relpoor`pass';
 138.                 drop if product==.;
-139.                                                                 * 
-> Temporally deflate transaction values ;
+139.                                                                 * Temporally deflate transaction values ;
 .                 gen value_r=value/tpi_trim;
-140. ******************************************************************
-> ********;
+140. **************************************************************************;
 . * Toss out the bottom 5% and top 5% of the HH-LEVEL prices per kg in
 > * each spdomain & product combination. This should eliminate outliers
 > * that may have an undue influence on the price calculation. 
-> *********************************************************************
-> *****;
+> **************************************************************************;
 .                 gen hhppkg=value_r/quantity;
-141.                 egen lower5=pctile(hhppkg), p(5)  by(spdomain prod
-> uct);
-142.                 egen upper5=pctile(hhppkg), p(95) by(spdomain prod
-> uct);
+141.                 egen lower5=pctile(hhppkg), p(5)  by(spdomain product);
+142.                 egen upper5=pctile(hhppkg), p(95) by(spdomain product);
 143.                 keep if hhppkg>=lower5 & hhppkg<=upper5;
-144. ******************************************************************
-> ***
-> * Note that we do prices in three ways. First, by summing quantity an
-> d value 
-> * This average price price_uw is thus quantity/value weighted. Second
-> , we
-> * calculate the price and take simple means for a transaction weighte
-> d
+144. *********************************************************************
+> * Note that we do prices in three ways. First, by summing quantity and value 
+> * This average price price_uw is thus quantity/value weighted. Second, we
+> * calculate the price and take simple means for a transaction weighted
 > * price, price_ut. Last we take the median, price_um. But in the end
 > * we only use price_unitw
-> *********************************************************************
-> ;
+> *********************************************************************;
 .                 gen price_ut`pass'=value_r/(quantity*1000);
 145.                 gen price_um`pass'=price_ut;
 146.                 collapse (sum) 
->                         quantity value_r count bswt (mean) price_ut (
-> median) price_um [aw=hhweight], 
+>                         quantity value_r count bswt (mean) price_ut (median) price_um [aw=hhweight], 
 >                         by(spdomain product);
 147.                 *Generate weighted price per gram ;
 .                 gen price_uw`pass'=value_r/(quantity*1000);
 148.                 drop value_r quantity;
 149.                 sort spdomain product;
-150.                 lab var price_ut`pass' "Average of calculated pric
-> es - transaction weighted";
+150.                 lab var price_ut`pass' "Average of calculated prices - transaction weighted";
 151.                 lab var price_um`pass' "Median of prices";
-152.                 lab var price_uw`pass' "Value share weighted mean 
-> prices";
+152.                 lab var price_uw`pass' "Value share weighted mean prices";
 153. * Get an idea of the difference between the price measures;
 .                 gen ratiotw`pass'=price_ut`pass'/price_uw`pass';
 154.                 gen ratiomw`pass'=price_um`pass'/price_uw`pass';
 155.                 sum ratiotw`pass' ratiomw`pass';
 156.                 sort product;
-157.                 merge product using "$path/work/codes_food_basket_
-> flex_it`pass'.dta";
+157.                 merge product using "$path/work/codes_food_basket_flex_it`pass'.dta";
 158.                 tab _m;
 159.                 count if _merge~=3;
 160.                 drop if _merge~=3;
 161.                 drop _merge;
 162.                 sort product spdomain;
 163.         save "$path/work/price_unit_flex_it`pass'.dta", replace;
-164. ******************************************************************
-> ********;
-. *********************************************************************
-> *****;
+164. **************************************************************************;
+. **************************************************************************;
 . * That concludes the prices part. Now we move to calculating the food
-> * poverty lines, which draws code from "120_povline_flex.do" with ver
-> y few
+> * poverty lines, which draws code from "120_povline_flex.do" with very few
 > * changes:
 > * - The changes facilitate accumulating vectors
-> *   of intermediate results across iterations, rather than generating
->  a
+> *   of intermediate results across iterations, rather than generating a
 > *   bunch of new files.
-> *********************************************************************
-> *****;
-. *********************************************************************
-> *****;
-. *********************************************************************
-> *****;
-. * Use the file with the food basket (`foodshares'), which is in share
-> s. 
-> * Then merge it with the prices file, and then with the calories file
-> .
-> * Along the way, drop those observations where we have no price infor
-> mation
+> **************************************************************************;
+. **************************************************************************;
+. **************************************************************************;
+. * Use the file with the food basket (`foodshares'), which is in shares. 
+> * Then merge it with the prices file, and then with the calories file.
+> * Along the way, drop those observations where we have no price information
 > * or no calorie information, but list them out.
-> *********************************************************************
-> *****;
+> **************************************************************************;
 .         use `foodshares', clear;
 165.                 sort product spdomain;
-166.                 merge product spdomain using "$path/work/price_uni
-> t_flex_it`pass'.dta";
+166.                 merge product spdomain using "$path/work/price_unit_flex_it`pass'.dta";
 167.                         tab _merge;
 168.                 list product spdomain descript if _merge==1;
 169.                         drop if _merge ~=3;
 170.                 drop _merge;
 171.                 sort product;
-172.                         merge product using "$path/work/calperg.dt
-> a";
+172.                         merge product using "$path/work/calperg.dta";
 173.                 tab _merge;
-174.                                                 * This tells where
->  we are lacking calorie info or are lacking quantity info due to 
+174.                                                 * This tells where we are lacking calorie info or are lacking quantit
+> y info due to 
 >                 * missing price info above;
 .                 list product spdomain descript if _merge==1;
 175.                         drop if _merge~=3;
@@ -616,73 +505,52 @@ file contpi_.dta saved
 178.                                 *CA modified to change count bswt;
 .                 by spdomain: count if round(bswt)<10;
 179.                                 sum bswt;
-180.                                                 drop if round(bswt
-> ) < 10;
-181.                                                                 * 
-> Total food share in spatial domain ;
+180.                                                 drop if round(bswt) < 10;
+181.                                                                 * Total food share in spatial domain ;
 .                 by spdomain: egen baskshr=sum(f_share_w`pass');
-182.                                 * Cumulated food share in spatial 
-> domain ;
+182.                                 * Cumulated food share in spatial domain ;
 .                 by spdomain: gen  cumshr =sum(f_share_w`pass');
 183.                 drop if cumshr<=baskshr-.9;
 184.                         drop baskshr;
 185.                 by spdomain: egen baskshr=sum(f_share_w`pass');
-186.                 tabstat baskshr , by(spdomain) st(n mean sd min ma
-> x);
-187.                                                                 * 
-> How many grams in 1 MT exp on food item ;
-.                                 gen quan`pass'=f_share_w`pass'/price_
-> uw`pass';
-188.                                 * How many calories in 1 MT exp on
->  food item ;
+186.                 tabstat baskshr , by(spdomain) st(n mean sd min max);
+187.                                                                 * How many grams in 1 MT exp on food item ;
+.                                 gen quan`pass'=f_share_w`pass'/price_uw`pass';
+188.                                 * How many calories in 1 MT exp on food item ;
 .                 gen cal_ir`pass'=quan`pass'*calperg;
-189.                                 * how many calories in 1 MT exp in
->  food basket ;
+189.                                 * how many calories in 1 MT exp in food basket ;
 .                 by spdomain: egen calreg=sum(cal_ir);
 190.                         sort spdomain;
 191.                 merge spdomain using "$path/work/calpp.dta";
 192.                 tab _merge;
 193.                 drop _merge;
-194.                                                         * get the 
-> expansion factor to hit 95% of calorie requirements ;
+194.                                                         * get the expansion factor to hit 95% of calorie requirements
+>  ;
 .                 gen ratio=.95*calpp/calreg;
 195.                         replace quan`pass'=quan`pass'*ratio;
 196.                 replace cal_ir`pass'=quan`pass'*calperg;
 197.                         sort spdomain product;
 198.                 by spdomain: egen chkcal=sum(cal_ir`pass');
 199.                 replace chkcal=chkcal/.95-calpp ;
-200.                                                 tabstat chkcal , b
-> y(spdomain) st(n mean sd min max);
-201.                         gen val_ir`pass'=quan`pass'*price_uw`pass'
-> ;
-202.                         by spdomain: egen povline_f_flex90_`pass'=
-> sum(val_ir`pass');
+200.                                                 tabstat chkcal , by(spdomain) st(n mean sd min max);
+201.                         gen val_ir`pass'=quan`pass'*price_uw`pass';
+202.                         by spdomain: egen povline_f_flex90_`pass'=sum(val_ir`pass');
 203.                 replace povline_f=povline_f_flex90_`pass'/.9;
 204.                 *drop product96;
-. keep product spdomain quan`pass'  price_uw`pass' val_ir`pass' povline
-> _f_flex90_`pass' calpp calperg;
-205.                     save "$path/work/quan_flex_it`pass'.dta", repl
-> ace;
-206.                         collapse (mean) povline_f_flex90_`pass', b
-> y (spdomain);
-207.                                                 keep spdomain povl
-> ine_f_flex90_`pass';
+. keep product spdomain quan`pass'  price_uw`pass' val_ir`pass' povline_f_flex90_`pass' calpp calperg;
+205.                     save "$path/work/quan_flex_it`pass'.dta", replace;
+206.                         collapse (mean) povline_f_flex90_`pass', by (spdomain);
+207.                                                 keep spdomain povline_f_flex90_`pass';
 208.                 sort spdomain;
-209.                 save "$path/work/povline_food_flex_it`pass'.dta", 
-> replace;
-210.         **********************************************************
-> ****************;
-. *********************************************************************
-> *****;
+209.                 save "$path/work/povline_food_flex_it`pass'.dta", replace;
+210.         **************************************************************************;
+. **************************************************************************;
 . * Now comes the part that draws the non-food and total poverty lines,
 > * and generates estimates of poverty measures. This is drawn from 
 > * "130_povmeas_flex.do" with a few changes.
-> *********************************************************************
-> *****;
-. *********************************************************************
-> *****;
-. *********************************************************************
-> *****
+> **************************************************************************;
+. **************************************************************************;
+. **************************************************************************
 > * Calculate non-food expenditure for HH around the food poverty line
 > *
 > * Develop a discrete triangular weighted distribution. This gives a
@@ -690,62 +558,48 @@ file contpi_.dta saved
 > * weight of  2 to HH at +/- 16-18% from food poverty line, and ...
 > * weight of 10 to HH at +/-  0- 2% from food poverty line.
 > * This weight is called triwt below.
-> *********************************************************************
-> *****;
+> **************************************************************************;
 .         use `contpi', clear;
 211.                 sort spdomain;
-212.                 merge spdomain using "$path/work/povline_food_flex
-> _it`pass'.dta";
+212.                 merge spdomain using "$path/work/povline_food_flex_it`pass'.dta";
 213.                 tab _merge;
 214.                 drop _merge;
 215.                 gen triwt=0;
-216.                 replace triwt = 11 - round(50*abs(cons_pc_tpi/povl
-> ine_f_flex90_`pass'-1)+0.5) if abs(cons_pc_tpi/povline_f_flex90_`pass
-> '-1) <= 0.2;
-217.                                 ***since the poor were very few in
->  Kampala and Central urban for Uganda we added 1 to weights****;
-.                                 * Nearness to poverty line and popula
-> tion weights ;
+216.                 replace triwt = 11 - round(50*abs(cons_pc_tpi/povline_f_flex90_`pass'-1)+0.5) if abs(cons_pc_tpi/povl
+> ine_f_flex90_`pass'-1) <= 0.2;
+217.                                 ***since the poor were very few in Kampala and Central urban for Uganda we added 1 to
+>  weights****;
+.                                 * Nearness to poverty line and population weights ;
 .                 gen tripopwt=(0.001+triwt)*hhweight*hhsize;
 218.                                                 preserve;
-219.                         collapse (mean) nf_pc_nom [aw=tripopwt] , 
-> by(spdomain);
+219.                         collapse (mean) nf_pc_nom [aw=tripopwt] , by(spdomain);
 220.                         rename nf_pc_nom povline_nf_flex`pass';
-221.                         lab var povline_nf_flex`pass' "Nonfood pov
-> erty line. Flexible bundle";
+221.                         lab var povline_nf_flex`pass' "Nonfood poverty line. Flexible bundle";
 222.                         tempfile znf;
 223.                         sort spdomain;
 224.                         save `znf', replace;
-225.                                                                 re
-> store;
+225.                                                                 restore;
 226.                                 sort spdomain;
 227.                 merge spdomain using `znf';
 228.                 tab _merge;
 229.                 drop _merge;
-230. ******************************************************************
-> ********
+230. **************************************************************************
 > * Poverty line is the sum of the food and non-food poverty lines
-> *********************************************************************
-> *****;
-.                 gen povline_flex`pass'=povline_f_flex90_`pass' + povl
-> ine_nf_flex`pass';
+> **************************************************************************;
+.                 gen povline_flex`pass'=povline_f_flex90_`pass' + povline_nf_flex`pass';
 231. keep spdomain povline_flex`pass';
 232.                 sort spdomain;
 233.         save "$path/work/povlines_it`pass'.dta", replace;
-234. ******************************************************************
-> ********;
+234. **************************************************************************;
 . * Create spatial price index, based on the total poverty line, with
 > * adjustment so that mean (and total) nominal consumption equals
 > * mean (and total) spatially deflated consumption.
 > *
-> * Choose arbitrary strata to be the base at first: we just use the fi
-> rst stratum.
-> *********************************************************************
-> *****;
+> * Choose arbitrary strata to be the base at first: we just use the first stratum.
+> **************************************************************************;
 .         use `contpi', clear;
 235.                 sort spdomain;
-236.                 merge spdomain using "$path/work/povlines_it`pass'
-> .dta";
+236.                 merge spdomain using "$path/work/povlines_it`pass'.dta";
 237.                 tab _merge;
 238.                 drop _merge;
 239.                 gen cr= cons_pc_tpi ;
@@ -761,74 +615,53 @@ file contpi_.dta saved
 249.                 replace spi`pass'=spi`pass'*$sumcr2/$sumcr;
 250.                 gen linpobr`pass'=linpob`pass'/spi`pass';
 251.                 replace cr_it`pass'=cr/spi`pass';
-252.                 su cr cr_it`pass' linpob`pass' linpobr`pass' [aw=h
-> hweight*hhsize];
+252.                 su cr cr_it`pass' linpob`pass' linpobr`pass' [aw=hhweight*hhsize];
 253.                 lab var cr "Temporally-adjusted cons pc";
-254.                 lab var cr_it`pass' "Spatially & temporally adjust
-> ed cons pc";
+254.                 lab var cr_it`pass' "Spatially & temporally adjusted cons pc";
 255.                 lab var linpob`pass' "Poverty line";
 256.                 lab var linpobr`pass' "Real poverty line";
 257.                 lab var spi`pass' "Spatial price index";
 258.                 gen linpob=linpob`pass';
-259. ******************************************************************
-> ********
+259. **************************************************************************
 > * calculate poverty measures with the flexible food bundle
-> *********************************************************************
-> *****;
-.                 gen h=100 if cr_it`pass'<=linpobr`pass' & linpobr`pas
-> s'~=. & cr_it`pass'~=.;
-260.                 replace  h   = 0 if cr_it`pass' > linpobr`pass' & 
-> linpobr`pass'~=. & cr_it`pass'~=.;
-261.                 gen      pg  = ((linpobr`pass' - cr_it`pass' )/lin
-> pobr`pass') *100;
+> **************************************************************************;
+.                 gen h=100 if cr_it`pass'<=linpobr`pass' & linpobr`pass'~=. & cr_it`pass'~=.;
+260.                 replace  h   = 0 if cr_it`pass' > linpobr`pass' & linpobr`pass'~=. & cr_it`pass'~=.;
+261.                 gen      pg  = ((linpobr`pass' - cr_it`pass' )/linpobr`pass') *100;
 262.                 replace  pg  = 0             if h==0;
-263.                 gen      spg = ((( linpobr`pass' - cr_it`pass' )/ 
-> linpobr`pass' )^2)*100;
+263.                 gen      spg = ((( linpobr`pass' - cr_it`pass' )/ linpobr`pass' )^2)*100;
 264.                 replace  spg = 0             if h==0;
 265.                 gen h_flex`pass'  =h;
 266.                 gen pg_flex`pass' =pg;
 267.                 gen spg_flex`pass'=spg;
-268.                                 lab var h_flex`pass'   "Poverty he
-> adcount. Flexible bundle";
-269.                 lab var pg_flex`pass'  "Poverty gap. Flexible bund
-> le";
-270.                 lab var spg_flex`pass' "Squared poverty gap. Flexi
-> ble bundle";
+268.                                 lab var h_flex`pass'   "Poverty headcount. Flexible bundle";
+269.                 lab var pg_flex`pass'  "Poverty gap. Flexible bundle";
+270.                 lab var spg_flex`pass' "Squared poverty gap. Flexible bundle";
 271.                 gen popwt=hhsize*hhweight;
 272.                         * Stata 10.1 syntax ;
 .                         svyset , clear;
-273.                         svyset [pweight=popwt] , str(strata) psu(p
-> su);
-274.                 svy: mean h_flex`pass' pg_flex`pass' spg_flex`pass
-> ';
-275.                 svy: mean h_flex`pass' pg_flex`pass' spg_flex`pass
-> ' , over(rural);
-276.                 svy: mean h_flex`pass' pg_flex`pass' spg_flex`pass
-> ' , over(strata);
-277.                 svy: mean h_flex`pass' pg_flex`pass' spg_flex`pass
-> ' , over(strata rural);
-278.                 svy: mean h_flex`pass' pg_flex`pass' spg_flex`pass
-> ' , over(spdomain);
+273.                         svyset [pweight=popwt] , str(strata) psu(psu);
+274.                 svy: mean h_flex`pass' pg_flex`pass' spg_flex`pass';
+275.                 svy: mean h_flex`pass' pg_flex`pass' spg_flex`pass' , over(rural);
+276.                 svy: mean h_flex`pass' pg_flex`pass' spg_flex`pass' , over(strata);
+277.                 svy: mean h_flex`pass' pg_flex`pass' spg_flex`pass' , over(strata rural);
+278.                 svy: mean h_flex`pass' pg_flex`pass' spg_flex`pass' , over(spdomain);
 279. *preserve;
-. keep hhid popwt cr_it`pass' h_flex`pass' pg_flex`pass' spg_flex`pass'
->  rural news reg_tpi strata spdomain;
+. keep hhid popwt cr_it`pass' h_flex`pass' pg_flex`pass' spg_flex`pass' rural news reg_tpi strata spdomain;
 280.                 compress;
 281.                 sort hhid;
 282.         save "$path/work/cons_real_it`pass'.dta" , replace;
 283. *restore;
-.                                 * New cutoff point (percentile) to us
-> e in next iteration is equal to the poverty ;
+.                                 * New cutoff point (percentile) to use in next iteration is equal to the poverty ;
 .                 * rate in this iteration ;
-.                                                 sum h_flex`pass' [aw=
-> popwt] ;
-284.                                 * Comment out next line for IAF 20
-> 02/03 in order to replicate official figures ( START );
-.                 * URB: In this case, we just use the poorest 50% as t
-> here are too few actually poor to calculate the bundle and prices..;
+.                                                 sum h_flex`pass' [aw=popwt] ;
+284.                                 * Comment out next line for IAF 2002/03 in order to replicate official figures ( STAR
+> T );
+.                 * URB: In this case, we just use the poorest 50% as there are too few actually poor to calculate the bun
+> dle and prices..;
 .                 local cutpt= $tpi_bottom;
 285. *               local cutpt= round(r(mean));
-.                 * Comment out next line for IAF 2002/03 in order to r
-> eplicate official figures ( END );
+.                 * Comment out next line for IAF 2002/03 in order to replicate official figures ( END );
 . *       save foodshares tempfile to disk;
 .         use `foodshares', clear;
 286.         save "$path/work/foodshares_it`pass'.dta", replace;
@@ -836,13 +669,11 @@ file contpi_.dta saved
 288.         local pass = `pass' + 1;
 289.         };
 (224 missing values generated)
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp not fo
-> und)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
+(note: file /tmp/St02337.000002 not found)
+file /tmp/St02337.000002 saved
 file cutoff.dta saved
 (224 missing values generated)
-variable one does not uniquely identify observations in the master
-    data
+variable one does not uniquely identify observations in the master data
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
@@ -856,10 +687,9 @@ variable one does not uniquely identify observations in the master
           1 | 1,765.9509       65.07      100.00
 ------------+-----------------------------------
       Total |      2,714      100.00
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
-> /work/relpoor_it1.dta saved
-variable hhid does not uniquely identify observations in the master
-    data
+(note: file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/relpoor_it1.dta not found)
+file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/relpoor_it1.dta saved
+variable hhid does not uniquely identify observations in the master data
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
@@ -869,8 +699,7 @@ variable hhid does not uniquely identify observations in the master
 ------------+-----------------------------------
       Total |     37,120      100.00
 (2999 observations deleted)
-variable hhid does not uniquely identify observations in the master
-    data
+variable hhid does not uniquely identify observations in the master data
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
@@ -885,14 +714,11 @@ variable hhid does not uniquely identify observations in the master
 (10 missing values generated)
    10
 (10 observations deleted)
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp not fo
-> und)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000004.tmp not fo
-> und)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000004.tmp saved
-variable spdomain does not uniquely identify observations in the
-    master data
+(note: file /tmp/St02337.000003 not found)
+file /tmp/St02337.000003 saved
+(note: file /tmp/St02337.000004 not found)
+file /tmp/St02337.000004 saved
+variable spdomain does not uniquely identify observations in the master data
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
@@ -901,19 +727,16 @@ variable spdomain does not uniquely identify observations in the
       Total |     18,598      100.00
   157
 (157 observations deleted)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
+file /tmp/St02337.000003 saved
 45
 45
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
-> /work/codes_food_basket_flex_it1.dta saved
-(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
->  + T6AEQ3))
+(note: file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/codes_food_basket_flex_it1.dta not found)
+file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/codes_food_basket_flex_it1.dta saved
+(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1 + T6AEQ3))
 (779 observations deleted)
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000005.tmp not fo
-> und)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000005.tmp saved
-variable hhid does not uniquely identify observations in the master
-    data
+(note: file /tmp/St02337.000005 not found)
+file /tmp/St02337.000005 saved
+variable hhid does not uniquely identify observations in the master data
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
@@ -923,9 +746,8 @@ variable hhid does not uniquely identify observations in the master
 ------------+-----------------------------------
       Total |     33,735      100.00
 (110 observations deleted)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000005.tmp saved
-variable product does not uniquely identify observations in the
-    master data
+file /tmp/St02337.000005 saved
+variable product does not uniquely identify observations in the master data
 product was int now float
 
      _merge |      Freq.     Percent        Cum.
@@ -937,9 +759,8 @@ product was int now float
       Total |     33,626      100.00
 (3097 observations deleted)
 (181 observations deleted)
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000007.tmp not fo
-> und)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000007.tmp saved
+(note: file /tmp/St02337.000007 not found)
+file /tmp/St02337.000007 saved
 product was float now int
 unit was float now byte
 food_cat was float now byte
@@ -953,8 +774,7 @@ hhsize was long now byte
 count was float now byte
 descript was float now byte
 numreg was double now byte
-variable hhid does not uniquely identify observations in the master
-    data
+variable hhid does not uniquely identify observations in the master data
 survquar was byte now float
 spdomain was byte now float
 (label lspdomain already defined)
@@ -967,8 +787,7 @@ spdomain was byte now float
           3 |     30,348       99.49      100.00
 ------------+-----------------------------------
       Total |     30,504      100.00
-variable hhid does not uniquely identify observations in the master
-    data
+variable hhid does not uniquely identify observations in the master data
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
@@ -984,8 +803,7 @@ variable hhid does not uniquely identify observations in the master
 -------------+--------------------------------------------------------
     ratiotw1 |       208    1.267721    .4887439   .6020459   3.923727
     ratiomw1 |       208     1.05857    .4772086   .2961278   5.840994
-variable product does not uniquely identify observations in the
-    master data
+variable product does not uniquely identify observations in the master data
 product was int now float
 
      _merge |      Freq.     Percent        Cum.
@@ -996,8 +814,8 @@ product was int now float
       Total |        210      100.00
     2
 (2 observations deleted)
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
-> /work/price_unit_flex_it1.dta saved
+(note: file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/price_unit_flex_it1.dta not found)
+file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/price_unit_flex_it1.dta saved
 (label lspdomain already defined)
 
      _merge |      Freq.     Percent        Cum.
@@ -1021,8 +839,7 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
 146. |       .   Central Rural          1 |
      +------------------------------------+
 (76 observations deleted)
-variable product does not uniquely identify observations in the
-    master data
+variable product does not uniquely identify observations in the master data
 (note: descript is str26 in using data but will be float now)
 
      _merge |      Freq.     Percent        Cum.
@@ -1043,19 +860,19 @@ variable product does not uniquely identify observations in the
      +------------------------------------+
 (26 observations deleted)
 
------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
 -> spdomain = Central Urban
    14
------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
 -> spdomain = Central Rural
     0
------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
 -> spdomain = Eastern
     0
------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
 -> spdomain = Northern
     0
------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
 -> spdomain = Western
     0
 
@@ -1066,8 +883,7 @@ variable product does not uniquely identify observations in the
 (0 observations deleted)
 
 Summary for variables: baskshr
-     by categories of: spdomain (Spatial domains: each with own poverty
->  line (they are 5))
+     by categories of: spdomain (Spatial domains: each with own poverty line (they are 5))
 
      spdomain |         N      mean        sd       min       max
 --------------+--------------------------------------------------
@@ -1079,8 +895,7 @@ Central Rural |        28  .7908835         0  .7908835  .7908835
 --------------+--------------------------------------------------
         Total |       121  .8247817  .1033625  .5221686  .8930709
 -----------------------------------------------------------------
-variable spdomain does not uniquely identify observations in the
-    master data
+variable spdomain does not uniquely identify observations in the master data
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
@@ -1094,8 +909,7 @@ variable spdomain does not uniquely identify observations in the
 (122 real changes made)
 
 Summary for variables: chkcal
-     by categories of: spdomain (Spatial domains: each with own poverty
->  line (they are 5))
+     by categories of: spdomain (Spatial domains: each with own poverty line (they are 5))
 
      spdomain |         N      mean        sd       min       max
 --------------+--------------------------------------------------
@@ -1109,12 +923,11 @@ Central Rural |        28  .0000257         0  .0000257  .0000257
 -----------------------------------------------------------------
 (1 missing value generated)
 (121 real changes made)
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
-> /work/quan_flex_it1.dta saved
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
-> /work/povline_food_flex_it1.dta saved
-variable spdomain does not uniquely identify observations in the
-    master data
+(note: file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/quan_flex_it1.dta not found)
+file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/quan_flex_it1.dta saved
+(note: file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/povline_food_flex_it1.dta not found)
+file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/povline_food_flex_it1.dta saved
+variable spdomain does not uniquely identify observations in the master data
 (label lspdomain already defined)
 
      _merge |      Freq.     Percent        Cum.
@@ -1124,11 +937,9 @@ variable spdomain does not uniquely identify observations in the
       Total |      2,717      100.00
 (69 real changes made)
 (3 missing values generated)
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000009.tmp not fo
-> und)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000009.tmp saved
-variable spdomain does not uniquely identify observations in the
-    master data
+(note: file /tmp/St02337.000009 not found)
+file /tmp/St02337.000009 saved
+variable spdomain does not uniquely identify observations in the master data
 (label lspdomain already defined)
 
      _merge |      Freq.     Percent        Cum.
@@ -1136,13 +947,11 @@ variable spdomain does not uniquely identify observations in the
           3 |      2,717      100.00      100.00
 ------------+-----------------------------------
       Total |      2,717      100.00
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
-> /work/povlines_it1.dta saved
-variable spdomain does not uniquely identify observations in the
-    master data
+(note: file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/povlines_it1.dta not found)
+file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/povlines_it1.dta saved
+variable spdomain does not uniquely identify observations in the master data
 variable spdomain does not uniquely identify observations in
-    C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP
-    > 3/work/povlines_it1.dta
+    /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/povlines_it1.dta
 (label lspdomain already defined)
 
      _merge |      Freq.     Percent        Cum.
@@ -1156,18 +965,12 @@ variable spdomain does not uniquely identify observations in
 (9 missing values generated)
 (2482 real changes made)
 
-    Variable |     Obs      Weight        Mean   Std. Dev.       Min   
->      Max
--------------+---------------------------------------------------------
-> --------
-          cr |    2492  34690902.7    1990.349   5527.795          0   
-> 252488.6
-      cr_it1 |    2492  34690902.7    1990.349   7051.711          0   
-> 352670.1
-     linpob1 |    2714  37328356.8     732.834    606.844          0   
-> 2598.683
-    linpobr1 |    2707    37257099    554.9532   .0000303   554.9531   
-> 554.9532
+    Variable |     Obs      Weight        Mean   Std. Dev.       Min        Max
+-------------+-----------------------------------------------------------------
+          cr |    2492  34690902.7    1990.349   5527.795          0   252488.6
+      cr_it1 |    2492  34690902.7    1990.349   7051.711          0   352670.1
+     linpob1 |    2714  37328356.8     732.834    606.844          0   2598.683
+    linpobr1 |    2707    37257099    554.9532   .0000303   554.9531   554.9532
 (2453 missing values generated)
 (2228 real changes made)
 (225 missing values generated)
@@ -1368,20 +1171,16 @@ rural was float now byte
 spdomain was float now byte
 news was float now byte
 h_flex1 was float now byte
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
-> /work/cons_real_it1.dta saved
+(note: file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/cons_real_it1.dta not found)
+file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/cons_real_it1.dta saved
 
-    Variable |     Obs      Weight        Mean   Std. Dev.       Min   
->      Max
--------------+---------------------------------------------------------
-> --------
-     h_flex1 |    2492  34690902.7    11.30399   31.67051          0   
->      100
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
-> /work/foodshares_it1.dta saved
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
-variable one does not uniquely identify observations in the master
-    data
+    Variable |     Obs      Weight        Mean   Std. Dev.       Min        Max
+-------------+-----------------------------------------------------------------
+     h_flex1 |    2492  34690902.7    11.30399   31.67051          0        100
+(note: file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/foodshares_it1.dta not found)
+file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/foodshares_it1.dta saved
+file /tmp/St02337.000002 saved
+variable one does not uniquely identify observations in the master data
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
@@ -1395,10 +1194,9 @@ variable one does not uniquely identify observations in the master
           1 | 1,261.4251       46.48      100.00
 ------------+-----------------------------------
       Total |      2,714      100.00
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
-> /work/relpoor_it2.dta saved
-variable hhid does not uniquely identify observations in the master
-    data
+(note: file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/relpoor_it2.dta not found)
+file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/relpoor_it2.dta saved
+variable hhid does not uniquely identify observations in the master data
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
@@ -1408,8 +1206,7 @@ variable hhid does not uniquely identify observations in the master
 ------------+-----------------------------------
       Total |     37,120      100.00
 (2999 observations deleted)
-variable hhid does not uniquely identify observations in the master
-    data
+variable hhid does not uniquely identify observations in the master data
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
@@ -1424,14 +1221,11 @@ variable hhid does not uniquely identify observations in the master
 (10 missing values generated)
    10
 (10 observations deleted)
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000a.tmp not fo
-> und)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000a.tmp saved
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000b.tmp not fo
-> und)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000b.tmp saved
-variable spdomain does not uniquely identify observations in the
-    master data
+(note: file /tmp/St02337.00000a not found)
+file /tmp/St02337.00000a saved
+(note: file /tmp/St02337.00000b not found)
+file /tmp/St02337.00000b saved
+variable spdomain does not uniquely identify observations in the master data
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
@@ -1440,19 +1234,16 @@ variable spdomain does not uniquely identify observations in the
       Total |     12,151      100.00
   164
 (164 observations deleted)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000a.tmp saved
+file /tmp/St02337.00000a saved
 45
 45
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
-> /work/codes_food_basket_flex_it2.dta saved
-(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
->  + T6AEQ3))
+(note: file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/codes_food_basket_flex_it2.dta not found)
+file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/codes_food_basket_flex_it2.dta saved
+(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1 + T6AEQ3))
 (779 observations deleted)
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000c.tmp not fo
-> und)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000c.tmp saved
-variable hhid does not uniquely identify observations in the master
-    data
+(note: file /tmp/St02337.00000c not found)
+file /tmp/St02337.00000c saved
+variable hhid does not uniquely identify observations in the master data
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
@@ -1462,9 +1253,8 @@ variable hhid does not uniquely identify observations in the master
 ------------+-----------------------------------
       Total |     33,735      100.00
 (110 observations deleted)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000c.tmp saved
-variable product does not uniquely identify observations in the
-    master data
+file /tmp/St02337.00000c saved
+variable product does not uniquely identify observations in the master data
 product was int now float
 
      _merge |      Freq.     Percent        Cum.
@@ -1476,9 +1266,8 @@ product was int now float
       Total |     33,626      100.00
 (3104 observations deleted)
 (177 observations deleted)
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000e.tmp not fo
-> und)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000e.tmp saved
+(note: file /tmp/St02337.00000e not found)
+file /tmp/St02337.00000e saved
 product was float now int
 unit was float now byte
 food_cat was float now byte
@@ -1492,8 +1281,7 @@ hhsize was long now byte
 count was float now byte
 descript was float now byte
 numreg was double now byte
-variable hhid does not uniquely identify observations in the master
-    data
+variable hhid does not uniquely identify observations in the master data
 survquar was byte now float
 spdomain was byte now float
 (label lspdomain already defined)
@@ -1506,8 +1294,7 @@ spdomain was byte now float
           3 |     30,345       99.56      100.00
 ------------+-----------------------------------
       Total |     30,479      100.00
-variable hhid does not uniquely identify observations in the master
-    data
+variable hhid does not uniquely identify observations in the master data
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
@@ -1522,8 +1309,7 @@ variable hhid does not uniquely identify observations in the master
 -------------+--------------------------------------------------------
     ratiotw2 |       212    1.252933    .4820457   .8504128    4.64159
     ratiomw2 |       212    1.059132    .3964208   .2999246   4.797804
-variable product does not uniquely identify observations in the
-    master data
+variable product does not uniquely identify observations in the master data
 product was int now float
 
      _merge |      Freq.     Percent        Cum.
@@ -1534,8 +1320,8 @@ product was int now float
       Total |        214      100.00
     2
 (2 observations deleted)
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
-> /work/price_unit_flex_it2.dta saved
+(note: file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/price_unit_flex_it2.dta not found)
+file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/price_unit_flex_it2.dta saved
 (label lspdomain already defined)
 
      _merge |      Freq.     Percent        Cum.
@@ -1559,13 +1345,12 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
 144. |       .   Central Rural          1 |
      +------------------------------------+
 (82 observations deleted)
-variable product does not uniquely identify observations in the
-    master data
+variable product does not uniquely identify observations in the master data
 (note: descript is str26 in using data but will be float now)
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          1 |          5        3.13        3.13
+          1 |          5        3.12        3.12
           2 |         23       14.38       17.50
           3 |        132       82.50      100.00
 ------------+-----------------------------------
@@ -1582,19 +1367,19 @@ variable product does not uniquely identify observations in the
      +------------------------------------+
 (28 observations deleted)
 
------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
 -> spdomain = Central Urban
     4
------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
 -> spdomain = Central Rural
     0
------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
 -> spdomain = Eastern
     0
------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
 -> spdomain = Northern
     1
------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
 -> spdomain = Western
     0
 
@@ -1605,8 +1390,7 @@ variable product does not uniquely identify observations in the
 (0 observations deleted)
 
 Summary for variables: baskshr
-     by categories of: spdomain (Spatial domains: each with own poverty
->  line (they are 5))
+     by categories of: spdomain (Spatial domains: each with own poverty line (they are 5))
 
      spdomain |         N      mean        sd       min       max
 --------------+--------------------------------------------------
@@ -1618,8 +1402,7 @@ Central Rural |        26  .7597615         0  .7597615  .7597615
 --------------+--------------------------------------------------
         Total |       127  .8292956  .0574874  .7597615  .8900589
 -----------------------------------------------------------------
-variable spdomain does not uniquely identify observations in the
-    master data
+variable spdomain does not uniquely identify observations in the master data
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
@@ -1633,8 +1416,7 @@ variable spdomain does not uniquely identify observations in the
 (128 real changes made)
 
 Summary for variables: chkcal
-     by categories of: spdomain (Spatial domains: each with own poverty
->  line (they are 5))
+     by categories of: spdomain (Spatial domains: each with own poverty line (they are 5))
 
      spdomain |         N      mean        sd       min       max
 --------------+--------------------------------------------------
@@ -1648,12 +1430,11 @@ Central Rural |        26  .0000257         0  .0000257  .0000257
 -----------------------------------------------------------------
 (1 missing value generated)
 (127 real changes made)
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
-> /work/quan_flex_it2.dta saved
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
-> /work/povline_food_flex_it2.dta saved
-variable spdomain does not uniquely identify observations in the
-    master data
+(note: file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/quan_flex_it2.dta not found)
+file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/quan_flex_it2.dta saved
+(note: file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/povline_food_flex_it2.dta not found)
+file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/povline_food_flex_it2.dta saved
+variable spdomain does not uniquely identify observations in the master data
 (label lspdomain already defined)
 
      _merge |      Freq.     Percent        Cum.
@@ -1663,11 +1444,9 @@ variable spdomain does not uniquely identify observations in the
       Total |      2,717      100.00
 (56 real changes made)
 (3 missing values generated)
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000g.tmp not fo
-> und)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000g.tmp saved
-variable spdomain does not uniquely identify observations in the
-    master data
+(note: file /tmp/St02337.00000g not found)
+file /tmp/St02337.00000g saved
+variable spdomain does not uniquely identify observations in the master data
 (label lspdomain already defined)
 
      _merge |      Freq.     Percent        Cum.
@@ -1675,13 +1454,11 @@ variable spdomain does not uniquely identify observations in the
           3 |      2,717      100.00      100.00
 ------------+-----------------------------------
       Total |      2,717      100.00
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
-> /work/povlines_it2.dta saved
-variable spdomain does not uniquely identify observations in the
-    master data
+(note: file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/povlines_it2.dta not found)
+file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/povlines_it2.dta saved
+variable spdomain does not uniquely identify observations in the master data
 variable spdomain does not uniquely identify observations in
-    C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP
-    > 3/work/povlines_it2.dta
+    /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/povlines_it2.dta
 (label lspdomain already defined)
 
      _merge |      Freq.     Percent        Cum.
@@ -1695,18 +1472,12 @@ variable spdomain does not uniquely identify observations in
 (9 missing values generated)
 (2482 real changes made)
 
-    Variable |     Obs      Weight        Mean   Std. Dev.       Min   
->      Max
--------------+---------------------------------------------------------
-> --------
-          cr |    2492  34690902.7    1990.349   5527.795          0   
-> 252488.6
-      cr_it2 |    2492  34690902.7    1990.349   7532.325          0   
-> 383041.4
-     linpob2 |    2714  37328356.8     720.859   666.3795          0   
-> 2774.872
-    linpobr2 |    2707    37257099    516.7629          0   516.7629   
-> 516.7629
+    Variable |     Obs      Weight        Mean   Std. Dev.       Min        Max
+-------------+-----------------------------------------------------------------
+          cr |    2492  34690902.7    1990.349   5527.795          0   252488.6
+      cr_it2 |    2492  34690902.7    1990.349   7532.325          0   383041.4
+     linpob2 |    2714  37328356.8     720.859   666.3795          0   2774.872
+    linpobr2 |    2707    37257099    516.7629          0   516.7629   516.7629
 (2481 missing values generated)
 (2256 real changes made)
 (225 missing values generated)
@@ -1907,20 +1678,16 @@ rural was float now byte
 spdomain was float now byte
 news was float now byte
 h_flex2 was float now byte
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
-> /work/cons_real_it2.dta saved
+(note: file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/cons_real_it2.dta not found)
+file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/cons_real_it2.dta saved
 
-    Variable |     Obs      Weight        Mean   Std. Dev.       Min   
->      Max
--------------+---------------------------------------------------------
-> --------
-     h_flex2 |    2492  34690902.7    9.844081   29.79695          0   
->      100
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
-> /work/foodshares_it2.dta saved
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
-variable one does not uniquely identify observations in the master
-    data
+    Variable |     Obs      Weight        Mean   Std. Dev.       Min        Max
+-------------+-----------------------------------------------------------------
+     h_flex2 |    2492  34690902.7    9.844081   29.79695          0        100
+(note: file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/foodshares_it2.dta not found)
+file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/foodshares_it2.dta saved
+file /tmp/St02337.000002 saved
+variable one does not uniquely identify observations in the master data
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
@@ -1934,10 +1701,9 @@ variable one does not uniquely identify observations in the master
           1 | 1,261.2589       46.47      100.00
 ------------+-----------------------------------
       Total |      2,714      100.00
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
-> /work/relpoor_it3.dta saved
-variable hhid does not uniquely identify observations in the master
-    data
+(note: file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/relpoor_it3.dta not found)
+file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/relpoor_it3.dta saved
+variable hhid does not uniquely identify observations in the master data
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
@@ -1947,8 +1713,7 @@ variable hhid does not uniquely identify observations in the master
 ------------+-----------------------------------
       Total |     37,120      100.00
 (2999 observations deleted)
-variable hhid does not uniquely identify observations in the master
-    data
+variable hhid does not uniquely identify observations in the master data
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
@@ -1963,14 +1728,11 @@ variable hhid does not uniquely identify observations in the master
 (10 missing values generated)
    10
 (10 observations deleted)
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000h.tmp not fo
-> und)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000h.tmp saved
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000i.tmp not fo
-> und)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000i.tmp saved
-variable spdomain does not uniquely identify observations in the
-    master data
+(note: file /tmp/St02337.00000h not found)
+file /tmp/St02337.00000h saved
+(note: file /tmp/St02337.00000i not found)
+file /tmp/St02337.00000i saved
+variable spdomain does not uniquely identify observations in the master data
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
@@ -1979,19 +1741,16 @@ variable spdomain does not uniquely identify observations in the
       Total |     12,286      100.00
   164
 (164 observations deleted)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000h.tmp saved
+file /tmp/St02337.00000h saved
 47
 47
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
-> /work/codes_food_basket_flex_it3.dta saved
-(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
->  + T6AEQ3))
+(note: file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/codes_food_basket_flex_it3.dta not found)
+file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/codes_food_basket_flex_it3.dta saved
+(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1 + T6AEQ3))
 (779 observations deleted)
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000j.tmp not fo
-> und)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000j.tmp saved
-variable hhid does not uniquely identify observations in the master
-    data
+(note: file /tmp/St02337.00000j not found)
+file /tmp/St02337.00000j saved
+variable hhid does not uniquely identify observations in the master data
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
@@ -2001,9 +1760,8 @@ variable hhid does not uniquely identify observations in the master
 ------------+-----------------------------------
       Total |     33,735      100.00
 (110 observations deleted)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000j.tmp saved
-variable product does not uniquely identify observations in the
-    master data
+file /tmp/St02337.00000j saved
+variable product does not uniquely identify observations in the master data
 product was int now float
 
      _merge |      Freq.     Percent        Cum.
@@ -2015,9 +1773,8 @@ product was int now float
       Total |     33,627      100.00
 (2833 observations deleted)
 (179 observations deleted)
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000l.tmp not fo
-> und)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000l.tmp saved
+(note: file /tmp/St02337.00000l not found)
+file /tmp/St02337.00000l saved
 product was float now int
 unit was float now byte
 food_cat was float now byte
@@ -2031,8 +1788,7 @@ hhsize was long now byte
 count was float now byte
 descript was float now byte
 numreg was double now byte
-variable hhid does not uniquely identify observations in the master
-    data
+variable hhid does not uniquely identify observations in the master data
 survquar was byte now float
 spdomain was byte now float
 (label lspdomain already defined)
@@ -2045,8 +1801,7 @@ spdomain was byte now float
           3 |     30,615       99.57      100.00
 ------------+-----------------------------------
       Total |     30,748      100.00
-variable hhid does not uniquely identify observations in the master
-    data
+variable hhid does not uniquely identify observations in the master data
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
@@ -2061,8 +1816,7 @@ variable hhid does not uniquely identify observations in the master
 -------------+--------------------------------------------------------
     ratiotw3 |       217    1.262218    .4901708   .8819051    4.64159
     ratiomw3 |       217    1.068268    .4071235   .4867766    4.13329
-variable product does not uniquely identify observations in the
-    master data
+variable product does not uniquely identify observations in the master data
 product was int now float
 
      _merge |      Freq.     Percent        Cum.
@@ -2073,8 +1827,8 @@ product was int now float
       Total |        220      100.00
     3
 (3 observations deleted)
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
-> /work/price_unit_flex_it3.dta saved
+(note: file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/price_unit_flex_it3.dta not found)
+file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/price_unit_flex_it3.dta saved
 (label lspdomain already defined)
 
      _merge |      Freq.     Percent        Cum.
@@ -2099,8 +1853,7 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
 145. |       .   Central Rural          1 |
      +------------------------------------+
 (88 observations deleted)
-variable product does not uniquely identify observations in the
-    master data
+variable product does not uniquely identify observations in the master data
 (note: descript is str26 in using data but will be float now)
 
      _merge |      Freq.     Percent        Cum.
@@ -2122,19 +1875,19 @@ variable product does not uniquely identify observations in the
      +------------------------------------+
 (27 observations deleted)
 
------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
 -> spdomain = Central Urban
     3
------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
 -> spdomain = Central Rural
     0
------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
 -> spdomain = Eastern
     0
------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
 -> spdomain = Northern
     1
------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
 -> spdomain = Western
     0
 
@@ -2145,8 +1898,7 @@ variable product does not uniquely identify observations in the
 (0 observations deleted)
 
 Summary for variables: baskshr
-     by categories of: spdomain (Spatial domains: each with own poverty
->  line (they are 5))
+     by categories of: spdomain (Spatial domains: each with own poverty line (they are 5))
 
      spdomain |         N      mean        sd       min       max
 --------------+--------------------------------------------------
@@ -2158,8 +1910,7 @@ Central Rural |        26  .7648284         0  .7648284  .7648284
 --------------+--------------------------------------------------
         Total |       128  .8257175  .0646062  .7333384  .8941371
 -----------------------------------------------------------------
-variable spdomain does not uniquely identify observations in the
-    master data
+variable spdomain does not uniquely identify observations in the master data
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
@@ -2173,8 +1924,7 @@ variable spdomain does not uniquely identify observations in the
 (129 real changes made)
 
 Summary for variables: chkcal
-     by categories of: spdomain (Spatial domains: each with own poverty
->  line (they are 5))
+     by categories of: spdomain (Spatial domains: each with own poverty line (they are 5))
 
      spdomain |         N      mean        sd       min       max
 --------------+--------------------------------------------------
@@ -2188,12 +1938,11 @@ Central Rural |        26 -.0000385         0 -.0000385 -.0000385
 -----------------------------------------------------------------
 (1 missing value generated)
 (128 real changes made)
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
-> /work/quan_flex_it3.dta saved
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
-> /work/povline_food_flex_it3.dta saved
-variable spdomain does not uniquely identify observations in the
-    master data
+(note: file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/quan_flex_it3.dta not found)
+file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/quan_flex_it3.dta saved
+(note: file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/povline_food_flex_it3.dta not found)
+file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/povline_food_flex_it3.dta saved
+variable spdomain does not uniquely identify observations in the master data
 (label lspdomain already defined)
 
      _merge |      Freq.     Percent        Cum.
@@ -2203,11 +1952,9 @@ variable spdomain does not uniquely identify observations in the
       Total |      2,717      100.00
 (56 real changes made)
 (3 missing values generated)
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000n.tmp not fo
-> und)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000n.tmp saved
-variable spdomain does not uniquely identify observations in the
-    master data
+(note: file /tmp/St02337.00000n not found)
+file /tmp/St02337.00000n saved
+variable spdomain does not uniquely identify observations in the master data
 (label lspdomain already defined)
 
      _merge |      Freq.     Percent        Cum.
@@ -2215,13 +1962,11 @@ variable spdomain does not uniquely identify observations in the
           3 |      2,717      100.00      100.00
 ------------+-----------------------------------
       Total |      2,717      100.00
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
-> /work/povlines_it3.dta saved
-variable spdomain does not uniquely identify observations in the
-    master data
+(note: file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/povlines_it3.dta not found)
+file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/povlines_it3.dta saved
+variable spdomain does not uniquely identify observations in the master data
 variable spdomain does not uniquely identify observations in
-    C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP
-    > 3/work/povlines_it3.dta
+    /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/povlines_it3.dta
 (label lspdomain already defined)
 
      _merge |      Freq.     Percent        Cum.
@@ -2235,18 +1980,12 @@ variable spdomain does not uniquely identify observations in
 (9 missing values generated)
 (2482 real changes made)
 
-    Variable |     Obs      Weight        Mean   Std. Dev.       Min   
->      Max
--------------+---------------------------------------------------------
-> --------
-          cr |    2492  34690902.7    1990.349   5527.795          0   
-> 252488.6
-      cr_it3 |    2492  34690902.7    1990.349   7521.424          0   
-> 382334.8
-     linpob3 |    2714  37328356.8    723.3075   673.1132          0   
-> 2799.716
-    linpobr3 |    2707    37257099    517.5221   .0000268    517.522   
-> 517.5221
+    Variable |     Obs      Weight        Mean   Std. Dev.       Min        Max
+-------------+-----------------------------------------------------------------
+          cr |    2492  34690902.7    1990.349   5527.795          0   252488.6
+      cr_it3 |    2492  34690902.7    1990.349   7521.424          0   382334.8
+     linpob3 |    2714  37328356.8    723.3075   673.1132          0   2799.716
+    linpobr3 |    2707    37257099    517.5221   .0000268    517.522   517.5221
 (2481 missing values generated)
 (2256 real changes made)
 (225 missing values generated)
@@ -2447,20 +2186,16 @@ rural was float now byte
 spdomain was float now byte
 news was float now byte
 h_flex3 was float now byte
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
-> /work/cons_real_it3.dta saved
+(note: file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/cons_real_it3.dta not found)
+file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/cons_real_it3.dta saved
 
-    Variable |     Obs      Weight        Mean   Std. Dev.       Min   
->      Max
--------------+---------------------------------------------------------
-> --------
-     h_flex3 |    2492  34690902.7    9.844081   29.79695          0   
->      100
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
-> /work/foodshares_it3.dta saved
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
-variable one does not uniquely identify observations in the master
-    data
+    Variable |     Obs      Weight        Mean   Std. Dev.       Min        Max
+-------------+-----------------------------------------------------------------
+     h_flex3 |    2492  34690902.7    9.844081   29.79695          0        100
+(note: file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/foodshares_it3.dta not found)
+file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/foodshares_it3.dta saved
+file /tmp/St02337.000002 saved
+variable one does not uniquely identify observations in the master data
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
@@ -2474,10 +2209,9 @@ variable one does not uniquely identify observations in the master
           1 | 1,261.2357       46.47      100.00
 ------------+-----------------------------------
       Total |      2,714      100.00
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
-> /work/relpoor_it4.dta saved
-variable hhid does not uniquely identify observations in the master
-    data
+(note: file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/relpoor_it4.dta not found)
+file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/relpoor_it4.dta saved
+variable hhid does not uniquely identify observations in the master data
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
@@ -2487,8 +2221,7 @@ variable hhid does not uniquely identify observations in the master
 ------------+-----------------------------------
       Total |     37,120      100.00
 (2999 observations deleted)
-variable hhid does not uniquely identify observations in the master
-    data
+variable hhid does not uniquely identify observations in the master data
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
@@ -2503,14 +2236,11 @@ variable hhid does not uniquely identify observations in the master
 (10 missing values generated)
    10
 (10 observations deleted)
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000o.tmp not fo
-> und)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000o.tmp saved
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000p.tmp not fo
-> und)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000p.tmp saved
-variable spdomain does not uniquely identify observations in the
-    master data
+(note: file /tmp/St02337.00000o not found)
+file /tmp/St02337.00000o saved
+(note: file /tmp/St02337.00000p not found)
+file /tmp/St02337.00000p saved
+variable spdomain does not uniquely identify observations in the master data
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
@@ -2519,19 +2249,16 @@ variable spdomain does not uniquely identify observations in the
       Total |     12,267      100.00
   164
 (164 observations deleted)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000o.tmp saved
+file /tmp/St02337.00000o saved
 47
 47
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
-> /work/codes_food_basket_flex_it4.dta saved
-(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
->  + T6AEQ3))
+(note: file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/codes_food_basket_flex_it4.dta not found)
+file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/codes_food_basket_flex_it4.dta saved
+(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1 + T6AEQ3))
 (779 observations deleted)
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000q.tmp not fo
-> und)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000q.tmp saved
-variable hhid does not uniquely identify observations in the master
-    data
+(note: file /tmp/St02337.00000q not found)
+file /tmp/St02337.00000q saved
+variable hhid does not uniquely identify observations in the master data
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
@@ -2541,9 +2268,8 @@ variable hhid does not uniquely identify observations in the master
 ------------+-----------------------------------
       Total |     33,735      100.00
 (110 observations deleted)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000q.tmp saved
-variable product does not uniquely identify observations in the
-    master data
+file /tmp/St02337.00000q saved
+variable product does not uniquely identify observations in the master data
 product was int now float
 
      _merge |      Freq.     Percent        Cum.
@@ -2555,9 +2281,8 @@ product was int now float
       Total |     33,627      100.00
 (2833 observations deleted)
 (179 observations deleted)
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000s.tmp not fo
-> und)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000s.tmp saved
+(note: file /tmp/St02337.00000s not found)
+file /tmp/St02337.00000s saved
 product was float now int
 unit was float now byte
 food_cat was float now byte
@@ -2571,8 +2296,7 @@ hhsize was long now byte
 count was float now byte
 descript was float now byte
 numreg was double now byte
-variable hhid does not uniquely identify observations in the master
-    data
+variable hhid does not uniquely identify observations in the master data
 survquar was byte now float
 spdomain was byte now float
 (label lspdomain already defined)
@@ -2585,8 +2309,7 @@ spdomain was byte now float
           3 |     30,615       99.57      100.00
 ------------+-----------------------------------
       Total |     30,748      100.00
-variable hhid does not uniquely identify observations in the master
-    data
+variable hhid does not uniquely identify observations in the master data
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
@@ -2601,8 +2324,7 @@ variable hhid does not uniquely identify observations in the master
 -------------+--------------------------------------------------------
     ratiotw4 |       217    1.263138    .4944414   .8819051    4.64159
     ratiomw4 |       217    1.067593    .4058826   .4867766   4.090567
-variable product does not uniquely identify observations in the
-    master data
+variable product does not uniquely identify observations in the master data
 product was int now float
 
      _merge |      Freq.     Percent        Cum.
@@ -2613,8 +2335,8 @@ product was int now float
       Total |        220      100.00
     3
 (3 observations deleted)
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
-> /work/price_unit_flex_it4.dta saved
+(note: file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/price_unit_flex_it4.dta not found)
+file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/price_unit_flex_it4.dta saved
 (label lspdomain already defined)
 
      _merge |      Freq.     Percent        Cum.
@@ -2639,8 +2361,7 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
 145. |       .   Central Rural          1 |
      +------------------------------------+
 (88 observations deleted)
-variable product does not uniquely identify observations in the
-    master data
+variable product does not uniquely identify observations in the master data
 (note: descript is str26 in using data but will be float now)
 
      _merge |      Freq.     Percent        Cum.
@@ -2662,19 +2383,19 @@ variable product does not uniquely identify observations in the
      +------------------------------------+
 (27 observations deleted)
 
------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
 -> spdomain = Central Urban
     3
------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
 -> spdomain = Central Rural
     0
------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
 -> spdomain = Eastern
     0
------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
 -> spdomain = Northern
     1
------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
 -> spdomain = Western
     0
 
@@ -2685,8 +2406,7 @@ variable product does not uniquely identify observations in the
 (0 observations deleted)
 
 Summary for variables: baskshr
-     by categories of: spdomain (Spatial domains: each with own poverty
->  line (they are 5))
+     by categories of: spdomain (Spatial domains: each with own poverty line (they are 5))
 
      spdomain |         N      mean        sd       min       max
 --------------+--------------------------------------------------
@@ -2698,8 +2418,7 @@ Central Rural |        26  .7645174         0  .7645174  .7645174
 --------------+--------------------------------------------------
         Total |       128  .8257521  .0647274  .7333384  .8942755
 -----------------------------------------------------------------
-variable spdomain does not uniquely identify observations in the
-    master data
+variable spdomain does not uniquely identify observations in the master data
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
@@ -2713,8 +2432,7 @@ variable spdomain does not uniquely identify observations in the
 (129 real changes made)
 
 Summary for variables: chkcal
-     by categories of: spdomain (Spatial domains: each with own poverty
->  line (they are 5))
+     by categories of: spdomain (Spatial domains: each with own poverty line (they are 5))
 
      spdomain |         N      mean        sd       min       max
 --------------+--------------------------------------------------
@@ -2728,12 +2446,11 @@ Central Rural |        26  .0000257         0  .0000257  .0000257
 -----------------------------------------------------------------
 (1 missing value generated)
 (128 real changes made)
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
-> /work/quan_flex_it4.dta saved
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
-> /work/povline_food_flex_it4.dta saved
-variable spdomain does not uniquely identify observations in the
-    master data
+(note: file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/quan_flex_it4.dta not found)
+file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/quan_flex_it4.dta saved
+(note: file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/povline_food_flex_it4.dta not found)
+file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/povline_food_flex_it4.dta saved
+variable spdomain does not uniquely identify observations in the master data
 (label lspdomain already defined)
 
      _merge |      Freq.     Percent        Cum.
@@ -2743,11 +2460,9 @@ variable spdomain does not uniquely identify observations in the
       Total |      2,717      100.00
 (56 real changes made)
 (3 missing values generated)
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000u.tmp not fo
-> und)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000u.tmp saved
-variable spdomain does not uniquely identify observations in the
-    master data
+(note: file /tmp/St02337.00000u not found)
+file /tmp/St02337.00000u saved
+variable spdomain does not uniquely identify observations in the master data
 (label lspdomain already defined)
 
      _merge |      Freq.     Percent        Cum.
@@ -2755,13 +2470,11 @@ variable spdomain does not uniquely identify observations in the
           3 |      2,717      100.00      100.00
 ------------+-----------------------------------
       Total |      2,717      100.00
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
-> /work/povlines_it4.dta saved
-variable spdomain does not uniquely identify observations in the
-    master data
+(note: file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/povlines_it4.dta not found)
+file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/povlines_it4.dta saved
+variable spdomain does not uniquely identify observations in the master data
 variable spdomain does not uniquely identify observations in
-    C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP
-    > 3/work/povlines_it4.dta
+    /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/povlines_it4.dta
 (label lspdomain already defined)
 
      _merge |      Freq.     Percent        Cum.
@@ -2775,18 +2488,12 @@ variable spdomain does not uniquely identify observations in
 (9 missing values generated)
 (2482 real changes made)
 
-    Variable |     Obs      Weight        Mean   Std. Dev.       Min   
->      Max
--------------+---------------------------------------------------------
-> --------
-          cr |    2492  34690902.7    1990.349   5527.795          0   
-> 252488.6
-      cr_it4 |    2492  34690902.7    1990.349   7517.215          0   
-> 382114.2
-     linpob4 |    2714  37328356.8     723.756   673.0642          0   
-> 2799.716
-    linpobr4 |    2707    37257099    518.0089          0   518.0089   
-> 518.0089
+    Variable |     Obs      Weight        Mean   Std. Dev.       Min        Max
+-------------+-----------------------------------------------------------------
+          cr |    2492  34690902.7    1990.349   5527.795          0   252488.6
+      cr_it4 |    2492  34690902.7    1990.349   7517.215          0   382114.2
+     linpob4 |    2714  37328356.8     723.756   673.0642          0   2799.716
+    linpobr4 |    2707    37257099    518.0089          0   518.0089   518.0089
 (2481 missing values generated)
 (2256 real changes made)
 (225 missing values generated)
@@ -2987,20 +2694,16 @@ rural was float now byte
 spdomain was float now byte
 news was float now byte
 h_flex4 was float now byte
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
-> /work/cons_real_it4.dta saved
+(note: file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/cons_real_it4.dta not found)
+file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/cons_real_it4.dta saved
 
-    Variable |     Obs      Weight        Mean   Std. Dev.       Min   
->      Max
--------------+---------------------------------------------------------
-> --------
-     h_flex4 |    2492  34690902.7    9.844081   29.79695          0   
->      100
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
-> /work/foodshares_it4.dta saved
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
-variable one does not uniquely identify observations in the master
-    data
+    Variable |     Obs      Weight        Mean   Std. Dev.       Min        Max
+-------------+-----------------------------------------------------------------
+     h_flex4 |    2492  34690902.7    9.844081   29.79695          0        100
+(note: file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/foodshares_it4.dta not found)
+file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/foodshares_it4.dta saved
+file /tmp/St02337.000002 saved
+variable one does not uniquely identify observations in the master data
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
@@ -3014,10 +2717,9 @@ variable one does not uniquely identify observations in the master
           1 | 1,263.2726       46.55      100.00
 ------------+-----------------------------------
       Total |      2,714      100.00
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
-> /work/relpoor_it5.dta saved
-variable hhid does not uniquely identify observations in the master
-    data
+(note: file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/relpoor_it5.dta not found)
+file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/relpoor_it5.dta saved
+variable hhid does not uniquely identify observations in the master data
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
@@ -3027,8 +2729,7 @@ variable hhid does not uniquely identify observations in the master
 ------------+-----------------------------------
       Total |     37,120      100.00
 (2999 observations deleted)
-variable hhid does not uniquely identify observations in the master
-    data
+variable hhid does not uniquely identify observations in the master data
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
@@ -3043,14 +2744,11 @@ variable hhid does not uniquely identify observations in the master
 (10 missing values generated)
    10
 (10 observations deleted)
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000v.tmp not fo
-> und)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000v.tmp saved
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000w.tmp not fo
-> und)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000w.tmp saved
-variable spdomain does not uniquely identify observations in the
-    master data
+(note: file /tmp/St02337.00000v not found)
+file /tmp/St02337.00000v saved
+(note: file /tmp/St02337.00000w not found)
+file /tmp/St02337.00000w saved
+variable spdomain does not uniquely identify observations in the master data
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
@@ -3059,19 +2757,16 @@ variable spdomain does not uniquely identify observations in the
       Total |     12,282      100.00
   164
 (164 observations deleted)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000v.tmp saved
+file /tmp/St02337.00000v saved
 47
 47
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
-> /work/codes_food_basket_flex_it5.dta saved
-(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
->  + T6AEQ3))
+(note: file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/codes_food_basket_flex_it5.dta not found)
+file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/codes_food_basket_flex_it5.dta saved
+(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1 + T6AEQ3))
 (779 observations deleted)
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000x.tmp not fo
-> und)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000x.tmp saved
-variable hhid does not uniquely identify observations in the master
-    data
+(note: file /tmp/St02337.00000x not found)
+file /tmp/St02337.00000x saved
+variable hhid does not uniquely identify observations in the master data
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
@@ -3081,9 +2776,8 @@ variable hhid does not uniquely identify observations in the master
 ------------+-----------------------------------
       Total |     33,735      100.00
 (110 observations deleted)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000x.tmp saved
-variable product does not uniquely identify observations in the
-    master data
+file /tmp/St02337.00000x saved
+variable product does not uniquely identify observations in the master data
 product was int now float
 
      _merge |      Freq.     Percent        Cum.
@@ -3095,9 +2789,8 @@ product was int now float
       Total |     33,627      100.00
 (2833 observations deleted)
 (179 observations deleted)
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000011.tmp not fo
-> und)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000011.tmp saved
+(note: file /tmp/St02337.000011 not found)
+file /tmp/St02337.000011 saved
 product was float now int
 unit was float now byte
 food_cat was float now byte
@@ -3111,8 +2804,7 @@ hhsize was long now byte
 count was float now byte
 descript was float now byte
 numreg was double now byte
-variable hhid does not uniquely identify observations in the master
-    data
+variable hhid does not uniquely identify observations in the master data
 survquar was byte now float
 spdomain was byte now float
 (label lspdomain already defined)
@@ -3125,8 +2817,7 @@ spdomain was byte now float
           3 |     30,615       99.57      100.00
 ------------+-----------------------------------
       Total |     30,748      100.00
-variable hhid does not uniquely identify observations in the master
-    data
+variable hhid does not uniquely identify observations in the master data
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
@@ -3141,8 +2832,7 @@ variable hhid does not uniquely identify observations in the master
 -------------+--------------------------------------------------------
     ratiotw5 |       217     1.26284    .4912453   .8819051    4.64159
     ratiomw5 |       217    1.068684    .4079751   .4867766   4.187579
-variable product does not uniquely identify observations in the
-    master data
+variable product does not uniquely identify observations in the master data
 product was int now float
 
      _merge |      Freq.     Percent        Cum.
@@ -3153,8 +2843,8 @@ product was int now float
       Total |        220      100.00
     3
 (3 observations deleted)
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
-> /work/price_unit_flex_it5.dta saved
+(note: file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/price_unit_flex_it5.dta not found)
+file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/price_unit_flex_it5.dta saved
 (label lspdomain already defined)
 
      _merge |      Freq.     Percent        Cum.
@@ -3179,8 +2869,7 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
 145. |       .   Central Rural          1 |
      +------------------------------------+
 (88 observations deleted)
-variable product does not uniquely identify observations in the
-    master data
+variable product does not uniquely identify observations in the master data
 (note: descript is str26 in using data but will be float now)
 
      _merge |      Freq.     Percent        Cum.
@@ -3202,19 +2891,19 @@ variable product does not uniquely identify observations in the
      +------------------------------------+
 (27 observations deleted)
 
------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
 -> spdomain = Central Urban
     3
------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
 -> spdomain = Central Rural
     0
------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
 -> spdomain = Eastern
     1
------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
 -> spdomain = Northern
     1
------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
 -> spdomain = Western
     0
 
@@ -3225,8 +2914,7 @@ variable product does not uniquely identify observations in the
 (0 observations deleted)
 
 Summary for variables: baskshr
-     by categories of: spdomain (Spatial domains: each with own poverty
->  line (they are 5))
+     by categories of: spdomain (Spatial domains: each with own poverty line (they are 5))
 
      spdomain |         N      mean        sd       min       max
 --------------+--------------------------------------------------
@@ -3238,8 +2926,7 @@ Central Rural |        26  .7647542         0  .7647542  .7647542
 --------------+--------------------------------------------------
         Total |       127   .823569  .0627901  .7333384   .885439
 -----------------------------------------------------------------
-variable spdomain does not uniquely identify observations in the
-    master data
+variable spdomain does not uniquely identify observations in the master data
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
@@ -3253,8 +2940,7 @@ variable spdomain does not uniquely identify observations in the
 (128 real changes made)
 
 Summary for variables: chkcal
-     by categories of: spdomain (Spatial domains: each with own poverty
->  line (they are 5))
+     by categories of: spdomain (Spatial domains: each with own poverty line (they are 5))
 
      spdomain |         N      mean        sd       min       max
 --------------+--------------------------------------------------
@@ -3268,12 +2954,11 @@ Central Rural |        26  .0000257         0  .0000257  .0000257
 -----------------------------------------------------------------
 (1 missing value generated)
 (127 real changes made)
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
-> /work/quan_flex_it5.dta saved
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
-> /work/povline_food_flex_it5.dta saved
-variable spdomain does not uniquely identify observations in the
-    master data
+(note: file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/quan_flex_it5.dta not found)
+file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/quan_flex_it5.dta saved
+(note: file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/povline_food_flex_it5.dta not found)
+file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/povline_food_flex_it5.dta saved
+variable spdomain does not uniquely identify observations in the master data
 (label lspdomain already defined)
 
      _merge |      Freq.     Percent        Cum.
@@ -3283,11 +2968,9 @@ variable spdomain does not uniquely identify observations in the
       Total |      2,717      100.00
 (56 real changes made)
 (3 missing values generated)
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000013.tmp not fo
-> und)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000013.tmp saved
-variable spdomain does not uniquely identify observations in the
-    master data
+(note: file /tmp/St02337.000013 not found)
+file /tmp/St02337.000013 saved
+variable spdomain does not uniquely identify observations in the master data
 (label lspdomain already defined)
 
      _merge |      Freq.     Percent        Cum.
@@ -3295,13 +2978,11 @@ variable spdomain does not uniquely identify observations in the
           3 |      2,717      100.00      100.00
 ------------+-----------------------------------
       Total |      2,717      100.00
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
-> /work/povlines_it5.dta saved
-variable spdomain does not uniquely identify observations in the
-    master data
+(note: file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/povlines_it5.dta not found)
+file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/povlines_it5.dta saved
+variable spdomain does not uniquely identify observations in the master data
 variable spdomain does not uniquely identify observations in
-    C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP
-    > 3/work/povlines_it5.dta
+    /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/povlines_it5.dta
 (label lspdomain already defined)
 
      _merge |      Freq.     Percent        Cum.
@@ -3315,18 +2996,12 @@ variable spdomain does not uniquely identify observations in
 (9 missing values generated)
 (2482 real changes made)
 
-    Variable |     Obs      Weight        Mean   Std. Dev.       Min   
->      Max
--------------+---------------------------------------------------------
-> --------
-          cr |    2492  34690902.7    1990.349   5527.795          0   
-> 252488.6
-      cr_it5 |    2492  34690902.7    1990.349   7546.638          0   
-> 383865.4
-     linpob5 |    2714  37328356.8    722.7188   673.4224          0   
-> 2799.716
-    linpobr5 |    2707    37257099    516.2853   .0000262   516.2853   
-> 516.2853
+    Variable |     Obs      Weight        Mean   Std. Dev.       Min        Max
+-------------+-----------------------------------------------------------------
+          cr |    2492  34690902.7    1990.349   5527.795          0   252488.6
+      cr_it5 |    2492  34690902.7    1990.349   7546.638          0   383865.4
+     linpob5 |    2714  37328356.8    722.7188   673.4224          0   2799.716
+    linpobr5 |    2707    37257099    516.2853   .0000262   516.2853   516.2853
 (2481 missing values generated)
 (2256 real changes made)
 (225 missing values generated)
@@ -3527,29 +3202,23 @@ rural was float now byte
 spdomain was float now byte
 news was float now byte
 h_flex5 was float now byte
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
-> /work/cons_real_it5.dta saved
+(note: file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/cons_real_it5.dta not found)
+file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/cons_real_it5.dta saved
 
-    Variable |     Obs      Weight        Mean   Std. Dev.       Min   
->      Max
--------------+---------------------------------------------------------
-> --------
-     h_flex5 |    2492  34690902.7    9.844081   29.79695          0   
->      100
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
-> /work/foodshares_it5.dta saved
+    Variable |     Obs      Weight        Mean   Std. Dev.       Min        Max
+-------------+-----------------------------------------------------------------
+     h_flex5 |    2492  34690902.7    9.844081   29.79695          0        100
+(note: file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/foodshares_it5.dta not found)
+file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/foodshares_it5.dta saved
 
-. *********************************************************************
-> *****
+. **************************************************************************
 > * Send results to one big csv-file
-> *********************************************************************
-> *****;
+> **************************************************************************;
 . use "$path/work/cons_real_it`lastpass'.dta", clear ;
 
 .         gen dum=1;
 
-.         collapse (mean) dum h_flex`lastpass' pg_flex`lastpass' spg_fl
-> ex`lastpass' [aw=popwt];
+.         collapse (mean) dum h_flex`lastpass' pg_flex`lastpass' spg_flex`lastpass' [aw=popwt];
 
 . gen geo="National";
 
@@ -3558,12 +3227,11 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
 . tempfile nat;
 
 . save `nat';
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000014.tmp saved
+file /tmp/St02337.000014 saved
 
 .         use "$path/work/cons_real_it`lastpass'.dta", clear ;
 
-.         collapse (mean) h_flex`lastpass' pg_flex`lastpass' spg_flex`l
-> astpass' [aw=popwt], by(rural);
+.         collapse (mean) h_flex`lastpass' pg_flex`lastpass' spg_flex`lastpass' [aw=popwt], by(rural);
 
 . gen geo="Rural/Urban";
 
@@ -3572,12 +3240,11 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000014.tmp saved
 . tempfile rur;
 
 . save `rur';
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000015.tmp saved
+file /tmp/St02337.000015 saved
 
 . use "$path/work/cons_real_it`lastpass'.dta", clear ;
 
-.         collapse (mean) h_flex`lastpass' pg_flex`lastpass' spg_flex`l
-> astpass' [aw=popwt], by(news);
+.         collapse (mean) h_flex`lastpass' pg_flex`lastpass' spg_flex`lastpass' [aw=popwt], by(news);
 
 . gen geo="North/Center/South";
 
@@ -3587,12 +3254,11 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000015.tmp saved
 . tempfile new;
 
 . save `new';
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000016.tmp saved
+file /tmp/St02337.000016 saved
 
 . use "$path/work/cons_real_it`lastpass'.dta", clear ;
 
-.         collapse (mean) h_flex`lastpass' pg_flex`lastpass' spg_flex`l
-> astpass' [aw=popwt], by(reg_tpi);
+.         collapse (mean) h_flex`lastpass' pg_flex`lastpass' spg_flex`lastpass' [aw=popwt], by(reg_tpi);
 
 . gen geo="TPI - 6 regions";
 
@@ -3601,12 +3267,11 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000016.tmp saved
 . tempfile rtp;
 
 . save `rtp';
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000017.tmp saved
+file /tmp/St02337.000017 saved
 
 . use "$path/work/cons_real_it`lastpass'.dta", clear ;
 
-.         collapse (mean) h_flex`lastpass' pg_flex`lastpass' spg_flex`l
-> astpass' [aw=popwt], by(strata);
+.         collapse (mean) h_flex`lastpass' pg_flex`lastpass' spg_flex`lastpass' [aw=popwt], by(strata);
 
 . gen geo="Provinces";
 
@@ -3615,12 +3280,11 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000017.tmp saved
 . tempfile str;
 
 . save `str';
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000018.tmp saved
+file /tmp/St02337.000018 saved
 
 . use "$path/work/cons_real_it`lastpass'.dta", clear ;
 
-.         collapse (mean) h_flex`lastpass' pg_flex`lastpass' spg_flex`l
-> astpass' [aw=popwt], by(spdomain);
+.         collapse (mean) h_flex`lastpass' pg_flex`lastpass' spg_flex`lastpass' [aw=popwt], by(spdomain);
 
 . gen geo="Spatial domains";
 
@@ -3630,7 +3294,7 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000018.tmp saved
 . tempfile r13;
 
 . save `r13';
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000019.tmp saved
+file /tmp/St02337.000019 saved
 
 . clear;
 
@@ -3642,7 +3306,7 @@ obs was 0, now 1
 . tempfile one;
 
 . save `one';
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00001a.tmp saved
+file /tmp/St02337.00001a saved
 
 . use          `nat';
 
@@ -3668,15 +3332,13 @@ geo was str11 now str18
 
 . append using `r13';
 
-. outsheet geo geono h_flex`lastpass' pg_flex`lastpass' spg_flex`lastpa
-> ss' dum rural news reg_tpi strata spdomain using "$path/work/poverty_
-> flexBask.csv", replace c;
+. outsheet geo geono h_flex`lastpass' pg_flex`lastpass' spg_flex`lastpass' dum rural news reg_tpi strata spdomain using "$
+> path/work/poverty_flexBask.csv", replace c;
+(note: file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/poverty_flexBask.csv not found)
 
-. *********************************************************************
-> *****
+. **************************************************************************
 > * Convergence graph (based on 5 iterations)
-> *********************************************************************
-> *****;
+> **************************************************************************;
 . #delimit cr
 delimiter now cr
 . 
@@ -3691,13 +3353,12 @@ obs was 0, now 1
 . tempfile converg
 
 . save `converg'
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00001b.tmp saved
+file /tmp/St02337.00001b saved
 
 . 
 . forvalues X = 1/`maxit' {
   2.         use "$path/work/cons_real_it`X'.dta", clear
-  3.         collapse (mean) h_flex`X' pg_flex`X' spg_flex`X' [aw=popwt
-> ], by(strata)
+  3.         collapse (mean) h_flex`X' pg_flex`X' spg_flex`X' [aw=popwt], by(strata)
   4.         rename h_flex`X' h_flex
   5.         rename pg_flex`X' pg_flex
   6.         rename spg_flex`X' spg_flex
@@ -3709,15 +3370,15 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00001b.tmp saved
  11.                         }
  12.         save `converg', replace
  13.         }
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00001b.tmp saved
+file /tmp/St02337.00001b saved
 (label strat already defined)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00001b.tmp saved
+file /tmp/St02337.00001b saved
 (label strat already defined)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00001b.tmp saved
+file /tmp/St02337.00001b saved
 (label strat already defined)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00001b.tmp saved
+file /tmp/St02337.00001b saved
 (label strat already defined)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00001b.tmp saved
+file /tmp/St02337.00001b saved
 
 . 
 . use `converg', clear
@@ -3733,12 +3394,12 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00001b.tmp saved
     spg_flex |        30    2.398923    2.412449          0   6.475885
 
 . 
-. twoway (connected h_flex iteration), by(, title(Convergence graph: Po
-> verty rate. %) subtitle(After iterative procedure)) by(strata)
+. twoway (connected h_flex iteration), by(, title(Convergence graph: Poverty rate. %) subtitle(After iterative procedure))
+>  by(strata)
 
 . graph export "$path/work/converge_pov_rate.tif", replace
-(file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP
-> 3/work/converge_pov_rate.tif written in TIFF format)
+(note: file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/converge_pov_rate.tif not found)
+(file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/converge_pov_rate.tif written in TIFF format)
 
 . 
 . sort strata iteration
@@ -3801,9 +3462,7 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00001b.tmp saved
 .         
 . #delimit ;
 delimiter now ;
-. *********************************************************************
-> *****
+. **************************************************************************
 > * 140_iterate.do        (end)
-> *********************************************************************
-> *****;
+> **************************************************************************;
 . cap log close;

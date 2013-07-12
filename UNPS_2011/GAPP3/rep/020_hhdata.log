@@ -1,9 +1,8 @@
------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
       name:  <unnamed>
-       log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_20
-> 11\GAPP3/rep/020_hhdata.log
+       log:  /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//rep/020_hhdata.log
   log type:  text
- opened on:   8 Jul 2013, 14:28:26
+ opened on:   8 Jul 2013, 20:05:46
 
 . clear
 
@@ -11,35 +10,29 @@
 
 . #delimit ;
 delimiter now ;
-. *********************************************************************
-> *****
+. **************************************************************************
 > * 020_hhdata.do         (start)
 > *
-> * Organize the hhid identifier in the HHData file the same way, and k
-> eep
+> * Organize the hhid identifier in the HHData file the same way, and keep
 > * only the relevant variables.
 > *
 > * This file sets:
 > * - interview month, quarter and year
-> * - regions: make all needed regions. But in the end only the one spe
-> cified
+> * - regions: make all needed regions. But in the end only the one specified
 > *            in initial.do are kept. These are
 > *            - rural: 0=urban, 1=rural
-> *            - news: speficifying North, East, West, South. But combi
-> nations
+> *            - news: speficifying North, East, West, South. But combinations
 > *                    are also possible, eg. North-East, Center,...
 > *            - reg_tpi: regions with own TPI
 > *            - strata: strata regions
-> *            - spdomain: spatial domains (regions with own poverty li
-> ne)
+> *            - spdomain: spatial domains (regions with own poverty line)
 > *            - news_ru_ur: combination of news and rural
-> *********************************************************************
-> *****;
+> **************************************************************************;
 . use "$path/in/hhdata.dta", clear;
 (Household master record (1 record per household))
 
-. *recode spdomain 10=1 11=2 20=3 30=4 40=5 these have been set to five
->  for Uganda to ensure hwe have at least 1000 households per domain;
+. *recode spdomain 10=1 11=2 20=3 30=4 40=5 these have been set to five for Uganda to ensure hwe have at least 1000 househ
+> olds per domain;
 . tab spdomain, missing;
 
       Spatial |
@@ -60,8 +53,8 @@ Central Rural |        529       19.48       30.67
 .         sort hhid;
 
 .         save "$path/work/hhdata.dta", replace;
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
-> /work/hhdata.dta saved
+(note: file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/hhdata.dta not found)
+file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/hhdata.dta saved
 
 .         sum;
 
@@ -101,13 +94,12 @@ spitoff10_11 |      2716    .0180412     .133125          0          1
       hhsize |      2714     7.06706    3.584677          1         29
 
 . use "$path/in/indata.dta", clear;
-(One record per person per household (i.e. The roster information) Sect
-> ions 2 -5)
+(One record per person per household (i.e. The roster information) Sections 2 -5)
 
 .         *sort hhid;
 .         save "$path/work/indata.dta", replace;
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
-> /work/indata.dta saved
+(note: file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/indata.dta not found)
+file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/indata.dta saved
 
 .         sum;
 
@@ -123,8 +115,8 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
 
 .         *sort hhid;
 .         save "$path/work/calperg.dta", replace;
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
-> /work/calperg.dta saved
+(note: file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/calperg.dta not found)
+file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/calperg.dta saved
 
 .         sum;
 
@@ -137,32 +129,27 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
 . use "$path/in/cons_cod.dta", clear;
 
 .                 save "$path/work/cons_cod.dta", replace;
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
-> /work/cons_cod.dta saved
+(note: file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/cons_cod.dta not found)
+file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/cons_cod.dta saved
 
 . use "$path/in/cons_cod_trans.dta", clear;
-(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
->  + T6AEQ3))
+(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1 + T6AEQ3))
 
 .                 save "$path/work/cons_cod_trans.dta", replace;
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
-> /work/cons_cod_trans.dta saved
+(note: file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/cons_cod_trans.dta not found)
+file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/cons_cod_trans.dta saved
 
 . /*
 > use "$path/in/cons_cod_trans.dta", clear;
 >         *sort hhid;
 >         sum;
-> for var value quantityd cod_hh_nom cod_hh_nom2 cod_hh_nom3: replace X
-> =0 if X==.;
-> collapse food_cat prod_cat (sum) value quantityd cod_hh_nom cod_hh_no
-> m2 cod_hh_nom3, by(hhid product descript);
+> for var value quantityd cod_hh_nom cod_hh_nom2 cod_hh_nom3: replace X=0 if X==.;
+> collapse food_cat prod_cat (sum) value quantityd cod_hh_nom cod_hh_nom2 cod_hh_nom3, by(hhid product descript);
 >         save "$path/work/cons_cod.dta", replace;
 >         sum;
 > */
 >  
-> *********************************************************************
-> *****
+> **************************************************************************
 > * 020_hhdata.do         (end)
-> *********************************************************************
-> *****;
+> **************************************************************************;
 . cap log close;

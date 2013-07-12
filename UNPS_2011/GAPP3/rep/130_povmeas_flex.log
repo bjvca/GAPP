@@ -1,9 +1,8 @@
------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
       name:  <unnamed>
-       log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_20
-> 11\GAPP3/rep/130_povmeas_flex.log
+       log:  /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//rep/130_povmeas_flex.log
   log type:  text
- opened on:   8 Jul 2013, 14:28:35
+ opened on:   8 Jul 2013, 20:15:58
 
 . clear
 
@@ -11,15 +10,12 @@
 
 . #delimit ;
 delimiter now ;
-. *********************************************************************
-> *****
+. **************************************************************************
 > * 130_povmeas_flex.do           (start)
 > *
 > * Purpose:
-> * Initial poverty measures calculation for flexible basket. (Before a
-> ny iteration)
-> *********************************************************************
-> *****;
+> * Initial poverty measures calculation for flexible basket. (Before any iteration)
+> **************************************************************************;
 . *CA modified to add work/hhdata.dta for bootstrap;
 . /*
 > This file uses:
@@ -38,18 +34,14 @@ delimiter now ;
 > 
 > 
 > 
-> *********************************************************************
-> *****;
-. * Bring in data file with nominal consumption per capita, and deflate
->  it
+> **************************************************************************;
+. * Bring in data file with nominal consumption per capita, and deflate it
 > * by temporal price index.
-> *********************************************************************
-> *****;
+> **************************************************************************;
 . use "$path/work/hhdata.dta", clear;
 (Household master record (1 record per household))
 
-.         keep hhid strata reg_tpi spdomain news rural survmon survquar
-> ;
+.         keep hhid strata reg_tpi spdomain news rural survmon survquar;
 
 .         tab reg_tpi, miss;
 
@@ -90,9 +82,8 @@ July-Sept 2011 |        610       22.46       98.23
 .         tempfile spdomainreg_tpi;
 
 . save `spdomainreg_tpi', replace;
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000001.tmp not fo
-> und)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000001.tmp saved
+(note: file /tmp/St02337.000001 not found)
+file /tmp/St02337.000001 saved
 
 . use "$path/work/conpc.dta", clear;
 
@@ -135,10 +126,8 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000001.tmp saved
 
 .         sort reg_tpi survquar;
 
-.         merge reg_tpi survquar using "$path/work/temp_index_reg_tpi.d
-> ta";
-variables reg_tpi survquar do not uniquely identify observations in
-    the master data
+.         merge reg_tpi survquar using "$path/work/temp_index_reg_tpi.dta";
+variables reg_tpi survquar do not uniquely identify observations in the master data
 (label lsurvquar already defined)
 (label lbreg already defined)
 
@@ -170,8 +159,7 @@ variables reg_tpi survquar do not uniquely identify observations in
 .         gen food_pc_tpi  = food_pc_nom /tpi_trim;
 (225 missing values generated)
 
-.         lab var food_pc_tpi "Temp-adjusted per capita food consumptio
-> n/day";
+.         lab var food_pc_tpi "Temp-adjusted per capita food consumption/day";
 
 .                 gen cons_pc_tpi = food_pc_tpi + nf_pc_nom;
 (225 missing values generated)
@@ -184,12 +172,10 @@ variables reg_tpi survquar do not uniquely identify observations in
 .         tempfile contpi;
 
 . save `contpi', replace;
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp not fo
-> und)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
+(note: file /tmp/St02337.000002 not found)
+file /tmp/St02337.000002 saved
 
-. *********************************************************************
-> *****
+. **************************************************************************
 > * Calculate non-food expenditure for HH around the food poverty line
 > *
 > * Develop a discrete triangular weighted distribution. This gives a
@@ -197,15 +183,13 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
 > * weight of  2 to HH at +/- 16-18% from food poverty line, and ...
 > * weight of 10 to HH at +/-  0- 2% from food poverty line.
 > * This weight is called triwt below.
-> *********************************************************************
-> *****;
+> **************************************************************************;
 . use `contpi';
 
 .         sort spdomain;
 
 .         merge spdomain using "$path/work/povline_food_flex.dta";
-variable spdomain does not uniquely identify observations in the
-    master data
+variable spdomain does not uniquely identify observations in the master data
 (label lspdomain already defined)
 
 .         tab _merge;
@@ -224,8 +208,7 @@ variable spdomain does not uniquely identify observations in the
 >                 if abs(cons_pc_tpi/povline_f_flex-1)<=0.2;
 (74 real changes made)
 
-.                                         * Nearness to poverty line an
-> d population weights ;
+.                                         * Nearness to poverty line and population weights ;
 .         gen tripopwt=triwt*hhweight*hhsize;
 (3 missing values generated)
 
@@ -234,20 +217,17 @@ variable spdomain does not uniquely identify observations in the
 .                 collapse (mean) nf_pc_nom [aw=tripopwt] ,
 >                         by(spdomain);
 
-.                                         rename nf_pc_nom povline_na_f
-> lex;
+.                                         rename nf_pc_nom povline_na_flex;
 
-.                 lab var povline_na_flex "Nonfood poverty line. Flexib
-> le bundle";
+.                 lab var povline_na_flex "Nonfood poverty line. Flexible bundle";
 
 .                                 tempfile znf;
 
 .                 sort spdomain;
 
 .                 save `znf', replace;
-(note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000004.tmp not fo
-> und)
-file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000004.tmp saved
+(note: file /tmp/St02337.000004 not found)
+file /tmp/St02337.000004 saved
 
 .                 tab spdomain;
 
@@ -270,8 +250,7 @@ Central Rural |          1       20.00       40.00
 .         sort spdomain;
 
 .         merge spdomain using `znf';
-variable spdomain does not uniquely identify observations in the
-    master data
+variable spdomain does not uniquely identify observations in the master data
 (label lspdomain already defined)
 
 .         tab _merge;
@@ -285,11 +264,9 @@ variable spdomain does not uniquely identify observations in the
 
 .         drop _merge;
 
-. *********************************************************************
-> *****;
+. **************************************************************************;
 . * Poverty line is the sum of the food and non-food poverty lines
-> *********************************************************************
-> *****;
+> **************************************************************************;
 .         gen povline_flex=povline_f_flex + povline_na_flex;
 (9 missing values generated)
 
@@ -298,29 +275,24 @@ variable spdomain does not uniquely identify observations in the
 .         sort spdomain;
 
 . save "$path/work/povlines.dta", replace;
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
-> /work/povlines.dta saved
+(note: file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/povlines.dta not found)
+file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/povlines.dta saved
 
-. *********************************************************************
-> *****;
+. **************************************************************************;
 . * Create spatial price index, based on the total poverty line, with
 > * adjustment so that mean (and total) nominal consumption equals
 > * mean (and total) spatially deflated consumption.
 > *
-> * Choose arbitrary strata to be the base at first: we just use the fi
-> rst stratum.
-> *********************************************************************
-> *****;
+> * Choose arbitrary strata to be the base at first: we just use the first stratum.
+> **************************************************************************;
 . use `contpi';
 
 .         sort spdomain;
 
 .         merge spdomain using "$path/work/povlines.dta";
-variable spdomain does not uniquely identify observations in the
-    master data
+variable spdomain does not uniquely identify observations in the master data
 variable spdomain does not uniquely identify observations in
-    C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP
-    > 3/work/povlines.dta
+    /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/povlines.dta
 (label lbreg already defined)
 (label lsurvquar already defined)
 (label lspdomain already defined)
@@ -375,18 +347,12 @@ variable spdomain does not uniquely identify observations in
 
 .         sum cr cr2 linpob linpobr [aw=hhweight*hhsize];
 
-    Variable |     Obs      Weight        Mean   Std. Dev.       Min   
->      Max
--------------+---------------------------------------------------------
-> --------
-          cr |    2492  34690902.7    1990.349   5527.795          0   
-> 252488.6
-         cr2 |    2492  34690902.7    1990.349   6430.098          0   
-> 316343.8
-      linpob |    2707    37257099    529.7761   132.8003   406.6796   
-> 692.5283
-     linpobr |    2707    37257099    509.5302   .0000117   509.5302   
-> 509.5302
+    Variable |     Obs      Weight        Mean   Std. Dev.       Min        Max
+-------------+-----------------------------------------------------------------
+          cr |    2492  34690902.7    1990.349   5527.795          0   252488.6
+         cr2 |    2492  34690902.7    1990.349   6430.098          0   316343.8
+      linpob |    2707    37257099    529.7761   132.8003   406.6796   692.5283
+     linpobr |    2707    37257099    509.5302   .0000117   509.5302   509.5302
 
 .         lab var cr      "Temporally-adjusted cons pc";
 
@@ -398,19 +364,16 @@ variable spdomain does not uniquely identify observations in
 
 .         lab var spi     "Spatial price index";
 
-. *********************************************************************
-> *****
+. **************************************************************************
 > * calculate poverty measures with the flexible food bundle
-> *********************************************************************
-> *****;
+> **************************************************************************;
 .         gen h = 100     if cr <=(linpob);
 (2498 missing values generated)
 
 .         replace  h = 0 if cr > (linpob);
 (2498 real changes made)
 
-.                         gen             pg      = ((linpob - cr )/lin
-> pob) *100;
+.                         gen             pg      = ((linpob - cr )/linpob) *100;
 (225 missing values generated)
 
 .         replace         pg      = 0             if h==0;
@@ -699,31 +662,27 @@ bswt was float now byte
 .         sort hhid;
 
 . save "$path/work/cons_real.dta" , replace;
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
-> /work/cons_real.dta saved
+(note: file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/cons_real.dta not found)
+file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/cons_real.dta saved
 
-.         collapse  (mean) h_flex pg_flex spg_flex [aw=hhweight*hhsize]
-> ;
+.         collapse  (mean) h_flex pg_flex spg_flex [aw=hhweight*hhsize];
 
 . save "$path/work/povmeas.dta", replace;
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
-> /work/povmeas.dta saved
+(note: file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/povmeas.dta not found)
+file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/povmeas.dta saved
 
-. *** HARUNA, the file Povmeas.dta gives the headcount poverty rates us
-> ing flexible food bundle without inflicting reveales preferences
-> *** therefore specifications in line 226 of this do file have been ch
-> anged repeatedly to generate these counts for particular
-> *** classifications of interest including strata spdomain region urba
-> n/rural (urban) and national (done by removing the by command 
-> *********************************************************************
-> *****
+. *** HARUNA, the file Povmeas.dta gives the headcount poverty rates using flexible food bundle without inflicting reveale
+> s preferences
+> *** therefore specifications in line 226 of this do file have been changed repeatedly to generate these counts for parti
+> cular
+> *** classifications of interest including strata spdomain region urban/rural (urban) and national (done by removing the 
+> by command 
+> **************************************************************************
 > * 130_povmeas_flex.do           (end)
-> *********************************************************************
-> *****;
+> **************************************************************************;
 . log close;
       name:  <unnamed>
-       log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_20
-> 11\GAPP3/rep/130_povmeas_flex.log
+       log:  /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//rep/130_povmeas_flex.log
   log type:  text
- closed on:   8 Jul 2013, 14:28:35
------------------------------------------------------------------------
+ closed on:   8 Jul 2013, 20:15:59
+--------------------------------------------------------------------------------------------------------------------------

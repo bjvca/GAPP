@@ -1,9 +1,8 @@
------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
       name:  <unnamed>
-       log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_20
-> 11\GAPP3/rep/120_povline_food_flex.log
+       log:  /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//rep/120_povline_food_flex.log
   log type:  text
- opened on:   8 Jul 2013, 14:28:35
+ opened on:   8 Jul 2013, 20:15:49
 
 . clear
 
@@ -11,19 +10,14 @@
 
 . #delimit ;
 delimiter now ;
-. *********************************************************************
-> *****
+. **************************************************************************
 > * 120_povline_food_flex.do      (start)
 > *
-> * Use the file with the food basket (food_basket_flex), which is in s
-> hares. 
-> * Then merge it with the prices file, and then with the calories file
-> .
-> * Along the way, drop those observations where we have no price infor
-> mation
+> * Use the file with the food basket (food_basket_flex), which is in shares. 
+> * Then merge it with the prices file, and then with the calories file.
+> * Along the way, drop those observations where we have no price information
 > * or no calorie information.
-> *********************************************************************
-> *****;
+> **************************************************************************;
 . /*
 > This file uses:
 >         work/food_basket_flex.dta
@@ -42,8 +36,7 @@ delimiter now ;
 .         sort product spdomain;
 
 .         * merge in price information;
-.         merge product spdomain using "$path/work/price_unit_flex.dta"
-> ;
+.         merge product spdomain using "$path/work/price_unit_flex.dta";
 (label lspdomain already defined)
 
 .         tab _merge;
@@ -86,8 +79,7 @@ delimiter now ;
 
 .         * merge in information on calories per gram;
 .         merge product using "$path/work/calperg.dta";
-variable product does not uniquely identify observations in the
-    master data
+variable product does not uniquely identify observations in the master data
 (note: descript is str26 in using data but will be float now)
 
 .         tab _merge;
@@ -100,8 +92,7 @@ variable product does not uniquely identify observations in the
 ------------+-----------------------------------
       Total |        138      100.00
 
-.         * This tells where we are lacking calorie info or are lacking
->  quantity info due to 
+.         * This tells where we are lacking calorie info or are lacking quantity info due to 
 >         * missing price info above;
 .         list product spdomain descript if _merge==1;
 
@@ -120,23 +111,22 @@ variable product does not uniquely identify observations in the
 .         sort spdomain f_share_w;
 
 .                 * CA modified to handle bootstrap counting;
-.         * determine if any quantity has fewer than 10 price observati
-> ons;
+.         * determine if any quantity has fewer than 10 price observations;
 .         by spdomain: count if round(bswt)<10;
 
------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
 -> spdomain = Central Urban
     2
------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
 -> spdomain = Central Rural
     0
------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
 -> spdomain = Eastern
     0
------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
 -> spdomain = Northern
     0
------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
 -> spdomain = Western
     0
 
@@ -147,48 +137,46 @@ variable product does not uniquely identify observations in the
 
 .         by spdomain: gen cumshr1=sum(f_share_w);
 
-.         * bundle was cut at 92.5 percent- cut back to 90 percent if n
-> ecessary;
+.         * bundle was cut at 92.5 percent- cut back to 90 percent if necessary;
 .         drop if cumshr1<=baskshr-.9;
 (0 observations deleted)
 
-.         * reobtain the share represented from the average basket- sho
-> uld be slightly more than 90;
+.         * reobtain the share represented from the average basket- should be slightly more than 90;
 .         drop baskshr;
 
 .         by spdomain: egen baskshr=sum(f_share_w);
 
 .         by spdomain: sum baskshr;
 
------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
 -> spdomain = Central Urban
 
     Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
      baskshr |        19    .4246981           0   .4246981   .4246981
 
------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
 -> spdomain = Central Rural
 
     Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
      baskshr |        21    .4414165           0   .4414165   .4414165
 
------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
 -> spdomain = Eastern
 
     Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
      baskshr |        25    .5149055           0   .5149055   .5149055
 
------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
 -> spdomain = Northern
 
     Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
      baskshr |        26    .4605806           0   .4605806   .4605806
 
------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
 -> spdomain = Western
 
     Variable |       Obs        Mean    Std. Dev.       Min        Max
@@ -196,15 +184,13 @@ variable product does not uniquely identify observations in the
      baskshr |        17    .4971784           0   .4971784   .4971784
 
 
-.         * obtain quantities and calories provided by these quantities
-> ;
+.         * obtain quantities and calories provided by these quantities;
 .         gen quan=f_share_w/price_unitw;
 
 .                         /* how many g in 1 MT exp on food item */
 >         gen cal_ir=quan*calperg;
 
-.                                 /* how many cal in 1 MT exp on food i
-> tem */
+.                                 /* how many cal in 1 MT exp on food item */
 >         by spdomain: egen calreg=sum(cal_ir);
 
 .         /* how many cal in 1 MT exp in food basket*/
@@ -213,8 +199,7 @@ variable product does not uniquely identify observations in the
 .         sort spdomain;
 
 .         merge spdomain using "$path/work/calpp.dta";
-variable spdomain does not uniquely identify observations in the
-    master data
+variable spdomain does not uniquely identify observations in the master data
 
 .         tab _merge;
 
@@ -227,8 +212,7 @@ variable spdomain does not uniquely identify observations in the
 
 .         drop _merge;
 
-.         * get the expansion factor to hit 95% of calorie requirements
-> ;
+.         * get the expansion factor to hit 95% of calorie requirements;
 .         gen ratio=.95*calpp/calreg;
 (1 missing value generated)
 
@@ -249,42 +233,42 @@ variable spdomain does not uniquely identify observations in the
 .                         * these values should be about zero;
 .         by spdomain: sum chkcal;
 
------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
 -> spdomain = Central Urban
 
     Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
       chkcal |        19   -.0000578           0  -.0000578  -.0000578
 
------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
 -> spdomain = Central Rural
 
     Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
       chkcal |        21   -.0000385           0  -.0000385  -.0000385
 
------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
 -> spdomain = Eastern
 
     Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
       chkcal |        25   -.0000257           0  -.0000257  -.0000257
 
------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
 -> spdomain = Northern
 
     Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
       chkcal |        26   -.0000964           0  -.0000964  -.0000964
 
------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
 -> spdomain = Western
 
     Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
       chkcal |        17    .0000578           0   .0000578   .0000578
 
------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
 -> spdomain = .
 
     Variable |       Obs        Mean    Std. Dev.       Min        Max
@@ -296,8 +280,7 @@ variable spdomain does not uniquely identify observations in the
 .         gen val_ir=quan*price_unitw;
 (1 missing value generated)
 
-.         * the sum of the value of the goods in the bundle is assumed 
-> to represent 90% of expenditure;
+.         * the sum of the value of the goods in the bundle is assumed to represent 90% of expenditure;
 .         by spdomain: egen povline_f_flex90=sum(val_ir);
 
 .         replace povline_f_flex=povline_f_flex90/.9;
@@ -305,16 +288,15 @@ variable spdomain does not uniquely identify observations in the
 
 .         collapse (mean) povline_f_flex, by (spdomain);
 
-.                 lab var povline_f_flex "Food poverty line. Flexible b
-> asket";
+.                 lab var povline_f_flex "Food poverty line. Flexible basket";
 
 .         sort spdomain;
 
 .         keep spdomain povline_f_flex;
 
 . save "$path/work/povline_food_flex.dta", replace;
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
-> /work/povline_food_flex.dta saved
+(note: file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/povline_food_flex.dta not found)
+file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/povline_food_flex.dta saved
 
 . /*
 > * To be used in 140_iterate.do;
@@ -323,15 +305,12 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
 > save "$path/work/povlines_first_iterate.dta", replace;
 > */
 > 
-> *********************************************************************
-> *****
+> **************************************************************************
 > * 120_povline_food_flex.do      (end)
-> *********************************************************************
-> *****;
+> **************************************************************************;
 . log close;
       name:  <unnamed>
-       log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_20
-> 11\GAPP3/rep/120_povline_food_flex.log
+       log:  /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//rep/120_povline_food_flex.log
   log type:  text
- closed on:   8 Jul 2013, 14:28:35
------------------------------------------------------------------------
+ closed on:   8 Jul 2013, 20:15:49
+--------------------------------------------------------------------------------------------------------------------------
