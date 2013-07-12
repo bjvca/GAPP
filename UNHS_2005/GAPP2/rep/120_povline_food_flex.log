@@ -1,9 +1,9 @@
-------------------------------------------------------------------
+-----------------------------------------------------------------------
       name:  <unnamed>
-       log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UN
-> HS_2005\GAPP2/rep/120_povline_food_flex.log
+       log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_20
+> 05\GAPP2/rep/120_povline_food_flex.log
   log type:  text
- opened on:   2 Jul 2013, 15:04:35
+ opened on:   9 Jul 2013, 11:07:29
 
 . clear
 
@@ -11,19 +11,19 @@
 
 . #delimit ;
 delimiter now ;
-. ****************************************************************
-> **********
+. *********************************************************************
+> *****
 > * 120_povline_food_flex.do      (start)
 > *
-> * Use the file with the food basket (food_basket_flex), which is
->  in shares. 
-> * Then merge it with the prices file, and then with the calories
->  file.
-> * Along the way, drop those observations where we have no price 
-> information
+> * Use the file with the food basket (food_basket_flex), which is in s
+> hares. 
+> * Then merge it with the prices file, and then with the calories file
+> .
+> * Along the way, drop those observations where we have no price infor
+> mation
 > * or no calorie information.
-> ****************************************************************
-> **********;
+> *********************************************************************
+> *****;
 . /*
 > This file uses:
 >         work/food_basket_flex.dta
@@ -42,17 +42,17 @@ delimiter now ;
 .         sort product spdomain;
 
 .         * merge in price information;
-.         merge product spdomain using "$path/work/price_unit_flex
-> .dta";
+.         merge product spdomain using "$path/work/price_unit_flex.dta"
+> ;
 (label lspdomain already defined)
 
 .         tab _merge;
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          1 |         20        5.36        5.36
-          2 |        185       49.60       54.96
-          3 |        168       45.04      100.00
+          1 |         21        5.63        5.63
+          2 |        173       46.38       52.01
+          3 |        179       47.99      100.00
 ------------+-----------------------------------
       Total |        373      100.00
 
@@ -61,33 +61,35 @@ delimiter now ;
      +-------------------------------------+
      | product         spdomain   descript |
      |-------------------------------------|
-169. |     157    Central rural          1 |
-170. |     157    Eastern urban          1 |
-171. |     157    Eastern rural          1 |
-172. |     157   Northern urban          1 |
-173. |     157    Western urban          1 |
+180. |     157          Kampala          1 |
+181. |     157    Central rural          1 |
+182. |     157    Eastern urban          1 |
+183. |     157    Eastern rural          1 |
+184. |     157   Northern urban          1 |
      |-------------------------------------|
-174. |     161    Central urban          1 |
-175. |     161    Central rural          1 |
-176. |     161    Eastern rural          1 |
-177. |     161   Northern urban          1 |
-178. |     161   Northern rural          1 |
+185. |     157    Western urban          1 |
+186. |     161    Central urban          1 |
+187. |     161    Central rural          1 |
+188. |     161    Eastern urban          1 |
+189. |     161    Eastern rural          1 |
      |-------------------------------------|
-179. |     161    Western urban          1 |
-180. |     999          Kampala          2 |
-181. |     999    Central urban          2 |
-182. |     999    Central rural          2 |
-183. |     999    Eastern urban          2 |
+190. |     161   Northern urban          1 |
+191. |     161   Northern rural          1 |
+192. |     999          Kampala          2 |
+193. |     999    Central urban          2 |
+194. |     999    Central rural          2 |
      |-------------------------------------|
-184. |     999    Eastern rural          2 |
-185. |     999   Northern urban          2 |
-186. |     999   Northern rural          2 |
-187. |     999    Western urban          2 |
-188. |     999    Western rural          2 |
+195. |     999    Eastern urban          2 |
+196. |     999    Eastern rural          2 |
+197. |     999   Northern urban          2 |
+198. |     999   Northern rural          2 |
+199. |     999    Western urban          2 |
+     |-------------------------------------|
+200. |     999    Western rural          2 |
      +-------------------------------------+
 
 .         drop if _merge ~=3;
-(205 observations deleted)
+(194 observations deleted)
 
 .         drop _merge;
 
@@ -103,13 +105,13 @@ variable product does not uniquely identify observations in the
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          2 |         22       11.58       11.58
-          3 |        168       88.42      100.00
+          2 |         22       10.95       10.95
+          3 |        179       89.05      100.00
 ------------+-----------------------------------
-      Total |        190      100.00
+      Total |        201      100.00
 
-.         * This tells where we are lacking calorie info or are la
-> cking quantity info due to 
+.         * This tells where we are lacking calorie info or are lacking
+>  quantity info due to 
 >         * missing price info above;
 .         list product spdomain descript if _merge==1;
 
@@ -121,159 +123,131 @@ variable product does not uniquely identify observations in the
 .         sort spdomain f_share_w;
 
 .                 * CA modified to handle bootstrap counting;
-.         * determine if any quantity has fewer than 10 price obse
-> rvations;
+.         * determine if any quantity has fewer than 10 price observati
+> ons;
 .         by spdomain: count if round(bswt)<10;
 
-------------------------------------------------------------------
+-----------------------------------------------------------------------
 -> spdomain = Kampala
     0
-------------------------------------------------------------------
+-----------------------------------------------------------------------
 -> spdomain = Central urban
     1
-------------------------------------------------------------------
+-----------------------------------------------------------------------
 -> spdomain = Central rural
     0
-------------------------------------------------------------------
+-----------------------------------------------------------------------
 -> spdomain = Eastern urban
     1
-------------------------------------------------------------------
+-----------------------------------------------------------------------
 -> spdomain = Eastern rural
     0
-------------------------------------------------------------------
+-----------------------------------------------------------------------
 -> spdomain = Northern urban
     1
-------------------------------------------------------------------
+-----------------------------------------------------------------------
 -> spdomain = Northern rural
     0
-------------------------------------------------------------------
+-----------------------------------------------------------------------
 -> spdomain = Western urban
-    1
-------------------------------------------------------------------
+    2
+-----------------------------------------------------------------------
 -> spdomain = Western rural
     0
 
 .         drop if round(bswt) < 10;
-(4 observations deleted)
+(5 observations deleted)
 
 .         by spdomain: egen baskshr=sum(f_share_w);
 
 .         by spdomain: gen cumshr1=sum(f_share_w);
 
-.         * bundle was cut at 92.5 percent- cut back to 90 percent
->  if necessary;
+.         * bundle was cut at 92.5 percent- cut back to 90 percent if n
+> ecessary;
 .         drop if cumshr1<=baskshr-.9;
 (0 observations deleted)
 
-.         * reobtain the share represented from the average basket
-> - should be slightly more than 90;
+.         * reobtain the share represented from the average basket- sho
+> uld be slightly more than 90;
 .         drop baskshr;
 
 .         by spdomain: egen baskshr=sum(f_share_w);
 
 .         by spdomain: sum baskshr;
 
-------------------------------------------------------------------
+-----------------------------------------------------------------------
 -> spdomain = Kampala
 
-    Variable |       Obs        Mean    Std. Dev.       Min       
->  Max
--------------+----------------------------------------------------
-> ----
-     baskshr |         1    .8012198           .   .8012198   .801
-> 2198
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+     baskshr |        11    .3550757           0   .3550757   .3550757
 
-------------------------------------------------------------------
+-----------------------------------------------------------------------
 -> spdomain = Central urban
 
-    Variable |       Obs        Mean    Std. Dev.       Min       
->  Max
--------------+----------------------------------------------------
-> ----
-     baskshr |        14    .4759655           0   .4759655   .475
-> 9655
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+     baskshr |        14    .4906189           0   .4906189   .4906189
 
-------------------------------------------------------------------
+-----------------------------------------------------------------------
 -> spdomain = Central rural
 
-    Variable |       Obs        Mean    Std. Dev.       Min       
->  Max
--------------+----------------------------------------------------
-> ----
-     baskshr |        21    .5302449           0   .5302449   .530
-> 2449
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+     baskshr |        21    .5415626           0   .5415626   .5415626
 
-------------------------------------------------------------------
+-----------------------------------------------------------------------
 -> spdomain = Eastern urban
 
-    Variable |       Obs        Mean    Std. Dev.       Min       
->  Max
--------------+----------------------------------------------------
-> ----
-     baskshr |        21    .5132776           0   .5132776   .513
-> 2776
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+     baskshr |        21    .5208822           0   .5208822   .5208822
 
-------------------------------------------------------------------
+-----------------------------------------------------------------------
 -> spdomain = Eastern rural
 
-    Variable |       Obs        Mean    Std. Dev.       Min       
->  Max
--------------+----------------------------------------------------
-> ----
-     baskshr |        25    .5607383           0   .5607383   .560
-> 7383
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+     baskshr |        25    .5712394           0   .5712394   .5712394
 
-------------------------------------------------------------------
+-----------------------------------------------------------------------
 -> spdomain = Northern urban
 
-    Variable |       Obs        Mean    Std. Dev.       Min       
->  Max
--------------+----------------------------------------------------
-> ----
-     baskshr |        17    .4622957           0   .4622957   .462
-> 2957
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+     baskshr |        17    .4708542           0   .4708542   .4708542
 
-------------------------------------------------------------------
+-----------------------------------------------------------------------
 -> spdomain = Northern rural
 
-    Variable |       Obs        Mean    Std. Dev.       Min       
->  Max
--------------+----------------------------------------------------
-> ----
-     baskshr |        20    .5378795           0   .5378795   .537
-> 8795
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+     baskshr |        21    .5518201           0   .5518201   .5518201
 
-------------------------------------------------------------------
+-----------------------------------------------------------------------
 -> spdomain = Western urban
 
-    Variable |       Obs        Mean    Std. Dev.       Min       
->  Max
--------------+----------------------------------------------------
-> ----
-     baskshr |        21    .4978843           0   .4978843   .497
-> 8843
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+     baskshr |        20    .4868528           0   .4868528   .4868528
 
-------------------------------------------------------------------
+-----------------------------------------------------------------------
 -> spdomain = Western rural
 
-    Variable |       Obs        Mean    Std. Dev.       Min       
->  Max
--------------+----------------------------------------------------
-> ----
-     baskshr |        24    .5732174           0   .5732174   .573
-> 2174
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+     baskshr |        24    .5836889           0   .5836889   .5836889
 
 
-.         * obtain quantities and calories provided by these quant
-> ities;
+.         * obtain quantities and calories provided by these quantities
+> ;
 .         gen quan=f_share_w/price_unitw;
 
-.                         /* how many g in 1 MT exp on food item *
-> /
+.                         /* how many g in 1 MT exp on food item */
 >         gen cal_ir=quan*calperg;
 
-.                                 /* how many cal in 1 MT exp on f
-> ood item */
+.                                 /* how many cal in 1 MT exp on food i
+> tem */
 >         by spdomain: egen calreg=sum(cal_ir);
 
 .         /* how many cal in 1 MT exp in food basket*/
@@ -289,21 +263,21 @@ variable spdomain does not uniquely identify observations in the
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          3 |        164      100.00      100.00
+          3 |        174      100.00      100.00
 ------------+-----------------------------------
-      Total |        164      100.00
+      Total |        174      100.00
 
 .         drop _merge;
 
-.         * get the expansion factor to hit 95% of calorie require
-> ments;
+.         * get the expansion factor to hit 95% of calorie requirements
+> ;
 .         gen ratio=.95*calpp/calreg;
 
 .                         replace quan=quan*ratio;
-(164 real changes made)
+(174 real changes made)
 
 .         replace cal_ir=quan*calperg;
-(161 real changes made)
+(171 real changes made)
 
 .         * do a consistency check;
 .         sort spdomain;
@@ -311,124 +285,97 @@ variable spdomain does not uniquely identify observations in the
 .         by spdomain: egen chkcal=sum(cal_ir);
 
 .         replace chkcal=chkcal/.95-calpp ;
-(164 real changes made)
+(174 real changes made)
 
 .                         * these values should be about zero;
 .         by spdomain: sum chkcal;
 
-------------------------------------------------------------------
+-----------------------------------------------------------------------
 -> spdomain = Kampala
 
-    Variable |       Obs        Mean    Std. Dev.       Min       
->  Max
--------------+----------------------------------------------------
-> ----
-      chkcal |         1    .0001092           .   .0001092   .000
-> 1092
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+      chkcal |        11    .0001092           0   .0001092   .0001092
 
-------------------------------------------------------------------
+-----------------------------------------------------------------------
 -> spdomain = Central urban
 
-    Variable |       Obs        Mean    Std. Dev.       Min       
->  Max
--------------+----------------------------------------------------
-> ----
-      chkcal |        14   -.0000707           0  -.0000707  -.000
-> 0707
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+      chkcal |        14    .0000578           0   .0000578   .0000578
 
-------------------------------------------------------------------
+-----------------------------------------------------------------------
 -> spdomain = Central rural
 
-    Variable |       Obs        Mean    Std. Dev.       Min       
->  Max
--------------+----------------------------------------------------
-> ----
-      chkcal |        21     .000045           0    .000045    .00
-> 0045
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+      chkcal |        21     .000045           0    .000045    .000045
 
-------------------------------------------------------------------
+-----------------------------------------------------------------------
 -> spdomain = Eastern urban
 
-    Variable |       Obs        Mean    Std. Dev.       Min       
->  Max
--------------+----------------------------------------------------
-> ----
-      chkcal |        21     .000045           0    .000045    .00
-> 0045
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+      chkcal |        21   -.0000835           0  -.0000835  -.0000835
 
-------------------------------------------------------------------
+-----------------------------------------------------------------------
 -> spdomain = Eastern rural
 
-    Variable |       Obs        Mean    Std. Dev.       Min       
->  Max
--------------+----------------------------------------------------
-> ----
-      chkcal |        25    .0000385           0   .0000385   .000
-> 0385
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+      chkcal |        25   -.0000899           0  -.0000899  -.0000899
 
-------------------------------------------------------------------
+-----------------------------------------------------------------------
 -> spdomain = Northern urban
 
-    Variable |       Obs        Mean    Std. Dev.       Min       
->  Max
--------------+----------------------------------------------------
-> ----
-      chkcal |        17    .0000321           0   .0000321   .000
-> 0321
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+      chkcal |        17    .0000321           0   .0000321   .0000321
 
-------------------------------------------------------------------
+-----------------------------------------------------------------------
 -> spdomain = Northern rural
 
-    Variable |       Obs        Mean    Std. Dev.       Min       
->  Max
--------------+----------------------------------------------------
-> ----
-      chkcal |        20   -.0000835           0  -.0000835  -.000
-> 0835
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+      chkcal |        21   -.0000835           0  -.0000835  -.0000835
 
-------------------------------------------------------------------
+-----------------------------------------------------------------------
 -> spdomain = Western urban
 
-    Variable |       Obs        Mean    Std. Dev.       Min       
->  Max
--------------+----------------------------------------------------
-> ----
-      chkcal |        21    .0000835           0   .0000835   .000
-> 0835
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+      chkcal |        20    -.000045           0   -.000045   -.000045
 
-------------------------------------------------------------------
+-----------------------------------------------------------------------
 -> spdomain = Western rural
 
-    Variable |       Obs        Mean    Std. Dev.       Min       
->  Max
--------------+----------------------------------------------------
-> ----
-      chkcal |        24   -.0000899           0  -.0000899  -.000
-> 0899
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+      chkcal |        24   -.0000899           0  -.0000899  -.0000899
 
 
 .         * obtain the value of each good in the bundle;
 .         gen val_ir=quan*price_unitw;
 
-.         * the sum of the value of the goods in the bundle is ass
-> umed to represent 90% of expenditure;
+.         * the sum of the value of the goods in the bundle is assumed 
+> to represent 90% of expenditure;
 .         by spdomain: egen povline_f_flex90=sum(val_ir);
 
 .         replace povline_f_flex=povline_f_flex90/.9;
-(164 real changes made)
+(174 real changes made)
 
 .         collapse (mean) povline_f_flex, by (spdomain);
 
-.                 lab var povline_f_flex "Food poverty line. Flexi
-> ble basket";
+.                 lab var povline_f_flex "Food poverty line. Flexible b
+> asket";
 
 .         sort spdomain;
 
 .         keep spdomain povline_f_flex;
 
 . save "$path/work/povline_food_flex.dta", replace;
-file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
-> GAPP2/work/povline_food_flex.dta saved
+file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\GAPP2
+> /work/povline_food_flex.dta saved
 
 . /*
 > * To be used in 140_iterate.do;
@@ -437,15 +384,15 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\
 > save "$path/work/povlines_first_iterate.dta", replace;
 > */
 > 
-> ****************************************************************
-> **********
+> *********************************************************************
+> *****
 > * 120_povline_food_flex.do      (end)
-> ****************************************************************
-> **********;
+> *********************************************************************
+> *****;
 . log close;
       name:  <unnamed>
-       log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UN
-> HS_2005\GAPP2/rep/120_povline_food_flex.log
+       log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_20
+> 05\GAPP2/rep/120_povline_food_flex.log
   log type:  text
- closed on:   2 Jul 2013, 15:04:35
-------------------------------------------------------------------
+ closed on:   9 Jul 2013, 11:07:29
+-----------------------------------------------------------------------

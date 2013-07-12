@@ -63,6 +63,7 @@ noisily display "Start time: " "$S_TIME"
 **************************************************************************
 * Macros. Region definitions. Demographic definitions.
 **************************************************************************
+do "$path/new/final_tableA1-A5-Haruna-2011.do"
 do "$path/new/010_initial.do"
 
 *do "C:\user\gapp\z_data_preb/new/100_collect_expen_moz.do"
@@ -140,9 +141,9 @@ $no_temp_rev	do "$path/new/180_povline_food_fix.do"	/* Inflating year t1's pover
 
 				shell "$path/new/$revpref"				/* Adjusting flexible basket: inside pref. constraints */
 *** execute as super user:
-sudo ./gams "/home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3/new/190a_revpref13_r_bjorn.gms" o="/home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3/new/list.lst"				
+** sudo ./gams "/home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3/new/190a_revpref13_r_bjorn.gms" o="/home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3/new/list.lst"				
 				
-				
+*sudo ./gams "C:/Users/Templeton/Desktop/GAPP/GAPP-UGANDA-HARUNA/UNPS_2011/GAPP3/new/190a_revpref13_r_bjorn.gms" o="/C:/Users/Templeton/Desktop/GAPP/GAPP-UGANDA-HARUNA/UNPS_2011/GAPP3/new/list.lst"				
 
 $no_temp_rev	do "$path/new/200_povmeas_fix.do"		/* Fixed basket: Poverty rates */
 				do "$path/new/210_povmeas_ent_flex.do"	/* Flexible basket, adjusted: Poverty rates */
