@@ -3,7 +3,7 @@
        log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_20
 > 11\GAPP3/rep/120_povline_food_flex.log
   log type:  text
- opened on:   8 Jul 2013, 14:28:35
+ opened on:   9 Jul 2013, 11:36:06
 
 . clear
 
@@ -50,35 +50,35 @@ delimiter now ;
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          1 |         12        5.97        5.97
-          2 |         77       38.31       44.28
-          3 |        112       55.72      100.00
+          1 |         12        6.09        6.09
+          2 |         79       40.10       46.19
+          3 |        106       53.81      100.00
 ------------+-----------------------------------
-      Total |        201      100.00
+      Total |        197      100.00
 
 .         list product spdomain descript if _merge==1;
 
      +------------------------------------+
      | product        spdomain   descript |
      |------------------------------------|
-111. |     157   Central Urban          1 |
-112. |     157   Central Rural          1 |
-113. |     157         Eastern          1 |
-114. |     157        Northern          1 |
-115. |     157         Western          1 |
+105. |     157   Central Urban          1 |
+106. |     157   Central Rural          1 |
+107. |     157         Eastern          1 |
+108. |     157        Northern          1 |
+109. |     157         Western          1 |
      |------------------------------------|
-118. |     999   Central Urban          2 |
-119. |     999   Central Rural          2 |
-120. |     999         Eastern          2 |
-121. |     999        Northern          2 |
-122. |     999         Western          2 |
+112. |     999   Central Urban          2 |
+113. |     999   Central Rural          2 |
+114. |     999         Eastern          2 |
+115. |     999        Northern          2 |
+116. |     999         Western          2 |
      |------------------------------------|
-123. |       .   Central Urban          1 |
-124. |       .   Central Rural          1 |
+117. |       .   Central Urban          1 |
+118. |       .   Central Rural          1 |
      +------------------------------------+
 
 .         drop if _merge ~=3;
-(89 observations deleted)
+(91 observations deleted)
 
 .         drop _merge;
 
@@ -94,11 +94,11 @@ variable product does not uniquely identify observations in the
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          1 |          2        1.45        1.45
-          2 |         26       18.84       20.29
-          3 |        110       79.71      100.00
+          1 |          2        1.50        1.50
+          2 |         27       20.30       21.80
+          3 |        104       78.20      100.00
 ------------+-----------------------------------
-      Total |        138      100.00
+      Total |        133      100.00
 
 .         * This tells where we are lacking calorie info or are lacking
 >  quantity info due to 
@@ -108,12 +108,12 @@ variable product does not uniquely identify observations in the
      +------------------------------------+
      | product        spdomain   descript |
      |------------------------------------|
-111. |     166         Western          1 |
-112. |     171   Central Rural          1 |
+105. |     166         Western          1 |
+106. |     171   Central Rural          1 |
      +------------------------------------+
 
 .         drop if _merge~=3;
-(28 observations deleted)
+(29 observations deleted)
 
 .         drop _merge;
 
@@ -165,35 +165,35 @@ variable product does not uniquely identify observations in the
 
     Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
-     baskshr |        19    .4246981           0   .4246981   .4246981
+     baskshr |        11    .3495967           0   .3495967   .3495967
 
 -----------------------------------------------------------------------
 -> spdomain = Central Rural
 
     Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
-     baskshr |        21    .4414165           0   .4414165   .4414165
+     baskshr |        20    .4647196           0   .4647196   .4647196
 
 -----------------------------------------------------------------------
 -> spdomain = Eastern
 
     Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
-     baskshr |        25    .5149055           0   .5149055   .5149055
+     baskshr |        26    .6146116           0   .6146116   .6146116
 
 -----------------------------------------------------------------------
 -> spdomain = Northern
 
     Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
-     baskshr |        26    .4605806           0   .4605806   .4605806
+     baskshr |        26    .5427582           0   .5427582   .5427582
 
 -----------------------------------------------------------------------
 -> spdomain = Western
 
     Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
-     baskshr |        17    .4971784           0   .4971784   .4971784
+     baskshr |        19    .6340601           0   .6340601   .6340601
 
 
 .         * obtain quantities and calories provided by these quantities
@@ -220,10 +220,10 @@ variable spdomain does not uniquely identify observations in the
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          2 |          1        0.92        0.92
-          3 |        108       99.08      100.00
+          2 |          1        0.97        0.97
+          3 |        102       99.03      100.00
 ------------+-----------------------------------
-      Total |        109      100.00
+      Total |        103      100.00
 
 .         drop _merge;
 
@@ -233,10 +233,10 @@ variable spdomain does not uniquely identify observations in the
 (1 missing value generated)
 
 .                         replace quan=quan*ratio;
-(108 real changes made)
+(102 real changes made)
 
 .         replace cal_ir=quan*calperg;
-(105 real changes made)
+(99 real changes made)
 
 .         * do a consistency check;
 .         sort spdomain;
@@ -244,7 +244,7 @@ variable spdomain does not uniquely identify observations in the
 .         by spdomain: egen chkcal=sum(cal_ir);
 
 .         replace chkcal=chkcal/.95-calpp ;
-(109 real changes made)
+(103 real changes made)
 
 .                         * these values should be about zero;
 .         by spdomain: sum chkcal;
@@ -254,35 +254,35 @@ variable spdomain does not uniquely identify observations in the
 
     Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
-      chkcal |        19   -.0000578           0  -.0000578  -.0000578
+      chkcal |        11    6.42e-06           0   6.42e-06   6.42e-06
 
 -----------------------------------------------------------------------
 -> spdomain = Central Rural
 
     Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
-      chkcal |        21   -.0000385           0  -.0000385  -.0000385
+      chkcal |        20   -.0000385           0  -.0000385  -.0000385
 
 -----------------------------------------------------------------------
 -> spdomain = Eastern
 
     Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
-      chkcal |        25   -.0000257           0  -.0000257  -.0000257
+      chkcal |        26    .0000385           0   .0000385   .0000385
 
 -----------------------------------------------------------------------
 -> spdomain = Northern
 
     Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
-      chkcal |        26   -.0000964           0  -.0000964  -.0000964
+      chkcal |        26    .0000321           0   .0000321   .0000321
 
 -----------------------------------------------------------------------
 -> spdomain = Western
 
     Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
-      chkcal |        17    .0000578           0   .0000578   .0000578
+      chkcal |        19   -.0000707           0  -.0000707  -.0000707
 
 -----------------------------------------------------------------------
 -> spdomain = .
@@ -301,7 +301,7 @@ variable spdomain does not uniquely identify observations in the
 .         by spdomain: egen povline_f_flex90=sum(val_ir);
 
 .         replace povline_f_flex=povline_f_flex90/.9;
-(108 real changes made)
+(102 real changes made)
 
 .         collapse (mean) povline_f_flex, by (spdomain);
 
@@ -333,5 +333,5 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
        log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_20
 > 11\GAPP3/rep/120_povline_food_flex.log
   log type:  text
- closed on:   8 Jul 2013, 14:28:35
+ closed on:   9 Jul 2013, 11:36:06
 -----------------------------------------------------------------------

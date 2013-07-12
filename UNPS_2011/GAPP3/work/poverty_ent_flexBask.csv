@@ -1,0 +1,31 @@
+geo,geono,h_ent_m,pg_ent_m,spg_ent_m,dum,rural,news,reg_tpi,strata,spdomain
+"National",1,9.098474,3.351541,2.187379,1,,,,,
+" ",,,,,,,,,,
+"Rural/Urban",0,3.87822,1.117826,.8122716,,0,,,,
+"Rural/Urban",1,10.04401,3.751091,2.433348,,1,,,,
+" ",,,,,,,,,,
+"North/Center/South",1,10.10307,5.916829,4.789356,,,"Central",,,
+"North/Center/South",2,8.589527,2.081071,.9033907,,,"Eastern",,,
+"North/Center/South",3,9.462565,2.305608,.8484276,,,"Northern",,,
+"North/Center/South",4,7.474443,2.812066,1.891231,,,"Western",,,
+"North/Center/South",,100,,,,,,,,
+" ",,,,,,,,,,
+"TPI - 6 regions",0,3.475812,0,0,,,,"Kampala",,
+"TPI - 6 regions",1,12.55936,7.355346,5.953758,,,,"Central",,
+"TPI - 6 regions",2,8.589527,2.081071,.9033907,,,,"Eastern",,
+"TPI - 6 regions",3,9.462565,2.305608,.8484276,,,,"Northern",,
+"TPI - 6 regions",4,7.474443,2.812066,1.891231,,,,"Western",,
+" ",,,,,,,,,,
+"Provinces",1,3.418621,0,0,,,,,"Kampala",
+"Provinces",2,4.102749,1.719856,1.249738,,,,,"Other Urban",
+"Provinces",3,14.38674,8.261443,6.640915,,,,,"Central rural",
+"Provinces",4,9.01477,2.17294,.9482048,,,,,"East rural",
+"Provinces",5,9.965559,2.511045,.937883,,,,,"North rural",
+"Provinces",6,7.814537,2.976202,2.020893,,,,,"West rural",
+" ",,,,,,,,,,
+"Spatial domains",1,1.830205,1.392669,1.217767,,,,,,"Central Urban"
+"Spatial domains",2,14.31316,8.219189,6.606949,,,,,,"Central Rural"
+"Spatial domains",3,8.589527,2.081071,.9033907,,,,,,"Eastern"
+"Spatial domains",4,9.462565,2.305608,.8484276,,,,,,"Northern"
+"Spatial domains",5,7.474443,2.812066,1.891231,,,,,,"Western"
+"Spatial domains",,100,,,,,,,,

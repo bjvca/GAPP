@@ -3,7 +3,7 @@
        log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_20
 > 11\GAPP3/rep/010_initial.log
   log type:  text
- opened on:   8 Jul 2013, 14:28:26
+ opened on:   9 Jul 2013, 11:35:58
 
 . clear
 
@@ -57,7 +57,7 @@ delimiter now ;
 > * Initial (arbitrary) quantile defining the (relatively) poor.
 > *********************************************************************
 > *********;
-. global bottom "70";
+. global bottom "50";
 
 . *********************************************************************
 > *********
@@ -102,5 +102,5 @@ delimiter now ;
        log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_20
 > 11\GAPP3/rep/010_initial.log
   log type:  text
- closed on:   8 Jul 2013, 14:28:26
+ closed on:   9 Jul 2013, 11:35:58
 -----------------------------------------------------------------------

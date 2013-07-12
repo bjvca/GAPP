@@ -3,7 +3,7 @@
        log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_20
 > 11\GAPP3/rep/110_price_unit_flex.log
   log type:  text
- opened on:   8 Jul 2013, 14:28:34
+ opened on:   9 Jul 2013, 11:36:05
 
 . clear
 
@@ -130,14 +130,14 @@ product was int now float
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          1 |      5,447       16.20       16.20
-          2 |          2        0.01       16.20
-          3 |     28,178       83.80      100.00
+          1 |      5,957       17.71       17.71
+          2 |          2        0.01       17.72
+          3 |     27,668       82.28      100.00
 ------------+-----------------------------------
       Total |     33,627      100.00
 
 .         drop if _merge~=3;
-(5449 observations deleted)
+(5959 observations deleted)
 
 .         drop _merge;
 
@@ -156,10 +156,10 @@ hhid                                                       household id
                   type:  numeric (double)
 
                  range:  [1.013e+09,2.115e+14]        units:  1
-         unique values:  2582                     missing .:  140/28178
+         unique values:  2582                     missing .:  149/27668
 
-                  mean:   1.5e+11
-              std. dev:   4.4e+12
+                  mean:   1.4e+11
+              std. dev:   4.2e+12
 
            percentiles:        10%       25%       50%       75%       
 > 90%
@@ -176,10 +176,10 @@ hhid                                                       household id
                   type:  numeric (double)
 
                  range:  [1.013e+09,2.115e+14]        units:  1
-         unique values:  2582                     missing .:  140/28178
+         unique values:  2582                     missing .:  149/27668
 
-                  mean:   1.5e+11
-              std. dev:   4.4e+12
+                  mean:   1.4e+11
+              std. dev:   4.2e+12
 
            percentiles:        10%       25%       50%       75%       
 > 90%
@@ -250,11 +250,11 @@ variable hhid does not uniquely identify observations in the master
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          1 |        140        0.49        0.49
-          2 |        134        0.47        0.97
-          3 |     28,038       99.03      100.00
+          1 |        149        0.54        0.54
+          2 |        134        0.48        1.02
+          3 |     27,519       98.98      100.00
 ------------+-----------------------------------
-      Total |     28,312      100.00
+      Total |     27,802      100.00
 
 .         drop _merge;
 
@@ -270,10 +270,10 @@ hhid                                                       household id
                   type:  numeric (double)
 
                  range:  [1.013e+09,2.115e+14]        units:  1
-         unique values:  2560                     missing .:  140/28156
+         unique values:  2560                     missing .:  149/27646
 
-                  mean:   1.5e+11
-              std. dev:   4.4e+12
+                  mean:   1.4e+11
+              std. dev:   4.2e+12
 
            percentiles:        10%       25%       50%       75%       
 > 90%
@@ -288,32 +288,32 @@ domains: each |
  poverty line |
  (they are 5) |      Freq.     Percent        Cum.
 --------------+-----------------------------------
-Central Urban |      3,776       13.48       13.48
-Central Rural |      5,379       19.20       32.68
-      Eastern |      7,082       25.28       57.96
-     Northern |      7,190       25.66       83.62
-      Western |      4,589       16.38      100.00
+Central Urban |      3,604       13.11       13.11
+Central Rural |      5,265       19.15       32.25
+      Eastern |      6,960       25.31       57.57
+     Northern |      7,111       25.86       83.43
+      Western |      4,557       16.57      100.00
 --------------+-----------------------------------
-        Total |     28,016      100.00
+        Total |     27,497      100.00
 
 . sum if spd>=3;
 
     Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
-        hhid |     18861    5.33e+10    2.43e+11   1.07e+09   2.32e+12
-     product |     19001    130.8395     15.6652        101        171
-    quantity |     18861    .6004119    1.229895   .0071429         60
-       value |     18861    437.4125    671.2989   2.857143      15000
-        unit |     18861           1           0          1          1
+        hhid |     18628    5.28e+10    2.42e+11   1.07e+09   2.32e+12
+     product |     18777    131.0222    15.66918        101        171
+    quantity |     18628    .5872794    1.198033   .0071429         60
+       value |     18628    437.5707    673.2686   2.857143      15000
+        unit |     18628           1           0          1          1
 -------------+--------------------------------------------------------
-    food_cat |     18861           1           0          1          1
-       count |     19001           1           0          1          1
-    descript |     19001           1           0          1          1
-      numreg |     19001     3.68428    1.336039          1          5
-    survquar |     18861    2.513228    1.123261          1          4
+    food_cat |     18628           1           0          1          1
+       count |     18777           1           0          1          1
+    descript |     18777           1           0          1          1
+      numreg |     18777    3.612718    1.193151          1          5
+    survquar |     18628    2.514119    1.123197          1          4
 -------------+--------------------------------------------------------
-     reg_tpi |     18861    2.867822    .7754683          2          4
-    spdomain |     18861    3.867822    .7754683          3          5
+     reg_tpi |     18628    2.871001    .7756638          2          4
+    spdomain |     18628    3.871001    .7756638          3          5
 
 . table spdomain, content(mean quantity count quantity count hhid) row 
 > missing;
@@ -325,17 +325,17 @@ with own      |
 poverty line  |
 (they are 5)  | mean(quantity)     N(quantity)         N(hhid)
 --------------+-----------------------------------------------
-Central Urban |       .4677047           3,776           3,776
-Central Rural |       .5302123           5,379           5,379
-      Eastern |       .6385076           7,082           7,082
-     Northern |       .5574299           7,190           7,190
-      Western |       .6089644           4,589           4,589
+Central Urban |       .4384165           3,604           3,604
+Central Rural |       .5270678           5,265           5,265
+      Eastern |        .622596           6,960           6,960
+     Northern |       .5400435           7,111           7,111
+      Western |       .6070493           4,557           4,557
               | 
-        Total |       .5690475          28,016          28,016
+        Total |       .5562391          27,497          27,497
 --------------------------------------------------------------
 
 .         drop if product==. | value==. | quantity==.  ;
-(140 observations deleted)
+(149 observations deleted)
 
 . codebook hhid;
 
@@ -346,10 +346,10 @@ hhid                                                       household id
                   type:  numeric (double)
 
                  range:  [1.013e+09,2.115e+14]        units:  1
-         unique values:  2560                     missing .:  0/28016
+         unique values:  2560                     missing .:  0/27497
 
-                  mean:   1.5e+11
-              std. dev:   4.4e+12
+                  mean:   1.4e+11
+              std. dev:   4.2e+12
 
            percentiles:        10%       25%       50%       75%       
 > 90%
@@ -364,13 +364,13 @@ domains: each |
  poverty line |
  (they are 5) |      Freq.     Percent        Cum.
 --------------+-----------------------------------
-Central Urban |      3,776       13.48       13.48
-Central Rural |      5,379       19.20       32.68
-      Eastern |      7,082       25.28       57.96
-     Northern |      7,190       25.66       83.62
-      Western |      4,589       16.38      100.00
+Central Urban |      3,604       13.11       13.11
+Central Rural |      5,265       19.15       32.25
+      Eastern |      6,960       25.31       57.57
+     Northern |      7,111       25.86       83.43
+      Western |      4,557       16.57      100.00
 --------------+-----------------------------------
-        Total |     28,016      100.00
+        Total |     27,497      100.00
 
 . ********************************************************************
 > * Merge in temporal price index to convert nominal value to real
@@ -388,13 +388,13 @@ variables reg_tpi survquar do not uniquely identify observations in
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          1 |      2,243        8.01        8.01
-          3 |     25,773       91.99      100.00
+          1 |      2,134        7.76        7.76
+          3 |     25,363       92.24      100.00
 ------------+-----------------------------------
-      Total |     28,016      100.00
+      Total |     27,497      100.00
 
 .         drop if _merge ~= 3;
-(2243 observations deleted)
+(2134 observations deleted)
 
 .         drop _merge;
 
@@ -563,8 +563,8 @@ variable spdomain does not uniquely identify observations in the
 bottom_bask |
          et |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          0 | 217.154212       71.43       71.43
-          1 | 86.8457882       28.57      100.00
+          0 |  241.69825       79.51       79.51
+          1 |62.30174983       20.49      100.00
 ------------+-----------------------------------
       Total |        304      100.00
 
@@ -574,8 +574,8 @@ bottom_bask |
 bottom_bask |
          et |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          0 | 162.297213       30.68       30.68
-          1 | 366.702787       69.32      100.00
+          0 | 266.462553       50.37       50.37
+          1 | 262.537447       49.63      100.00
 ------------+-----------------------------------
       Total |        529      100.00
 
@@ -585,8 +585,8 @@ bottom_bask |
 bottom_bask |
          et |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          0 |   200.1663       30.99       30.99
-          1 |   445.8337       69.01      100.00
+          0 |326.7689633       50.58       50.58
+          1 |319.2310367       49.42      100.00
 ------------+-----------------------------------
       Total |        646      100.00
 
@@ -596,8 +596,8 @@ bottom_bask |
 bottom_bask |
          et |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          0 | 213.532491       30.81       30.81
-          1 | 479.467509       69.19      100.00
+          0 | 352.503617       50.87       50.87
+          1 | 340.496383       49.13      100.00
 ------------+-----------------------------------
       Total |        693      100.00
 
@@ -607,8 +607,8 @@ bottom_bask |
 bottom_bask |
          et |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          0 | 174.838781       32.68       32.68
-          1 | 360.161219       67.32      100.00
+          0 |278.7435543       52.10       52.10
+          1 |256.2564457       47.90      100.00
 ------------+-----------------------------------
       Total |        535      100.00
 
@@ -648,16 +648,16 @@ variable hhid does not uniquely identify observations in the master
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          2 |        319        1.22        1.22
-          3 |     25,773       98.78      100.00
+          2 |        319        1.24        1.24
+          3 |     25,363       98.76      100.00
 ------------+-----------------------------------
-      Total |     26,092      100.00
+      Total |     25,682      100.00
 
 .         drop _merge;
 
 .                         * Only keep price observations for the poor ;
 .         keep if bottom_basket==1;
-(9978 observations deleted)
+(15277 observations deleted)
 
 .         *************************************************************
 > *************;
@@ -668,63 +668,63 @@ variable hhid does not uniquely identify observations in the master
 > *********************************************************************
 > *****;
 .                 gen hhppkg=value_r/quantity;
-(56 missing values generated)
+(50 missing values generated)
 
 .                 egen lower5=pctile(hhppkg), p(5) by(spdomain product)
 > ;
-(56 missing values generated)
+(50 missing values generated)
 
 .                 egen upper5=pctile(hhppkg), p(95) by(spdomain product
 > );
-(56 missing values generated)
+(50 missing values generated)
 
 . sum;
 
     Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
-        hhid |     16114    4.29e+10    2.24e+11   1.01e+09   2.32e+12
-     product |     16058    131.1113    15.78549        101        171
-    quantity |     16058    .5736999    1.048957   .0071429   34.28571
-       value |     16058    408.0044     606.284   2.857143   10285.71
-        unit |     16058           1           0          1          1
+        hhid |     10405    3.95e+10    2.23e+11   1.02e+09   2.31e+12
+     product |     10355    131.5637    15.75313        101        171
+    quantity |     10355    .5502244    1.016882   .0142857   34.28571
+       value |     10355    366.5467    539.4332   2.857143   7714.286
+        unit |     10355           1           0          1          1
 -------------+--------------------------------------------------------
-    food_cat |     16058           1           0          1          1
-       count |     16058           1           0          1          1
-    descript |     16058           1           0          1          1
-      numreg |     16058    3.728858     1.30724          1          5
-    survquar |     16114    2.437197    1.092476          1          4
+    food_cat |     10355           1           0          1          1
+       count |     10355           1           0          1          1
+    descript |     10355           1           0          1          1
+      numreg |     10355     3.64423    1.169494          1          5
+    survquar |     10405    2.397886     1.08078          1          4
 -------------+--------------------------------------------------------
-     reg_tpi |     16114    2.322328    1.060154          1          4
-    spdomain |     16114    3.260022    1.160665          1          5
-    tpi_trim |     16114    .9148665    .1034583   .7488575   1.185341
-     value_r |     16058    445.8989     656.778   3.668811   11975.82
- cons_pc_nom |     16114    1136.326    523.1695          0   3796.331
+     reg_tpi |     10405    2.298799    1.046866          1          4
+    spdomain |     10405    3.235175    1.149257          1          5
+    tpi_trim |     10405    .9620845    .0953176   .7983326   1.159266
+     value_r |     10355    382.8098    557.7301   3.274749   8261.106
+ cons_pc_nom |     10405    765.0789    347.5735          0   2452.366
 -------------+--------------------------------------------------------
-    hhweight |     16114    2054.267     1543.94   308.1181   8736.727
-        bswt |     16114           1           0          1          1
-      hhsize |     16114    7.670163    3.205511          1         29
- cons_hh_nom |     16114    8605.981    5600.623          0      51206
- food_pc_nom |     16114    677.1563    357.7267          0   3616.072
+    hhweight |     10405    2002.106    1470.699   308.1181   8736.727
+        bswt |     10405           1           0          1          1
+      hhsize |     10405    7.854974    3.157322          1         29
+ cons_hh_nom |     10405    5995.319    3950.675          0   39287.83
+ food_pc_nom |     10405    521.6734    249.4096          0   1803.061
 -------------+--------------------------------------------------------
-   nf_pc_nom |     16114    459.1693    313.5306          0   2553.836
- food_pc_tpi |     16114    745.3005    394.3738          0   3616.072
- cons_pc_tpi |     16114     1204.47    552.3329          0   3796.331
-   pctile_60 |     16114    1988.621     561.186   1604.367   3877.697
-bottom_bas~t |     16114           1           0          1          1
+   nf_pc_nom |     10405    243.4055    188.3797          0   1715.154
+ food_pc_tpi |     10405    545.9181    263.8467          0   1814.827
+ cons_pc_tpi |     10405    789.3236    358.2619          0   2449.415
+   pctile_60 |     10405    1175.064    389.3798   895.5701   2489.117
+bottom_bas~t |     10405           1           0          1          1
 -------------+--------------------------------------------------------
-      hhppkg |     16058    1419.686     2017.35   3.128083    77609.8
-      lower5 |     16058    523.3717     835.048   20.85389   6420.419
-      upper5 |     16058    2880.575    2765.386   84.36391   38522.51
+      hhppkg |     10355    1227.363     1650.93   3.034752   17290.76
+      lower5 |     10355    447.1951     706.767    25.2896   5763.585
+      upper5 |     10355    2567.291    2467.469   114.2019   17290.76
 
 . describe;
 
 Contains data from C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000001.tmp
-  obs:        16,114                          HH food cons. (1 rec
+  obs:        10,405                          HH food cons. (1 rec
                                                 per item cons. cat A& B
                                                 per HH; Cat B: only
                                                 T6SQ1 + T6AEQ3)
- vars:            28                          8 Jul 2013 14:28
- size:     1,949,794                          (_dta has notes)
+ vars:            28                          9 Jul 2013 11:36
+ size:     1,259,005                          (_dta has notes)
 -----------------------------------------------------------------------
               storage  display     value
 variable name   type   format      label      variable label
@@ -780,7 +780,7 @@ food_pc_tpi     float  %9.0g                  Temp-adjusted per capita
                                                 food consumption/day
 cons_pc_tpi     float  %9.0g                  Temp adjusted total
                                                 consumption/day
-pctile_60       float  %9.0g                  (p 70) cons_pc_tpi
+pctile_60       float  %9.0g                  (p 50) cons_pc_tpi
 bottom_basket   float  %9.0g                  =1 if in bottom (60%) of
                                                 PCE
 hhppkg          float  %9.0g                  
@@ -791,7 +791,7 @@ Sorted by:
      Note:  dataset has changed since last saved
 
 . keep if hhppkg-lower5>=0 & hhppkg-upper5<=0;
-(1294 observations deleted)
+(801 observations deleted)
 
 . *********************************************************************
 > * Note that we do prices in three ways. First, by summing quantity an
@@ -838,8 +838,8 @@ Sorted by:
 
     Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
-     ratiotw |       189    1.258554    .4945715   .5507623   3.923727
-     ratiomw |       189    1.078488    .5008593   .2610922   5.840994
+     ratiotw |       185      1.2179    .3331531   .8040299    3.07245
+     ratiomw |       185      1.0032    .2398947   .2391765   2.132446
 
 .         sort product;
 
@@ -851,10 +851,10 @@ variable product does not uniquely identify observations in the
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          2 |          3        1.56        1.56
-          3 |        189       98.44      100.00
+          2 |          3        1.60        1.60
+          3 |        185       98.40      100.00
 ------------+-----------------------------------
-      Total |        192      100.00
+      Total |        188      100.00
 
 .         count if _merge~=3;
     3

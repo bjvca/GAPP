@@ -3,7 +3,7 @@
        log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_20
 > 11\GAPP3/rep/140_iterate.log
   log type:  text
- opened on:   8 Jul 2013, 14:28:35
+ opened on:   9 Jul 2013, 11:36:06
 
 . clear
 
@@ -835,12 +835,12 @@ file contpi_.dta saved
 287.         local lastpass = `pass';
 288.         local pass = `pass' + 1;
 289.         };
-(224 missing values generated)
+(350 missing values generated)
 (note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp not fo
 > und)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000002.tmp saved
 file cutoff.dta saved
-(224 missing values generated)
+(350 missing values generated)
 variable one does not uniquely identify observations in the master
     data
 
@@ -852,8 +852,8 @@ variable one does not uniquely identify observations in the master
 
    relpoor1 |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          0 | 948.049143       34.93       34.93
-          1 | 1,765.9509       65.07      100.00
+          0 | 1,503.2608       55.39       55.39
+          1 | 1,210.7392       44.61      100.00
 ------------+-----------------------------------
       Total |      2,714      100.00
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
@@ -878,13 +878,13 @@ variable hhid does not uniquely identify observations in the master
           3 |     34,121       99.82      100.00
 ------------+-----------------------------------
       Total |     34,181      100.00
-(15573 observations deleted)
-(10 missing values generated)
-   10
+(23289 observations deleted)
+(9 missing values generated)
+    9
     0
-(10 missing values generated)
-   10
-(10 observations deleted)
+(9 missing values generated)
+    9
+(9 observations deleted)
 (note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp not fo
 > und)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
@@ -896,14 +896,14 @@ variable spdomain does not uniquely identify observations in the
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          3 |     18,598      100.00      100.00
+          3 |     10,883      100.00      100.00
 ------------+-----------------------------------
-      Total |     18,598      100.00
-  157
-(157 observations deleted)
+      Total |     10,883      100.00
+  135
+(135 observations deleted)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000003.tmp saved
-45
-45
+42
+42
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
 > /work/codes_food_basket_flex_it1.dta saved
 (HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
@@ -930,13 +930,13 @@ product was int now float
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          1 |      3,096        9.21        9.21
-          2 |          1        0.00        9.21
-          3 |     30,529       90.79      100.00
+          1 |      3,661       10.89       10.89
+          2 |          1        0.00       10.89
+          3 |     29,964       89.11      100.00
 ------------+-----------------------------------
       Total |     33,626      100.00
-(3097 observations deleted)
-(181 observations deleted)
+(3662 observations deleted)
+(175 observations deleted)
 (note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000007.tmp not fo
 > und)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000007.tmp saved
@@ -963,37 +963,37 @@ spdomain was byte now float
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          2 |        156        0.51        0.51
-          3 |     30,348       99.49      100.00
+          2 |        156        0.52        0.52
+          3 |     29,789       99.48      100.00
 ------------+-----------------------------------
-      Total |     30,504      100.00
+      Total |     29,945      100.00
 variable hhid does not uniquely identify observations in the master
     data
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
           1 |          1        0.00        0.00
-          3 |     30,503      100.00      100.00
+          3 |     29,944      100.00      100.00
 ------------+-----------------------------------
-      Total |     30,504      100.00
-(13357 observations deleted)
-(54 observations deleted)
-(1303 observations deleted)
+      Total |     29,945      100.00
+(19854 observations deleted)
+(44 observations deleted)
+(740 observations deleted)
 
     Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
-    ratiotw1 |       208    1.267721    .4887439   .6020459   3.923727
-    ratiomw1 |       208     1.05857    .4772086   .2961278   5.840994
+    ratiotw1 |       159    1.288192    .4768824   .9618641   4.315717
+    ratiomw1 |       159    1.063617    .3547853   .3428777   3.198781
 variable product does not uniquely identify observations in the
     master data
 product was int now float
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          2 |          2        0.95        0.95
-          3 |        208       99.05      100.00
+          2 |          2        1.24        1.24
+          3 |        159       98.76      100.00
 ------------+-----------------------------------
-      Total |        210      100.00
+      Total |        161      100.00
     2
 (2 observations deleted)
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
@@ -1002,67 +1002,61 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          1 |          7        3.26        3.26
-          2 |         69       32.09       35.35
-          3 |        139       64.65      100.00
+          1 |          5        3.05        3.05
+          2 |         52       31.71       34.76
+          3 |        107       65.24      100.00
 ------------+-----------------------------------
-      Total |        215      100.00
+      Total |        164      100.00
 
      +------------------------------------+
      | product        spdomain   descript |
      |------------------------------------|
-136. |     157   Central Urban          1 |
-137. |     157   Central Rural          1 |
-138. |     157         Eastern          1 |
-139. |     157        Northern          1 |
-140. |     157         Western          1 |
-     |------------------------------------|
-145. |       .   Central Urban          1 |
-146. |       .   Central Rural          1 |
+104. |     157   Central Rural          1 |
+105. |     157         Eastern          1 |
+106. |     157        Northern          1 |
+107. |     157         Western          1 |
+112. |       .   Central Rural          1 |
      +------------------------------------+
-(76 observations deleted)
+(57 observations deleted)
 variable product does not uniquely identify observations in the
     master data
 (note: descript is str26 in using data but will be float now)
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          1 |          4        2.48        2.48
-          2 |         22       13.66       16.15
-          3 |        135       83.85      100.00
+          1 |          4        3.03        3.03
+          2 |         25       18.94       21.97
+          3 |        103       78.03      100.00
 ------------+-----------------------------------
-      Total |        161      100.00
+      Total |        132      100.00
 
      +------------------------------------+
      | product        spdomain   descript |
      |------------------------------------|
-136. |     162        Northern          1 |
-137. |     166   Central Urban          1 |
-138. |     166         Western          1 |
-139. |     171   Central Rural          1 |
+104. |     162        Northern          1 |
+105. |     166         Western          1 |
+106. |     171   Central Rural          1 |
+107. |     171         Eastern          1 |
      +------------------------------------+
-(26 observations deleted)
+(29 observations deleted)
 
------------------------------------------------------------------------
--> spdomain = Central Urban
-   14
 -----------------------------------------------------------------------
 -> spdomain = Central Rural
     0
 -----------------------------------------------------------------------
 -> spdomain = Eastern
-    0
+    1
 -----------------------------------------------------------------------
 -> spdomain = Northern
-    0
+    1
 -----------------------------------------------------------------------
 -> spdomain = Western
     0
 
     Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
-        bswt |       135    102.8148    94.39439          1        397
-(14 observations deleted)
+        bswt |       103    78.85437    62.65661          6        331
+(2 observations deleted)
 (0 observations deleted)
 
 Summary for variables: baskshr
@@ -1071,27 +1065,26 @@ Summary for variables: baskshr
 
      spdomain |         N      mean        sd       min       max
 --------------+--------------------------------------------------
-Central Urban |        11  .5221686         0  .5221686  .5221686
-Central Rural |        28  .7908835         0  .7908835  .7908835
-      Eastern |        30  .8930709         0  .8930709  .8930709
-     Northern |        29  .8572496         0  .8572496  .8572496
-      Western |        23  .8807663         0  .8807663  .8807663
+Central Rural |        25  .7573137         0  .7573137  .7573137
+      Eastern |        27  .8916079         0  .8916079  .8916079
+     Northern |        26  .8504013         0  .8504013  .8504013
+      Western |        23  .8848824         0  .8848824  .8848824
 --------------+--------------------------------------------------
-        Total |       121  .8247817  .1033625  .5221686  .8930709
+        Total |       101  .8462276  .0536716  .7573137  .8916079
 -----------------------------------------------------------------
 variable spdomain does not uniquely identify observations in the
     master data
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          2 |          1        0.82        0.82
-          3 |        121       99.18      100.00
+          2 |          2        1.94        1.94
+          3 |        101       98.06      100.00
 ------------+-----------------------------------
-      Total |        122      100.00
-(1 missing value generated)
-(121 real changes made)
-(114 real changes made)
-(122 real changes made)
+      Total |        103      100.00
+(2 missing values generated)
+(101 real changes made)
+(96 real changes made)
+(103 real changes made)
 
 Summary for variables: chkcal
      by categories of: spdomain (Spatial domains: each with own poverty
@@ -1099,16 +1092,16 @@ Summary for variables: chkcal
 
      spdomain |         N      mean        sd       min       max
 --------------+--------------------------------------------------
-Central Urban |        11  6.42e-06         0  6.42e-06  6.42e-06
-Central Rural |        28  .0000257         0  .0000257  .0000257
-      Eastern |        30  .0000385         0  .0000385  .0000385
-     Northern |        29  .0000321         0  .0000321  .0000321
-      Western |        23  .0000578         0  .0000578  .0000578
+Central Urban |         1 -1060.045         . -1060.045 -1060.045
+Central Rural |        25  .0000899         0  .0000899  .0000899
+      Eastern |        27 -.0000257         0 -.0000257 -.0000257
+     Northern |        26  .0000321         0  .0000321  .0000321
+      Western |        23 -.0000707         0 -.0000707 -.0000707
 --------------+--------------------------------------------------
-        Total |       121  .0000348  .0000141  6.42e-06  .0000578
+        Total |       102 -10.39259  104.9601 -1060.045  .0000899
 -----------------------------------------------------------------
-(1 missing value generated)
-(121 real changes made)
+(2 missing values generated)
+(101 real changes made)
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
 > /work/quan_flex_it1.dta saved
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
@@ -1122,7 +1115,7 @@ variable spdomain does not uniquely identify observations in the
           3 |      2,717      100.00      100.00
 ------------+-----------------------------------
       Total |      2,717      100.00
-(69 real changes made)
+(99 real changes made)
 (3 missing values generated)
 (note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000009.tmp not fo
 > und)
@@ -1160,20 +1153,20 @@ variable spdomain does not uniquely identify observations in
 >      Max
 -------------+---------------------------------------------------------
 > --------
-          cr |    2492  34690902.7    1990.349   5527.795          0   
-> 252488.6
-      cr_it1 |    2492  34690902.7    1990.349   7051.711          0   
-> 352670.1
-     linpob1 |    2714  37328356.8     732.834    606.844          0   
-> 2598.683
-    linpobr1 |    2707    37257099    554.9532   .0000303   554.9531   
-> 554.9532
-(2453 missing values generated)
-(2228 real changes made)
+          cr |    2492  34690902.7    1467.411   2339.007          0   
+> 72983.64
+      cr_it1 |    2492  34690902.7    1467.411   1952.191          0   
+> 56019.25
+     linpob1 |    2714  37328356.8    589.4915   383.9129          0   
+> 1666.636
+    linpobr1 |    2707    37257099    468.8762   .0000131   468.8762   
+> 468.8762
+(2451 missing values generated)
+(2226 real changes made)
 (225 missing values generated)
-(2228 real changes made)
+(2226 real changes made)
 (225 missing values generated)
-(2228 real changes made)
+(2226 real changes made)
 (225 missing values generated)
 (225 missing values generated)
 (225 missing values generated)
@@ -1197,9 +1190,9 @@ Number of PSUs   =     317        Population size  =  34690903
              |             Linearized
              |       Mean   Std. Err.     [95% Conf. Interval]
 -------------+------------------------------------------------
-     h_flex1 |   11.30399          .             .           .
-    pg_flex1 |   4.161427          .             .           .
-   spg_flex1 |   2.622783          .             .           .
+     h_flex1 |   11.36297          .             .           .
+    pg_flex1 |   4.395072          .             .           .
+   spg_flex1 |    2.70294          .             .           .
 --------------------------------------------------------------
 Note: missing standard errors because of stratum with single
       sampling unit.
@@ -1219,16 +1212,16 @@ Number of PSUs   =     317        Population size  =  34690903
         Over |       Mean   Std. Err.     [95% Conf. Interval]
 -------------+------------------------------------------------
 h_flex1      |
-           0 |   20.41518          .             .           .
-           1 |   10.26365          .             .           .
+           0 |   10.12667          .             .           .
+           1 |   11.50414          .             .           .
 -------------+------------------------------------------------
 pg_flex1     |
-           0 |    7.15136          .             .           .
-           1 |   3.820029          .             .           .
+           0 |   3.787533          .             .           .
+           1 |   4.464442          .             .           .
 -------------+------------------------------------------------
 spg_flex1    |
-           0 |   3.746596          .             .           .
-           1 |   2.494463          .             .           .
+           0 |   2.259359          .             .           .
+           1 |   2.753589          .             .           .
 --------------------------------------------------------------
 Note: missing standard errors because of stratum with single
       sampling unit.
@@ -1253,27 +1246,27 @@ Number of PSUs   =     317        Population size  =  34690903
 -------------+------------------------------------------------
 h_flex1      |
      Kampala |          0  (omitted)
-   _subpop_2 |   20.41518          .             .           .
-   _subpop_3 |    13.1653          .             .           .
-   _subpop_4 |   2.995052          .             .           .
-   _subpop_5 |   6.394424          .             .           .
-   _subpop_6 |   19.42525          .             .           .
+   _subpop_2 |   10.12667          .             .           .
+   _subpop_3 |   14.04497          .             .           .
+   _subpop_4 |   2.692934          .             .           .
+   _subpop_5 |   5.777134          .             .           .
+   _subpop_6 |   24.35194          .             .           .
 -------------+------------------------------------------------
 pg_flex1     |
      Kampala |          0  (omitted)
-   _subpop_2 |    7.15136          .             .           .
-   _subpop_3 |   7.918178          .             .           .
-   _subpop_4 |   .9382142          .             .           .
-   _subpop_5 |    1.50798          .             .           .
-   _subpop_6 |   5.760272          .             .           .
+   _subpop_2 |   3.787533          .             .           .
+   _subpop_3 |   8.184908          .             .           .
+   _subpop_4 |   .9129342          .             .           .
+   _subpop_5 |   1.124124          .             .           .
+   _subpop_6 |   8.388749          .             .           .
 -------------+------------------------------------------------
 spg_flex1    |
      Kampala |          0  (omitted)
-   _subpop_2 |   3.746596          .             .           .
-   _subpop_3 |    6.47575          .             .           .
-   _subpop_4 |   .4369273          .             .           .
-   _subpop_5 |   .5540385          .             .           .
-   _subpop_6 |   3.283556          .             .           .
+   _subpop_2 |   2.259359          .             .           .
+   _subpop_3 |   6.613541          .             .           .
+   _subpop_4 |   .3928803          .             .           .
+   _subpop_5 |   .4119675          .             .           .
+   _subpop_6 |   4.341361          .             .           .
 --------------------------------------------------------------
 Note: missing standard errors because of stratum with single
       sampling unit.
@@ -1299,27 +1292,27 @@ Number of PSUs   =     317        Population size  =  34690903
 -------------+------------------------------------------------
 h_flex1      |
    _subpop_1 |          0  (omitted)
-   _subpop_2 |   20.41518          .             .           .
-   _subpop_3 |    13.1653          .             .           .
-   _subpop_4 |   2.995052          .             .           .
-   _subpop_5 |   6.394424          .             .           .
-   _subpop_6 |   19.42525          .             .           .
+   _subpop_2 |   10.12667          .             .           .
+   _subpop_3 |   14.04497          .             .           .
+   _subpop_4 |   2.692934          .             .           .
+   _subpop_5 |   5.777134          .             .           .
+   _subpop_6 |   24.35194          .             .           .
 -------------+------------------------------------------------
 pg_flex1     |
    _subpop_1 |          0  (omitted)
-   _subpop_2 |    7.15136          .             .           .
-   _subpop_3 |   7.918178          .             .           .
-   _subpop_4 |   .9382142          .             .           .
-   _subpop_5 |    1.50798          .             .           .
-   _subpop_6 |   5.760272          .             .           .
+   _subpop_2 |   3.787533          .             .           .
+   _subpop_3 |   8.184908          .             .           .
+   _subpop_4 |   .9129342          .             .           .
+   _subpop_5 |   1.124124          .             .           .
+   _subpop_6 |   8.388749          .             .           .
 -------------+------------------------------------------------
 spg_flex1    |
    _subpop_1 |          0  (omitted)
-   _subpop_2 |   3.746596          .             .           .
-   _subpop_3 |    6.47575          .             .           .
-   _subpop_4 |   .4369273          .             .           .
-   _subpop_5 |   .5540385          .             .           .
-   _subpop_6 |   3.283556          .             .           .
+   _subpop_2 |   2.259359          .             .           .
+   _subpop_3 |   6.613541          .             .           .
+   _subpop_4 |   .3928803          .             .           .
+   _subpop_5 |   .4119675          .             .           .
+   _subpop_6 |   4.341361          .             .           .
 --------------------------------------------------------------
 Note: missing standard errors because of stratum with single
       sampling unit.
@@ -1342,25 +1335,25 @@ Number of PSUs   =     317        Population size  =  34690903
         Over |       Mean   Std. Err.     [95% Conf. Interval]
 -------------+------------------------------------------------
 h_flex1      |
-   _subpop_1 |   46.39306          .             .           .
-   _subpop_2 |   13.09757          .             .           .
-     Eastern |   2.938117          .             .           .
-    Northern |   6.036822          .             .           .
-     Western |   18.45243          .             .           .
+   _subpop_1 |   21.85824          .             .           .
+   _subpop_2 |   13.97271          .             .           .
+     Eastern |   2.530198          .             .           .
+    Northern |   5.200971          .             .           .
+     Western |   23.18836          .             .           .
 -------------+------------------------------------------------
 pg_flex1     |
-   _subpop_1 |   16.92961          .             .           .
-   _subpop_2 |   7.877442          .             .           .
-     Eastern |   .8997628          .             .           .
-    Northern |   1.392303          .             .           .
-     Western |   5.474222          .             .           .
+   _subpop_1 |   8.609504          .             .           .
+   _subpop_2 |     8.1428          .             .           .
+     Eastern |    .865327          .             .           .
+    Northern |   1.012014          .             .           .
+     Western |   7.928226          .             .           .
 -------------+------------------------------------------------
 spg_flex1    |
-   _subpop_1 |   9.029231          .             .           .
-   _subpop_2 |   6.442435          .             .           .
-     Eastern |   .4175686          .             .           .
-    Northern |   .5032006          .             .           .
-     Western |   3.105699          .             .           .
+   _subpop_1 |   5.265976          .             .           .
+   _subpop_2 |   6.579518          .             .           .
+     Eastern |    .374839          .             .           .
+    Northern |   .3708813          .             .           .
+     Western |   4.093801          .             .           .
 --------------------------------------------------------------
 Note: missing standard errors because of stratum with single
       sampling unit.
@@ -1375,7 +1368,7 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
 >      Max
 -------------+---------------------------------------------------------
 > --------
-     h_flex1 |    2492  34690902.7    11.30399   31.67051          0   
+     h_flex1 |    2492  34690902.7    11.36297   31.74247          0   
 >      100
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
 > /work/foodshares_it1.dta saved
@@ -1391,8 +1384,8 @@ variable one does not uniquely identify observations in the master
 
    relpoor2 |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          0 | 1,452.5749       53.52       53.52
-          1 | 1,261.4251       46.48      100.00
+          0 | 1,452.0966       53.50       53.50
+          1 | 1,261.9034       46.50      100.00
 ------------+-----------------------------------
       Total |      2,714      100.00
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
@@ -1417,13 +1410,13 @@ variable hhid does not uniquely identify observations in the master
           3 |     34,121       99.82      100.00
 ------------+-----------------------------------
       Total |     34,182      100.00
-(22021 observations deleted)
-(10 missing values generated)
-   10
+(22262 observations deleted)
+(11 missing values generated)
+   11
     0
-(10 missing values generated)
-   10
-(10 observations deleted)
+(11 missing values generated)
+   11
+(11 observations deleted)
 (note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000a.tmp not fo
 > und)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000a.tmp saved
@@ -1435,14 +1428,14 @@ variable spdomain does not uniquely identify observations in the
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          3 |     12,151      100.00      100.00
+          3 |     11,909      100.00      100.00
 ------------+-----------------------------------
-      Total |     12,151      100.00
+      Total |     11,909      100.00
   164
 (164 observations deleted)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000a.tmp saved
-45
-45
+46
+46
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
 > /work/codes_food_basket_flex_it2.dta saved
 (HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
@@ -1469,13 +1462,13 @@ product was int now float
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          1 |      3,103        9.23        9.23
-          2 |          1        0.00        9.23
-          3 |     30,522       90.77      100.00
+          1 |      3,030        9.01        9.01
+          2 |          1        0.00        9.01
+          3 |     30,595       90.99      100.00
 ------------+-----------------------------------
       Total |     33,626      100.00
-(3104 observations deleted)
-(177 observations deleted)
+(3031 observations deleted)
+(181 observations deleted)
 (note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000e.tmp not fo
 > und)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000e.tmp saved
@@ -1503,35 +1496,35 @@ spdomain was byte now float
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
           2 |        134        0.44        0.44
-          3 |     30,345       99.56      100.00
+          3 |     30,414       99.56      100.00
 ------------+-----------------------------------
-      Total |     30,479      100.00
+      Total |     30,548      100.00
 variable hhid does not uniquely identify observations in the master
     data
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          3 |     30,479      100.00      100.00
+          3 |     30,548      100.00      100.00
 ------------+-----------------------------------
-      Total |     30,479      100.00
-(19209 observations deleted)
+      Total |     30,548      100.00
+(19474 observations deleted)
 (45 observations deleted)
-(785 observations deleted)
+(775 observations deleted)
 
     Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
-    ratiotw2 |       212    1.252933    .4820457   .8504128    4.64159
-    ratiomw2 |       212    1.059132    .3964208   .2999246   4.797804
+    ratiotw2 |       219     1.27601     .524948   .8082206    4.31711
+    ratiomw2 |       219     1.06976    .3987479   .3428777   4.587382
 variable product does not uniquely identify observations in the
     master data
 product was int now float
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          2 |          2        0.93        0.93
-          3 |        212       99.07      100.00
+          2 |          2        0.90        0.90
+          3 |        219       99.10      100.00
 ------------+-----------------------------------
-      Total |        214      100.00
+      Total |        221      100.00
     2
 (2 observations deleted)
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
@@ -1540,25 +1533,25 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          1 |          7        3.20        3.20
-          2 |         75       34.25       37.44
-          3 |        137       62.56      100.00
+          1 |          7        3.10        3.10
+          2 |         81       35.84       38.94
+          3 |        138       61.06      100.00
 ------------+-----------------------------------
-      Total |        219      100.00
+      Total |        226      100.00
 
      +------------------------------------+
      | product        spdomain   descript |
      |------------------------------------|
-132. |     157   Central Urban          1 |
-133. |     157   Central Rural          1 |
-134. |     157         Eastern          1 |
-135. |     157        Northern          1 |
-136. |     157         Western          1 |
+133. |     157   Central Urban          1 |
+134. |     157   Central Rural          1 |
+135. |     157         Eastern          1 |
+136. |     157        Northern          1 |
+137. |     157         Western          1 |
      |------------------------------------|
-143. |       .   Central Urban          1 |
-144. |       .   Central Rural          1 |
+144. |       .   Central Urban          1 |
+145. |       .   Central Rural          1 |
      +------------------------------------+
-(82 observations deleted)
+(88 observations deleted)
 variable product does not uniquely identify observations in the
     master data
 (note: descript is str26 in using data but will be float now)
@@ -1566,21 +1559,21 @@ variable product does not uniquely identify observations in the
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
           1 |          5        3.13        3.13
-          2 |         23       14.38       17.50
-          3 |        132       82.50      100.00
+          2 |         22       13.75       16.88
+          3 |        133       83.13      100.00
 ------------+-----------------------------------
       Total |        160      100.00
 
      +------------------------------------+
      | product        spdomain   descript |
      |------------------------------------|
-133. |     162        Northern          1 |
-134. |     166         Western          1 |
-135. |     170   Central Urban          1 |
-136. |     171   Central Rural          1 |
-137. |     171         Eastern          1 |
+134. |     162        Northern          1 |
+135. |     166         Western          1 |
+136. |     170   Central Urban          1 |
+137. |     171   Central Rural          1 |
+138. |     171         Eastern          1 |
      +------------------------------------+
-(28 observations deleted)
+(27 observations deleted)
 
 -----------------------------------------------------------------------
 -> spdomain = Central Urban
@@ -1600,7 +1593,7 @@ variable product does not uniquely identify observations in the
 
     Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
-        bswt |       132    69.31061    55.25004          7        277
+        bswt |       133    67.38346    58.33442          5        336
 (5 observations deleted)
 (0 observations deleted)
 
@@ -1610,13 +1603,13 @@ Summary for variables: baskshr
 
      spdomain |         N      mean        sd       min       max
 --------------+--------------------------------------------------
-Central Urban |        25   .762072         0   .762072   .762072
-Central Rural |        26  .7597615         0  .7597615  .7597615
-      Eastern |        27  .8900589         0  .8900589  .8900589
-     Northern |        26  .8547322         0  .8547322  .8547322
-      Western |        23   .880883         0   .880883   .880883
+Central Urban |        25  .7935855         0  .7935855  .7935855
+Central Rural |        26  .7531532         0  .7531532  .7531532
+      Eastern |        28  .9005471         0  .9005471  .9005471
+     Northern |        26  .8576869         0  .8576869  .8576869
+      Western |        23   .885156         0   .885156   .885156
 --------------+--------------------------------------------------
-        Total |       127  .8292956  .0574874  .7597615  .8900589
+        Total |       128  .8382452  .0566272  .7531532  .9005471
 -----------------------------------------------------------------
 variable spdomain does not uniquely identify observations in the
     master data
@@ -1624,13 +1617,13 @@ variable spdomain does not uniquely identify observations in the
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
           2 |          1        0.78        0.78
-          3 |        127       99.22      100.00
+          3 |        128       99.22      100.00
 ------------+-----------------------------------
-      Total |        128      100.00
+      Total |        129      100.00
 (1 missing value generated)
-(127 real changes made)
-(120 real changes made)
 (128 real changes made)
+(121 real changes made)
+(129 real changes made)
 
 Summary for variables: chkcal
      by categories of: spdomain (Spatial domains: each with own poverty
@@ -1638,16 +1631,16 @@ Summary for variables: chkcal
 
      spdomain |         N      mean        sd       min       max
 --------------+--------------------------------------------------
-Central Urban |        25  6.42e-06         0  6.42e-06  6.42e-06
+Central Urban |        25  .0000707         0  .0000707  .0000707
 Central Rural |        26  .0000257         0  .0000257  .0000257
-      Eastern |        27 -.0000257         0 -.0000257 -.0000257
-     Northern |        26  .0000321         0  .0000321  .0000321
+      Eastern |        28 -.0000257         0 -.0000257 -.0000257
+     Northern |        26 -.0000964         0 -.0000964 -.0000964
       Western |        23  .0000578         0  .0000578  .0000578
 --------------+--------------------------------------------------
-        Total |       127  .0000181  .0000279 -.0000257  .0000578
+        Total |       128  4.22e-06  .0000613 -.0000964  .0000707
 -----------------------------------------------------------------
 (1 missing value generated)
-(127 real changes made)
+(128 real changes made)
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
 > /work/quan_flex_it2.dta saved
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
@@ -1661,7 +1654,7 @@ variable spdomain does not uniquely identify observations in the
           3 |      2,717      100.00      100.00
 ------------+-----------------------------------
       Total |      2,717      100.00
-(56 real changes made)
+(96 real changes made)
 (3 missing values generated)
 (note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000g.tmp not fo
 > und)
@@ -1699,20 +1692,20 @@ variable spdomain does not uniquely identify observations in
 >      Max
 -------------+---------------------------------------------------------
 > --------
-          cr |    2492  34690902.7    1990.349   5527.795          0   
-> 252488.6
-      cr_it2 |    2492  34690902.7    1990.349   7532.325          0   
-> 383041.4
-     linpob2 |    2714  37328356.8     720.859   666.3795          0   
-> 2774.872
-    linpobr2 |    2707    37257099    516.7629          0   516.7629   
-> 516.7629
-(2481 missing values generated)
-(2256 real changes made)
+          cr |    2492  34690902.7    1467.411   2339.007          0   
+> 72983.64
+      cr_it2 |    2492  34690902.7    1467.411   1952.888          0   
+> 55674.09
+     linpob2 |    2714  37328356.8    622.5717    479.812          0   
+> 2025.139
+    linpobr2 |    2707    37257099    468.3002   .0000142   468.3001   
+> 468.3002
+(2439 missing values generated)
+(2214 real changes made)
 (225 missing values generated)
-(2256 real changes made)
+(2214 real changes made)
 (225 missing values generated)
-(2256 real changes made)
+(2214 real changes made)
 (225 missing values generated)
 (225 missing values generated)
 (225 missing values generated)
@@ -1736,9 +1729,9 @@ Number of PSUs   =     317        Population size  =  34690903
              |             Linearized
              |       Mean   Std. Err.     [95% Conf. Interval]
 -------------+------------------------------------------------
-     h_flex2 |   9.844081          .             .           .
-    pg_flex2 |   3.878088          .             .           .
-   spg_flex2 |   2.533186          .             .           .
+     h_flex2 |   11.99919          .             .           .
+    pg_flex2 |   4.577506          .             .           .
+   spg_flex2 |   2.787255          .             .           .
 --------------------------------------------------------------
 Note: missing standard errors because of stratum with single
       sampling unit.
@@ -1758,16 +1751,16 @@ Number of PSUs   =     317        Population size  =  34690903
         Over |       Mean   Std. Err.     [95% Conf. Interval]
 -------------+------------------------------------------------
 h_flex2      |
-           0 |   21.76924          .             .           .
-           1 |   8.482435          .             .           .
+           0 |    15.0638          .             .           .
+           1 |   11.64927          .             .           .
 -------------+------------------------------------------------
 pg_flex2     |
-           0 |   7.802456          .             .           .
-           1 |   3.429993          .             .           .
+           0 |   5.373952          .             .           .
+           1 |   4.486566          .             .           .
 -------------+------------------------------------------------
 spg_flex2    |
-           0 |   4.143901          .             .           .
-           1 |   2.349271          .             .           .
+           0 |   2.947772          .             .           .
+           1 |   2.768927          .             .           .
 --------------------------------------------------------------
 Note: missing standard errors because of stratum with single
       sampling unit.
@@ -1792,27 +1785,27 @@ Number of PSUs   =     317        Population size  =  34690903
 -------------+------------------------------------------------
 h_flex2      |
      Kampala |          0  (omitted)
-   _subpop_2 |   21.76924          .             .           .
-   _subpop_3 |    13.1653          .             .           .
-   _subpop_4 |   2.415916          .             .           .
-   _subpop_5 |   4.372422          .             .           .
-   _subpop_6 |   15.09143          .             .           .
+   _subpop_2 |    15.0638          .             .           .
+   _subpop_3 |   14.04497          .             .           .
+   _subpop_4 |   2.692934          .             .           .
+   _subpop_5 |   5.649407          .             .           .
+   _subpop_6 |   25.02446          .             .           .
 -------------+------------------------------------------------
 pg_flex2     |
      Kampala |          0  (omitted)
-   _subpop_2 |   7.802456          .             .           .
-   _subpop_3 |   7.917947          .             .           .
-   _subpop_4 |   .8795093          .             .           .
-   _subpop_5 |   .8553601          .             .           .
-   _subpop_6 |   4.929269          .             .           .
+   _subpop_2 |   5.373952          .             .           .
+   _subpop_3 |   8.213851          .             .           .
+   _subpop_4 |   .8996534          .             .           .
+   _subpop_5 |   1.036598          .             .           .
+   _subpop_6 |   8.544508          .             .           .
 -------------+------------------------------------------------
 spg_flex2    |
      Kampala |          0  (omitted)
-   _subpop_2 |   4.143901          .             .           .
-   _subpop_3 |   6.475623          .             .           .
-   _subpop_4 |   .4036744          .             .           .
-   _subpop_5 |   .3267688          .             .           .
-   _subpop_6 |   2.972345          .             .           .
+   _subpop_2 |   2.947772          .             .           .
+   _subpop_3 |   6.629168          .             .           .
+   _subpop_4 |   .3851901          .             .           .
+   _subpop_5 |   .3861707          .             .           .
+   _subpop_6 |   4.419361          .             .           .
 --------------------------------------------------------------
 Note: missing standard errors because of stratum with single
       sampling unit.
@@ -1838,27 +1831,27 @@ Number of PSUs   =     317        Population size  =  34690903
 -------------+------------------------------------------------
 h_flex2      |
    _subpop_1 |          0  (omitted)
-   _subpop_2 |   21.76924          .             .           .
-   _subpop_3 |    13.1653          .             .           .
-   _subpop_4 |   2.415916          .             .           .
-   _subpop_5 |   4.372422          .             .           .
-   _subpop_6 |   15.09143          .             .           .
+   _subpop_2 |    15.0638          .             .           .
+   _subpop_3 |   14.04497          .             .           .
+   _subpop_4 |   2.692934          .             .           .
+   _subpop_5 |   5.649407          .             .           .
+   _subpop_6 |   25.02446          .             .           .
 -------------+------------------------------------------------
 pg_flex2     |
    _subpop_1 |          0  (omitted)
-   _subpop_2 |   7.802456          .             .           .
-   _subpop_3 |   7.917947          .             .           .
-   _subpop_4 |   .8795093          .             .           .
-   _subpop_5 |   .8553601          .             .           .
-   _subpop_6 |   4.929269          .             .           .
+   _subpop_2 |   5.373952          .             .           .
+   _subpop_3 |   8.213851          .             .           .
+   _subpop_4 |   .8996534          .             .           .
+   _subpop_5 |   1.036598          .             .           .
+   _subpop_6 |   8.544508          .             .           .
 -------------+------------------------------------------------
 spg_flex2    |
    _subpop_1 |          0  (omitted)
-   _subpop_2 |   4.143901          .             .           .
-   _subpop_3 |   6.475623          .             .           .
-   _subpop_4 |   .4036744          .             .           .
-   _subpop_5 |   .3267688          .             .           .
-   _subpop_6 |   2.972345          .             .           .
+   _subpop_2 |   2.947772          .             .           .
+   _subpop_3 |   6.629168          .             .           .
+   _subpop_4 |   .3851901          .             .           .
+   _subpop_5 |   .3861707          .             .           .
+   _subpop_6 |   4.419361          .             .           .
 --------------------------------------------------------------
 Note: missing standard errors because of stratum with single
       sampling unit.
@@ -1881,25 +1874,25 @@ Number of PSUs   =     317        Population size  =  34690903
         Over |       Mean   Std. Err.     [95% Conf. Interval]
 -------------+------------------------------------------------
 h_flex2      |
-   _subpop_1 |    51.4747          .             .           .
-   _subpop_2 |   13.09757          .             .           .
-     Eastern |   2.401441          .             .           .
-    Northern |   3.936353          .             .           .
-     Western |   14.42713          .             .           .
+   _subpop_1 |   34.36474          .             .           .
+   _subpop_2 |   13.97271          .             .           .
+     Eastern |   2.530198          .             .           .
+    Northern |   5.085983          .             .           .
+     Western |   23.81301          .             .           .
 -------------+------------------------------------------------
 pg_flex2     |
-   _subpop_1 |   18.94604          .             .           .
-   _subpop_2 |   7.877213          .             .           .
-     Eastern |   .8407687          .             .           .
-    Northern |   .7700536          .             .           .
-     Western |   4.681379          .             .           .
+   _subpop_1 |   12.60323          .             .           .
+   _subpop_2 |   8.171595          .             .           .
+     Eastern |   .8529052          .             .           .
+    Northern |   .9332167          .             .           .
+     Western |   8.077013          .             .           .
 -------------+------------------------------------------------
 spg_flex2    |
-   _subpop_1 |   10.12423          .             .           .
-   _subpop_2 |   6.442309          .             .           .
-     Eastern |   .3856657          .             .           .
-    Northern |   .2941796          .             .           .
-     Western |   2.807814          .             .           .
+   _subpop_1 |   7.001587          .             .           .
+   _subpop_2 |   6.595064          .             .           .
+     Eastern |   .3675852          .             .           .
+    Northern |   .3476573          .             .           .
+     Western |   4.167709          .             .           .
 --------------------------------------------------------------
 Note: missing standard errors because of stratum with single
       sampling unit.
@@ -1914,7 +1907,7 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
 >      Max
 -------------+---------------------------------------------------------
 > --------
-     h_flex2 |    2492  34690902.7    9.844081   29.79695          0   
+     h_flex2 |    2492  34690902.7    11.99919   32.50173          0   
 >      100
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
 > /work/foodshares_it2.dta saved
@@ -1930,8 +1923,8 @@ variable one does not uniquely identify observations in the master
 
    relpoor3 |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          0 | 1,452.7411       53.53       53.53
-          1 | 1,261.2589       46.47      100.00
+          0 | 1,452.8686       53.53       53.53
+          1 | 1,261.1314       46.47      100.00
 ------------+-----------------------------------
       Total |      2,714      100.00
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
@@ -1956,13 +1949,13 @@ variable hhid does not uniquely identify observations in the master
           3 |     34,121       99.82      100.00
 ------------+-----------------------------------
       Total |     34,182      100.00
-(21886 observations deleted)
-(10 missing values generated)
-   10
+(22149 observations deleted)
+(11 missing values generated)
+   11
     0
-(10 missing values generated)
-   10
-(10 observations deleted)
+(11 missing values generated)
+   11
+(11 observations deleted)
 (note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000h.tmp not fo
 > und)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000h.tmp saved
@@ -1974,14 +1967,14 @@ variable spdomain does not uniquely identify observations in the
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          3 |     12,286      100.00      100.00
+          3 |     12,022      100.00      100.00
 ------------+-----------------------------------
-      Total |     12,286      100.00
-  164
-(164 observations deleted)
+      Total |     12,022      100.00
+  165
+(165 observations deleted)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000h.tmp saved
-47
-47
+46
+46
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
 > /work/codes_food_basket_flex_it3.dta saved
 (HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
@@ -2008,13 +2001,13 @@ product was int now float
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          1 |      2,831        8.42        8.42
-          2 |          2        0.01        8.42
-          3 |     30,794       91.58      100.00
+          1 |      3,030        9.01        9.01
+          2 |          1        0.00        9.01
+          3 |     30,595       90.99      100.00
 ------------+-----------------------------------
-      Total |     33,627      100.00
-(2833 observations deleted)
-(179 observations deleted)
+      Total |     33,626      100.00
+(3031 observations deleted)
+(181 observations deleted)
 (note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000l.tmp not fo
 > und)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000l.tmp saved
@@ -2041,49 +2034,49 @@ spdomain was byte now float
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          2 |        133        0.43        0.43
-          3 |     30,615       99.57      100.00
+          2 |        134        0.44        0.44
+          3 |     30,414       99.56      100.00
 ------------+-----------------------------------
-      Total |     30,748      100.00
+      Total |     30,548      100.00
 variable hhid does not uniquely identify observations in the master
     data
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          3 |     30,748      100.00      100.00
+          3 |     30,548      100.00      100.00
 ------------+-----------------------------------
-      Total |     30,748      100.00
-(19323 observations deleted)
+      Total |     30,548      100.00
+(19391 observations deleted)
 (45 observations deleted)
-(794 observations deleted)
+(776 observations deleted)
 
     Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
-    ratiotw3 |       217    1.262218    .4901708   .8819051    4.64159
-    ratiomw3 |       217    1.068268    .4071235   .4867766    4.13329
+    ratiotw3 |       219    1.274658    .5061596   .8083197    4.31711
+    ratiomw3 |       219    1.074855    .3842247   .3428777   4.108816
 variable product does not uniquely identify observations in the
     master data
 product was int now float
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          2 |          3        1.36        1.36
-          3 |        217       98.64      100.00
+          2 |          2        0.90        0.90
+          3 |        219       99.10      100.00
 ------------+-----------------------------------
-      Total |        220      100.00
-    3
-(3 observations deleted)
+      Total |        221      100.00
+    2
+(2 observations deleted)
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
 > /work/price_unit_flex_it3.dta saved
 (label lspdomain already defined)
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          1 |          8        3.56        3.56
-          2 |         80       35.56       39.11
-          3 |        137       60.89      100.00
+          1 |          7        3.10        3.10
+          2 |         82       36.28       39.38
+          3 |        137       60.62      100.00
 ------------+-----------------------------------
-      Total |        225      100.00
+      Total |        226      100.00
 
      +------------------------------------+
      | product        spdomain   descript |
@@ -2094,11 +2087,10 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
 135. |     157        Northern          1 |
 136. |     157         Western          1 |
      |------------------------------------|
-138. |     160   Central Urban          1 |
-144. |       .   Central Urban          1 |
-145. |       .   Central Rural          1 |
+143. |       .   Central Urban          1 |
+144. |       .   Central Rural          1 |
      +------------------------------------+
-(88 observations deleted)
+(89 observations deleted)
 variable product does not uniquely identify observations in the
     master data
 (note: descript is str26 in using data but will be float now)
@@ -2124,7 +2116,7 @@ variable product does not uniquely identify observations in the
 
 -----------------------------------------------------------------------
 -> spdomain = Central Urban
-    3
+    4
 -----------------------------------------------------------------------
 -> spdomain = Central Rural
     0
@@ -2140,8 +2132,8 @@ variable product does not uniquely identify observations in the
 
     Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
-        bswt |       132    70.09091    55.66427          7        277
-(4 observations deleted)
+        bswt |       132    68.31061    58.08025          5        337
+(5 observations deleted)
 (0 observations deleted)
 
 Summary for variables: baskshr
@@ -2150,13 +2142,13 @@ Summary for variables: baskshr
 
      spdomain |         N      mean        sd       min       max
 --------------+--------------------------------------------------
-Central Urban |        25  .7333384         0  .7333384  .7333384
-Central Rural |        26  .7648284         0  .7648284  .7648284
-      Eastern |        28  .8941371         0  .8941371  .8941371
-     Northern |        26  .8529498         0  .8529498  .8529498
-      Western |        23   .880883         0   .880883   .880883
+Central Urban |        25   .763405         0   .763405   .763405
+Central Rural |        26  .7529826         0  .7529826  .7529826
+      Eastern |        28  .9002006         0  .9002006  .9002006
+     Northern |        25  .8481905         0  .8481905  .8481905
+      Western |        23   .885047         0   .885047   .885047
 --------------+--------------------------------------------------
-        Total |       128  .8257175  .0646062  .7333384  .8941371
+        Total |       127  .8301506  .0617886  .7529826  .9002006
 -----------------------------------------------------------------
 variable spdomain does not uniquely identify observations in the
     master data
@@ -2164,13 +2156,13 @@ variable spdomain does not uniquely identify observations in the
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
           2 |          1        0.78        0.78
-          3 |        128       99.22      100.00
+          3 |        127       99.22      100.00
 ------------+-----------------------------------
-      Total |        129      100.00
+      Total |        128      100.00
 (1 missing value generated)
+(127 real changes made)
+(120 real changes made)
 (128 real changes made)
-(121 real changes made)
-(129 real changes made)
 
 Summary for variables: chkcal
      by categories of: spdomain (Spatial domains: each with own poverty
@@ -2178,16 +2170,16 @@ Summary for variables: chkcal
 
      spdomain |         N      mean        sd       min       max
 --------------+--------------------------------------------------
-Central Urban |        25 -.0001221         0 -.0001221 -.0001221
+Central Urban |        25  .0000707         0  .0000707  .0000707
 Central Rural |        26 -.0000385         0 -.0000385 -.0000385
-      Eastern |        28 -.0000899         0 -.0000899 -.0000899
-     Northern |        26  .0000321         0  .0000321  .0000321
-      Western |        23  .0000578         0  .0000578  .0000578
+      Eastern |        28  .0000385         0  .0000385  .0000385
+     Northern |        25 -.0000964         0 -.0000964 -.0000964
+      Western |        23 -.0000707         0 -.0000707 -.0000707
 --------------+--------------------------------------------------
-        Total |       128 -.0000344  .0000681 -.0001221  .0000578
+        Total |       127 -.0000173  .0000639 -.0000964  .0000707
 -----------------------------------------------------------------
 (1 missing value generated)
-(128 real changes made)
+(127 real changes made)
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
 > /work/quan_flex_it3.dta saved
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
@@ -2201,7 +2193,7 @@ variable spdomain does not uniquely identify observations in the
           3 |      2,717      100.00      100.00
 ------------+-----------------------------------
       Total |      2,717      100.00
-(56 real changes made)
+(97 real changes made)
 (3 missing values generated)
 (note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000n.tmp not fo
 > und)
@@ -2239,20 +2231,20 @@ variable spdomain does not uniquely identify observations in
 >      Max
 -------------+---------------------------------------------------------
 > --------
-          cr |    2492  34690902.7    1990.349   5527.795          0   
-> 252488.6
-      cr_it3 |    2492  34690902.7    1990.349   7521.424          0   
-> 382334.8
-     linpob3 |    2714  37328356.8    723.3075   673.1132          0   
-> 2799.716
-    linpobr3 |    2707    37257099    517.5221   .0000268    517.522   
-> 517.5221
-(2481 missing values generated)
-(2256 real changes made)
+          cr |    2492  34690902.7    1467.411   2339.007          0   
+> 72983.64
+      cr_it3 |    2492  34690902.7    1467.411   1952.567          0   
+> 55551.59
+     linpob3 |    2714  37328356.8    624.9682   488.1951          0   
+>  2054.84
+    linpobr3 |    2707    37257099    467.3574   .0000151   467.3574   
+> 467.3574
+(2438 missing values generated)
+(2213 real changes made)
 (225 missing values generated)
-(2256 real changes made)
+(2213 real changes made)
 (225 missing values generated)
-(2256 real changes made)
+(2213 real changes made)
 (225 missing values generated)
 (225 missing values generated)
 (225 missing values generated)
@@ -2276,9 +2268,9 @@ Number of PSUs   =     317        Population size  =  34690903
              |             Linearized
              |       Mean   Std. Err.     [95% Conf. Interval]
 -------------+------------------------------------------------
-     h_flex3 |   9.844081          .             .           .
-    pg_flex3 |   3.890261          .             .           .
-   spg_flex3 |   2.539307          .             .           .
+     h_flex3 |    12.1365          .             .           .
+    pg_flex3 |    4.58596          .             .           .
+   spg_flex3 |    2.79407          .             .           .
 --------------------------------------------------------------
 Note: missing standard errors because of stratum with single
       sampling unit.
@@ -2298,16 +2290,16 @@ Number of PSUs   =     317        Population size  =  34690903
         Over |       Mean   Std. Err.     [95% Conf. Interval]
 -------------+------------------------------------------------
 h_flex3      |
-           0 |   21.76924          .             .           .
-           1 |   8.482435          .             .           .
+           0 |   17.45556          .             .           .
+           1 |   11.52916          .             .           .
 -------------+------------------------------------------------
 pg_flex3     |
-           0 |   7.917524          .             .           .
-           1 |   3.430418          .             .           .
+           0 |   5.514416          .             .           .
+           1 |   4.479946          .             .           .
 -------------+------------------------------------------------
 spg_flex3    |
-           0 |   4.206679          .             .           .
-           1 |   2.348922          .             .           .
+           0 |   3.013848          .             .           .
+           1 |   2.768975          .             .           .
 --------------------------------------------------------------
 Note: missing standard errors because of stratum with single
       sampling unit.
@@ -2332,27 +2324,27 @@ Number of PSUs   =     317        Population size  =  34690903
 -------------+------------------------------------------------
 h_flex3      |
      Kampala |          0  (omitted)
-   _subpop_2 |   21.76924          .             .           .
-   _subpop_3 |    13.1653          .             .           .
-   _subpop_4 |   2.415916          .             .           .
-   _subpop_5 |   4.372422          .             .           .
-   _subpop_6 |   15.09143          .             .           .
+   _subpop_2 |   17.45556          .             .           .
+   _subpop_3 |   14.04497          .             .           .
+   _subpop_4 |   2.692934          .             .           .
+   _subpop_5 |   5.147406          .             .           .
+   _subpop_6 |   25.02446          .             .           .
 -------------+------------------------------------------------
 pg_flex3     |
      Kampala |          0  (omitted)
-   _subpop_2 |   7.917524          .             .           .
-   _subpop_3 |    7.90065          .             .           .
-   _subpop_4 |   .8841512          .             .           .
-   _subpop_5 |   .8669976          .             .           .
-   _subpop_6 |    4.92927          .             .           .
+   _subpop_2 |   5.514416          .             .           .
+   _subpop_3 |   8.214945          .             .           .
+   _subpop_4 |   .9081349          .             .           .
+   _subpop_5 |   .9748339          .             .           .
+   _subpop_6 |   8.565577          .             .           .
 -------------+------------------------------------------------
 spg_flex3    |
      Kampala |          0  (omitted)
-   _subpop_2 |   4.206679          .             .           .
-   _subpop_3 |   6.466156          .             .           .
-   _subpop_4 |   .4065594          .             .           .
-   _subpop_5 |   .3302996          .             .           .
-   _subpop_6 |   2.972345          .             .           .
+   _subpop_2 |   3.013848          .             .           .
+   _subpop_3 |   6.629763          .             .           .
+   _subpop_4 |   .3900851          .             .           .
+   _subpop_5 |   .3684625          .             .           .
+   _subpop_6 |   4.429929          .             .           .
 --------------------------------------------------------------
 Note: missing standard errors because of stratum with single
       sampling unit.
@@ -2378,27 +2370,27 @@ Number of PSUs   =     317        Population size  =  34690903
 -------------+------------------------------------------------
 h_flex3      |
    _subpop_1 |          0  (omitted)
-   _subpop_2 |   21.76924          .             .           .
-   _subpop_3 |    13.1653          .             .           .
-   _subpop_4 |   2.415916          .             .           .
-   _subpop_5 |   4.372422          .             .           .
-   _subpop_6 |   15.09143          .             .           .
+   _subpop_2 |   17.45556          .             .           .
+   _subpop_3 |   14.04497          .             .           .
+   _subpop_4 |   2.692934          .             .           .
+   _subpop_5 |   5.147406          .             .           .
+   _subpop_6 |   25.02446          .             .           .
 -------------+------------------------------------------------
 pg_flex3     |
    _subpop_1 |          0  (omitted)
-   _subpop_2 |   7.917524          .             .           .
-   _subpop_3 |    7.90065          .             .           .
-   _subpop_4 |   .8841512          .             .           .
-   _subpop_5 |   .8669976          .             .           .
-   _subpop_6 |    4.92927          .             .           .
+   _subpop_2 |   5.514416          .             .           .
+   _subpop_3 |   8.214945          .             .           .
+   _subpop_4 |   .9081349          .             .           .
+   _subpop_5 |   .9748339          .             .           .
+   _subpop_6 |   8.565577          .             .           .
 -------------+------------------------------------------------
 spg_flex3    |
    _subpop_1 |          0  (omitted)
-   _subpop_2 |   4.206679          .             .           .
-   _subpop_3 |   6.466156          .             .           .
-   _subpop_4 |   .4065594          .             .           .
-   _subpop_5 |   .3302996          .             .           .
-   _subpop_6 |   2.972345          .             .           .
+   _subpop_2 |   3.013848          .             .           .
+   _subpop_3 |   6.629763          .             .           .
+   _subpop_4 |   .3900851          .             .           .
+   _subpop_5 |   .3684625          .             .           .
+   _subpop_6 |   4.429929          .             .           .
 --------------------------------------------------------------
 Note: missing standard errors because of stratum with single
       sampling unit.
@@ -2421,25 +2413,25 @@ Number of PSUs   =     317        Population size  =  34690903
         Over |       Mean   Std. Err.     [95% Conf. Interval]
 -------------+------------------------------------------------
 h_flex3      |
-   _subpop_1 |    51.4747          .             .           .
-   _subpop_2 |   13.09757          .             .           .
-     Eastern |   2.401441          .             .           .
-    Northern |   3.936353          .             .           .
-     Western |   14.42713          .             .           .
+   _subpop_1 |    40.4234          .             .           .
+   _subpop_2 |   13.97271          .             .           .
+     Eastern |   2.530198          .             .           .
+    Northern |   4.634047          .             .           .
+     Western |   23.81301          .             .           .
 -------------+------------------------------------------------
 pg_flex3     |
-   _subpop_1 |   19.23469          .             .           .
-   _subpop_2 |   7.860005          .             .           .
-     Eastern |   .8454839          .             .           .
-    Northern |   .7805305          .             .           .
-     Western |   4.681379          .             .           .
+   _subpop_1 |   12.95513          .             .           .
+   _subpop_2 |   8.172683          .             .           .
+     Eastern |   .8608382          .             .           .
+    Northern |   .8776121          .             .           .
+     Western |   8.097132          .             .           .
 -------------+------------------------------------------------
 spg_flex3    |
-   _subpop_1 |   10.28266          .             .           .
-   _subpop_2 |   6.432891          .             .           .
-     Eastern |   .3884258          .             .           .
-    Northern |   .2973582          .             .           .
-     Western |   2.807814          .             .           .
+   _subpop_1 |   7.167165          .             .           .
+   _subpop_2 |   6.595656          .             .           .
+     Eastern |   .3722027          .             .           .
+    Northern |   .3317151          .             .           .
+     Western |   4.177724          .             .           .
 --------------------------------------------------------------
 Note: missing standard errors because of stratum with single
       sampling unit.
@@ -2454,7 +2446,7 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
 >      Max
 -------------+---------------------------------------------------------
 > --------
-     h_flex3 |    2492  34690902.7    9.844081   29.79695          0   
+     h_flex3 |    2492  34690902.7     12.1365   32.66165          0   
 >      100
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
 > /work/foodshares_it3.dta saved
@@ -2470,8 +2462,8 @@ variable one does not uniquely identify observations in the master
 
    relpoor4 |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          0 | 1,452.7643       53.53       53.53
-          1 | 1,261.2357       46.47      100.00
+          0 | 1,451.9086       53.50       53.50
+          1 | 1,262.0914       46.50      100.00
 ------------+-----------------------------------
       Total |      2,714      100.00
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
@@ -2496,13 +2488,13 @@ variable hhid does not uniquely identify observations in the master
           3 |     34,121       99.82      100.00
 ------------+-----------------------------------
       Total |     34,182      100.00
-(21905 observations deleted)
-(10 missing values generated)
-   10
+(22181 observations deleted)
+(11 missing values generated)
+   11
     0
-(10 missing values generated)
-   10
-(10 observations deleted)
+(11 missing values generated)
+   11
+(11 observations deleted)
 (note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000o.tmp not fo
 > und)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000o.tmp saved
@@ -2514,14 +2506,14 @@ variable spdomain does not uniquely identify observations in the
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          3 |     12,267      100.00      100.00
+          3 |     11,990      100.00      100.00
 ------------+-----------------------------------
-      Total |     12,267      100.00
-  164
-(164 observations deleted)
+      Total |     11,990      100.00
+  165
+(165 observations deleted)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000o.tmp saved
-47
-47
+46
+46
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
 > /work/codes_food_basket_flex_it4.dta saved
 (HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
@@ -2548,13 +2540,13 @@ product was int now float
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          1 |      2,831        8.42        8.42
-          2 |          2        0.01        8.42
-          3 |     30,794       91.58      100.00
+          1 |      3,030        9.01        9.01
+          2 |          1        0.00        9.01
+          3 |     30,595       90.99      100.00
 ------------+-----------------------------------
-      Total |     33,627      100.00
-(2833 observations deleted)
-(179 observations deleted)
+      Total |     33,626      100.00
+(3031 observations deleted)
+(181 observations deleted)
 (note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000s.tmp not fo
 > und)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000s.tmp saved
@@ -2581,49 +2573,49 @@ spdomain was byte now float
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          2 |        133        0.43        0.43
-          3 |     30,615       99.57      100.00
+          2 |        134        0.44        0.44
+          3 |     30,414       99.56      100.00
 ------------+-----------------------------------
-      Total |     30,748      100.00
+      Total |     30,548      100.00
 variable hhid does not uniquely identify observations in the master
     data
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          3 |     30,748      100.00      100.00
+          3 |     30,548      100.00      100.00
 ------------+-----------------------------------
-      Total |     30,748      100.00
-(19340 observations deleted)
-(45 observations deleted)
-(797 observations deleted)
+      Total |     30,548      100.00
+(19416 observations deleted)
+(44 observations deleted)
+(777 observations deleted)
 
     Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
-    ratiotw4 |       217    1.263138    .4944414   .8819051    4.64159
-    ratiomw4 |       217    1.067593    .4058826   .4867766   4.090567
+    ratiotw4 |       219    1.275778    .5071754   .8083197    4.31711
+    ratiomw4 |       219    1.074048    .3886707   .3428777   4.108816
 variable product does not uniquely identify observations in the
     master data
 product was int now float
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          2 |          3        1.36        1.36
-          3 |        217       98.64      100.00
+          2 |          2        0.90        0.90
+          3 |        219       99.10      100.00
 ------------+-----------------------------------
-      Total |        220      100.00
-    3
-(3 observations deleted)
+      Total |        221      100.00
+    2
+(2 observations deleted)
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
 > /work/price_unit_flex_it4.dta saved
 (label lspdomain already defined)
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          1 |          8        3.56        3.56
-          2 |         80       35.56       39.11
-          3 |        137       60.89      100.00
+          1 |          7        3.10        3.10
+          2 |         82       36.28       39.38
+          3 |        137       60.62      100.00
 ------------+-----------------------------------
-      Total |        225      100.00
+      Total |        226      100.00
 
      +------------------------------------+
      | product        spdomain   descript |
@@ -2634,11 +2626,10 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
 135. |     157        Northern          1 |
 136. |     157         Western          1 |
      |------------------------------------|
-138. |     160   Central Urban          1 |
-144. |       .   Central Urban          1 |
-145. |       .   Central Rural          1 |
+143. |       .   Central Urban          1 |
+144. |       .   Central Rural          1 |
      +------------------------------------+
-(88 observations deleted)
+(89 observations deleted)
 variable product does not uniquely identify observations in the
     master data
 (note: descript is str26 in using data but will be float now)
@@ -2664,7 +2655,7 @@ variable product does not uniquely identify observations in the
 
 -----------------------------------------------------------------------
 -> spdomain = Central Urban
-    3
+    4
 -----------------------------------------------------------------------
 -> spdomain = Central Rural
     0
@@ -2680,8 +2671,8 @@ variable product does not uniquely identify observations in the
 
     Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
-        bswt |       132    69.98485    55.50682          7        277
-(4 observations deleted)
+        bswt |       132    68.21212    58.12044          5        339
+(5 observations deleted)
 (0 observations deleted)
 
 Summary for variables: baskshr
@@ -2690,13 +2681,13 @@ Summary for variables: baskshr
 
      spdomain |         N      mean        sd       min       max
 --------------+--------------------------------------------------
-Central Urban |        25  .7333384         0  .7333384  .7333384
-Central Rural |        26  .7645174         0  .7645174  .7645174
-      Eastern |        28  .8942755         0  .8942755  .8942755
-     Northern |        26  .8532822         0  .8532822  .8532822
-      Western |        23   .880883         0   .880883   .880883
+Central Urban |        25   .763405         0   .763405   .763405
+Central Rural |        26  .7529826         0  .7529826  .7529826
+      Eastern |        28  .9005471         0  .9005471  .9005471
+     Northern |        25  .8527654         0  .8527654  .8527654
+      Western |        23  .8855708         0  .8855708  .8855708
 --------------+--------------------------------------------------
-        Total |       128  .8257521  .0647274  .7333384  .8942755
+        Total |       127  .8312225   .062249  .7529826  .9005471
 -----------------------------------------------------------------
 variable spdomain does not uniquely identify observations in the
     master data
@@ -2704,13 +2695,13 @@ variable spdomain does not uniquely identify observations in the
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
           2 |          1        0.78        0.78
-          3 |        128       99.22      100.00
+          3 |        127       99.22      100.00
 ------------+-----------------------------------
-      Total |        129      100.00
+      Total |        128      100.00
 (1 missing value generated)
+(127 real changes made)
+(120 real changes made)
 (128 real changes made)
-(121 real changes made)
-(129 real changes made)
 
 Summary for variables: chkcal
      by categories of: spdomain (Spatial domains: each with own poverty
@@ -2718,16 +2709,16 @@ Summary for variables: chkcal
 
      spdomain |         N      mean        sd       min       max
 --------------+--------------------------------------------------
-Central Urban |        25 -.0001221         0 -.0001221 -.0001221
-Central Rural |        26  .0000257         0  .0000257  .0000257
+Central Urban |        25  .0000707         0  .0000707  .0000707
+Central Rural |        26 -.0000385         0 -.0000385 -.0000385
       Eastern |        28 -.0000257         0 -.0000257 -.0000257
-     Northern |        26  .0001606         0  .0001606  .0001606
+     Northern |        25 -.0000964         0 -.0000964 -.0000964
       Western |        23  .0000578         0  .0000578  .0000578
 --------------+--------------------------------------------------
-        Total |       128  .0000188  .0000935 -.0001221  .0001606
+        Total |       127 -8.14e-06  .0000619 -.0000964  .0000707
 -----------------------------------------------------------------
 (1 missing value generated)
-(128 real changes made)
+(127 real changes made)
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
 > /work/quan_flex_it4.dta saved
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
@@ -2741,7 +2732,7 @@ variable spdomain does not uniquely identify observations in the
           3 |      2,717      100.00      100.00
 ------------+-----------------------------------
       Total |      2,717      100.00
-(56 real changes made)
+(97 real changes made)
 (3 missing values generated)
 (note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000u.tmp not fo
 > und)
@@ -2779,20 +2770,20 @@ variable spdomain does not uniquely identify observations in
 >      Max
 -------------+---------------------------------------------------------
 > --------
-          cr |    2492  34690902.7    1990.349   5527.795          0   
-> 252488.6
-      cr_it4 |    2492  34690902.7    1990.349   7517.215          0   
-> 382114.2
-     linpob4 |    2714  37328356.8     723.756   673.0642          0   
-> 2799.716
-    linpobr4 |    2707    37257099    518.0089          0   518.0089   
-> 518.0089
-(2481 missing values generated)
-(2256 real changes made)
+          cr |    2492  34690902.7    1467.411   2339.007          0   
+> 72983.64
+      cr_it4 |    2492  34690902.7    1467.411   1947.701          0   
+> 55319.01
+     linpob4 |    2714  37328356.8    622.9357   488.4138          0   
+>  2054.84
+    linpobr4 |    2707    37257099    465.4007   .0000131   465.4007   
+> 465.4008
+(2441 missing values generated)
+(2216 real changes made)
 (225 missing values generated)
-(2256 real changes made)
+(2216 real changes made)
 (225 missing values generated)
-(2256 real changes made)
+(2216 real changes made)
 (225 missing values generated)
 (225 missing values generated)
 (225 missing values generated)
@@ -2816,9 +2807,9 @@ Number of PSUs   =     317        Population size  =  34690903
              |             Linearized
              |       Mean   Std. Err.     [95% Conf. Interval]
 -------------+------------------------------------------------
-     h_flex4 |   9.844081          .             .           .
-    pg_flex4 |   3.894462          .             .           .
-   spg_flex4 |   2.541319          .             .           .
+     h_flex4 |   12.02793          .             .           .
+    pg_flex4 |   4.550126          .             .           .
+   spg_flex4 |   2.777111          .             .           .
 --------------------------------------------------------------
 Note: missing standard errors because of stratum with single
       sampling unit.
@@ -2838,16 +2829,16 @@ Number of PSUs   =     317        Population size  =  34690903
         Over |       Mean   Std. Err.     [95% Conf. Interval]
 -------------+------------------------------------------------
 h_flex4      |
-           0 |   21.76924          .             .           .
-           1 |   8.482435          .             .           .
+           0 |   17.45556          .             .           .
+           1 |   11.40819          .             .           .
 -------------+------------------------------------------------
 pg_flex4     |
-           0 |   7.917234          .             .           .
-           1 |   3.435132          .             .           .
+           0 |   5.506494          .             .           .
+           1 |   4.440925          .             .           .
 -------------+------------------------------------------------
 spg_flex4    |
-           0 |   4.206618          .             .           .
-           1 |   2.351171          .             .           .
+           0 |   3.010858          .             .           .
+           1 |   2.750422          .             .           .
 --------------------------------------------------------------
 Note: missing standard errors because of stratum with single
       sampling unit.
@@ -2872,27 +2863,27 @@ Number of PSUs   =     317        Population size  =  34690903
 -------------+------------------------------------------------
 h_flex4      |
      Kampala |          0  (omitted)
-   _subpop_2 |   21.76924          .             .           .
-   _subpop_3 |    13.1653          .             .           .
-   _subpop_4 |   2.415916          .             .           .
-   _subpop_5 |   4.372422          .             .           .
-   _subpop_6 |   15.09143          .             .           .
+   _subpop_2 |   17.45556          .             .           .
+   _subpop_3 |   14.04497          .             .           .
+   _subpop_4 |   2.692934          .             .           .
+   _subpop_5 |   5.037835          .             .           .
+   _subpop_6 |   24.66174          .             .           .
 -------------+------------------------------------------------
 pg_flex4     |
      Kampala |          0  (omitted)
-   _subpop_2 |   7.917234          .             .           .
-   _subpop_3 |   7.918424          .             .           .
-   _subpop_4 |   .8829452          .             .           .
-   _subpop_5 |   .8723121          .             .           .
-   _subpop_6 |    4.92927          .             .           .
+   _subpop_2 |   5.506494          .             .           .
+   _subpop_3 |   8.214945          .             .           .
+   _subpop_4 |   .8996534          .             .           .
+   _subpop_5 |   .9526639          .             .           .
+   _subpop_6 |   8.445777          .             .           .
 -------------+------------------------------------------------
 spg_flex4    |
      Kampala |          0  (omitted)
-   _subpop_2 |   4.206618          .             .           .
-   _subpop_3 |   6.475886          .             .           .
-   _subpop_4 |    .405808          .             .           .
-   _subpop_5 |   .3319337          .             .           .
-   _subpop_6 |   2.972345          .             .           .
+   _subpop_2 |   3.010858          .             .           .
+   _subpop_3 |   6.629763          .             .           .
+   _subpop_4 |   .3851901          .             .           .
+   _subpop_5 |   .3620954          .             .           .
+   _subpop_6 |   4.370087          .             .           .
 --------------------------------------------------------------
 Note: missing standard errors because of stratum with single
       sampling unit.
@@ -2918,27 +2909,27 @@ Number of PSUs   =     317        Population size  =  34690903
 -------------+------------------------------------------------
 h_flex4      |
    _subpop_1 |          0  (omitted)
-   _subpop_2 |   21.76924          .             .           .
-   _subpop_3 |    13.1653          .             .           .
-   _subpop_4 |   2.415916          .             .           .
-   _subpop_5 |   4.372422          .             .           .
-   _subpop_6 |   15.09143          .             .           .
+   _subpop_2 |   17.45556          .             .           .
+   _subpop_3 |   14.04497          .             .           .
+   _subpop_4 |   2.692934          .             .           .
+   _subpop_5 |   5.037835          .             .           .
+   _subpop_6 |   24.66174          .             .           .
 -------------+------------------------------------------------
 pg_flex4     |
    _subpop_1 |          0  (omitted)
-   _subpop_2 |   7.917234          .             .           .
-   _subpop_3 |   7.918424          .             .           .
-   _subpop_4 |   .8829452          .             .           .
-   _subpop_5 |   .8723121          .             .           .
-   _subpop_6 |    4.92927          .             .           .
+   _subpop_2 |   5.506494          .             .           .
+   _subpop_3 |   8.214945          .             .           .
+   _subpop_4 |   .8996534          .             .           .
+   _subpop_5 |   .9526639          .             .           .
+   _subpop_6 |   8.445777          .             .           .
 -------------+------------------------------------------------
 spg_flex4    |
    _subpop_1 |          0  (omitted)
-   _subpop_2 |   4.206618          .             .           .
-   _subpop_3 |   6.475886          .             .           .
-   _subpop_4 |    .405808          .             .           .
-   _subpop_5 |   .3319337          .             .           .
-   _subpop_6 |   2.972345          .             .           .
+   _subpop_2 |   3.010858          .             .           .
+   _subpop_3 |   6.629763          .             .           .
+   _subpop_4 |   .3851901          .             .           .
+   _subpop_5 |   .3620954          .             .           .
+   _subpop_6 |   4.370087          .             .           .
 --------------------------------------------------------------
 Note: missing standard errors because of stratum with single
       sampling unit.
@@ -2961,25 +2952,25 @@ Number of PSUs   =     317        Population size  =  34690903
         Over |       Mean   Std. Err.     [95% Conf. Interval]
 -------------+------------------------------------------------
 h_flex4      |
-   _subpop_1 |    51.4747          .             .           .
-   _subpop_2 |   13.09757          .             .           .
-     Eastern |   2.401441          .             .           .
-    Northern |   3.936353          .             .           .
-     Western |   14.42713          .             .           .
+   _subpop_1 |    40.4234          .             .           .
+   _subpop_2 |   13.97271          .             .           .
+     Eastern |   2.530198          .             .           .
+    Northern |   4.535404          .             .           .
+     Western |   23.47611          .             .           .
 -------------+------------------------------------------------
 pg_flex4     |
-   _subpop_1 |   19.23469          .             .           .
-   _subpop_2 |   7.877688          .             .           .
-     Eastern |   .8442589          .             .           .
-    Northern |    .785315          .             .           .
-     Western |   4.681379          .             .           .
+   _subpop_1 |   12.95513          .             .           .
+   _subpop_2 |   8.172683          .             .           .
+     Eastern |   .8529053          .             .           .
+    Northern |   .8576532          .             .           .
+     Western |   7.982724          .             .           .
 -------------+------------------------------------------------
 spg_flex4    |
-   _subpop_1 |   10.28266          .             .           .
-   _subpop_2 |    6.44257          .             .           .
-     Eastern |   .3877068          .             .           .
-    Northern |   .2988294          .             .           .
-     Western |   2.807814          .             .           .
+   _subpop_1 |   7.167165          .             .           .
+   _subpop_2 |   6.595656          .             .           .
+     Eastern |   .3675852          .             .           .
+    Northern |    .325983          .             .           .
+     Western |   4.121018          .             .           .
 --------------------------------------------------------------
 Note: missing standard errors because of stratum with single
       sampling unit.
@@ -2994,7 +2985,7 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
 >      Max
 -------------+---------------------------------------------------------
 > --------
-     h_flex4 |    2492  34690902.7    9.844081   29.79695          0   
+     h_flex4 |    2492  34690902.7    12.02793   32.53531          0   
 >      100
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
 > /work/foodshares_it4.dta saved
@@ -3010,8 +3001,8 @@ variable one does not uniquely identify observations in the master
 
    relpoor5 |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          0 | 1,450.7274       53.45       53.45
-          1 | 1,263.2726       46.55      100.00
+          0 | 1,452.3254       53.51       53.51
+          1 | 1,261.6746       46.49      100.00
 ------------+-----------------------------------
       Total |      2,714      100.00
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
@@ -3036,13 +3027,13 @@ variable hhid does not uniquely identify observations in the master
           3 |     34,121       99.82      100.00
 ------------+-----------------------------------
       Total |     34,182      100.00
-(21890 observations deleted)
-(10 missing values generated)
-   10
+(22155 observations deleted)
+(11 missing values generated)
+   11
     0
-(10 missing values generated)
-   10
-(10 observations deleted)
+(11 missing values generated)
+   11
+(11 observations deleted)
 (note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000v.tmp not fo
 > und)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000v.tmp saved
@@ -3054,14 +3045,14 @@ variable spdomain does not uniquely identify observations in the
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          3 |     12,282      100.00      100.00
+          3 |     12,016      100.00      100.00
 ------------+-----------------------------------
-      Total |     12,282      100.00
-  164
-(164 observations deleted)
+      Total |     12,016      100.00
+  166
+(166 observations deleted)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00000v.tmp saved
-47
-47
+46
+46
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
 > /work/codes_food_basket_flex_it5.dta saved
 (HH food cons. (1 rec per item cons. cat A& B per HH; Cat B: only T6SQ1
@@ -3088,13 +3079,13 @@ product was int now float
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          1 |      2,831        8.42        8.42
-          2 |          2        0.01        8.42
-          3 |     30,794       91.58      100.00
+          1 |      3,030        9.01        9.01
+          2 |          1        0.00        9.01
+          3 |     30,595       90.99      100.00
 ------------+-----------------------------------
-      Total |     33,627      100.00
-(2833 observations deleted)
-(179 observations deleted)
+      Total |     33,626      100.00
+(3031 observations deleted)
+(181 observations deleted)
 (note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000011.tmp not fo
 > und)
 file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000011.tmp saved
@@ -3121,49 +3112,49 @@ spdomain was byte now float
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          2 |        133        0.43        0.43
-          3 |     30,615       99.57      100.00
+          2 |        134        0.44        0.44
+          3 |     30,414       99.56      100.00
 ------------+-----------------------------------
-      Total |     30,748      100.00
+      Total |     30,548      100.00
 variable hhid does not uniquely identify observations in the master
     data
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          3 |     30,748      100.00      100.00
+          3 |     30,548      100.00      100.00
 ------------+-----------------------------------
-      Total |     30,748      100.00
-(19325 observations deleted)
-(45 observations deleted)
-(798 observations deleted)
+      Total |     30,548      100.00
+(19392 observations deleted)
+(44 observations deleted)
+(772 observations deleted)
 
     Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
-    ratiotw5 |       217     1.26284    .4912453   .8819051    4.64159
-    ratiomw5 |       217    1.068684    .4079751   .4867766   4.187579
+    ratiotw5 |       219    1.275231     .506324   .8083197    4.31711
+    ratiomw5 |       219    1.072348    .3996702   .3428777   4.484998
 variable product does not uniquely identify observations in the
     master data
 product was int now float
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          2 |          3        1.36        1.36
-          3 |        217       98.64      100.00
+          2 |          2        0.90        0.90
+          3 |        219       99.10      100.00
 ------------+-----------------------------------
-      Total |        220      100.00
-    3
-(3 observations deleted)
+      Total |        221      100.00
+    2
+(2 observations deleted)
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
 > /work/price_unit_flex_it5.dta saved
 (label lspdomain already defined)
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          1 |          8        3.56        3.56
-          2 |         80       35.56       39.11
-          3 |        137       60.89      100.00
+          1 |          7        3.10        3.10
+          2 |         82       36.28       39.38
+          3 |        137       60.62      100.00
 ------------+-----------------------------------
-      Total |        225      100.00
+      Total |        226      100.00
 
      +------------------------------------+
      | product        spdomain   descript |
@@ -3174,11 +3165,10 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
 135. |     157        Northern          1 |
 136. |     157         Western          1 |
      |------------------------------------|
-138. |     160   Central Urban          1 |
-144. |       .   Central Urban          1 |
-145. |       .   Central Rural          1 |
+143. |       .   Central Urban          1 |
+144. |       .   Central Rural          1 |
      +------------------------------------+
-(88 observations deleted)
+(89 observations deleted)
 variable product does not uniquely identify observations in the
     master data
 (note: descript is str26 in using data but will be float now)
@@ -3204,13 +3194,13 @@ variable product does not uniquely identify observations in the
 
 -----------------------------------------------------------------------
 -> spdomain = Central Urban
-    3
+    4
 -----------------------------------------------------------------------
 -> spdomain = Central Rural
     0
 -----------------------------------------------------------------------
 -> spdomain = Eastern
-    1
+    0
 -----------------------------------------------------------------------
 -> spdomain = Northern
     1
@@ -3220,7 +3210,7 @@ variable product does not uniquely identify observations in the
 
     Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
-        bswt |       132    70.05303    55.57573          7        277
+        bswt |       132    68.38636    58.25302          5        338
 (5 observations deleted)
 (0 observations deleted)
 
@@ -3230,13 +3220,13 @@ Summary for variables: baskshr
 
      spdomain |         N      mean        sd       min       max
 --------------+--------------------------------------------------
-Central Urban |        25  .7333384         0  .7333384  .7333384
-Central Rural |        26  .7647542         0  .7647542  .7647542
-      Eastern |        27   .885439         0   .885439   .885439
-     Northern |        26  .8541934         0  .8541934  .8541934
-      Western |        23   .880883         0   .880883   .880883
+Central Urban |        25   .763405         0   .763405   .763405
+Central Rural |        26  .7549108         0  .7549108  .7549108
+      Eastern |        28  .9005471         0  .9005471  .9005471
+     Northern |        25  .8527654         0  .8527654  .8527654
+      Western |        23  .8852671         0  .8852671  .8852671
 --------------+--------------------------------------------------
-        Total |       127   .823569  .0627901  .7333384   .885439
+        Total |       127  .8315622  .0617035  .7549108  .9005471
 -----------------------------------------------------------------
 variable spdomain does not uniquely identify observations in the
     master data
@@ -3258,13 +3248,13 @@ Summary for variables: chkcal
 
      spdomain |         N      mean        sd       min       max
 --------------+--------------------------------------------------
-Central Urban |        25 -.0001221         0 -.0001221 -.0001221
+Central Urban |        25  .0000707         0  .0000707  .0000707
 Central Rural |        26  .0000257         0  .0000257  .0000257
-      Eastern |        27 -.0000257         0 -.0000257 -.0000257
-     Northern |        26  .0000321         0  .0000321  .0000321
+      Eastern |        28 -.0000257         0 -.0000257 -.0000257
+     Northern |        25 -.0000964         0 -.0000964 -.0000964
       Western |        23  .0000578         0  .0000578  .0000578
 --------------+--------------------------------------------------
-        Total |       127 -7.18e-06  .0000633 -.0001221  .0000578
+        Total |       127  5.01e-06  .0000608 -.0000964  .0000707
 -----------------------------------------------------------------
 (1 missing value generated)
 (127 real changes made)
@@ -3281,7 +3271,7 @@ variable spdomain does not uniquely identify observations in the
           3 |      2,717      100.00      100.00
 ------------+-----------------------------------
       Total |      2,717      100.00
-(56 real changes made)
+(98 real changes made)
 (3 missing values generated)
 (note: file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000013.tmp not fo
 > und)
@@ -3319,20 +3309,20 @@ variable spdomain does not uniquely identify observations in
 >      Max
 -------------+---------------------------------------------------------
 > --------
-          cr |    2492  34690902.7    1990.349   5527.795          0   
-> 252488.6
-      cr_it5 |    2492  34690902.7    1990.349   7546.638          0   
-> 383865.4
-     linpob5 |    2714  37328356.8    722.7188   673.4224          0   
-> 2799.716
-    linpobr5 |    2707    37257099    516.2853   .0000262   516.2853   
-> 516.2853
-(2481 missing values generated)
-(2256 real changes made)
+          cr |    2492  34690902.7    1467.411   2339.007          0   
+> 72983.64
+      cr_it5 |    2492  34690902.7    1467.411   1948.226          0   
+> 55279.24
+     linpob5 |    2714  37328356.8    624.7855   488.7333          0   
+>  2054.84
+    linpobr5 |    2707    37257099    466.2393   .0000127   466.2393   
+> 466.2393
+(2438 missing values generated)
+(2213 real changes made)
 (225 missing values generated)
-(2256 real changes made)
+(2213 real changes made)
 (225 missing values generated)
-(2256 real changes made)
+(2213 real changes made)
 (225 missing values generated)
 (225 missing values generated)
 (225 missing values generated)
@@ -3356,9 +3346,9 @@ Number of PSUs   =     317        Population size  =  34690903
              |             Linearized
              |       Mean   Std. Err.     [95% Conf. Interval]
 -------------+------------------------------------------------
-     h_flex5 |   9.844081          .             .           .
-    pg_flex5 |     3.8849          .             .           .
-   spg_flex5 |   2.537552          .             .           .
+     h_flex5 |   12.12178          .             .           .
+    pg_flex5 |   4.588223          .             .           .
+   spg_flex5 |   2.796162          .             .           .
 --------------------------------------------------------------
 Note: missing standard errors because of stratum with single
       sampling unit.
@@ -3378,16 +3368,16 @@ Number of PSUs   =     317        Population size  =  34690903
         Over |       Mean   Std. Err.     [95% Conf. Interval]
 -------------+------------------------------------------------
 h_flex5      |
-           0 |   21.76924          .             .           .
-           1 |   8.482435          .             .           .
+           0 |   17.45556          .             .           .
+           1 |   11.51275          .             .           .
 -------------+------------------------------------------------
 pg_flex5     |
-           0 |   7.917295          .             .           .
-           1 |   3.424471          .             .           .
+           0 |   5.515925          .             .           .
+           1 |   4.482296          .             .           .
 -------------+------------------------------------------------
 spg_flex5    |
-           0 |    4.20663          .             .           .
-           1 |   2.346973          .             .           .
+           0 |   3.014253          .             .           .
+           1 |   2.771259          .             .           .
 --------------------------------------------------------------
 Note: missing standard errors because of stratum with single
       sampling unit.
@@ -3412,27 +3402,27 @@ Number of PSUs   =     317        Population size  =  34690903
 -------------+------------------------------------------------
 h_flex5      |
      Kampala |          0  (omitted)
-   _subpop_2 |   21.76924          .             .           .
-   _subpop_3 |    13.1653          .             .           .
-   _subpop_4 |   2.415916          .             .           .
-   _subpop_5 |   4.372422          .             .           .
-   _subpop_6 |   15.09143          .             .           .
+   _subpop_2 |   17.45556          .             .           .
+   _subpop_3 |   14.09101          .             .           .
+   _subpop_4 |   2.692934          .             .           .
+   _subpop_5 |   5.037835          .             .           .
+   _subpop_6 |   25.02446          .             .           .
 -------------+------------------------------------------------
 pg_flex5     |
      Kampala |          0  (omitted)
-   _subpop_2 |   7.917295          .             .           .
-   _subpop_3 |   7.899232          .             .           .
-   _subpop_4 |   .8832051          .             .           .
-   _subpop_5 |   .8445327          .             .           .
-   _subpop_6 |    4.92927          .             .           .
+   _subpop_2 |   5.515925          .             .           .
+   _subpop_3 |   8.229625          .             .           .
+   _subpop_4 |   .8996534          .             .           .
+   _subpop_5 |   .9526641          .             .           .
+   _subpop_6 |   8.592173          .             .           .
 -------------+------------------------------------------------
 spg_flex5    |
      Kampala |          0  (omitted)
-   _subpop_2 |    4.20663          .             .           .
-   _subpop_3 |   6.465383          .             .           .
-   _subpop_4 |   .4059698          .             .           .
-   _subpop_5 |   .3235425          .             .           .
-   _subpop_6 |   2.972345          .             .           .
+   _subpop_2 |   3.014253          .             .           .
+   _subpop_3 |   6.637767          .             .           .
+   _subpop_4 |   .3851901          .             .           .
+   _subpop_5 |   .3620955          .             .           .
+   _subpop_6 |   4.443326          .             .           .
 --------------------------------------------------------------
 Note: missing standard errors because of stratum with single
       sampling unit.
@@ -3458,27 +3448,27 @@ Number of PSUs   =     317        Population size  =  34690903
 -------------+------------------------------------------------
 h_flex5      |
    _subpop_1 |          0  (omitted)
-   _subpop_2 |   21.76924          .             .           .
-   _subpop_3 |    13.1653          .             .           .
-   _subpop_4 |   2.415916          .             .           .
-   _subpop_5 |   4.372422          .             .           .
-   _subpop_6 |   15.09143          .             .           .
+   _subpop_2 |   17.45556          .             .           .
+   _subpop_3 |   14.09101          .             .           .
+   _subpop_4 |   2.692934          .             .           .
+   _subpop_5 |   5.037835          .             .           .
+   _subpop_6 |   25.02446          .             .           .
 -------------+------------------------------------------------
 pg_flex5     |
    _subpop_1 |          0  (omitted)
-   _subpop_2 |   7.917295          .             .           .
-   _subpop_3 |   7.899232          .             .           .
-   _subpop_4 |   .8832051          .             .           .
-   _subpop_5 |   .8445327          .             .           .
-   _subpop_6 |    4.92927          .             .           .
+   _subpop_2 |   5.515925          .             .           .
+   _subpop_3 |   8.229625          .             .           .
+   _subpop_4 |   .8996534          .             .           .
+   _subpop_5 |   .9526641          .             .           .
+   _subpop_6 |   8.592173          .             .           .
 -------------+------------------------------------------------
 spg_flex5    |
    _subpop_1 |          0  (omitted)
-   _subpop_2 |    4.20663          .             .           .
-   _subpop_3 |   6.465383          .             .           .
-   _subpop_4 |   .4059698          .             .           .
-   _subpop_5 |   .3235425          .             .           .
-   _subpop_6 |   2.972345          .             .           .
+   _subpop_2 |   3.014253          .             .           .
+   _subpop_3 |   6.637767          .             .           .
+   _subpop_4 |   .3851901          .             .           .
+   _subpop_5 |   .3620955          .             .           .
+   _subpop_6 |   4.443326          .             .           .
 --------------------------------------------------------------
 Note: missing standard errors because of stratum with single
       sampling unit.
@@ -3501,25 +3491,25 @@ Number of PSUs   =     317        Population size  =  34690903
         Over |       Mean   Std. Err.     [95% Conf. Interval]
 -------------+------------------------------------------------
 h_flex5      |
-   _subpop_1 |    51.4747          .             .           .
-   _subpop_2 |   13.09757          .             .           .
-     Eastern |   2.401441          .             .           .
-    Northern |   3.936353          .             .           .
-     Western |   14.42713          .             .           .
+   _subpop_1 |    40.4234          .             .           .
+   _subpop_2 |   14.01852          .             .           .
+     Eastern |   2.530198          .             .           .
+    Northern |   4.535404          .             .           .
+     Western |   23.81301          .             .           .
 -------------+------------------------------------------------
 pg_flex5     |
-   _subpop_1 |   19.23469          .             .           .
-   _subpop_2 |   7.858594          .             .           .
-     Eastern |   .8445229          .             .           .
-    Northern |    .760306          .             .           .
-     Western |    4.68138          .             .           .
+   _subpop_1 |   12.95513          .             .           .
+   _subpop_2 |   8.187287          .             .           .
+     Eastern |   .8529053          .             .           .
+    Northern |   .8576533          .             .           .
+     Western |   8.122526          .             .           .
 -------------+------------------------------------------------
 spg_flex5    |
-   _subpop_1 |   10.28266          .             .           .
-   _subpop_2 |   6.432122          .             .           .
-     Eastern |   .3878616          .             .           .
-    Northern |   .2912751          .             .           .
-     Western |   2.807814          .             .           .
+   _subpop_1 |   7.167164          .             .           .
+   _subpop_2 |   6.603619          .             .           .
+     Eastern |   .3675853          .             .           .
+    Northern |   .3259831          .             .           .
+     Western |   4.190421          .             .           .
 --------------------------------------------------------------
 Note: missing standard errors because of stratum with single
       sampling unit.
@@ -3534,7 +3524,7 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
 >      Max
 -------------+---------------------------------------------------------
 > --------
-     h_flex5 |    2492  34690902.7    9.844081   29.79695          0   
+     h_flex5 |    2492  34690902.7    12.12178   32.64457          0   
 >      100
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
 > /work/foodshares_it5.dta saved
@@ -3728,9 +3718,9 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00001b.tmp saved
 -------------+--------------------------------------------------------
    iteration |        30           3     1.43839          1          5
       strata |        30         3.5    1.737021          1          6
-      h_flex |        30    9.655081    7.922925          0   21.76924
-     pg_flex |        30    3.771762    3.351773          0   7.918424
-    spg_flex |        30    2.398923    2.412449          0   6.475885
+      h_flex |        30    10.40098    8.797417          0   25.02446
+     pg_flex |        30     3.96181    3.580383          0   8.592173
+    spg_flex |        30    2.440649    2.493365          0   6.637767
 
 . 
 . twoway (connected h_flex iteration), by(, title(Convergence graph: Po
@@ -3767,35 +3757,35 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l00001b.tmp saved
   4. |       Kampala          4        0         0          0 |
   5. |       Kampala          5        0         0          0 |
      |--------------------------------------------------------|
-  6. |   Other Urban          1    20.42      7.15       3.75 |
-  7. |   Other Urban          2    21.77       7.8       4.14 |
-  8. |   Other Urban          3    21.77      7.92       4.21 |
-  9. |   Other Urban          4    21.77      7.92       4.21 |
- 10. |   Other Urban          5    21.77      7.92       4.21 |
+  6. |   Other Urban          1    10.13      3.79       2.26 |
+  7. |   Other Urban          2    15.06      5.37       2.95 |
+  8. |   Other Urban          3    17.46      5.51       3.01 |
+  9. |   Other Urban          4    17.46      5.51       3.01 |
+ 10. |   Other Urban          5    17.46      5.52       3.01 |
      |--------------------------------------------------------|
- 11. | Central rural          1    13.17      7.92       6.48 |
- 12. | Central rural          2    13.17      7.92       6.48 |
- 13. | Central rural          3    13.17       7.9       6.47 |
- 14. | Central rural          4    13.17      7.92       6.48 |
- 15. | Central rural          5    13.17       7.9       6.47 |
+ 11. | Central rural          1    14.04      8.18       6.61 |
+ 12. | Central rural          2    14.04      8.21       6.63 |
+ 13. | Central rural          3    14.04      8.21       6.63 |
+ 14. | Central rural          4    14.04      8.21       6.63 |
+ 15. | Central rural          5    14.09      8.23       6.64 |
      |--------------------------------------------------------|
- 16. |    East rural          1        3       .94        .44 |
- 17. |    East rural          2     2.42       .88         .4 |
- 18. |    East rural          3     2.42       .88        .41 |
- 19. |    East rural          4     2.42       .88        .41 |
- 20. |    East rural          5     2.42       .88        .41 |
+ 16. |    East rural          1     2.69       .91        .39 |
+ 17. |    East rural          2     2.69        .9        .39 |
+ 18. |    East rural          3     2.69       .91        .39 |
+ 19. |    East rural          4     2.69        .9        .39 |
+ 20. |    East rural          5     2.69        .9        .39 |
      |--------------------------------------------------------|
- 21. |   North rural          1     6.39      1.51        .55 |
- 22. |   North rural          2     4.37       .86        .33 |
- 23. |   North rural          3     4.37       .87        .33 |
- 24. |   North rural          4     4.37       .87        .33 |
- 25. |   North rural          5     4.37       .84        .32 |
+ 21. |   North rural          1     5.78      1.12        .41 |
+ 22. |   North rural          2     5.65      1.04        .39 |
+ 23. |   North rural          3     5.15       .97        .37 |
+ 24. |   North rural          4     5.04       .95        .36 |
+ 25. |   North rural          5     5.04       .95        .36 |
      |--------------------------------------------------------|
- 26. |    West rural          1    19.43      5.76       3.28 |
- 27. |    West rural          2    15.09      4.93       2.97 |
- 28. |    West rural          3    15.09      4.93       2.97 |
- 29. |    West rural          4    15.09      4.93       2.97 |
- 30. |    West rural          5    15.09      4.93       2.97 |
+ 26. |    West rural          1    24.35      8.39       4.34 |
+ 27. |    West rural          2    25.02      8.54       4.42 |
+ 28. |    West rural          3    25.02      8.57       4.43 |
+ 29. |    West rural          4    24.66      8.45       4.37 |
+ 30. |    West rural          5    25.02      8.59       4.44 |
      +--------------------------------------------------------+
 
 .         

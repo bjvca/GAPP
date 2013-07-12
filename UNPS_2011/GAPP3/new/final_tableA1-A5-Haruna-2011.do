@@ -543,9 +543,10 @@ gen assetvalue = h14q5
 
 **************************************************************************************************************
 ** i took land-03, bicycle-10, motor cycle-11 and motorvehicle-12, boat-13 and other buildings-02, as durables and assumed that a year, 
-** the household can use 10% of these assests. house not treated as an asset as the toolkit takes care of imputed rent
+** the household can use 0.1% of these assests, just to limit the influence of assests that were inflating unnecessarily especially the urban poverty estimates,
+** house not treated as an asset as the toolkit takes care of imputed rent
 ************************************************************************************************************************
-gen dassetvalue = (assetvalue*0.1)/365
+gen dassetvalue = (assetvalue*0.001)/365
 la var dassetvalue "household daily durables expenditure"
 rename HHID hhid
 sort hhid
@@ -564,7 +565,7 @@ gen nondurablevalue = h14q5
 **  others;-21 & 22, NOTE: figures are codes in data set
 la var nondurablevalue "household daily non-durables expenditure"
 sort hhid
-gen dnondurables = (nondurablevalue*0.1)/365
+gen dnondurables = (nondurablevalue*0.001)/365
 la var dnondurables "household daily non-durables expenditure"
 save "$path/out/hhdnondurablesexp.dta", replace
 
@@ -613,7 +614,7 @@ rename HHID hhid
 drop if inlist( h15dq2 ,204,205,208,209,301,302,303,306,401,403,404,405,406,407,408,409,410,411,501,503,504,505,506,601,602,603,604,605,701,702,703)
 egen hhsemidurables = rowtotal ( h15dq5 h15dq7)
 sort hhid
-gen hhdsemidurs = (hhsemidurables*0.1)/365
+gen hhdsemidurs = (hhsemidurables*0.001)/365
 la var hhdsemidurs "household daily semi durables goods and seervices expenses"
 drop hhsemidurables
 save "$path/out/hhdsemidurablesexp.dta", replace

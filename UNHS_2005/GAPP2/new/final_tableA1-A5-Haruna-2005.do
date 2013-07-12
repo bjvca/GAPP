@@ -503,10 +503,10 @@ keep if inlist( h12aq2 ,010,011,012)
 gen assetvalue = h12aq5
 
 **************************************************************************************************************
-** i took land, bicycle, motor cycle and other transport equipment-012, that in 2009 were motor vehicles, as durables and assumed that a year, the household can use 10% of these assests. there was no land in 2005 assets
+** i took land, bicycle, motor cycle and other transport equipment-012, that in 2009 were motor vehicles, as durables and assumed that a year, the household can use 1% of these assests. there was no land in 2005 assets
 ** house not treated as an asset as the toolkit takes care of imputed rent
 ************************************************************************************************************************
-gen dassetvalue = (assetvalue*0.1)/365
+gen dassetvalue = (assetvalue*0.01)/365
 la var dassetvalue "household daily durables expenditure"
 rename hh hhid
 sort hhid
@@ -519,13 +519,13 @@ save "$path/out/hhnondurables.dta", replace
 rename hh hhid
 drop if inlist(  h12aq2 ,010,011,012 ,001)
 gen nondurablevalue = h12aq5
-**h12aq4 multiple has been dropped since UBOS had recorded h12aq5 as total estimated value in Ush and also discounted them by 10% to get rough value used per year
+**h12aq4 multiple has been dropped since UBOS had recorded h12aq5 as total estimated value in Ush and also discounted them by 1% to get rough value used per year
 *** we considered other buildings-002, furniture-003, Bednets-005, Hh appliances as Kettle,flat iron-006, electronics as tv,radio-007, generators-008, solar-panel-009
 *** , jewelry&watches-013, mobilephone-014, otherassets as lawn mores-015, Enterprise assests like; home-101, ploughs-102, wheelbarrows-104, pangas-103
 **  others-105, 106 and 107 and financial assets-201, NOTE: figures are codes in data set
 la var nondurablevalue "household daily non-durables expenditure"
 sort hhid
-gen dnondurables = (nondurablevalue*0.1)/365
+gen dnondurables = (nondurablevalue*0.01)/365
 la var dnondurables "household daily non-durables expenditure"
 save "$path/out/hhdnondurablesexp.dta", replace
 
@@ -572,7 +572,7 @@ rename hh hhid
 drop if inlist( h14cq2 ,209,210,229,401,402,403,409,421,423,424,425,426,427,428,429,430,431,441,443,444,445,449,601,602,603,604,609,801,802,803)
 egen hhsemidurables = rowtotal ( h14cq3 h14cq4)
 sort hhid
-gen hhdsemidurs = (hhsemidurables*0.1)/365
+gen hhdsemidurs = (hhsemidurables*0.01)/365
 la var hhdsemidurs "household daily semi durables goods and seervices expenses"
 drop hhsemidurables
 save "$path/out/hhdsemidurablesexp.dta", replace

@@ -3,7 +3,7 @@
        log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_20
 > 11\GAPP3/rep/130_povmeas_flex.log
   log type:  text
- opened on:   8 Jul 2013, 14:28:35
+ opened on:   9 Jul 2013, 11:36:06
 
 . clear
 
@@ -222,7 +222,7 @@ variable spdomain does not uniquely identify observations in the
 
 . replace triwt = 11 - round(50*abs(cons_pc_tpi/povline_f_flex-1)+0.5)
 >                 if abs(cons_pc_tpi/povline_f_flex-1)<=0.2;
-(74 real changes made)
+(106 real changes made)
 
 .                                         * Nearness to poverty line an
 > d population weights ;
@@ -257,13 +257,12 @@ domains: each |
  poverty line |
  (they are 5) |      Freq.     Percent        Cum.
 --------------+-----------------------------------
-Central Urban |          1       20.00       20.00
-Central Rural |          1       20.00       40.00
-      Eastern |          1       20.00       60.00
-     Northern |          1       20.00       80.00
-      Western |          1       20.00      100.00
+Central Rural |          1       25.00       25.00
+      Eastern |          1       25.00       50.00
+     Northern |          1       25.00       75.00
+      Western |          1       25.00      100.00
 --------------+-----------------------------------
-        Total |          5      100.00
+        Total |          4      100.00
 
 .         restore;
 
@@ -278,8 +277,8 @@ variable spdomain does not uniquely identify observations in the
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          1 |          9        0.33        0.33
-          3 |      2,708       99.67      100.00
+          1 |        313       11.52       11.52
+          3 |      2,404       88.48      100.00
 ------------+-----------------------------------
       Total |      2,717      100.00
 
@@ -291,7 +290,7 @@ variable spdomain does not uniquely identify observations in the
 > *********************************************************************
 > *****;
 .         gen povline_flex=povline_f_flex + povline_na_flex;
-(9 missing values generated)
+(313 missing values generated)
 
 .         lab var povline_flex "Poverty line. Flexible bundle";
 
@@ -341,7 +340,7 @@ variable spdomain does not uniquely identify observations in
 
 .         * Poverty line;
 .         gen linpob=povline_flex;
-(9 missing values generated)
+(313 missing values generated)
 
 .         *qui sum linpob if spdomain==1, meanonly;
 .         sum linpob if spdomain==3, meanonly;
@@ -350,11 +349,11 @@ variable spdomain does not uniquely identify observations in
 
 .         * Spatial price index ;
 .         gen spi=linpob/$spi_base;
-(9 missing values generated)
+(313 missing values generated)
 
 .         * Real consumption pc, temporally and spatially deflated ;
 .         gen cr2=cr/spi;
-(225 missing values generated)
+(351 missing values generated)
 
 .         qui sum cr [aw=hhweight*hhsize];
 
@@ -365,13 +364,13 @@ variable spdomain does not uniquely identify observations in
 .         global sumcr2=r(sum);
 
 .         replace spi=spi*$sumcr2/$sumcr;
-(2708 real changes made)
+(2404 real changes made)
 
 .         gen linpobr=linpob/spi;
-(9 missing values generated)
+(313 missing values generated)
 
 .         replace cr2=cr/spi;
-(2482 real changes made)
+(2358 real changes made)
 
 .         sum cr cr2 linpob linpobr [aw=hhweight*hhsize];
 
@@ -379,14 +378,14 @@ variable spdomain does not uniquely identify observations in
 >      Max
 -------------+---------------------------------------------------------
 > --------
-          cr |    2492  34690902.7    1990.349   5527.795          0   
-> 252488.6
-         cr2 |    2492  34690902.7    1990.349   6430.098          0   
-> 316343.8
-      linpob |    2707    37257099    529.7761   132.8003   406.6796   
-> 692.5283
-     linpobr |    2707    37257099    509.5302   .0000117   509.5302   
-> 509.5302
+          cr |    2492  34690902.7    1467.411   2339.007          0   
+> 72983.64
+         cr2 |    2366  33287447.6     1529.28   2098.911          0   
+> 61161.88
+      linpob |    2403  33844588.9    483.4337   164.8043   323.7984   
+> 703.8991
+     linpobr |    2403  33844588.9    491.8102          0   491.8102   
+> 491.8102
 
 .         lab var cr      "Temporally-adjusted cons pc";
 
@@ -404,31 +403,31 @@ variable spdomain does not uniquely identify observations in
 > *********************************************************************
 > *****;
 .         gen h = 100     if cr <=(linpob);
-(2498 missing values generated)
+(2163 missing values generated)
 
 .         replace  h = 0 if cr > (linpob);
-(2498 real changes made)
+(2163 real changes made)
 
 .                         gen             pg      = ((linpob - cr )/lin
 > pob) *100;
-(225 missing values generated)
+(351 missing values generated)
 
 .         replace         pg      = 0             if h==0;
-(2498 real changes made)
+(2163 real changes made)
 
 .         gen             spg     = ((( linpob - cr )/ linpob )^2)*100;
-(225 missing values generated)
+(351 missing values generated)
 
 .         replace         spg     = 0             if h==0;
-(2498 real changes made)
+(2163 real changes made)
 
 .         gen h_flex=h;
 
 .         gen pg_flex=pg;
-(9 missing values generated)
+(313 missing values generated)
 
 .         gen spg_flex=spg;
-(9 missing values generated)
+(313 missing values generated)
 
 .         lab var h_flex   "Poverty headcount. Flex bundle";
 
@@ -477,27 +476,29 @@ variable spdomain does not uniquely identify observations in
 
 Survey: Mean estimation
 
-Number of strata =       6        Number of obs    =      2707
-Number of PSUs   =     368        Population size  =  37257099
-                                  Design df        =       362
+Number of strata =       6        Number of obs    =      2403
+Number of PSUs   =     288        Population size  =  33844589
+                                  Design df        =       282
 
 --------------------------------------------------------------
              |             Linearized
              |       Mean   Std. Err.     [95% Conf. Interval]
 -------------+------------------------------------------------
-      h_flex |    8.76186   .8600683      7.070502    10.45322
-     pg_flex |    3.32818   .5097187      2.325799    4.330562
-    spg_flex |   2.188254   .4528251      1.297756    3.078753
+      h_flex |   11.03457          .             .           .
+     pg_flex |   4.152206          .             .           .
+    spg_flex |   2.533686          .             .           .
 --------------------------------------------------------------
+Note: missing standard errors because of stratum with single
+      sampling unit.
 
 .         svy: mean h_flex pg_flex spg_flex , over(rural);
 (running mean on estimation sample)
 
 Survey: Mean estimation
 
-Number of strata =       6        Number of obs    =      2707
-Number of PSUs   =     368        Population size  =  37257099
-                                  Design df        =       362
+Number of strata =       6        Number of obs    =      2403
+Number of PSUs   =     288        Population size  =  33844589
+                                  Design df        =       282
 
             0: rural = 0
             1: rural = 1
@@ -507,26 +508,28 @@ Number of PSUs   =     368        Population size  =  37257099
         Over |       Mean   Std. Err.     [95% Conf. Interval]
 -------------+------------------------------------------------
 h_flex       |
-           0 |   2.347801   .7653406      .8427293    3.852873
-           1 |    9.90916    1.00198      7.938727    11.87959
+           0 |   3.215378          .             .           .
+           1 |   11.58892          .             .           .
 -------------+------------------------------------------------
 pg_flex      |
-           0 |   1.062615   .5288138      .0226822    2.102548
-           1 |   3.733428   .5920856      2.569069    4.897787
+           0 |     .60231          .             .           .
+           1 |   4.403878          .             .           .
 -------------+------------------------------------------------
 spg_flex     |
-           0 |    .786894   .4957461       -.18801    1.761798
-           1 |    2.43892   .5255589      1.405388    3.472452
+           0 |   .2759845          .             .           .
+           1 |   2.693747          .             .           .
 --------------------------------------------------------------
+Note: missing standard errors because of stratum with single
+      sampling unit.
 
 .         svy: mean h_flex pg_flex spg_flex , over(news);
 (running mean on estimation sample)
 
 Survey: Mean estimation
 
-Number of strata =       6        Number of obs    =      2707
-Number of PSUs   =     368        Population size  =  37257099
-                                  Design df        =       362
+Number of strata =       6        Number of obs    =      2403
+Number of PSUs   =     288        Population size  =  33844589
+                                  Design df        =       282
 
       Central: news = Central
       Eastern: news = Eastern
@@ -538,34 +541,35 @@ Number of PSUs   =     368        Population size  =  37257099
         Over |       Mean   Std. Err.     [95% Conf. Interval]
 -------------+------------------------------------------------
 h_flex       |
-     Central |   8.777579   1.852652      5.134266    12.42089
-     Eastern |   2.378509    .654105      1.092186    3.664831
-    Northern |   6.334718     1.6445      3.100744    9.568692
-     Western |   17.77789   2.283348       13.2876    22.26818
+     Central |    13.4672          .             .           .
+     Eastern |   2.506036          .             .           .
+    Northern |   7.211695          .             .           .
+     Western |   21.84331          .             .           .
 -------------+------------------------------------------------
 pg_flex      |
-     Central |   5.537216   1.608617      2.373808    8.700625
-     Eastern |   .8312819     .31287      .2160109    1.446553
-    Northern |    1.48846   .4796829      .5451449    2.431775
-     Western |   5.222359   .8576244      3.535807     6.90891
+     Central |   7.863899          .             .           .
+     Eastern |    .881476          .             .           .
+    Northern |   1.511279          .             .           .
+     Western |   7.329021          .             .           .
 -------------+------------------------------------------------
 spg_flex     |
-     Central |    4.57504   1.490075      1.644751     7.50533
-     Eastern |   .3811335   .1689075      .0489703    .7132967
-    Northern |    .540163   .2058027      .1354441    .9448819
-     Western |   2.973454   .7168449      1.563751    4.383158
+     Central |   6.421195          .             .           .
+     Eastern |   .3858987          .             .           .
+    Northern |    .538026          .             .           .
+     Western |   3.790671          .             .           .
 --------------------------------------------------------------
+Note: missing standard errors because of stratum with single
+      sampling unit.
 
 .         svy: mean h_flex pg_flex spg_flex , over(reg_tpi);
 (running mean on estimation sample)
 
 Survey: Mean estimation
 
-Number of strata =       6        Number of obs    =      2707
-Number of PSUs   =     368        Population size  =  37257099
-                                  Design df        =       362
+Number of strata =       6        Number of obs    =      2403
+Number of PSUs   =     288        Population size  =  33844589
+                                  Design df        =       282
 
-      Kampala: reg_tpi = Kampala
       Central: reg_tpi = Central
       Eastern: reg_tpi = Eastern
      Northern: reg_tpi = Northern
@@ -576,35 +580,34 @@ Number of PSUs   =     368        Population size  =  37257099
         Over |       Mean   Std. Err.     [95% Conf. Interval]
 -------------+------------------------------------------------
 h_flex       |
-     Kampala |          0  (omitted)
-     Central |   10.91161   2.268518      6.450482    15.37274
-     Eastern |   2.378509    .654105      1.092186    3.664831
-    Northern |   6.334718     1.6445      3.100744    9.568692
-     Western |   17.77789   2.283348       13.2876    22.26818
+     Central |    13.4672          .             .           .
+     Eastern |   2.506036          .             .           .
+    Northern |   7.211695          .             .           .
+     Western |   21.84331          .             .           .
 -------------+------------------------------------------------
 pg_flex      |
-     Kampala |          0  (omitted)
-     Central |   6.883441   1.978797       2.99206    10.77482
-     Eastern |   .8312819     .31287      .2160109    1.446553
-    Northern |    1.48846   .4796829      .5451449    2.431775
-     Western |   5.222359   .8576244      3.535807     6.90891
+     Central |   7.863899          .             .           .
+     Eastern |    .881476          .             .           .
+    Northern |   1.511279          .             .           .
+     Western |   7.329021          .             .           .
 -------------+------------------------------------------------
 spg_flex     |
-     Kampala |          0  (omitted)
-     Central |   5.687338   1.835839      2.077089    9.297587
-     Eastern |   .3811335   .1689075      .0489703    .7132967
-    Northern |    .540163   .2058027      .1354441    .9448819
-     Western |   2.973454   .7168449      1.563751    4.383158
+     Central |   6.421195          .             .           .
+     Eastern |   .3858987          .             .           .
+    Northern |    .538026          .             .           .
+     Western |   3.790671          .             .           .
 --------------------------------------------------------------
+Note: missing standard errors because of stratum with single
+      sampling unit.
 
 .         svy: mean h_flex pg_flex spg_flex , over(strata);
 (running mean on estimation sample)
 
 Survey: Mean estimation
 
-Number of strata =       6        Number of obs    =      2707
-Number of PSUs   =     368        Population size  =  37257099
-                                  Design df        =       362
+Number of strata =       6        Number of obs    =      2403
+Number of PSUs   =     288        Population size  =  33844589
+                                  Design df        =       282
 
       Kampala: strata = Kampala
     _subpop_2: strata = Other Urban
@@ -619,40 +622,41 @@ Number of PSUs   =     368        Population size  =  37257099
 -------------+------------------------------------------------
 h_flex       |
      Kampala |          0  (omitted)
-   _subpop_2 |    3.61226   1.175674      1.300252    5.924269
-   _subpop_3 |   12.44266   2.680751       7.17086    17.71446
-   _subpop_4 |   2.404409   .7030801      1.021774    3.787043
-   _subpop_5 |   6.744711   1.818026      3.169492    10.31993
-   _subpop_6 |   18.68904    2.44331      13.88418    23.49391
+   _subpop_2 |   3.215378          .             .           .
+   _subpop_3 |   13.53644          .             .           .
+   _subpop_4 |   2.680107          .             .           .
+   _subpop_5 |   7.721144          .             .           .
+   _subpop_6 |   22.94611          .             .           .
 -------------+------------------------------------------------
 pg_flex      |
      Kampala |          0  (omitted)
-   _subpop_2 |   1.634909   .8131727      .0357736    3.234045
-   _subpop_3 |   7.745786   2.356314      3.112003    12.37957
-   _subpop_4 |   .8738779    .338548      .2081101    1.539646
-   _subpop_5 |   1.612815   .5331707      .5643144    2.661316
-   _subpop_6 |   5.487546   .9198026      3.678718    7.296373
+   _subpop_2 |     .60231          .             .           .
+   _subpop_3 |   7.904327          .             .           .
+   _subpop_4 |   .9348123          .             .           .
+   _subpop_5 |   1.676808          .             .           .
+   _subpop_6 |   7.747521          .             .           .
 -------------+------------------------------------------------
 spg_flex     |
      Kampala |          0  (omitted)
-   _subpop_2 |   1.210693   .7625393     -.2888704    2.710256
-   _subpop_3 |   6.368603   2.187377       2.06704    10.67017
-   _subpop_4 |   .4008593   .1827781      .0414191    .7602994
-   _subpop_5 |   .5948952   .2291733       .144217    1.045573
-   _subpop_6 |    3.13957     .77015      1.625041      4.6541
+   _subpop_2 |   .2759845          .             .           .
+   _subpop_3 |   6.454206          .             .           .
+   _subpop_4 |   .4066088          .             .           .
+   _subpop_5 |    .598921          .             .           .
+   _subpop_6 |   4.014982          .             .           .
 --------------------------------------------------------------
+Note: missing standard errors because of stratum with single
+      sampling unit.
 
 .         svy: mean h_flex pg_flex spg_flex , over(spdomain);
 (running mean on estimation sample)
 
 Survey: Mean estimation
 
-Number of strata =       6        Number of obs    =      2707
-Number of PSUs   =     368        Population size  =  37257099
-                                  Design df        =       362
+Number of strata =       6        Number of obs    =      2403
+Number of PSUs   =     288        Population size  =  33844589
+                                  Design df        =       282
 
-    _subpop_1: spdomain = Central Urban
-    _subpop_2: spdomain = Central Rural
+    _subpop_1: spdomain = Central Rural
       Eastern: spdomain = Eastern
      Northern: spdomain = Northern
       Western: spdomain = Western
@@ -662,26 +666,25 @@ Number of PSUs   =     368        Population size  =  37257099
         Over |       Mean   Std. Err.     [95% Conf. Interval]
 -------------+------------------------------------------------
 h_flex       |
-   _subpop_1 |    1.70071   1.035329     -.3353047    3.736725
-   _subpop_2 |   12.37902   2.668272       7.13176    17.62628
-     Eastern |   2.378509    .654105      1.092186    3.664831
-    Northern |   6.334718     1.6445      3.100744    9.568692
-     Western |   17.77789   2.283348       13.2876    22.26818
+   _subpop_1 |    13.4672          .             .           .
+     Eastern |   2.506036          .             .           .
+    Northern |   7.211695          .             .           .
+     Western |   21.84331          .             .           .
 -------------+------------------------------------------------
 pg_flex      |
-   _subpop_1 |   1.275202   .8513672     -.3990443    2.949449
-   _subpop_2 |   7.706169      2.345      3.094636     12.3177
-     Eastern |   .8312819     .31287      .2160109    1.446553
-    Northern |    1.48846   .4796829      .5451449    2.431775
-     Western |   5.222359   .8576244      3.535807     6.90891
+   _subpop_1 |   7.863899          .             .           .
+     Eastern |    .881476          .             .           .
+    Northern |   1.511279          .             .           .
+     Western |   7.329021          .             .           .
 -------------+------------------------------------------------
 spg_flex     |
-   _subpop_1 |   1.114679   .8109814     -.4801478    2.709505
-   _subpop_2 |    6.33603    2.17677      2.055328    10.61673
-     Eastern |   .3811335   .1689075      .0489703    .7132967
-    Northern |    .540163   .2058027      .1354441    .9448819
-     Western |   2.973454   .7168449      1.563751    4.383158
+   _subpop_1 |   6.421195          .             .           .
+     Eastern |   .3858987          .             .           .
+    Northern |    .538026          .             .           .
+     Western |   3.790671          .             .           .
 --------------------------------------------------------------
+Note: missing standard errors because of stratum with single
+      sampling unit.
 
 .         compress;
 hhsize was long now byte
@@ -725,5 +728,5 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
        log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_20
 > 11\GAPP3/rep/130_povmeas_flex.log
   log type:  text
- closed on:   8 Jul 2013, 14:28:35
+ closed on:   9 Jul 2013, 11:36:06
 -----------------------------------------------------------------------

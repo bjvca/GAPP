@@ -3,7 +3,7 @@
        log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_20
 > 11\GAPP3/rep/100_food_basket_flex.log
   log type:  text
- opened on:   8 Jul 2013, 14:28:33
+ opened on:   9 Jul 2013, 11:36:04
 
 . clear
 
@@ -176,8 +176,8 @@ variable one does not uniquely identify observations in the master
 bottom_bask |
          et |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          0 | 948.911484       34.96       34.96
-          1 | 1,765.0885       65.04      100.00
+          0 | 1,453.0937       53.54       53.54
+          1 | 1,260.9063       46.46      100.00
 ------------+-----------------------------------
       Total |      2,714      100.00
 
@@ -255,7 +255,7 @@ variable hhid does not uniquely identify observations in the master
 .         drop _merge;
 
 .         keep if bottom_basket==1;
-(16722 observations deleted)
+(23874 observations deleted)
 
 .      ****************************************************************
 > **********;
@@ -330,13 +330,13 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000005.tmp saved
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          2 |      1,042       38.37       38.37
-          3 |      1,674       61.63      100.00
+          2 |      1,529       56.30       56.30
+          3 |      1,187       43.70      100.00
 ------------+-----------------------------------
       Total |      2,716      100.00
 
 .            drop if _m==2;
-(1042 observations deleted)
+(1529 observations deleted)
 
 .            drop _merge;
 
@@ -361,15 +361,15 @@ variable hhid does not uniquely identify observations in the master
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          2 |      1,042        4.86        4.86
-          3 |     20,384       95.14      100.00
+          2 |      1,529       10.36       10.36
+          3 |     13,232       89.64      100.00
 ------------+-----------------------------------
-      Total |     21,426      100.00
+      Total |     14,761      100.00
 
 .           sort _m;
 
 .           drop if _m==2;
-(1042 observations deleted)
+(1529 observations deleted)
 
 .           drop _m;
 
@@ -384,9 +384,9 @@ variable spdomain does not uniquely identify observations in the
 
      _merge |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          3 |     20,384      100.00      100.00
+          3 |     13,232      100.00      100.00
 ------------+-----------------------------------
-      Total |     20,384      100.00
+      Total |     13,232      100.00
 
 .           drop _merge;
 
@@ -403,10 +403,10 @@ variable spdomain does not uniquely identify observations in the
 .           by spdomain: gen cumshr= sum(f_share_w);
 
 .                     count if cumshr<=.075;
-  187
+  164
 
 .           drop if cumshr<=.075;
-(187 observations deleted)
+(164 observations deleted)
 
 .             lab var f_share_w "average food share for the 13 regions"
 > ;
@@ -421,34 +421,25 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
      +-----------------------------------------------+
      | product        spdomain   f_shar~w     cumshr |
      |-----------------------------------------------|
-  1. |     105   Central Urban    .007011   .0778088 |
-  2. |     107   Central Urban   .0081733    .085982 |
-  3. |     102   Central Urban   .0090383   .0950203 |
-  4. |     101   Central Urban   .0091023   .1041226 |
-  5. |     114   Central Urban   .0091574   .1132801 |
+  1. |     157   Central Urban   .0101097   .0796525 |
+  2. |     135   Central Urban   .0112005   .0908529 |
+  3. |     137   Central Urban   .0135283   .1043813 |
+  4. |     102   Central Urban   .0137683   .1181496 |
+  5. |     103   Central Urban   .0139247   .1320743 |
      |-----------------------------------------------|
-  6. |     135   Central Urban   .0098028   .1230829 |
-  7. |     123   Central Urban   .0125427   .1356256 |
-  8. |     122   Central Urban   .0129624    .148588 |
-  9. |     157   Central Urban   .0154191   .1640071 |
- 10. |     127   Central Urban   .0186287   .1826357 |
+  6. |     112   Central Urban   .0144115   .1464858 |
+  7. |     136   Central Urban   .0201746   .1666604 |
+  8. |     117   Central Urban   .0241995   .1908599 |
+  9. |     127   Central Urban   .0251527   .2160126 |
+ 10. |     141   Central Urban   .0305866   .2465992 |
      |-----------------------------------------------|
- 11. |     136   Central Urban    .019481   .2021168 |
- 12. |     117   Central Urban    .019678   .2217948 |
- 13. |     125   Central Urban    .020405   .2421998 |
- 14. |     103   Central Urban   .0216762    .263876 |
- 15. |     141   Central Urban   .0220954   .2859713 |
+ 11. |     110   Central Urban   .0310484   .2776476 |
+ 12. |     147   Central Urban   .0432177   .3208652 |
+ 13. |     144   Central Urban   .0521724   .3730377 |
+ 14. |     113   Central Urban   .0843913   .4574289 |
+ 15. |       .   Central Urban   .2610612   .7184901 |
      |-----------------------------------------------|
- 16. |     137   Central Urban   .0222872   .3082585 |
- 17. |     110   Central Urban   .0229298   .3311884 |
- 18. |     140   Central Urban   .0258224   .3570108 |
- 19. |     144   Central Urban    .027746   .3847568 |
- 20. |     108   Central Urban   .0336766   .4184333 |
-     |-----------------------------------------------|
- 21. |     147   Central Urban   .0416138   .4600471 |
- 22. |     113   Central Urban   .0669171   .5269642 |
- 23. |       .   Central Urban    .081341   .6083052 |
- 24. |     999   Central Urban   .3916948          1 |
+ 16. |     999   Central Urban   .2815099          1 |
      +-----------------------------------------------+
 
 .                     gen numreg=1;
@@ -458,7 +449,7 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
 .                           keep product descript numreg;
 
 .           display _N;
-41
+40
 
 .                     lab var numreg "number of goods in the basket";
 
@@ -472,7 +463,7 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
 .             sort product;
 
 .                display _N;
-41
+40
 
 .   save "$path/work/codes_food_basket_flex.dta", replace;
 file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3

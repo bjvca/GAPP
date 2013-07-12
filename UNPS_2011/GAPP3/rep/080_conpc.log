@@ -3,7 +3,7 @@
        log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_20
 > 11\GAPP3/rep/080_conpc.log
   log type:  text
- opened on:   8 Jul 2013, 14:28:27
+ opened on:   9 Jul 2013, 11:35:58
 
 . set more off
 
@@ -95,7 +95,7 @@ file C:\Users\TEMPLE~1\AppData\Local\Temp\ST_0l000001.tmp saved
    quantityd |     34121    .5441537    1.353663          0   71.42857
       valuez |     34121    470.5371    985.3928   1.428571   85714.29
     quantity |     18998    .7658831    2.589936          0         60
-  cod_hh_nom |     37116    1066.391    8498.978          0   857465.5
+  cod_hh_nom |     37116    779.4658    4851.598          0   779153.5
 
 . collapse (sum) cod_hh_nom, by(hhid) 
 
@@ -196,5 +196,5 @@ file C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3
        log:  C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_20
 > 11\GAPP3/rep/080_conpc.log
   log type:  text
- closed on:   8 Jul 2013, 14:28:27
+ closed on:   9 Jul 2013, 11:35:58
 -----------------------------------------------------------------------
