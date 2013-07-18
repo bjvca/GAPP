@@ -110,62 +110,62 @@ save "$path/work/cons_cod_trans.dta", replace
 **  DATA OUT: cons_cod.dta
 ******************************************************************************************************************************************************
 clear
-use "$path/in/HSEC4.dta"
-
-rename hh hhid
-codebook hhid
-keep hhid h4q13f
-sort hhid
-gen educationd = h4q13f/365
-la var educationd "daily household expense on education"
-drop h4q13f
-save "$path/out/hhdeducationexp.dta", replace
-
-use "$path/in/HSEC5.dta"
-
-des
-rename hh hhid
-sort hhid
-keep hhid h5q10 h5q13
-egen medicalexp = rowtotal ( h5q10 h5q13)
-gen medicalexpd = medicalexp/30
-la var medicalexpd "household daily expenditure"
-drop h5q10 h5q13 medicalexp
-save "$path/out/hhdmedicalexp.dta", replace
-
-clear
-use "$path/in/HSEC8.dta"
-des
-save "$path/out/hhddurables.dta", replace
-keep if inlist( h8q2 ,003,009,010,011,012)
-
-*** h8q4 multiple has been removed because h8q5 was captured as total estimated value by UBOS 
-gen assetvalue = h8q5
-
-**************************************************************************************************************
-** i took land, bicycle, motor cycle and boat as durables and assumed that a year, the household can use 10% of these assests
-**********************************************************************************************************************
-gen dassetvalue = (assetvalue*0.1)/365
-la var dassetvalue "household daily durables expenditure"
-rename hh hhid
-sort hhid
-save "$path/out/hhddurablesexp.dta", replace
-clear
-
-use "$path/in/HSEC8.dta"
-save "$path/out/hhnondurables.dta", replace
-rename hh hhid
-drop if inlist( h8q2 ,001,002,003,009,010,011,012)
-gen nondurablevalue = h8q5
-**h8q4 multiple has been dropped since UBOS had recorded h8q5 as total estimated value in Ush and also discounted them by 10% to get rough value used per year
-*** we considered other buildings-002, furniture-004, Hh appliances as Kettle,flat iron-005, electronics as tv,radio-006, generators-007, solar-panel-008
-*** other transport equipment-013, jewelry&watches-014, mobilephone-015, otherassets as lawn mores-016, others -017 & 018. NOTE: figures are codes in data set
-la var nondurablevalue "household daily non-durables expenditure"
-sort hhid
-gen dnondurables = (nondurablevalue*0.1)/365
-la var dnondurables "household daily non-durables expenditure"
-save "$path/out/hhdnondurablesexp.dta", replace
-clear
+// use "$path/in/HSEC4.dta"
+// 
+// rename hh hhid
+// codebook hhid
+// keep hhid h4q13f
+// sort hhid
+// gen educationd = h4q13f/365
+// la var educationd "daily household expense on education"
+// drop h4q13f
+// save "$path/out/hhdeducationexp.dta", replace
+// 
+// use "$path/in/HSEC5.dta"
+// 
+// des
+// rename hh hhid
+// sort hhid
+// keep hhid h5q10 h5q13
+// egen medicalexp = rowtotal ( h5q10 h5q13)
+// gen medicalexpd = medicalexp/30
+// la var medicalexpd "household daily expenditure"
+// drop h5q10 h5q13 medicalexp
+// save "$path/out/hhdmedicalexp.dta", replace
+// 
+// clear
+// use "$path/in/HSEC8.dta"
+// des
+// save "$path/out/hhddurables.dta", replace
+// keep if inlist( h8q2 ,003,009,010,011,012)
+// 
+// *** h8q4 multiple has been removed because h8q5 was captured as total estimated value by UBOS 
+// gen assetvalue = h8q5
+// 
+// **************************************************************************************************************
+// ** i took land, bicycle, motor cycle and boat as durables and assumed that a year, the household can use 10% of these assests
+// **********************************************************************************************************************
+// gen dassetvalue = (assetvalue*0.1)/365
+// la var dassetvalue "household daily durables expenditure"
+// rename hh hhid
+// sort hhid
+// save "$path/out/hhddurablesexp.dta", replace
+// clear
+// 
+// use "$path/in/HSEC8.dta"
+// save "$path/out/hhnondurables.dta", replace
+// rename hh hhid
+// drop if inlist( h8q2 ,001,002,003,009,010,011,012)
+// gen nondurablevalue = h8q5
+// **h8q4 multiple has been dropped since UBOS had recorded h8q5 as total estimated value in Ush and also discounted them by 10% to get rough value used per year
+// *** we considered other buildings-002, furniture-004, Hh appliances as Kettle,flat iron-005, electronics as tv,radio-006, generators-007, solar-panel-008
+// *** other transport equipment-013, jewelry&watches-014, mobilephone-015, otherassets as lawn mores-016, others -017 & 018. NOTE: figures are codes in data set
+// la var nondurablevalue "household daily non-durables expenditure"
+// sort hhid
+// gen dnondurables = (nondurablevalue*0.1)/365
+// la var dnondurables "household daily non-durables expenditure"
+// save "$path/out/hhdnondurablesexp.dta", replace
+// clear
 
 use "$path/in/HSEC10B_CLN.dta"
 des
@@ -179,7 +179,7 @@ sort hhid
 *** hospitalcharges-503, traditionaldoctors-504, others-509 since medical expenses were cosidered in section 5, sports/theater-701,
 **  drycleaning-702, houseboys-703, barbers&beauty shops-704 and lodging-705. THESE HAVE BEEN CONSIDERED NON BASIC
 
-drop if inlist( h10bq2 ,311,455,456,457,458,459,461,462,464,465,466,467,469,501,502,503,504,509,701,702,703,704,705)
+//drop if inlist( h10bq2 ,311,455,456,457,458,459,461,462,464,465,466,467,469,501,502,503,504,509,701,702,703,704,705)
  
 egen hhfrequents = rowtotal ( h10bq5 h10bq7 h10bq9)
 gen dhhfrequents = hhfrequents/30
@@ -194,82 +194,82 @@ clear
 **   just as in kind food consumptions were eliminated in table 4 as per the GAPP guidelines, These have also been discounted by 10% usage per year
 ***************************************************************************************************************************************************
 
-use "$path/in/HSEC10C_CLN.dta"
-save "$path/out/hhsemidurables.dta", replace
-des
-sort hh
-rename hh hhid
-** we have considered the following men clothing-201, womenclothing-202, childrenclothing-203, men footware-221, women footware-222, children footware-223
-** bedding mattress-404, blankets-405, charcoal/parafin stoves-422, plastic plates and tumblers-442
-** and dropped other clothing-209, tailoring materials-210, other footware-229, furniture items-401, carpets-402, curtains&bedsheets-403, others-409
-** kettles-421, tv&radio-423, byclcles-424, radio-425, motors-426, motorcycles-427,computers-428, phone handsets-429, others-430, jewelry&watches-431, 
-** glass/table ware of codes 441-449, education cost (601-609) as education done in section 4, and others like functions & premiums (801-809)
-** as these have been consideered NON BASIC
-drop if inlist( h10cq2 ,209,210,229,401,402,403,409,421,423,424,425,426,427,428,429,430,431,441,443,444,445,449,601,602,603,604,609,801,802,803)
-egen hhsemidurables = rowtotal ( h10cq3 h10cq4)
-sort hhid
-gen hhdsemidurs = (hhsemidurables*0.1)/365
-la var hhdsemidurs "household daily semi durables goods and seervices expenses"
-drop hhsemidurables
-save "$path/out/hhdsemidurablesexp.dta", replace
-clear
-
-use "$path/in/HSEC10D.dta"
-save "$path/in/hhnonconsmpexptaxes.dta", replace
-sort hh
-rename hh hhid
-** we only considered local service tax-904, that may cause arrest if not paid and it used to be per head paid to local government annually
-** and dropped income tax-901, property tax-902, user fees-903, social security payments-905, remmitances-906, funerals-907 and others-909
-drop if inlist( h10dq2 ,901,902,903,905,906,907,909)
-gen hhdnonconsumpexp = h10dq3/365
-la var hhdnonconsumpexp "hh daily expenditure on taxes, contributions, donations, duties, etc"
-sort hhid
-save "$path/out/hhdnonconsumpexp.dta", replace
-clear
-******************************************************************************
-** after generating all daily total household expenditures of various considered items, then we start merging these  seven hhd--- prefixed files, and ending with sufix exp to get all non food hh daily expenditure
-**
-**********************************************************************************************
-
-
-use "$path/out/hhdeducationexp.dta", clear
-collapse (sum) educationd , by(hhid)
-sort hhid
-save "$path/out/hhdeducationexp.dta", replace
-
-use "$path/out/hhdmedicalexp.dta", clear
-collapse (sum) medicalexpd , by(hhid)
-sort hhid
-save "$path/out/hhdmedicalexp.dta", replace
-
-use "$path/out/hhdeducationexp.dta", clear
-merge 1:1 hhid using "$path/out/hhdmedicalexp.dta"
-drop _merge
-sort hhid
-save "$path/out/hhdeduc&medicex.dta", replace
-
-
-use "$path/out/hhddurablesexp.dta"
-collapse (sum) dassetvalue , by(hhid)
-sort hhid
-save "$path/out/hhddurablesexp.dta", replace
-
-use "$path/out/hhdeduc&medicex.dta"
-merge 1:1 hhid using "$path/out/hhddurablesexp.dta"
-drop _merge
-sort hhid
-save "$path/out/hhdeduc&medic&durabex.dta", replace
-
-use "$path/out/hhdnondurablesexp.dta"
-collapse (sum) dnondurables , by(hhid)
-sort hhid
-save "$path/out/hhdnondurablesexp.dta", replace
-
-use "$path/out/hhdeduc&medic&durabex.dta"
-merge 1:1 hhid using "$path/out/hhdnondurablesexp.dta"
-drop _merge
-sort hhid
-save "$path/out/hhdeduc&medic&durab&nondurabex.dta", replace
+// use "$path/in/HSEC10C_CLN.dta"
+// save "$path/out/hhsemidurables.dta", replace
+// des
+// sort hh
+// rename hh hhid
+// ** we have considered the following men clothing-201, womenclothing-202, childrenclothing-203, men footware-221, women footware-222, children footware-223
+// ** bedding mattress-404, blankets-405, charcoal/parafin stoves-422, plastic plates and tumblers-442
+// ** and dropped other clothing-209, tailoring materials-210, other footware-229, furniture items-401, carpets-402, curtains&bedsheets-403, others-409
+// ** kettles-421, tv&radio-423, byclcles-424, radio-425, motors-426, motorcycles-427,computers-428, phone handsets-429, others-430, jewelry&watches-431, 
+// ** glass/table ware of codes 441-449, education cost (601-609) as education done in section 4, and others like functions & premiums (801-809)
+// ** as these have been consideered NON BASIC
+// drop if inlist( h10cq2 ,209,210,229,401,402,403,409,421,423,424,425,426,427,428,429,430,431,441,443,444,445,449,601,602,603,604,609,801,802,803)
+// egen hhsemidurables = rowtotal ( h10cq3 h10cq4)
+// sort hhid
+// gen hhdsemidurs = (hhsemidurables*0.1)/365
+// la var hhdsemidurs "household daily semi durables goods and seervices expenses"
+// drop hhsemidurables
+// save "$path/out/hhdsemidurablesexp.dta", replace
+// clear
+// 
+// use "$path/in/HSEC10D.dta"
+// save "$path/in/hhnonconsmpexptaxes.dta", replace
+// sort hh
+// rename hh hhid
+// ** we only considered local service tax-904, that may cause arrest if not paid and it used to be per head paid to local government annually
+// ** and dropped income tax-901, property tax-902, user fees-903, social security payments-905, remmitances-906, funerals-907 and others-909
+// drop if inlist( h10dq2 ,901,902,903,905,906,907,909)
+// gen hhdnonconsumpexp = h10dq3/365
+// la var hhdnonconsumpexp "hh daily expenditure on taxes, contributions, donations, duties, etc"
+// sort hhid
+// save "$path/out/hhdnonconsumpexp.dta", replace
+// clear
+// ******************************************************************************
+// ** after generating all daily total household expenditures of various considered items, then we start merging these  seven hhd--- prefixed files, and ending with sufix exp to get all non food hh daily expenditure
+// **
+// **********************************************************************************************
+// 
+// 
+// use "$path/out/hhdeducationexp.dta", clear
+// collapse (sum) educationd , by(hhid)
+// sort hhid
+// save "$path/out/hhdeducationexp.dta", replace
+// 
+// use "$path/out/hhdmedicalexp.dta", clear
+// collapse (sum) medicalexpd , by(hhid)
+// sort hhid
+// save "$path/out/hhdmedicalexp.dta", replace
+// 
+// use "$path/out/hhdeducationexp.dta", clear
+// merge 1:1 hhid using "$path/out/hhdmedicalexp.dta"
+// drop _merge
+// sort hhid
+// save "$path/out/hhdeduc&medicex.dta", replace
+// 
+// 
+// use "$path/out/hhddurablesexp.dta"
+// collapse (sum) dassetvalue , by(hhid)
+// sort hhid
+// save "$path/out/hhddurablesexp.dta", replace
+// 
+// use "$path/out/hhdeduc&medicex.dta"
+// merge 1:1 hhid using "$path/out/hhddurablesexp.dta"
+// drop _merge
+// sort hhid
+// save "$path/out/hhdeduc&medic&durabex.dta", replace
+// 
+// use "$path/out/hhdnondurablesexp.dta"
+// collapse (sum) dnondurables , by(hhid)
+// sort hhid
+// save "$path/out/hhdnondurablesexp.dta", replace
+// 
+// use "$path/out/hhdeduc&medic&durabex.dta"
+// merge 1:1 hhid using "$path/out/hhdnondurablesexp.dta"
+// drop _merge
+// sort hhid
+// save "$path/out/hhdeduc&medic&durab&nondurabex.dta", replace
 
 
 
@@ -278,37 +278,37 @@ collapse (sum) dhhfrequents , by(hhid)
 sort hhid
 save "$path/out/hhdfrequentsexp.dta", replace
 
-use "$path/out/hhdeduc&medic&durab&nondurabex.dta"
-merge 1:1 hhid using "$path/out/hhdfrequentsexp.dta" 
-drop _merge
-sort hhid
-save "$path/out/hhdeduc&medic&durab&nondurab&freqsex.dta", replace
+// use "$path/out/hhdeduc&medic&durab&nondurabex.dta"
+// merge 1:1 hhid using "$path/out/hhdfrequentsexp.dta" 
+// drop _merge
+// sort hhid
+// save "$path/out/hhdeduc&medic&durab&nondurab&freqsex.dta", replace
+// 
+// use "$path/out/hhdsemidurablesexp.dta"
+// collapse (sum) hhdsemidurs , by(hhid)
+// sort hhid
+// save "$path/out/hhdsemidurablesexp.dta", replace
+// 
+// use "$path/out/hhdeduc&medic&durab&nondurab&freqsex.dta"
+// merge 1:1 hhid using "$path/out/hhdsemidurablesexp.dta"
+// drop _merge
+// replace hhdsemidurs=0 if hhdsemidurs==.
+// sort hhid
+// save "$path/out/hhdeduc&medic&durab&nondurab&freqs&semidurabex.dta", replace
+// 
+// use "$path/out/hhdnonconsumpexp.dta"
+// collapse (sum) hhdnonconsumpexp , by(hhid)
+// sort hhid
+// save "$path/out/hhdnonconsumpexp.dta", replace
+// 
+// use "$path/out/hhdeduc&medic&durab&nondurab&freqs&semidurabex.dta"
+// merge 1:1 hhid using "$path/out/hhdnonconsumpexp.dta"
+// drop _merge
+// replace hhdnonconsumpexp=0 if hhdnonconsumpexp==.
+// sort hhid
+// save "$path/out/hhdeduc&medic&durab&nondurab&freqs&semidurab&nonconsmpex.dta", replace
 
-use "$path/out/hhdsemidurablesexp.dta"
-collapse (sum) hhdsemidurs , by(hhid)
-sort hhid
-save "$path/out/hhdsemidurablesexp.dta", replace
-
-use "$path/out/hhdeduc&medic&durab&nondurab&freqsex.dta"
-merge 1:1 hhid using "$path/out/hhdsemidurablesexp.dta"
-drop _merge
-replace hhdsemidurs=0 if hhdsemidurs==.
-sort hhid
-save "$path/out/hhdeduc&medic&durab&nondurab&freqs&semidurabex.dta", replace
-
-use "$path/out/hhdnonconsumpexp.dta"
-collapse (sum) hhdnonconsumpexp , by(hhid)
-sort hhid
-save "$path/out/hhdnonconsumpexp.dta", replace
-
-use "$path/out/hhdeduc&medic&durab&nondurab&freqs&semidurabex.dta"
-merge 1:1 hhid using "$path/out/hhdnonconsumpexp.dta"
-drop _merge
-replace hhdnonconsumpexp=0 if hhdnonconsumpexp==.
-sort hhid
-save "$path/out/hhdeduc&medic&durab&nondurab&freqs&semidurab&nonconsmpex.dta", replace
-
-gen hhnonfoodexp =  educationd+medicalexpd+dassetvalue+dnondurables+dhhfrequents+hhdsemidurs+hhdnonconsumpexp
+gen hhnonfoodexp = dhhfrequents
 la var hhnonfoodexp "household total non food expenditure"
 keep hhid hhnonfoodexp
 
