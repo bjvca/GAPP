@@ -66,7 +66,7 @@ $include /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3/work/price_unit_flex.i
 
 Table   quan(cod,reg,qtit)   quantity and related information
                            calperg          quan5           calpp      povline_a_flex5
-$include /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2/work/quan_flex.inc
+$include /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3/work/quan_flex.inc
 ;
 
   shr(cod,reg)$quan(cod,reg,'povline_a_flex5')

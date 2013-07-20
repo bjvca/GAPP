@@ -153,7 +153,7 @@ tab rural,m
 
 ***-----Regions used for temporal price index calculations
 tab region,m
-
+replace region=1 if region==0
 * Region of |
 *  Residence |
 * in 2009/10 |      Freq.     Percent        Cum.
@@ -235,16 +235,9 @@ tab spdomain rural
 
 ***---------------News; another way to specify variables, is the traditional Uganda regions, North east central and western, represented in region
 
-gen new = 1 if spdomain==1 & rural==0
-replace new=2 if spdomain==1 & rural==1
-replace new=3 if spdomain==2 & rural==0
-replace new=4 if spdomain==2 & rural==1
-replace new=5 if spdomain==3 & rural==0
-replace new=6 if spdomain==3 & rural==1
-replace new=7 if spdomain==4 & rural==0
-replace new=8 if spdomain==4 & rural==1
+gen new = spdomain
 
-label define lnew 1 "Central Urban" 2 "Central Rural" 3 "Eastern Urban" 4 "Eastern Rural" 5 "Northern Urban" 6 "Northern Rural" 7 "Western Urban" 8 "Western Rural"  
+label define lnew 1 n 1 "Central" 2 "Eastern" 3 "Northern" 4 "Western" 
 label values new lnew
 
 label variable new "other ways to dissagregate poverty lines"
