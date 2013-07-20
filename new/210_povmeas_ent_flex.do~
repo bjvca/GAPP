@@ -322,7 +322,7 @@ drop bswt one h pg spg;
 	compress;
 label data "Final data set. Official published poverty rates are calculated from this data set";
 	sort hhid;
-	save "$path/work/povmeas_ent_flex.dta", replace;
+	save "$path\work\povmeas_ent_flex.dta", replace;
 
 gen dum=1;
 

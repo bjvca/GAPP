@@ -235,20 +235,31 @@ tab spdomain rural
 
 ***---------------News; another way to specify variables, is the traditional Uganda regions, North east central and western, represented in region
 
-gen new = 1 if spdomain==1 & rural==0
-replace new=2 if spdomain==1 & rural==1
-replace new=3 if spdomain==2 & rural==0
-replace new=4 if spdomain==2 & rural==1
-replace new=5 if spdomain==3 & rural==0
-replace new=6 if spdomain==3 & rural==1
-replace new=7 if spdomain==4 & rural==0
-replace new=8 if spdomain==4 & rural==1
-
-label define lnew 1 "Central Urban" 2 "Central Rural" 3 "Eastern Urban" 4 "Eastern Rural" 5 "Northern Urban" 6 "Northern Rural" 7 "Western Urban" 8 "Western Rural"  
-label values new lnew
-
-label variable new "other ways to dissagregate poverty lines"
-rename new news
+gen float news=1 if regurb==11 | regurb==10
+replace news=2  if regurb==20 | regurb==21
+replace news=3  if regurb==30 | regurb==31
+replace news=4  if regurb==40 | regurb==41
+label define lnews 1 "Central" 2 "Eastern" 3 "Northern" 4 "Western" 
+label values news lnews
+label variable new "regions north, east, central and western; other ways to dissagregate poverty lines"
+tab news
+* regions |
+*     north, |
+*      east, |
+*central and |
+*   western; |
+* other ways |
+*         to |
+*dissagregat |
+*  e poverty |
+*        lin |      Freq.     Percent        Cum.
+*------------+-----------------------------------
+*    Central |        833       30.76       30.76
+*    Eastern |        647       23.89       54.65
+*  Northern |        693       25.59       80.24
+*    Western |        535       19.76      100.00
+*------------+-----------------------------------
+*      Total |      2,708      100.00
 
 ****-------geo1-geo?; other administrative geographical boundariies where a survey is representative is not required as also done in news rural and others
 

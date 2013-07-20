@@ -6,7 +6,7 @@ cap log close
 log using "$path/rep/070_calpp.log", replace
 clear
 set more off
-
+#delimit  
 
 
 *global fert_rate "fert_rate" 
@@ -42,11 +42,11 @@ list
 * Now do the calorie needs for individuals
 *-------------------------------------------------------------------------* 
 use "$path/work/indata.dta" 
-    replace sex=2 if sex==0
+
 * CA bootstrap modification 
 sort hhid 
 merge hhid using "$path/work/hhdata.dta" 
-tab _m 
+tab _m  
 drop _m 
 
 sum 
@@ -65,8 +65,6 @@ sum
 
 * Children (no difference between boys and girls)     
     replace cal =  820 if age < 1 
-    
-
 
 * Add 500 cal per day for mothers in first six months of breast feeding
 * We assume that 60% of children under 1 are under six months old

@@ -168,17 +168,6 @@ While differences in consumption baskets are interesting in its own right,
  nutritional requirements, the West will need a much higher poverty line.
 \end_layout
 
-\begin_layout Standard
-While there are probably many more countries that would benefit from regional
- poverty lines becouse of geogrpahic differences in customs of production
- systems
-\end_layout
-
-\begin_layout Standard
-, the fact that these different diets provided the same amout of calories
- at very different costs is 
-\end_layout
-
 \begin_layout Section
 Poverty in Uganda - Recent Trends and Controversies
 \end_layout
@@ -260,11 +249,134 @@ key "RePEc:oup:jafrec:v:12:y:2003:i:4:p:598-624"
 \end_layout
 
 \begin_layout Section
-Utility Consistent Poverty Lines - Theory
+Utility Consistent Poverty Lines using Revealed Preferences
+\end_layout
+
+\begin_layout Standard
+The idea uses the rationality assumption that economic agent that derive
+ utility from consumption always prefere consuming more to less.
+ Let us assume that a representative agent living in spatial domain 
+\emph on
+
+\begin_inset Formula $(r\in R)$
+\end_inset
+
+ 
+\emph default
+derives utility from a set of consumption goods (
+\begin_inset Formula $i\in I$
+\end_inset
+
+).
+ We will then instruct each representative consumer in each spatial domain
+ 
+\emph on
+r 
+\emph default
+to spend a minimum to attain an arbitrary (but constant accros spatial domains)
+ level of utility.
+ As such, each individual will spend 
+\begin_inset Formula $\sum p_{i,r}q_{i,r}$
+\end_inset
+
+ on a consumption bundle, with 
+\begin_inset Formula $p_{i,r}$
+\end_inset
+
+ the price of good 
+\emph on
+i
+\emph default
+ in spatial domain 
+\emph on
+r
+\emph default
+ and 
+\begin_inset Formula $q_{i,r}$
+\end_inset
+
+ the price of good 
+\emph on
+i
+\emph default
+ in spatial domain 
+\emph on
+r
+\emph default
+.
+ Revealed preference conditions wil then imply that:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\sum p_{i,r}q_{ir'}\geq\sum p_{i,r}q_{i,r}\;\forall r,r'\label{eq:revpref}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This is so because the representative consumer in spatial domain 
+\emph on
+r
+\emph default
+ will choose only that bundle that minimizes expenditure.
+ Thus, any other bundle that yields the same level of utility (such as for
+ instance the one chosen by the representative consumer in region 
+\emph on
+r'
+\emph default
+) should be equally or more expensive than the chosen bundel.
+ There can be no bundle that costs less than the chosen one, because then
+ the rational consumer should have chosen that one.
+ The above condition 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:revpref"
+
+\end_inset
+
+ should hold for all possible pairs of spatial domains.
 \end_layout
 
 \begin_layout Section
 A Reassesment of Poverty in Uganda
+\end_layout
+
+\begin_layout Standard
+We will look at data taken from thee different surveys.
+ The oldest is the Uganda National Household Survey conducted in 2005/06.
+ The second is the Uganda National Household survey conducted in 2009/10.
+ Finally, we will also run the analysis on the second wave of the Uganda
+ National Panel Survey (2010/11).
+ Unfortunately, this last survey is much smaller than the previous surveys.
+\end_layout
+
+\begin_layout Standard
+For each dataset, we will start by constructing new food bundles in each
+ spatial domain.
+ For Uganda, we will use the rural parts of the four regions seperately
+ and take all urban areas (including Kampala) togehter as one spatial domain.
+ In each poverty line region, a basket of food products that satisfied basic
+ calorie needs (WHO 1985) was identified using information on the age and
+ sex composition of the household and the recorded consumption patterns
+ of poorer households.
+ The cost of this basket, valued at prices prevailing within each region,
+ is the food poverty line in each region.
+ A nonfood poverty line was obtained for each region by calculating the
+ share of food expenditures for households whose total food and nonfood
+ consumption per capita was near the food poverty line.
+ The total poverty line is obtained as the sum of the food and the nonfood
+ poverty lines.
+ 
+\end_layout
+
+\begin_layout Standard
+It will be instructive to have a closer look at the poverty lines.
+ After all, poverty lines are not only usefull 
 \end_layout
 
 \begin_layout Standard

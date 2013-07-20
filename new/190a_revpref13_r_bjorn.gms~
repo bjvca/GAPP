@@ -161,7 +161,7 @@ Equations
   display povline.l;
 
 *print the revealed preference matrix prior to optimisation;
-file povline_rp / povline_rp_inout.csv /;
+file povline_rp/"/home/bjvca/data/data/GAP/Haruna/work/povline_rp_inout.csv" /;
 put povline_rp;
 povline_rp.pc=5;
 povline_rp.nd=0;
@@ -222,7 +222,7 @@ PARAMETERS
 
    display perc_chng, povline_ent, povline_ali;
 
-   file res / qent.csv /;
+   file res/"/home/bjvca/data/data/GAP/Haruna/work/qent.csv" /;
 
    put res;
    res.pc=5;
