@@ -545,6 +545,10 @@ use "$path/in/hsec14b.dta"
 des
 rename hh hhid
 sort hhid
+drop if  (h14bq7>900000 &  h14bq7!=.)
+drop if (h14bq5 >900000 & h14bq5!=.)  
+drop if (h14bq9>900000 & h14bq9!=.)
+
 ** here we considered rent of rented house-301, imputed rent of own house-302, imputed rent of free given house-303, repair expenses-304, water-305 
 ** electricity-306, generator fuels-307, parafin-308, charcoal-309, firewood-310, matches-451, washing soap-452, bathing soap-453, toothpaste-454, 
 ** taxifares-463, and expenditure on phones not owned-468
