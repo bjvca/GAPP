@@ -302,7 +302,7 @@ keep if hhppkg-lower5>=0 & hhppkg-upper5<=0;
         drop _merge;
 	
 	  drop price_unitw;
-	  gen price_unitw=price_unitt;
+	  gen price_unitw=price_unitm;
 	  
 	  
 	  

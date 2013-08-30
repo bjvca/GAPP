@@ -399,7 +399,7 @@ rename hh hhid
 la var hhid "household id"
 ** we drop alcoholic and tobacco as these were not considered basic in foods generally and by GAPP, these included beer-152, other alcoholic dricns-153
 ** cigarettes-155, other tobacco-156 and beer taken in restaurants-159, just like we did in the 2009 poverty calculations
-drop if inlist( h14aq2 ,152,153,155,156,159)
+drop if inlist( h14aq2 , 101, 102,103,104,147,152,153,155,156,159)
 duplicates report  hhid h14aq2
 duplicates list  hhid h14aq2
 codebook hhid
@@ -444,6 +444,7 @@ sort product h14aq3
 ** we need it to convert the local units used in food consumption bundles into kilograms. Since the foods and the local units were the same, this file is 
 ** similar to the one used for the 2009 data
 merge m:1 product h14aq3 using  "$path/in/conversionfactors.dta"
+ replace convfactor=1.49 if product==121 & h14aq3==85
 tab _m
 drop _m
 ** I had to destring all the variables of the "conversionfactors.dta" file to match type with that of "--table4.dta" to enable the merge successful
@@ -545,7 +546,8 @@ use "$path/in/hsec14b.dta"
 des
 rename hh hhid
 sort hhid
-drop if  (h14bq7>1000000 &  h14bq7!=.)
+
+
 ** here we considered rent of rented house-301, imputed rent of own house-302, imputed rent of free given house-303, repair expenses-304, water-305 
 ** electricity-306, generator fuels-307, parafin-308, charcoal-309, firewood-310, matches-451, washing soap-452, bathing soap-453, toothpaste-454, 
 ** taxifares-463, and expenditure on phones not owned-468
@@ -559,6 +561,7 @@ drop if  (h14bq7>1000000 &  h14bq7!=.)
 egen hhfrequents = rowtotal ( h14bq5 h14bq7 h14bq9)
 gen dhhfrequents = hhfrequents/30
 la var dhhfrequents "daily household expenditure on frequently bought commodities"
+
 
 save "$path/out/hhdfrequentsexp.dta", replace
 
@@ -651,6 +654,7 @@ save "$path/out/hhdeduc&medic&durab&nondurabex.dta", replace
 
 use "$path/out/hhdfrequentsexp.dta"
 collapse (sum) dhhfrequents , by(hhid)
+
 sort hhid
 save "$path/out/hhdfrequentsexp.dta", replace
 
@@ -671,7 +675,7 @@ save "$path/out/hhdfrequentsexp.dta", replace
 // replace hhdsemidurs=0 if hhdsemidurs==.
 // sort hhid
 // save "$path/out/hhdeduc&medic&durab&nondurab&freqs&semidurabex.dta", replace
-// 
+// // use "$path/in/HSEC5.dta"
 // use "$path/out/hhdnonconsumpexp.dta"
 // collapse (sum) hhdnonconsumpexp , by(hhid)
 // sort hhid
@@ -686,6 +690,7 @@ save "$path/out/hhdfrequentsexp.dta", replace
 
 gen hhnonfoodexp = dhhfrequents
 la var hhnonfoodexp "household total non food expenditure"
+drop if hhnonfoodexp>45000 & hhnonfoodexp!=.
 keep hhid hhnonfoodexp
 
 

@@ -61,6 +61,7 @@ use "$path/work/hhdata.dta", clear;
 
 	sort hhid;
 	merge hhid using "$path/work/conpc.dta";
+
 	tab _merge;
 	drop _merge;
 

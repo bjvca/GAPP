@@ -61,6 +61,7 @@ use "$path/work/hhdata.dta", clear;
 
 	sort hhid;
 	merge hhid using "$path/work/conpc.dta";
+	drop if nf_pc_nom>100;
 	tab _merge;
 	drop _merge;
 
@@ -322,7 +323,7 @@ drop bswt one h pg spg;
 	compress;
 label data "Final data set. Official published poverty rates are calculated from this data set";
 	sort hhid;
-	save "$path\work\povmeas_ent_flex.dta", replace;
+	save "$path/work/povmeas_ent_flex.dta", replace;
 
 gen dum=1;
 

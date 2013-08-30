@@ -105,7 +105,7 @@ use `contpi';
 	merge spdomain using "$path/work/povline_food_flex.dta";
 	tab _merge;
 	drop _merge;
-
+drop triwt
 gen     triwt = 0 ;
 replace triwt = 11 - round(50*abs(cons_pc_tpi/povline_f_flex-1)+0.5)
                 if abs(cons_pc_tpi/povline_f_flex-1)<=0.2;

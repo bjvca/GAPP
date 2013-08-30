@@ -63,7 +63,7 @@ use "$path/work/hhdata.dta", clear;
 	merge hhid using "$path/work/conpc.dta";
 	tab _merge;
 	drop _merge;
-
+	drop if nf_pc_nom>15000;
 	gen food_pc_tpi  = food_pc_nom /tpi_trim;
 	lab var food_pc_tpi "Temp-adjusted per capita food consumption/day";
 	gen cons_pc_tpi = food_pc_tpi + nf_pc_nom;
@@ -105,10 +105,11 @@ use `contpi';
 	tab _merge;
 	drop _merge;
 
-
 gen     triwt = 0 ;
-replace triwt = 10 - round(abs(cons_pc_tpi/food_povline_ent-1))
-                if abs(cons_pc_tpi/food_povline_ent-1)<=10;
+replace triwt = 11 - round(50*abs(cons_pc_tpi/food_povline_ent-1)+0.5)
+                if abs(cons_pc_tpi/food_povline_ent-1)<=0.2;
+	
+
 
 
 	gen tripopwt=triwt*hhweight*hhsize;

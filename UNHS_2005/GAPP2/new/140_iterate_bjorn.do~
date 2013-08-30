@@ -525,7 +525,7 @@ drop if quantity==0 ;
                 drop _merge;
 
                 	  drop price_uw`pass';
-	  gen price_uw`pass'=price_ut`pass';
+	  gen price_uw`pass'=price_um`pass';
                 
                 sort product spdomain;
         save "$path/work/price_unit_flex_it`pass'.dta", replace;
