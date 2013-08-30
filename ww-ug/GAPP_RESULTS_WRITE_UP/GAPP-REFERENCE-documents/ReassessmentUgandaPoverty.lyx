@@ -85,8 +85,8 @@ Uganda has seen substantial poverty reduction, but reported measures are
  We find poverty to be higher in general, and reductions in poverty were
  slower than official figures suggest.
  We also find that poverty is highest in regions that consume relatively
- more matooke, while the North seems to enjoy cheap calories, making them
- less poor than officially reported.
+ more matooke and maize, while the North seems to enjoy cheap calories,
+ making them less poor than officially reported.
  However, the figure from the North hides significant heterogeneity, and
  poverty reduction in the North is very slow.
  
@@ -2125,7 +2125,7 @@ Central
 \uwave off
 \noun off
 \color none
-827.73
+635.93
 \end_layout
 
 \end_inset
@@ -2146,7 +2146,7 @@ Central
 \uwave off
 \noun off
 \color none
-43.89%
+72.95%
 \end_layout
 
 \end_inset
@@ -2274,7 +2274,7 @@ Eastern
 \uwave off
 \noun off
 \color none
-608.45
+626.07
 \end_layout
 
 \end_inset
@@ -2295,7 +2295,7 @@ Eastern
 \uwave off
 \noun off
 \color none
-59.33%
+75.90%
 \end_layout
 
 \end_inset
@@ -2423,7 +2423,7 @@ Northern
 \uwave off
 \noun off
 \color none
-305.91
+269.54
 \end_layout
 
 \end_inset
@@ -2444,7 +2444,7 @@ Northern
 \uwave off
 \noun off
 \color none
-47.60%
+72.03%
 \end_layout
 
 \end_inset
@@ -2572,7 +2572,7 @@ Western
 \uwave off
 \noun off
 \color none
-746.75
+735.84
 \end_layout
 
 \end_inset
@@ -2593,7 +2593,7 @@ Western
 \uwave off
 \noun off
 \color none
-56.21%
+75.73%
 \end_layout
 
 \end_inset
@@ -3118,14 +3118,14 @@ Comparing the official poverty lines to the utility consistent poverty lines
  In 2005/06, the cost of basic needs of an individual for one day in the
  North appears to be less than half of the official cost once we take into
  account this region specific diet.
- 
+ In 2009/10, the difference is less dramatic, but still considerable.
 \end_layout
 
 \begin_layout Standard
-The reverse holds for the Central and the Western regions.
+The reverse holds for the Western region.
  There, the cost of meeting basic needs of an individual increases if we
  allow them to assemble their own diet.
- This is as expected, as these regions rely heavily on matooke, the most
+ This is as expected, as this regions relies heavily on matooke, the most
  expensive staple
 \begin_inset Foot
 status collapsed
@@ -3137,7 +3137,7 @@ Irish potatoes and rices are even less cost effective than matooke, but
 
 \end_inset
 
-.
+ in terms of energy conversion.
  The official poverty line that relies on a single consumption basket for
  the entire country therefore averages out this expensive diet over the
  entire country.
@@ -3164,8 +3164,6 @@ ed by the food prices that prevail in 2009/10.
  This is partly due to the fact that prices have increased more in urban
  areas during the 2008/09 food price crisis.
  Also in the North, there was a doubling of the cost of basic needs.
- The sharp increase in prices also mean that households are devoting significant
-ly larger shares to food.
  
 \end_layout
 
@@ -3195,15 +3193,11 @@ key "RePEc:ecm:emetrp:v:52:y:1984:i:3:p:761-66"
 \end_layout
 
 \begin_layout Standard
-At the national level, we find that poverty stood at about 38 percent in
- 2005/06, about 7 percentage points higher than the official figure.
- Over time, poverty has decreased, but slower than what official poverty
- figures suggest.
- For instance, between 2005/06 and 2009/10, official headcount poverty fell
- by about 23 percent.
- Our estimates suggest the reduction over that period was only 5 percent.
- But in 2010/11, a substantial poverty reduction is registered, bringing
- the reduction over this larger time span closer to the official estimates.
+At the national level, we find that poverty stood at about 33 percent in
+ 2005/06, less than 2 percentage points higher than the official figure.
+ Contrary to official figures, our estimates suggest that poverty has stayed
+ virtually the same.
+ In fact, we find that poverty increased in 2009/10.
  It is easy to see why we find this pattern.
  A cost of basic needs approach rooted in regional caloric requirements
  and differentiated consumption bundles would be expected to shift poverty
@@ -3211,10 +3205,10 @@ At the national level, we find that poverty stood at about 38 percent in
  Our poverty measure is likely to better reflect the impact of the food
  price crisis than the national poverty measure based on (consumer price
  index adjusted) poverty lines.
- This explanation is supported by the fact that poverty increases for the
- urban poor (from 13 to 16.3 percent) between 2005/06 and 2009/10, and the
- poorest of the poor (the North Eastern province), two groups that are likely
- to be especially hit by food price surges 
+ This explanation is supported by the fact that poverty increases disproportiona
+lly for the urban poor (from 9 to 16.3 percent) between 2005/06 and 2009/10,
+ and the poorest of the poor (the North Eastern province), two groups that
+ are likely to be especially hit by food price surges 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "New6"
@@ -3260,11 +3254,8 @@ reference "tab:Official-poverty-headcount00s"
 \end_layout
 
 \begin_layout Standard
-We also find that the Western region was the poorest in 2005/06 and in 2010/11.
- It was briefly surpassed by the Eastern region during the food price crisis.
- Indeed, as we mentioned before, the price of matooke did not increase as
- much as the price of other commodities, due to its localized nature.
- Our results are consistent with the analysis of 
+We also find that the Western region was the poorest in 2010/11.
+ This is consistent with the analysis of 
 \begin_inset CommandInset citation
 LatexCommand citet
 key "New1"
@@ -3635,7 +3626,7 @@ National
 \uwave off
 \noun off
 \color none
-37.80
+32.88
 \end_layout
 
 \end_inset
@@ -3656,7 +3647,7 @@ National
 \uwave off
 \noun off
 \color none
-10.96
+9.12
 \end_layout
 
 \end_inset
@@ -3677,7 +3668,7 @@ National
 \uwave off
 \noun off
 \color none
-4.51
+3.65
 \end_layout
 
 \end_inset
@@ -3927,7 +3918,7 @@ Urban
 \uwave off
 \noun off
 \color none
-12.93
+9.11
 \end_layout
 
 \end_inset
@@ -3948,7 +3939,7 @@ Urban
 \uwave off
 \noun off
 \color none
-3.15
+2.12
 \end_layout
 
 \end_inset
@@ -3969,7 +3960,7 @@ Urban
 \uwave off
 \noun off
 \color none
-1.17
+0.78
 \end_layout
 
 \end_inset
@@ -4127,7 +4118,7 @@ Rural
 \uwave off
 \noun off
 \color none
-42.48
+37.34
 \end_layout
 
 \end_inset
@@ -4148,7 +4139,7 @@ Rural
 \uwave off
 \noun off
 \color none
-12.43
+10.43
 \end_layout
 
 \end_inset
@@ -4169,7 +4160,7 @@ Rural
 \uwave off
 \noun off
 \color none
-5.14
+4.19
 \end_layout
 
 \end_inset
@@ -4431,7 +4422,7 @@ Central
 \uwave off
 \noun off
 \color none
-36.70
+22.70
 \end_layout
 
 \end_inset
@@ -4452,7 +4443,7 @@ Central
 \uwave off
 \noun off
 \color none
-11.44
+6.02
 \end_layout
 
 \end_inset
@@ -4473,7 +4464,7 @@ Central
 \uwave off
 \noun off
 \color none
-4.92
+2.31
 \end_layout
 
 \end_inset
@@ -4643,7 +4634,7 @@ Eastern
 \uwave off
 \noun off
 \color none
-44.29
+47.26
 \end_layout
 
 \end_inset
@@ -4664,7 +4655,7 @@ Eastern
 \uwave off
 \noun off
 \color none
-11.85
+12.80
 \end_layout
 
 \end_inset
@@ -4685,7 +4676,7 @@ Eastern
 \uwave off
 \noun off
 \color none
-4.60
+5.03
 \end_layout
 
 \end_inset
@@ -4855,7 +4846,7 @@ Northern
 \uwave off
 \noun off
 \color none
-22.17
+15.62
 \end_layout
 
 \end_inset
@@ -4876,7 +4867,7 @@ Northern
 \uwave off
 \noun off
 \color none
-5.11
+3.32
 \end_layout
 
 \end_inset
@@ -4897,7 +4888,7 @@ Northern
 \uwave off
 \noun off
 \color none
-1.71
+1.02
 \end_layout
 
 \end_inset
@@ -5067,7 +5058,7 @@ Western
 \uwave off
 \noun off
 \color none
-44.57
+43.71
 \end_layout
 
 \end_inset
@@ -5088,7 +5079,7 @@ Western
 \uwave off
 \noun off
 \color none
-13.95
+13.52
 \end_layout
 
 \end_inset
@@ -5109,7 +5100,7 @@ Western
 \uwave off
 \noun off
 \color none
-6.06
+5.84
 \end_layout
 
 \end_inset
@@ -5371,7 +5362,7 @@ Kampala
 \uwave off
 \noun off
 \color none
-7.98
+3.74
 \end_layout
 
 \end_inset
@@ -5392,7 +5383,7 @@ Kampala
 \uwave off
 \noun off
 \color none
-2.02
+0.97
 \end_layout
 
 \end_inset
@@ -5413,7 +5404,7 @@ Kampala
 \uwave off
 \noun off
 \color none
-0.86
+0.43
 \end_layout
 
 \end_inset
@@ -5583,7 +5574,7 @@ Central 1
 \uwave off
 \noun off
 \color none
-38.87
+25.73
 \end_layout
 
 \end_inset
@@ -5604,7 +5595,7 @@ Central 1
 \uwave off
 \noun off
 \color none
-12.33
+6.69
 \end_layout
 
 \end_inset
@@ -5625,7 +5616,7 @@ Central 1
 \uwave off
 \noun off
 \color none
-5.28
+2.45
 \end_layout
 
 \end_inset
@@ -5759,7 +5750,7 @@ Central 2
 \uwave off
 \noun off
 \color none
-48.19
+28.76
 \end_layout
 
 \end_inset
@@ -5780,7 +5771,7 @@ Central 2
 \uwave off
 \noun off
 \color none
-15.03
+7.76
 \end_layout
 
 \end_inset
@@ -5801,7 +5792,7 @@ Central 2
 \uwave off
 \noun off
 \color none
-6.50
+3.07
 \end_layout
 
 \end_inset
@@ -5935,7 +5926,7 @@ East Central
 \uwave off
 \noun off
 \color none
-40.32
+43.69
 \end_layout
 
 \end_inset
@@ -5956,7 +5947,7 @@ East Central
 \uwave off
 \noun off
 \color none
-10.16
+11.04
 \end_layout
 
 \end_inset
@@ -5977,7 +5968,7 @@ East Central
 \uwave off
 \noun off
 \color none
-3.83
+4.20
 \end_layout
 
 \end_inset
@@ -6111,7 +6102,7 @@ Eastern
 \uwave off
 \noun off
 \color none
-45.92
+48.29
 \end_layout
 
 \end_inset
@@ -6132,7 +6123,7 @@ Eastern
 \uwave off
 \noun off
 \color none
-12.95
+13.91
 \end_layout
 
 \end_inset
@@ -6153,7 +6144,7 @@ Eastern
 \uwave off
 \noun off
 \color none
-5.13
+5.59
 \end_layout
 
 \end_inset
@@ -6287,7 +6278,7 @@ Mid Northern
 \uwave off
 \noun off
 \color none
-22.42
+15.37
 \end_layout
 
 \end_inset
@@ -6308,7 +6299,7 @@ Mid Northern
 \uwave off
 \noun off
 \color none
-4.83
+3.00
 \end_layout
 
 \end_inset
@@ -6329,7 +6320,7 @@ Mid Northern
 \uwave off
 \noun off
 \color none
-1.50
+0.84
 \end_layout
 
 \end_inset
@@ -6463,7 +6454,7 @@ North East
 \uwave off
 \noun off
 \color none
-55.96
+56.60
 \end_layout
 
 \end_inset
@@ -6484,7 +6475,7 @@ North East
 \uwave off
 \noun off
 \color none
-16.36
+15.99
 \end_layout
 
 \end_inset
@@ -6505,7 +6496,7 @@ North East
 \uwave off
 \noun off
 \color none
-6.53
+6.28
 \end_layout
 
 \end_inset
@@ -6639,7 +6630,7 @@ West Nile
 \uwave off
 \noun off
 \color none
-14.50
+9.01
 \end_layout
 
 \end_inset
@@ -6660,7 +6651,7 @@ West Nile
 \uwave off
 \noun off
 \color none
-2.99
+1.88
 \end_layout
 
 \end_inset
@@ -6681,7 +6672,7 @@ West Nile
 \uwave off
 \noun off
 \color none
-1.02
+0.63
 \end_layout
 
 \end_inset
@@ -6815,7 +6806,7 @@ Mid Western
 \uwave off
 \noun off
 \color none
-42.57
+41.71
 \end_layout
 
 \end_inset
@@ -6836,7 +6827,7 @@ Mid Western
 \uwave off
 \noun off
 \color none
-13.21
+12.80
 \end_layout
 
 \end_inset
@@ -6845,7 +6836,19 @@ Mid Western
 \begin_inset Text
 
 \begin_layout Plain Layout
-5.85
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+5.64
 \end_layout
 
 \end_inset
@@ -6979,7 +6982,7 @@ South Western
 \uwave off
 \noun off
 \color none
-45.83
+44.98
 \end_layout
 
 \end_inset
@@ -7000,7 +7003,7 @@ South Western
 \uwave off
 \noun off
 \color none
-14.42
+13.98
 \end_layout
 
 \end_inset
@@ -7021,7 +7024,7 @@ South Western
 \uwave off
 \noun off
 \color none
-6.20
+5.97
 \end_layout
 
 \end_inset
@@ -7215,8 +7218,8 @@ key "RePEc:ucp:ecdecc:v:58:y:2010:i:3:p:449-474"
 Applying the above to three nationally representative surveys for Uganda,
  we find that national poverty has been and remains higher than the official
  figures suggest.
- Also somewhat controversial, we find that not the North, but the West is
- the region that is poorest.
+ Also somewhat controversial, we find that not the North, but the East and
+ more recently the West are the regions that are poorest.
  This can be re-conciliated by the fact that households living in the West
  are disproportionally dependent on matooke for their caloric requirements,
  while the North prefers (or has to rely on because of climatic conditions)
