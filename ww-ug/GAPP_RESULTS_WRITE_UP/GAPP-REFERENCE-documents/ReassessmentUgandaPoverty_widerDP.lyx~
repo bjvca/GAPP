@@ -28,7 +28,7 @@ theorems-ams
 \bibtex_command default
 \index_command default
 \paperfontsize 12
-\spacing single
+\spacing onehalf
 \use_hyperref false
 \papersize default
 \use_geometry false
@@ -63,38 +63,6 @@ theorems-ams
 
 \begin_body
 
-\begin_layout Standard
-\begin_inset Float figure
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\begin_inset Graphics
-	filename /home/bjvca/data/data/GAP/Haruna/ww-ug/GAPP_RESULTS_WRITE_UP/ifpri.jpeg
-	scale 40
-
-\end_inset
-
- 
-\begin_inset space \hfill{}
-\end_inset
-
-
-\begin_inset Graphics
-	filename /home/bjvca/data/data/GAP/Haruna/ww-ug/GAPP_RESULTS_WRITE_UP/wider.jpeg
-	scale 40
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
 \begin_layout Title
 The Role of Price and Consumption Bundle Aggregation in Poverty Measurement:
  A Reassessment of Poverty in Uganda
@@ -107,45 +75,36 @@ status open
 
 \begin_layout Plain Layout
 International Food Policy Research Institute (IFPRI) -Kampala, b.vancampenhout@cg
-iar.org, first draft.
+iar.org
 \end_layout
 
 \end_inset
 
 , Haruna Sekabira and Dede H.
  Aduayom
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Status: presented at WIDER/UNU conference.
- Can be improved by adding literature that shows nutrition outcomes.
- I have also updated the figures to now include more non-food items
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Abstract
 Uganda has seen substantial poverty reduction, but reported measures are
  flawed because the official poverty line is based on a single national
- food poverty line that was constructed using 1993 data.
+ food poverty line.
  We use regional consumption patterns to construct poverty lines that account
  for location specific diets and adjust these poverty lines such that they
  pass revealed preference tests.
- In doing so, we estimate poverty in Uganda using the 2005/06 and 2009/10
- Uganda National Household Survey and the 2010/11 round of the Uganda National
- Panel Survey.
  We find poverty to be higher in general, and reductions in poverty were
  slower than official figures suggest.
  We also find that poverty is highest in regions that consume relatively
  more matooke and maize, while the North seems to enjoy cheap calories,
  making them less poor than officially reported.
- However, the figure from the North hides significant heterogeneity, and
- poverty reduction in the North is very slow.
  
+\end_layout
+
+\begin_layout Description
+JEL: O12, D31, O55
+\end_layout
+
+\begin_layout Description
+Keywords: poverty, cost of basic needs, revealed preferences, Uganda
 \end_layout
 
 \begin_layout Section
@@ -1054,14 +1013,14 @@ Western
 
 \begin_layout Plain Layout
 \align center
-note: reproduced from 
+source: 
 \begin_inset CommandInset citation
 LatexCommand citet
 key "RePEc:oup:jafrec:v:12:y:2003:i:4:p:598-624"
 
 \end_inset
 
-.
+
 \end_layout
 
 \end_inset
@@ -1219,7 +1178,7 @@ national
 \begin_inset Text
 
 \begin_layout Plain Layout
-38.3
+38.8
 \end_layout
 
 \end_inset
@@ -1596,6 +1555,18 @@ Western
 </cell>
 </row>
 </lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+source: 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "New8,New9"
 
 \end_inset
 
@@ -2746,6 +2717,11 @@ Western
 
 \end_layout
 
+\begin_layout Plain Layout
+\align center
+source: author's calculations on the basis of UNHS and UNPS data
+\end_layout
+
 \end_inset
 
 
@@ -3147,6 +3123,18 @@ Western
 </cell>
 </row>
 </lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+source: 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "RePEc:oup:jafrec:v:12:y:2003:i:4:p:598-624"
 
 \end_inset
 
@@ -7192,6 +7180,11 @@ South Western
 \end_inset
 
 
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+source: author's calculations on the basis of UNHS and UNPS data
 \end_layout
 
 \end_inset

@@ -336,7 +336,7 @@ save "$path/out/hhdeduc&medic&durabex&freq.dta", replace
 // sort hhid
 // save "$path/out/hhdeduc&medic&durab&nondurab&freqs&semidurab&nonconsmpex.dta", replace
 
-gen hhnonfoodexp = educationd+medicalexpd+dassetvalue+dhhfrequents
+gen hhnonfoodexp = dassetvalue+dhhfrequents
 
 la var hhnonfoodexp "household total non food expenditure"
 keep hhid hhnonfoodexp

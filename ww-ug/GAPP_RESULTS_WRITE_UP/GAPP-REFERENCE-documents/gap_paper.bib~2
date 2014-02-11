@@ -38,7 +38,7 @@
 	year = "1998"
 }
 
-@proceedings{New2,
+@unpublished{New2,
 	author = "Daniels, Lisa",
 	series = "{e Fourth Global Conference on Agricultural and Rural Household Statistics}",
 	title = "{Measuring Poverty Trends in Uganda with Non-monetary Indicators}",

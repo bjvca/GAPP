@@ -38,7 +38,7 @@
 	year = "1998"
 }
 
-@proceedings{New2,
+@unpublished{New2,
 	author = "Daniels, Lisa",
 	series = "{e Fourth Global Conference on Agricultural and Rural Household Statistics}",
 	title = "{Measuring Poverty Trends in Uganda with Non-monetary Indicators}",
@@ -207,7 +207,7 @@
 	year = "2013"
 }
 
-@misc{New7,
+@manual{New7,
 	author = "UBOS",
 	howpublished = "http://www.ubos.org/onlinefiles/uploads/ubos/UDHS/UDHS2011.pdf",
 	title = "{Uganda Dermogrphic and Health Survey}",
@@ -215,7 +215,7 @@
 	year = "2011"
 }
 
-@misc{New8,
+@manual{New8,
 	author = "UBOS",
 	howpublished = "http://www.ubos.org/UNHS0910/unhs200910.pdf",
 	title = "{Uganda National Household Survey 2009/10 Socio Economic Module - Abridged report}",
@@ -223,7 +223,7 @@
 	year = "2010"
 }
 
-@misc{New9,
+@manual{New9,
 	author = "UBOS",
 	howpublished = "http://www.ubos.org/onlinefiles/uploads/ubos/pdf\%20documents/UNHSReport20052006.pdf",
 	title = "{Uganda National Household Survey 2005/06 Report on the Socio Economic Module}",
