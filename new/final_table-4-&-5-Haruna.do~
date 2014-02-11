@@ -141,7 +141,7 @@ use "$path/in/HSEC8.dta"
 save "$path/out/hhddurables.dta", replace
 *keep if inlist( h8q2 ,010,011,012)
   
-gen assetvalue = h8q5
+gen assetvalue = h8q5/10
 // 
 // **************************************************************************************************************
 // ** i took land, bicycle, motor cycle and other transport equipment-012, that in 2009 were motor vehicles, as durables and assumed that a year, the household can use 1% of these assests. there was no land in 2005 assets
@@ -336,7 +336,7 @@ save "$path/out/hhdeduc&medic&durabex&freq.dta", replace
 // sort hhid
 // save "$path/out/hhdeduc&medic&durab&nondurab&freqs&semidurab&nonconsmpex.dta", replace
 
-gen hhnonfoodexp = educationd+medicalexpd+dassetvalue+dhhfrequents
+gen hhnonfoodexp = dassetvalue+dhhfrequents
 
 la var hhnonfoodexp "household total non food expenditure"
 keep hhid hhnonfoodexp
