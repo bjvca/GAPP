@@ -52,10 +52,10 @@ use "$path/work/cons_cod_trans.dta", clear;
 
 *drop if quantityd==0 ;
 
-keep hhid product food_cat valuez quantityz unit;
+keep hhid product food_cat valuez quantityz unit quantity;
 
 rename valuez    value;
-rename quantityz quantity;
+*rename quantityz quantity;
 
 drop if quantity==0 ;
 
@@ -271,6 +271,8 @@ keep if hhppkg-lower5>=0 & hhppkg-upper5<=0;
 * we only use price_unitw
 *********************************************************************;
         gen price_unitt=value_r/(quantity*1000);
+        
+
         gen price_unitm=price_unitt;
 
 		*CA modified to count the boot sample weight bswt;

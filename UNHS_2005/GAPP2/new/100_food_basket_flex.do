@@ -123,7 +123,7 @@ use "$path/work/cons_cod.dta";
         drop _merge;
 */
         
-        keep if food_cat;
+        keep if food_cat==1;
         codebook hhid;
         sort hhid;
 
