@@ -73,6 +73,9 @@ save "$path/out/household_table4.dta", replace
 set more off
 count
 sort product untcd
+
+replace product=100 if product==101  | product==102  | product==103  | product==104
+
 merge m:1 product untcd using  "$path/in/conversionfactors.dta"
 tab _m
 drop _m
@@ -139,7 +142,9 @@ use "$path/in/HSEC8.dta"
 
 save "$path/out/hhddurables.dta", replace
 *keep if inlist( h8q2 ,010,011,012)
-  
+  drop if h8q2==3
+  drop if h8q2==2
+drop  if h8q2==1
 gen assetvalue = h8q5/10
  
 ** **************************************************************************************************************
@@ -147,6 +152,7 @@ gen assetvalue = h8q5/10
  ** house not treated as an asset as the toolkit takes care of imputed rent
 ************************************************************************************************************************
  gen dassetvalue = (assetvalue)/365
+ replace dassetvalue=0
 la var dassetvalue "household daily durables expenditure"
 rename hh hhid
 sort hhid
@@ -196,7 +202,8 @@ sort hh
 rename hh hhid
 egen hhsemidurables = rowtotal ( h10cq3 h10cq4 h10cq5)
 sort hhid
-gen hhdsemidurs = (hhsemidurables)/365
+gen hhdsemidurs = (hhsemidurables*0.20)/365
+
 la var hhdsemidurs "household daily semi durables goods and seervices expenses"
 drop hhsemidurables
 save "$path/out/hhdsemidurablesexp.dta", replace
@@ -207,8 +214,9 @@ use "$path/in/HSEC10D.dta"
 save "$path/in/hhnonconsmpexptaxes.dta", replace
 sort hh
 rename hh hhid
-
+drop if h10dq2==906
 gen hhdnonconsumpexp = h10dq3/365
+
 la var hhdnonconsumpexp "hh daily expenditure on taxes, contributions, donations, duties, etc"
 sort hhid
 save "$path/out/hhdnonconsumpexp.dta", replace
