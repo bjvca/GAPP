@@ -64,6 +64,7 @@ noisily display "Start time: " "$S_TIME"
 * Macros. Region definitions. Demographic definitions.
 **************************************************************************
 do "$path/new/010_initial.do"
+do "$path/new/final_tableA1-A3_Haruna.do"
 do "$path/new/final_table-4-&-5-Haruna.do"
 
 *do "C:\user\gapp\z_data_preb/new/100_collect_expen_moz.do"
