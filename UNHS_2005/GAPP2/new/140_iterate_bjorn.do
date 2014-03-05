@@ -377,10 +377,10 @@ use "$path/in/cons_cod_trans.dta", clear;
 *drop value   ;
 *drop quantity;
 
-keep hhid product food_cat valuez quantityz unit;
+keep hhid product food_cat valuez quantity unit;
 
 rename valuez    value;
-rename quantityz quantity;
+*rename quantityz quantity;
 
 *drop count;
 
@@ -656,7 +656,7 @@ keep product spdomain quan`pass'  price_uw`pass' val_ir`pass' povline_f_flex90_`
 
 
                 gen triwt=0 ;
-		replace triwt = 11 - round(50*abs(cons_pc_tpi/povline_f_flex90_`pass'-1)+0.5)
+	       		replace triwt = 11 - round(50*abs(cons_pc_tpi/povline_f_flex90_`pass'-1)+0.5)
                 if abs(cons_pc_tpi/povline_f_flex90_`pass'-1)<=0.2;
 				
 				* Nearness to poverty line and population weights ;

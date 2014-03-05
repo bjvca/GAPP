@@ -51,7 +51,6 @@ use "$path/work/food_basket_flex.dta";
         * This tells where we are lacking calorie info or are lacking quantity info due to 
         * missing price info above;
         list product spdomain descript if _merge==1;
-
         drop if _merge~=3;
         drop _merge;
         sort spdomain f_share_w;

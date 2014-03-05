@@ -103,7 +103,7 @@ use "$path/work/food_basket_flex.dta";
 
         * the sum of the value of the goods in the bundle is assumed to represent 90% of expenditure;
         by spdomain: egen povline_f_flex90=sum(val_ir);
-        
+        	stopppp;
         replace povline_f_flex=povline_f_flex90/.9;
 
         collapse (mean) povline_f_flex, by (spdomain);

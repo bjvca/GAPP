@@ -345,6 +345,7 @@ sort hhid
 replace product = 999 if product==2
 la var product "product code is 999, if product is non food"
 replace prod_cat = 1 if prod_cat==.
+drop if product==139
 
 replace descript=1 if descript==.
 label drop _all
