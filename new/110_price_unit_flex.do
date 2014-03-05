@@ -52,7 +52,7 @@ use "$path/work/cons_cod_trans.dta", clear;
 
 *drop if quantityd==0 ;
 
-keep hhid product food_cat valuez quantityz unit;
+keep hhid product food_cat valuez quantity unit;
 
 rename valuez    value;
 *rename quantityz quantity;
