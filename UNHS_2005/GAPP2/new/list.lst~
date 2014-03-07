@@ -1,0 +1,668 @@
+GAMS 24.1.2  r40979 Released Jun 16, 2013 LEX-LEG x86_64/Linux                                                                                                                                                                         03/06/14 11:18:36 Page 1
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+   1  *File to estimate quantities consistent with revealed preferences
+   2   
+      This file uses:
+               work\product_flex.inc
+               work\price_unit_flex.inc
+               work\quan_flex.inc
+       
+      This file creates:
+               work\qent.csv
+               work\povline_ali_ent.csv
+               work\povline_rp_inout.csv
+       
+  15   
+  16  SETS
+  17   cod        200910 codes for products used in basket
+  18  /
+INCLUDE    /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2/work/product_flex.inc
+  20  100
+  21  105
+  22  106
+  23  107
+  24  108
+  25  109
+  26  110
+  27  111
+  28  112
+  29  113
+  30  114
+  31  115
+  32  116
+  33  117
+  34  118
+  35  119
+  36  121
+  37  122
+  38  123
+  39  125
+  40  127
+  41  132
+  42  134
+  43  135
+  44  136
+  45  138
+  46  139
+  47  140
+  48  141
+  49  143
+  50  144
+  51  145
+  52  146
+  53  147
+  54  150
+  55  154
+GAMS 24.1.2  r40979 Released Jun 16, 2013 LEX-LEG x86_64/Linux                                                                                                                                                                         03/06/14 11:18:36 Page 2
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+  56  /
+  57   
+  58   reg        4 spatial domains /1*4/
+  59   r(reg)     all included spatial regions /1*4/
+  60   
+  61   ptit       price table titles
+  62  /
+  63    count      number of observations making up the price average
+  64    price_uw5  average price
+  65  /
+  66   
+  67   qtit       quantity table titles
+  68  /
+  69    calperg          calories per gram
+  70    quan5            quantities in grams
+  71    calpp            calories per person by region
+  72    povline_a_flex5    value of flexible food bundle
+  73  /
+  74   
+  75   
+  76    posquan(cod,reg)  mark positive quantities in each region
+  77    posprice(cod,reg) mark the existence of acceptable price info in each region
+  78    chkprice(cod,reg) ensure that prices exist once all estimated
+  79  ;
+  80   
+  81  alias(reg,regq);
+  82  alias(r,rq);
+  83   
+  84  SCALAR
+  85     caltarg single level of calories to target across regions / 2150 /
+  86   ;
+  87   
+  88  PARAMETERS
+  89   
+  90    shr(cod,reg)         shares in each basket by region
+  91    chkshr(reg)          check that the calculated shares sum to .9
+  92    shrmiss(regq,reg)    shares missing in each region pair
+  93    povline_ali(reg)       food poverty line
+  94    perc_chng(reg)       percent change in line
+  95    finmiss(reg)         final missing shares post optimization procedure
+  96   ;
+  97   
+  98  Table  price(cod,reg,ptit)  price and related information
+  99                          count   price_uw5
+INCLUDE    /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2/work/price_unit_flex.inc
+ 101  100     .       1       358     .1385743
+ 102  100     .       2       253     .1424982
+ 103  100     .       3       18      .145245
+ 104  100     .       4       587     .1035087
+ 105  105     .       1       403     .1777841
+ 106  105     .       2       510     .160952
+ 107  105     .       3       246     .0820463
+ 108  105     .       4       380     .1562738
+GAMS 24.1.2  r40979 Released Jun 16, 2013 LEX-LEG x86_64/Linux                                                                                                                                                                         03/06/14 11:18:36 Page 3
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+ 109  106     .       1       8       .1664628
+ 110  106     .       2       51      .1459396
+ 111  106     .       3       18      .0980027
+ 112  106     .       4       11      .1100485
+ 113  107     .       1       363     .0784478
+ 114  107     .       2       289     .0632228
+ 115  107     .       3       223     .0262376
+ 116  107     .       4       273     .0869518
+ 117  108     .       1       68      .4334635
+ 118  108     .       2       313     .4378609
+ 119  108     .       3       139     .5308122
+ 120  108     .       4       150     .3919613
+ 121  109     .       1       27      .397339
+ 122  109     .       2       18      .3408006
+ 123  109     .       3       4       .9050463
+ 124  109     .       4       150     .2342229
+ 125  110     .       1       111     1.181304
+ 126  110     .       2       204     1.011064
+ 127  110     .       3       16      1.007408
+ 128  110     .       4       71      1.088738
+ 129  111     .       1       12      .4084681
+ 130  111     .       2       64      .3120872
+ 131  111     .       3       43      .2671674
+ 132  111     .       4       36      .3894773
+ 133  112     .       1       94      .2342792
+ 134  112     .       2       139     .2126245
+ 135  112     .       3       59      .1705878
+ 136  112     .       4       64      .1980803
+ 137  113     .       1       469     .598322
+ 138  113     .       2       552     .5247064
+ 139  113     .       3       166     .3332952
+ 140  113     .       4       368     .5505979
+ 141  114     .       1       100     1.221117
+ 142  114     .       2       55      1.15942
+ 143  114     .       3       6       1.578027
+ 144  114     .       4       58      1.258574
+ 145  115     .       1       36      .6923987
+ 146  115     .       2       181     .5052691
+ 147  115     .       3       25      .3550401
+ 148  115     .       4       203     .6001995
+ 149  116     .       1       4       .4314531
+ 150  116     .       2       183     .288116
+ 151  116     .       3       143     .2945915
+ 152  116     .       4       53      .3592925
+ 153  117     .       1       139     2.333451
+ 154  117     .       2       227     2.682296
+ 155  117     .       3       56      2.41045
+ 156  117     .       4       190     2.233422
+ 157  118     .       1       52      1.910913
+ 158  118     .       2       47      2.059247
+ 159  118     .       3       8       1.914438
+ 160  118     .       4       29      1.977466
+ 161  119     .       1       10      2.368849
+GAMS 24.1.2  r40979 Released Jun 16, 2013 LEX-LEG x86_64/Linux                                                                                                                                                                         03/06/14 11:18:36 Page 4
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+ 162  119     .       2       60      2.715838
+ 163  119     .       3       25      2.045556
+ 164  119     .       4       38      2.611423
+ 165  121     .       1       20      3.056498
+ 166  121     .       2       78      2.800217
+ 167  121     .       3       27      2.233073
+ 168  121     .       4       20      2.895597
+ 169  122     .       1       154     .6581885
+ 170  122     .       2       161     .7509244
+ 171  122     .       3       54      .6984526
+ 172  122     .       4       42      1.174343
+ 173  123     .       1       154     2.052202
+ 174  123     .       2       257     2.032916
+ 175  123     .       3       183     2.500919
+ 176  123     .       4       72      3.942898
+ 177  125     .       1       201     .2106521
+ 178  125     .       2       250     .1432769
+ 179  125     .       3       33      .0631902
+ 180  125     .       4       178     .1114734
+ 181  127     .       1       377     1.853653
+ 182  127     .       2       608     1.771647
+ 183  127     .       3       410     2.230525
+ 184  127     .       4       168     2.298473
+ 185  132     .       1       51      .1474474
+ 186  132     .       2       109     .1067689
+ 187  132     .       3       41      .0455113
+ 188  132     .       4       42      .0746294
+ 189  134     .       1       223     .9310544
+ 190  134     .       2       134     .8588079
+ 191  134     .       3       23      .2777815
+ 192  134     .       4       117     .3476523
+ 193  135     .       1       440     .6258332
+ 194  135     .       2       582     .3791726
+ 195  135     .       3       369     .2444912
+ 196  135     .       4       388     .3114149
+ 197  136     .       1       467     .109255
+ 198  136     .       2       652     .109451
+ 199  136     .       3       262     .1006535
+ 200  136     .       4       394     .15847
+ 201  138     .       1       208     .2393868
+ 202  138     .       2       399     .2737813
+ 203  138     .       3       137     .2031848
+ 204  138     .       4       312     .2429575
+ 205  139     .       1       132     .2911553
+ 206  139     .       2       437     .293454
+ 207  139     .       3       513     .1941558
+ 208  139     .       4       70      .3168305
+ 209  140     .       1       92      1.583645
+ 210  140     .       2       71      1.625508
+ 211  140     .       3       14      .7470751
+ 212  140     .       4       130     1.14106
+ 213  141     .       1       377     .9386666
+ 214  141     .       2       457     .8384635
+GAMS 24.1.2  r40979 Released Jun 16, 2013 LEX-LEG x86_64/Linux                                                                                                                                                                         03/06/14 11:18:36 Page 5
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+ 215  141     .       3       204     1.181984
+ 216  141     .       4       523     1.143649
+ 217  143     .       1       48      1.803374
+ 218  143     .       2       127     1.73288
+ 219  143     .       3       10      1.321482
+ 220  143     .       4       89      2.123574
+ 221  144     .       1       224     1.558529
+ 222  144     .       2       222     1.303079
+ 223  144     .       3       1       1.75
+ 224  144     .       4       155     1.508856
+ 225  145     .       1       3       1.365703
+ 226  145     .       2       51      .8942891
+ 227  145     .       3       61      .6160956
+ 228  145     .       4       35      .8926445
+ 229  146     .       1       4       1.383532
+ 230  146     .       2       28      1.293512
+ 231  146     .       3       92      .9714274
+ 232  146     .       4       8       1.266919
+ 233  147     .       1       431     1.707907
+ 234  147     .       2       608     1.681353
+ 235  147     .       3       165     1.686355
+ 236  147     .       4       248     1.757262
+ 237  150     .       1       643     .5241172
+ 238  150     .       2       917     .4758193
+ 239  150     .       3       515     .4258919
+ 240  150     .       4       671     .6244859
+ 241  154     .       1       18      .5756527
+ 242  154     .       2       37      1.026051
+ 243  154     .       3       36      .6439751
+ 244  154     .       4       54      .2939937
+ 245  ;
+ 246   
+ 247  Table   quan(cod,reg,qtit)   quantity and related information
+ 248                             calperg          quan5           calpp      povline_a_flex5
+INCLUDE    /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2/work/quan_flex.inc
+ 250  100     .       1       6.8900000e-01   3.3982550e+02   2.0082173e+03   418.8822
+ 251  105     .       1       1.0164000e+00   3.0780438e+02   2.0082173e+03   418.8822
+ 252  107     .       1       1.3440000e+00   4.6554990e+02   2.0082173e+03   418.8822
+ 253  108     .       1       3.1400000e+00   1.3524429e+01   2.0082173e+03   418.8822
+ 254  109     .       1       6.4680000e-01   6.6394086e+00   2.0082173e+03   418.8822
+ 255  110     .       1       3.6100000e+00   7.9712844e+00   2.0082173e+03   418.8822
+ 256  112     .       1       9.4600000e-01   3.1468851e+01   2.0082173e+03   418.8822
+ 257  113     .       1       3.6500000e+00   8.3383522e+01   2.0082173e+03   418.8822
+ 258  114     .       1       2.6600000e+00   2.7130444e+00   2.0082173e+03   418.8822
+ 259  117     .       1       1.7982000e+00   5.5740261e+00   2.0082173e+03   418.8822
+ 260  118     .       1       2.3534000e+00   1.9270887e+00   2.0082173e+03   418.8822
+ 261  122     .       1       6.1610000e-01   1.6913506e+01   2.0082173e+03   418.8822
+ 262  123     .       1       3.7500000e+00   2.9961936e+00   2.0082173e+03   418.8822
+ 263  125     .       1       6.0000000e-01   6.3808517e+01   2.0082173e+03   418.8822
+ 264  127     .       1       8.8400000e+00   3.6991110e+00   2.0082173e+03   418.8822
+ 265  134     .       1       4.9400000e-01   1.4992083e+01   2.0082173e+03   418.8822
+ 266  135     .       1       3.6400000e-01   6.5255842e+00   2.0082173e+03   418.8822
+ 267  136     .       1       1.6380000e-01   7.4859390e+01   2.0082173e+03   418.8822
+GAMS 24.1.2  r40979 Released Jun 16, 2013 LEX-LEG x86_64/Linux                                                                                                                                                                         03/06/14 11:18:36 Page 6
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+ 268  138     .       1       2.0160000e-01   2.1552240e+01   2.0082173e+03   418.8822
+ 269  140     .       1       1.0300000e+00   6.3104005e+00   2.0082173e+03   418.8822
+ 270  141     .       1       3.1300000e+00   2.7571226e+01   2.0082173e+03   418.8822
+ 271  144     .       1       5.8800000e+00   5.5350385e+00   2.0082173e+03   418.8822
+ 272  147     .       1       3.8700000e+00   1.5325537e+01   2.0082173e+03   418.8822
+ 273  150     .       1       0.0000000e+00   7.3314142e+00   2.0082173e+03   418.8822
+ 274  100     .       2       6.8900000e-01   1.5535461e+02   2.0029237e+03   386.8039
+ 275  105     .       2       1.0164000e+00   3.3583755e+02   2.0029237e+03   386.8039
+ 276  106     .       2       3.4300000e+00   2.7357950e+01   2.0029237e+03   386.8039
+ 277  107     .       2       1.3440000e+00   2.4018802e+02   2.0029237e+03   386.8039
+ 278  108     .       2       3.1400000e+00   6.4048248e+01   2.0029237e+03   386.8039
+ 279  110     .       2       3.6100000e+00   9.0348721e+00   2.0029237e+03   386.8039
+ 280  112     .       2       9.4600000e-01   3.9760174e+01   2.0029237e+03   386.8039
+ 281  113     .       2       3.6500000e+00   8.9256645e+01   2.0029237e+03   386.8039
+ 282  115     .       2       3.7800000e+00   1.8639051e+01   2.0029237e+03   386.8039
+ 283  116     .       2       3.3900000e+00   1.6082409e+01   2.0029237e+03   386.8039
+ 284  117     .       2       1.7982000e+00   4.6062064e+00   2.0029237e+03   386.8039
+ 285  119     .       2       1.2210000e+00   1.3238684e+00   2.0029237e+03   386.8039
+ 286  121     .       2       1.4835000e+00   2.1381552e+00   2.0029237e+03   386.8039
+ 287  122     .       2       6.1610000e-01   1.0870551e+01   2.0029237e+03   386.8039
+ 288  123     .       2       3.7500000e+00   4.0490079e+00   2.0029237e+03   386.8039
+ 289  125     .       2       6.0000000e-01   6.1319077e+01   2.0029237e+03   386.8039
+ 290  127     .       2       8.8400000e+00   5.5695982e+00   2.0029237e+03   386.8039
+ 291  132     .       2       4.3310000e-01   3.6263348e+01   2.0029237e+03   386.8039
+ 292  134     .       2       4.9400000e-01   4.7272301e+00   2.0029237e+03   386.8039
+ 293  136     .       2       1.6380000e-01   8.5451790e+01   2.0029237e+03   386.8039
+ 294  138     .       2       2.0160000e-01   3.7862942e+01   2.0029237e+03   386.8039
+ 295  139     .       2       2.6100000e-01   3.9673553e+01   2.0029237e+03   386.8039
+ 296  141     .       2       3.1300000e+00   1.9135448e+01   2.0029237e+03   386.8039
+ 297  143     .       2       5.6700000e+00   2.0753400e+00   2.0029237e+03   386.8039
+ 298  144     .       2       5.8800000e+00   3.9437618e+00   2.0029237e+03   386.8039
+ 299  147     .       2       3.8700000e+00   1.2864264e+01   2.0029237e+03   386.8039
+ 300  150     .       2       0.0000000e+00   7.4587927e+00   2.0029237e+03   386.8039
+ 301  105     .       3       1.0164000e+00   1.8510440e+02   1.9871310e+03   235.69
+ 302  107     .       3       1.3440000e+00   5.5036340e+02   1.9871310e+03   235.69
+ 303  108     .       3       3.1400000e+00   4.6418424e+00   1.9871310e+03   235.69
+ 304  108     .       3       3.1400000e+00   3.0189322e+01   1.9871310e+03   235.69
+****                  $176
+**** LINE     55 INCLUDE     /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2/work/quan_flex.inc
+**** LINE     69 INPUT       /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2/new/190a_revpref13_r_bjorn.gms
+ 305  111     .       3       3.6500000e+00   1.2844737e+01   1.9871310e+03   235.69
+ 306  112     .       3       9.4600000e-01   1.2546924e+01   1.9871310e+03   235.69
+ 307  113     .       3       3.6500000e+00   4.5473289e+01   1.9871310e+03   235.69
+ 308  113     .       3       3.6500000e+00   4.2684502e+01   1.9871310e+03   235.69
+****                  $176
+**** LINE     59 INCLUDE     /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2/work/quan_flex.inc
+**** LINE     69 INPUT       /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2/new/190a_revpref13_r_bjorn.gms
+ 309  115     .       3       3.7800000e+00   4.3155594e+00   1.9871310e+03   235.69
+ 310  116     .       3       3.3900000e+00   3.4422318e+01   1.9871310e+03   235.69
+ 311  116     .       3       3.3900000e+00   1.2732676e+01   1.9871310e+03   235.69
+****                  $176
+**** LINE     62 INCLUDE     /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2/work/quan_flex.inc
+**** LINE     69 INPUT       /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2/new/190a_revpref13_r_bjorn.gms
+GAMS 24.1.2  r40979 Released Jun 16, 2013 LEX-LEG x86_64/Linux                                                                                                                                                                         03/06/14 11:18:36 Page 7
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+ 312  117     .       3       1.7982000e+00   1.1916728e+00   1.9871310e+03   235.69
+ 313  119     .       3       1.2210000e+00   6.5509170e-01   1.9871310e+03   235.69
+ 314  121     .       3       1.4835000e+00   8.5501534e-01   1.9871310e+03   235.69
+ 315  122     .       3       6.1610000e-01   3.6914454e+00   1.9871310e+03   235.69
+ 316  123     .       3       3.7500000e+00   5.8392966e-01   1.9871310e+03   235.69
+ 317  123     .       3       3.7500000e+00   2.4134250e+00   1.9871310e+03   235.69
+****                  $176
+**** LINE     68 INCLUDE     /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2/work/quan_flex.inc
+**** LINE     69 INPUT       /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2/new/190a_revpref13_r_bjorn.gms
+ 318  125     .       3       6.0000000e-01   2.6947514e+01   1.9871310e+03   235.69
+ 319  127     .       3       8.8400000e+00   5.9693208e+00   1.9871310e+03   235.69
+ 320  132     .       3       4.3310000e-01   4.8747662e+01   1.9871310e+03   235.69
+ 321  135     .       3       3.6400000e-01   1.1132062e+01   1.9871310e+03   235.69
+ 322  136     .       3       1.6380000e-01   4.0948952e+01   1.9871310e+03   235.69
+ 323  138     .       3       2.0160000e-01   1.2341277e+01   1.9871310e+03   235.69
+ 324  139     .       3       2.6100000e-01   6.9014175e+01   1.9871310e+03   235.69
+ 325  141     .       3       3.1300000e+00   1.5091877e+01   1.9871310e+03   235.69
+ 326  141     .       3       3.1300000e+00   9.3150597e+00   1.9871310e+03   235.69
+****                  $176
+**** LINE     77 INCLUDE     /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2/work/quan_flex.inc
+**** LINE     69 INPUT       /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2/new/190a_revpref13_r_bjorn.gms
+ 327  145     .       3       8.1000000e-01   5.1939564e+00   1.9871310e+03   235.69
+ 328  145     .       3       8.1000000e-01   1.1030028e+01   1.9871310e+03   235.69
+****                  $176
+**** LINE     79 INCLUDE     /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2/work/quan_flex.inc
+**** LINE     69 INPUT       /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2/new/190a_revpref13_r_bjorn.gms
+ 329  146     .       3       5.7300000e+00   6.5548353e+00   1.9871310e+03   235.69
+ 330  146     .       3       5.7300000e+00   2.2764542e+00   1.9871310e+03   235.69
+****                  $176
+**** LINE     81 INCLUDE     /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2/work/quan_flex.inc
+**** LINE     69 INPUT       /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2/new/190a_revpref13_r_bjorn.gms
+ 331  147     .       3       3.8700000e+00   3.2599890e+00   1.9871310e+03   235.69
+ 332  150     .       3       0.0000000e+00   6.7211080e+00   1.9871310e+03   235.69
+ 333  154     .       3       8.1000000e-01   2.5789449e+00   1.9871310e+03   235.69
+ 334  100     .       4       6.8900000e-01   9.0285651e+02   2.0768691e+03   413.4716
+ 335  105     .       4       1.0164000e+00   2.5855185e+02   2.0768691e+03   413.4716
+ 336  107     .       4       1.3440000e+00   2.3906709e+02   2.0768691e+03   413.4716
+ 337  108     .       4       3.1400000e+00   3.7749069e+01   2.0768691e+03   413.4716
+ 338  109     .       4       6.4680000e-01   6.1902672e+01   2.0768691e+03   413.4716
+ 339  110     .       4       3.6100000e+00   3.2162139e+00   2.0768691e+03   413.4716
+ 340  112     .       4       9.4600000e-01   2.1796799e+01   2.0768691e+03   413.4716
+ 341  113     .       4       3.6500000e+00   5.1075066e+01   2.0768691e+03   413.4716
+ 342  115     .       4       3.7800000e+00   2.4658031e+01   2.0768691e+03   413.4716
+ 343  117     .       4       1.7982000e+00   7.6038280e+00   2.0768691e+03   413.4716
+ 344  119     .       4       1.2210000e+00   1.2713817e+00   2.0768691e+03   413.4716
+ 345  123     .       4       3.7500000e+00   1.3032821e+00   2.0768691e+03   413.4716
+ 346  125     .       4       6.0000000e-01   7.7460823e+01   2.0768691e+03   413.4716
+ 347  127     .       4       8.8400000e+00   1.3917218e+00   2.0768691e+03   413.4716
+ 348  134     .       4       4.9400000e-01   9.0749483e+00   2.0768691e+03   413.4716
+ 349  136     .       4       1.6380000e-01   3.7995350e+01   2.0768691e+03   413.4716
+ 350  138     .       4       2.0160000e-01   2.4822659e+01   2.0768691e+03   413.4716
+ 351  140     .       4       1.0300000e+00   9.3872213e+00   2.0768691e+03   413.4716
+ 352  141     .       4       3.1300000e+00   3.9253651e+01   2.0768691e+03   413.4716
+GAMS 24.1.2  r40979 Released Jun 16, 2013 LEX-LEG x86_64/Linux                                                                                                                                                                         03/06/14 11:18:36 Page 8
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+ 353  143     .       4       5.6700000e+00   1.7823341e+00   2.0768691e+03   413.4716
+ 354  144     .       4       5.8800000e+00   4.5945387e+00   2.0768691e+03   413.4716
+ 355  147     .       4       3.8700000e+00   5.4334559e+00   2.0768691e+03   413.4716
+ 356  150     .       4       0.0000000e+00   8.0829773e+00   2.0768691e+03   413.4716
+ 357  154     .       4       8.1000000e-01   1.3755412e+01   2.0768691e+03   413.4716
+ 358  ;
+ 359   
+ 360    shr(cod,reg)$quan(cod,reg,'povline_a_flex5')
+ 361                        =price(cod,reg,'price_uw5')*quan(cod,reg,'quan5')/
+ 362                         quan(cod,reg,'povline_a_flex5');
+ 363   
+ 364    chkshr(reg)=sum(cod,shr(cod,reg));
+ 365   
+ 366  loop(reg,
+ 367    abort$(abs(chkshr(reg)-.9) gt .0001) "share does not sum to .9", chkshr ;
+ 368  );
+ 369   
+ 370   
+ 371  *turn on dynamic sets to indicate positive quantities and existence of
+ 372  *price info for each region
+ 373   
+ 374   posprice(cod,reg)$(price(cod,reg,'price_uw5')
+ 375                        AND price(cod,reg,'count') gt 4) = yes;
+ 376   
+ 377   posquan(cod,reg)$quan(cod,reg,'quan5')=yes;
+ 378   
+ 379   shrmiss(regq,reg)=sum(cod$(NOT posprice(cod,reg)), shr(cod,regq));
+ 380   display shrmiss;
+ 381   
+ 382    povline_ali(reg)=sum(cod$posquan(cod,reg),price(cod,reg,'price_uw5')*
+ 383                                             quan(cod,reg,'quan5'))/.9;
+ 384   
+ 385    display povline_ali;
+ 386   
+ 387   
+ 388  *boost values so shares sum to one;
+ 389  shr(cod,reg)=shr(cod,reg)/chkshr(reg);
+ 390   
+ 391  *fill out price matrix with maximum observed price outside of Maputo
+ 392   
+ 393  loop((cod,reg)$(NOT posprice(cod,reg) AND posquan(cod,reg)),
+ 394           loop(r,
+ 395                   price(cod,reg,'price_uw5')=max(price(cod,reg,'price_uw5'),
+ 396                                                price(cod,r,'price_uw5'));
+ 397           );
+ 398  );
+ 399   
+ 400  chkprice(cod,reg)$(NOT price(cod,reg,'price_uw5') AND posquan(cod,reg))=yes;
+ 401   
+ 402  display 'should be an empty set', chkprice;
+ 403   
+ 404   
+ 405   
+GAMS 24.1.2  r40979 Released Jun 16, 2013 LEX-LEG x86_64/Linux                                                                                                                                                                         03/06/14 11:18:36 Page 9
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+ 406   
+ 407  Variables
+ 408     z                objective value
+ 409     q(cod,reg)       revised maximum entropy quanties in grams
+ 410     s(cod,reg)       derived maximum entropy shares
+ 411     povline(regq,reg)  estimated revealed preference matrix
+ 412  ;
+ 413   
+ 414   
+ 415  Equations
+ 416     obj              objective equation
+ 417     rev(regq,reg)    revealed preference tests
+ 418     deflin(regq,reg) define revealed preference matrix
+ 419     defshr(cod,regq) define the endogenous budget shares
+ 420     cals(regq)       ensure that each bundle hits the calorie
+ 421   
+ 422  ;
+ 423   
+ 424     obj ..  z=e= sum((cod,rq)$posquan(cod,rq),
+ 425                     s(cod,rq)*log(s(cod,rq)/shr(cod,rq)));
+ 426   
+ 427     deflin(rq,r) .. povline(rq,r) =e= sum(cod$posquan(cod,rq),
+ 428                            q(cod,rq)*price(cod,r,'price_uw5'));
+ 429   
+ 430     rev(rq,r) ..    povline(r,rq)=g=povline(rq,rq);
+ 431   
+ 432     defshr(cod,rq)$posquan(cod,rq) ..
+ 433               povline(rq,rq)*s(cod,rq)=e= q(cod,rq)*price(cod,rq,'price_uw5');
+ 434   
+ 435     cals(rq) .. sum(cod$posquan(cod,rq),
+ 436                      q(cod,rq)*quan(cod,rq,'calperg'))=e=.95*caltarg;
+ 437   
+ 438  *set bounds and starting values for variables
+ 439   
+ 440    q.lo(cod,reg)=.00001;
+ 441    q.up(cod,reg)=inf;
+ 442    q.l(cod,reg)=quan(cod,reg,'quan5');
+ 443    q.fx(cod,reg)$(NOT posquan(cod,reg))=0;
+ 444   
+ 445    povline.l(regq,reg)= sum(cod$posquan(cod,regq),
+ 446                            q.l(cod,regq)*price(cod,reg,'price_uw5'));
+ 447   
+ 448   
+ 449    display povline.l;
+ 450   
+ 451  *print the revealed preference matrix prior to optimisation;
+ 452  file povline_rp/"/home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2/work/povline_rp_inout.csv"/;
+ 453  put povline_rp;
+ 454  povline_rp.pc=5;
+ 455  povline_rp.nd=0;
+ 456  put " ";
+ 457  loop(reg,
+ 458        put reg.tl;
+GAMS 24.1.2  r40979 Released Jun 16, 2013 LEX-LEG x86_64/Linux                                                                                                                                                                        03/06/14 11:18:36 Page 10
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+ 459  );
+ 460  put /;
+ 461  loop(regq,
+ 462       put regq.tl;
+ 463       loop(reg,
+ 464           put povline.l(regq,reg);
+ 465       );
+ 466       put /;
+ 467  );
+ 468  put /; put /; put /;
+ 469   
+ 470     s.l(cod,regq)= q.l(cod,regq)*price(cod,regq,'price_uw5')/povline.l(regq,regq);
+ 471     s.lo(cod,regq)=.0001;
+ 472     s.fx(cod,regq)$(NOT posquan(cod,regq))=0;
+ 473   
+ 474   
+ 475     model revpref /obj, deflin, rev, defshr, cals/;
+ 476   
+ 477     revpref.holdfixed=1;
+ 478   
+ 479     option limrow=100;
+ 480   
+ 481     option nlp=conopt;
+ 482   
+ 483     solve revpref using nlp minimizing z;
+****                                         $257
+**** LINE    195 INPUT       /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2/new/190a_revpref13_r_bjorn.gms
+ 484   
+ 485     povline.l(regq,reg)$(NOT rq(regq) OR NOT r(reg))=0;
+ 486     display "this is without adjustment for calorie target or 90%", povline.l;
+ 487   
+ 488  put /;
+ 489  loop(rq,
+ 490       put rq.tl;
+ 491       loop(r,
+ 492           put povline.l(rq,r);
+ 493       );
+ 494       put /;
+ 495  );
+ 496  put /;
+ 497   
+ 498   
+ 499  PARAMETERS
+ 500     qent(cod,reg)  entropy quantities with all adjustments accounted for
+ 501     povline_ent(reg) entropy line that hits calorie targets (100% food expen)
+ 502    ;
+ 503  *readjust quantities to hit regional calorie target and calculate line;
+ 504     qent(cod,r)=q.l(cod,r)*quan(cod,r,'calpp')/caltarg;
+ 505   
+ 506     povline_ent(r)=sum(cod$posquan(cod,r),price(cod,r,'price_uw5')*
+ 507                                             qent(cod,r))/.9;
+ 508   
+ 509     perc_chng(r)=100*(povline_ent(r)/povline_ali(r)-1);
+GAMS 24.1.2  r40979 Released Jun 16, 2013 LEX-LEG x86_64/Linux                                                                                                                                                                        03/06/14 11:18:36 Page 11
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+ 510   
+ 511     display perc_chng, povline_ent, povline_ali;
+ 512   
+ 513     file res/"/home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2/work/qent.csv"/;
+ 514   
+ 515     put res;
+ 516     res.pc=5;
+ 517     res.nd=6;
+ 518   
+ 519  *recall that the basket reflects 90% of expenditure and 95% of calories";
+ 520     put "spdomain" ;
+ 521     put "product" ;
+ 522     put "quan5";
+ 523     put "qent";
+ 524     put "price";
+ 525     put "calperg";
+ 526   
+ 527     put /;
+ 528   
+ 529     loop(reg,
+ 530         loop(cod,
+ 531             put reg.tl;
+ 532             put cod.tl;
+ 533             put quan(cod,reg,'quan5');
+ 534             put qent(cod,reg);
+ 535             put price(cod,reg,'price_uw5')
+ 536             put quan(cod,reg,'calperg');
+ 537             put /;
+ 538         );
+ 539     );
+ 540   
+ 541     file lin/"/home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2/work/povline_food_ent.csv"/;
+ 542   
+ 543     put lin;
+ 544     lin.pc=5;
+ 545  *Flexible, entropy, and fixed food pov lines at 100% expenditure
+ 546   
+ 547     put "spdomain";
+ 548     put "flex";
+ 549     put "ent";
+ 550     put /;
+ 551   
+ 552     loop(reg,
+ 553           put reg.tl;
+ 554           put povline_ali(reg);
+ 555           put povline_ent(reg);
+ 556           put /;
+ 557     );
+GAMS 24.1.2  r40979 Released Jun 16, 2013 LEX-LEG x86_64/Linux                                                                                                                                                                        03/06/14 11:18:36 Page 12
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Error Messages
+
+
+176  A row with the same name has been defined before in this table.
+257  Solve statement not checked because of previous errors
+
+**** 8 ERROR(S)   0 WARNING(S)
+GAMS 24.1.2  r40979 Released Jun 16, 2013 LEX-LEG x86_64/Linux                                                                                                                                                                        03/06/14 11:18:36 Page 13
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Include File Summary
+
+
+   SEQ   GLOBAL TYPE      PARENT   LOCAL  FILENAME
+
+     1        1 INPUT          0       0  /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2/new/190a_revpref13_r_bjorn.gms
+     2       19 INCLUDE        1      19  ./home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2/work/product_flex.inc
+     3      100 INCLUDE        1      64  ./home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2/work/price_unit_flex.inc
+     4      249 INCLUDE        1      69  ./home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2/work/quan_flex.inc
+
+
+COMPILATION TIME     =        0.003 SECONDS      3 MB  24.1.2 r40979 LEX-LEG
+
+
+USER: Computer Services                              G130401:1333CP-GEN
+      International Food Policy Research Institute               DC2119
+
+
+**** FILE SUMMARY
+
+Input      /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2/new/190a_revpref13_r_bjorn.gms
+Output     /home/bjvca/data/data/GAP/Haruna/UNHS_2005/GAPP2/new/list.lst
+
+**** USER ERROR(S) ENCOUNTERED

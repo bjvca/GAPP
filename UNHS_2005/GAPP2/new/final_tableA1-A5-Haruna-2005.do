@@ -510,7 +510,9 @@ use "$path/in/hsec12a.dta"
 
 save "$path/out/hhddurables.dta", replace
 * keep if inlist( h12aq2 ,010,011,012)
-  
+
+drop if h12aq2==2
+drop  if h12aq2==1
  gen assetvalue = h12aq5
  
  **************************************************************************************************************
@@ -518,6 +520,7 @@ save "$path/out/hhddurables.dta", replace
  ** house not treated as an asset as the toolkit takes care of imputed rent
  ************************************************************************************************************************
  gen dassetvalue = (assetvalue)/365
+replace dassetvalue=0
 la var dassetvalue "household daily durables expenditure"
 rename hh hhid
 sort hhid
@@ -526,7 +529,7 @@ save "$path/out/hhddurablesexp.dta", replace
 use "$path/in/hsec12a.dta"
 save "$path/out/hhnondurables.dta", replace
 rename hh hhid
- drop if inlist(  h12aq2 ,010,011,012 ,001)
+ *drop if inlist(  h12aq2 ,010,011,012 ,001)
  gen nondurablevalue = h12aq5
  **h12aq4 multiple has been dropped since UBOS had recorded h12aq5 as total estimated value in Ush and also discounted them by 1% to get rough value *used per year
  *** we considered other buildings-002, furniture-003, Bednets-005, Hh appliances as Kettle,flat iron-006, electronics as tv,radio-007, *generators-008, solar-panel-009
@@ -535,6 +538,7 @@ rename hh hhid
  la var nondurablevalue "household daily non-durables expenditure"
  sort hhid
  gen dnondurables = (nondurablevalue)/365
+ replace dnondurables = 0
  la var dnondurables "household daily non-durables expenditure"
  save "$path/out/hhdnondurablesexp.dta", replace
 
@@ -579,10 +583,10 @@ rename hh hhid
 ** kettles-421, tv&radio-423, byclcles-424, radio-425, motors-426, motorcycles-427,computers-428, phone handsets-429, others-430, jewelry&watches-431, 
 ** glass/table ware of codes 441-449, education cost (601-609) as education done in section 4, and others like functions & premiums (801-809)
 ** as these have been consideered NON BASIC
-drop if inlist( h14cq2 ,209,210,229,401,402,403,409,421,423,424,425,426,427,428,429,430,431,441,443,444,445,449,601,602,603,604,609,801,802,803)
+
 egen hhsemidurables = rowtotal( h14cq3 h14cq4)
 sort hhid
-gen hhdsemidurs = (hhsemidurables)/365
+gen hhdsemidurs = (hhsemidurables*0.20)/365
 la var hhdsemidurs "household daily semi durables goods and seervices expenses"
 
 save "$path/out/hhdsemidurablesexp.dta", replace
@@ -595,7 +599,8 @@ sort hh
 rename hh hhid
 ** we only considered graduated tax-904, that may cause arrest if not paid and it used to be per head paid to local government annually
 ** and dropped income tax-901, property tax-902, user fees-903, social security payments-905, remmitances-906, funerals-907 and others-909
-drop if inlist( h14dq2 ,901,902,903,905,906,907,909)
+drop if h14dq2==906
+
 gen hhdnonconsumpexp = h14dq3/365
 la var hhdnonconsumpexp "hh daily expenditure on taxes, contributions, donations, duties, etc"
 sort hhid

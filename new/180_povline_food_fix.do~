@@ -51,11 +51,9 @@ use "$path/in/match_t1_t2.dta", clear ;
 	*drop repeated codes (left over from matching 96 to 02);
 	*drop if delete==1;
 
-tostring product_t1, replace;
-      replace product_t1=substr(product_t1,1,3);
+	replace product_t1=substr(product_t1,1,7);
       destring product_t1, replace;
-      
-      
+
 	keep product product_t1;
 lab var product_t1 "Product code year t1 (e.g. 1996)";
 lab var product    "Product code year t2 (e.g. 2002)";

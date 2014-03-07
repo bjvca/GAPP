@@ -8,7 +8,9 @@ global path "C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNHS_2005\GAPP2"
 }
 
 
-
+shell rm $path/work/*
+shell rm $path/out/*
+*/
 
 
 
@@ -154,7 +156,7 @@ $no_temp_rev	do "$path/new/200_povmeas_fix.do"		/* Fixed basket: Poverty rates *
 		
 *quietly	do "$path/new/230_assets_possession"			/* Extra: Deprivation */
 *quietly	do "$path/new/240_compare_nat_acc.do"			/* Extra: Compare survey with national accounts */
-
+do "${path}/new/250_future_revealed_preference.do" 
 
 
 **********************************************************************;

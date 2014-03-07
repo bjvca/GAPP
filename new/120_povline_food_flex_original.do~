@@ -1,4 +1,4 @@
-*global path "C:\user\gapp"
+*global path "C:/user/gapp"
 clear all
 set mem 999m
 
@@ -21,13 +21,13 @@ set more off
 
 /*
 This file uses:
-        work\food_basket_flex.dta
-        work\price_unit_flex.dta
-        work\calperg.dta
-        work\calpp.dta
+        work/food_basket_flex.dta
+        work/price_unit_flex.dta
+        work/calperg.dta
+        work/calpp.dta
 
 This file creates:
-        work\povline_flex.dta
+        work/povline_flex.dta
 */
 
 
@@ -35,22 +35,23 @@ This file creates:
 use "$path/work/food_basket_flex.dta";
         sort product spdomain;
         * merge in price information;
-        merge product spdomain using "$path\work\price_unit_flex.dta";
+        merge product spdomain using "$path/work/price_unit_flex.dta";
 
         tab _merge;
-        *list product spdomain descript if _merge==1;
+        list product spdomain descript if _merge==1;
 
         drop if _merge ~=3;
         drop _merge;
         sort product;
 
         * merge in information on calories per gram;
-        merge product using "$path\work\calperg.dta";
+        merge product using "$path/work/calperg.dta";
         tab _merge;
 
         * This tells where we are lacking calorie info or are lacking quantity info due to 
         * missing price info above;
-       ** list product spdomain descript if _merge==1;
+        list product spdomain descript if _merge==1;
+
         drop if _merge~=3;
         drop _merge;
         sort spdomain f_share_w;
@@ -79,7 +80,7 @@ use "$path/work/food_basket_flex.dta";
 
         * merge in calorie requirements;
         sort spdomain;
-        merge spdomain using "$path\work\calpp.dta";
+        merge spdomain using "$path/work/calpp.dta";
         tab _merge;
         drop _merge;
 
@@ -102,12 +103,6 @@ use "$path/work/food_basket_flex.dta";
 
         * the sum of the value of the goods in the bundle is assumed to represent 90% of expenditure;
         by spdomain: egen povline_f_flex90=sum(val_ir);
-		
-		
-*************** we change the poverty line for Kampala urban, to try if it works ************;
-***		replace povline_f_flex90=povline_f_flex90 + 6000;
-
-		
         replace povline_f_flex=povline_f_flex90/.9;
 
         collapse (mean) povline_f_flex, by (spdomain);
@@ -117,7 +112,7 @@ lab var povline_f_flex "Food poverty line. Flexible basket";
         sort spdomain;
         keep spdomain povline_f_flex;
 
-save "$path\work\povline_food_flex.dta", replace;
+save "$path/work/povline_food_flex.dta", replace;
 
 
 

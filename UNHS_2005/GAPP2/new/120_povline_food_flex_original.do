@@ -38,7 +38,7 @@ use "$path/work/food_basket_flex.dta";
         merge product spdomain using "$path/work/price_unit_flex.dta";
 
         tab _merge;
-        list product spdomain descript if _merge==1;
+       ** list product spdomain descript if _merge==1;
 
         drop if _merge ~=3;
         drop _merge;
@@ -50,17 +50,18 @@ use "$path/work/food_basket_flex.dta";
 
         * This tells where we are lacking calorie info or are lacking quantity info due to 
         * missing price info above;
-        list product spdomain descript if _merge==1;
+      **  list product spdomain descript if _merge==1;
 
         drop if _merge~=3;
         drop _merge;
         sort spdomain f_share_w;
         
+             save "$path/work/sharesandcost.dta", replace;   
         * CA modified to handle bootstrap counting;
 
         * determine if any quantity has fewer than 10 price observations;
         by spdomain: count if round(bswt)<10;
-        drop if round(bswt) < 30;
+        drop if round(bswt) < 10;
 
         by spdomain: egen baskshr=sum(f_share_w);
         by spdomain: gen cumshr1=sum(f_share_w);

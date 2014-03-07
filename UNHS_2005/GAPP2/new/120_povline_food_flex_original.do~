@@ -56,11 +56,12 @@ use "$path/work/food_basket_flex.dta";
         drop _merge;
         sort spdomain f_share_w;
         
+             save "$path/work/sharesandcost.dta", replace;   
         * CA modified to handle bootstrap counting;
 
         * determine if any quantity has fewer than 10 price observations;
         by spdomain: count if round(bswt)<10;
-        drop if round(bswt) < 30;
+        drop if round(bswt) < 10;
 
         by spdomain: egen baskshr=sum(f_share_w);
         by spdomain: gen cumshr1=sum(f_share_w);
@@ -103,7 +104,7 @@ use "$path/work/food_basket_flex.dta";
 
         * the sum of the value of the goods in the bundle is assumed to represent 90% of expenditure;
         by spdomain: egen povline_f_flex90=sum(val_ir);
-        	stopppp;
+        
         replace povline_f_flex=povline_f_flex90/.9;
 
         collapse (mean) povline_f_flex, by (spdomain);

@@ -41,7 +41,7 @@ This file creates:
         
 
 use spdomain product f_share_fix price qent povline_a_fix calpp
-using "$path/in/food_basket_fix.dta", clear;
+using "$path\in/food_basket_fix.dta", clear;
 
 * Product code in previous survey (PS);
 rename product    product_t1;

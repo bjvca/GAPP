@@ -55,12 +55,12 @@ This file creates:
 
 use "$path/in/cons_cod_trans.dta", clear;
 
-drop if quantityd==0 ;
+*drop if quantityd==0 ;
 
-keep hhid product food_cat valuez quantityz unit;
+keep hhid product food_cat valuez quantity unit;
 
 rename valuez    value;
-rename quantityz quantity;
+*rename quantityz quantity;
 
 *drop count;
 
@@ -108,12 +108,12 @@ save `dd_acsort', replace;
 save `build';
 
 
-use "$path\in\match_t1_t2.dta", clear;
+use "$path/in/match_t1_t2.dta", clear;
 *rename $product   product;
 *rename $product_t1 product_t1;
         drop if product==.;
         sort product;
-save "$path\work\match_t1_t2.dta", replace; 
+save "$path/work/match_t1_t2.dta", replace; 
 
 **************************************************************************************;
 *Merge the matched codes with the dd  and own data set;
@@ -126,7 +126,7 @@ save "$path\work\match_t1_t2.dta", replace;
       local matchobs=_N; 
       forvalues x = 1/`matchobs' 
          { 		;
-           use "$path\work\match_t1_t2.dta", clear;
+           use "$path/work/match_t1_t2.dta", clear;
            drop if _n ~= `x';
            sort product;
            merge product using `dd_acsort', nokeep;
@@ -153,13 +153,13 @@ save "$path\work\match_t1_t2.dta", replace;
 * There remain a few difficult to interpret observations such as liters
 * of fish and liters of pasta. These are dropped ;
 ********************************************************************;
-drop if unit~=2;
+*drop if unit~=2;
 
 ********************************************************************
 * Merge in general info
 ********************************************************************;
      sort hhid;
-     merge hhid using "$path\work\hhdata.dta";
+     merge hhid using "$path/work/hhdata.dta";
      tab _merge;
      drop _merge;
      drop if product==.;
@@ -170,7 +170,7 @@ drop if unit~=2;
 
 * This is the eight commodity calculated index by reg_tpi;
       sort reg_tpi survquar;
-      merge reg_tpi survquar using "$path\work\temp_index_reg_tpi.dta";
+      merge reg_tpi survquar using "$path/work/temp_index_reg_tpi.dta";
       tab _merge;
       drop _merge;
 
@@ -182,7 +182,7 @@ drop if unit~=2;
 save `ddacspdomain', replace;
 
 *Bring in the households on whom we want to perform the price calculations ;
-use "$path\work\bottom_basket.dta", clear;
+use "$path/work/bottom_basket.dta", clear;
       drop if bottom_basket==0;
       keep hhid;
       sort hhid;
@@ -206,7 +206,7 @@ save `pricehh';
 
 
 * Comment out his section if avg==0 everywhere. E.g. in IOF 2008/09 ( START );
-/*
+
 use `ddacspdomain';
 
         merge hhid using `pricehh';
@@ -217,7 +217,7 @@ use `ddacspdomain';
 * NOTE: value_r has been temporally deflated.;
 * It is not necessary to spatially deflate since we are working within each region;
 
-        drop if avg==0;
+       * drop if avg==0;
         gen price_unitt=value_r/(quantity*1000);
         gen price_unitm=price_unitt;
         sort spdomain product product_t1;
@@ -251,7 +251,7 @@ use `ddacspdomain';
         tempfile prices_avg;
 save `prices_avg', replace;
 
-*/
+
 * Comment out his section if avg==0 everywhere. E.g. in IOF 2008/09 ( END );
 
          
@@ -266,7 +266,7 @@ use `ddacspdomain', clear;
       keep if _merge==3;
       drop _merge;
 
-      drop if avg==1;
+      *drop if avg==1;
       gen price_unitt=value_r/(quantity*1000);
       gen price_unitm=price_unitt;
       sort spdomain product_t1;
@@ -299,16 +299,17 @@ use `ddacspdomain', clear;
 
 * Comment out his section if avg==0 everywhere. E.g. in IOF 2008/09 ( START );
 
-*append using `prices_avg';
+append using `prices_avg';
 
 * Comment out his section if avg==0 everywhere. E.g. in IOF 2008/09 ( END );
 
-      replace product_t1=substr(product_t1,1,7);
+tostring product_t1, replace;
+      replace product_t1=substr(product_t1,1,3);
       destring product_t1, replace;
 
         sort spdomain product_t1;
 
-save "$path\work\price_unit_fix.dta", replace;
+save "$path/work/price_unit_fix.dta", replace;
 
         *get an idea of the difference between the price measures;
         gen ratiotw=price_unitt/price_unitw;

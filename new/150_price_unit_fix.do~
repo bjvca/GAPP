@@ -155,8 +155,6 @@ save "$path/work/match_t1_t2.dta", replace;
 ********************************************************************;
 *drop if unit~=2;
 
-
-
 ********************************************************************
 * Merge in general info
 ********************************************************************;
@@ -208,7 +206,7 @@ save `pricehh';
 
 
 * Comment out his section if avg==0 everywhere. E.g. in IOF 2008/09 ( START );
-/*
+
 use `ddacspdomain';
 
         merge hhid using `pricehh';
@@ -219,7 +217,7 @@ use `ddacspdomain';
 * NOTE: value_r has been temporally deflated.;
 * It is not necessary to spatially deflate since we are working within each region;
 
-        drop if avg==0;
+       * drop if avg==0;
         gen price_unitt=value_r/(quantity*1000);
         gen price_unitm=price_unitt;
         sort spdomain product product_t1;
@@ -253,7 +251,7 @@ use `ddacspdomain';
         tempfile prices_avg;
 save `prices_avg', replace;
 
-*/
+
 * Comment out his section if avg==0 everywhere. E.g. in IOF 2008/09 ( END );
 
          
@@ -268,7 +266,7 @@ use `ddacspdomain', clear;
       keep if _merge==3;
       drop _merge;
 
-*    drop if avg==1;
+      *drop if avg==1;
       gen price_unitt=value_r/(quantity*1000);
       gen price_unitm=price_unitt;
       sort spdomain product_t1;
@@ -301,11 +299,11 @@ use `ddacspdomain', clear;
 
 * Comment out his section if avg==0 everywhere. E.g. in IOF 2008/09 ( START );
 
-*append using `prices_avg';
+append using `prices_avg';
 
 * Comment out his section if avg==0 everywhere. E.g. in IOF 2008/09 ( END );
-tostring product_t1, replace;
-      replace product_t1=substr(product_t1,1,3);
+
+      replace product_t1=substr(product_t1,1,7);
       destring product_t1, replace;
 
         sort spdomain product_t1;
