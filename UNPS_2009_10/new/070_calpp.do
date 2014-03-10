@@ -1,0 +1,147 @@
+*global path "C:/Users/Templeton/Desktop/GAPP/GAPP-UGANDA-HARUNA"
+clear all
+set mem 999m
+
+cap log close
+log using "$path/rep/070_calpp.log", replace
+clear
+set more off
+#delimit ;
+
+
+*global fert_rate "fert_rate";
+
+***********************************************************************
+* 070_calpp.do		(start)
+*
+* Purpose: Determine calories required for each person per domain per day.
+***********************************************************************;
+
+/*
+This file uses:
+	work/indata.dta
+	work/hhdata.dta
+
+This file creates:
+	work/calpp.dta
+*/
+
+*-------------------------------------------------------------------------*
+* Include fertility rates from csv-file
+*-------------------------------------------------------------------------*;
+clear;
+insheet sex rural age fert_rate using "$path/in/fert_rate_Uganda.csv";
+***************************************** check for Ugandan fertility rates *************************************
+*************************************************************************************************************;
+sort sex rural age;
+tempfile fert_rate;
+save `fert_rate';
+list;
+
+*-------------------------------------------------------------------------*
+* Now do the calorie needs for individuals
+*-------------------------------------------------------------------------*;
+use "$path/work/indata.dta";
+
+* CA bootstrap modification;
+sort hhid;
+merge hhid using "$path/work/hhdata.dta";
+tab _m; drop _m;
+
+sum;
+
+* Include fertility rates;
+sort sex rural age;
+merge sex rural age using `fert_rate';
+
+sum;
+
+* Do calorie calculations ;
+    gen num=1;
+    gen cal = .;
+
+* Same assumptions about sex/age specific calories need in IAF 1997, IAF 2003 and IOF 2009;
+
+* Children (no difference between boys and girls)   ; 
+    replace cal =  820 if age < 1;
+
+* Add 500 cal per day for mothers in first six months of breast feeding
+* We assume that 60% of children under 1 are under six months old
+* And that all of them breast feed
+* We add these mother requirements of 300 on average to each child under 1 whose mother is alive;
+    replace cal = 1120 if age <  1 & motherhh==1;
+    replace cal = 1150 if age >= 1 & age <2;
+    replace cal = 1350 if age >= 2 & age <3;
+    replace cal = 1550 if age >= 3 & age <5;
+
+* Males ;
+    replace cal = 1850 if age >=  5 & age <7  & sex==1;
+    replace cal = 2100 if age >=  7 & age <10 & sex==1;
+    replace cal = 2200 if age >= 10 & age <12 & sex==1;
+    replace cal = 2400 if age >= 12 & age <14 & sex==1;
+    replace cal = 2650 if age >= 14 & age <16 & sex==1;
+    replace cal = 2850 if age >= 16 & age <18 & sex==1;
+    replace cal = 3000 if age >= 18 & age <30 & sex==1;
+    replace cal = 2900 if age >= 30 & age <60 & sex==1;
+    replace cal = 2450 if age>=60 & age~=. & sex==1;
+
+* Girls 5-12 years (probability of pregnancy assumed = 0) ;
+    replace cal = 1750 if age >=  5 & age < 7 & sex==2;
+    replace cal = 1800 if age >=  7 & age <10 & sex==2;
+    replace cal = 1950 if age >= 10 & age <12 & sex==2;
+
+* Women with a correction for pregnancy. We add 285 calories per for the final trimester.
+* To do this we find the probability that rural and urban women are pregnant from
+* live births data in the 1997 census over the past 12 months (no correction for still births).
+* 3/4*probability of birth gives probability of preganancy. Probability of final trimester is one
+* third of that of that or 1/4 of the probability of birth
+
+* Women urban;
+    replace cal = 2100 + (fert_rate*285)/4 if age >= 12 & age <14 & sex==2 & rural==0;
+    replace cal = 2150 + (fert_rate*285)/4 if age >= 14 & age <18 & sex==2 & rural==0;
+    replace cal = 2100 + (fert_rate*285)/4 if age >= 18 & age <30 & sex==2 & rural==0;
+    replace cal = 2150 + (fert_rate*285)/4 if age >= 30 & age <60 & sex==2 & rural==0;
+
+* Women rural;
+    replace cal = 2100 + (fert_rate*285)/4 if age >= 12 & age <14 & sex==2 & rural==1;
+    replace cal = 2150 + (fert_rate*285)/4 if age >= 14 & age <18 & sex==2 & rural==1;
+    replace cal = 2100 + (fert_rate*285)/4 if age >= 18 & age <30 & sex==2 & rural==1;
+    replace cal = 2150 + (fert_rate*285)/4 if age >= 30 & age <60 & sex==2 & rural==1;
+
+* Women 60+ are not pregnant ;
+    replace cal = 1950 if age>=60 & age~=. & sex==2;
+
+    count if cal ==.;
+
+    *Fill in these two observations for IAF 2002/03:;
+
+    * 1) this one is a child;
+    *replace cal = 1500 if cal ==. & age==.;
+
+    * 2) this one is 21 years old;
+    *replace cal = 2500 if cal ==. & b2==.;
+
+    collapse (sum) cal num (max) psu hhsize hhweight strata rural spdomain, by (hhid);
+    gen chk=hhsize - num;
+    sum chk;
+    drop chk;
+    gen calpp = cal / hhsize;
+    sort spdomain;
+
+sum;
+
+* MAH ; sum; codebook hhid;
+
+collapse (mean) calpp[aw=hhsize*hhweight], by (spdomain);
+
+sort spdomain;
+
+save "$path/work/calpp.dta",replace;
+
+
+
+***********************************************************************
+* 070_calpp.do		(end)
+***********************************************************************;
+
+log close;
