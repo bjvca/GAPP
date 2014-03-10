@@ -323,7 +323,7 @@ while `pass' <= `maxit' {;
 
                 gen f_share_w`pass'=(food_share*hhweight)/tothhweight;
 
-                collapse (sum) f_share_w`pass', by(spdomain product descript);               
+                collapse (sum) f_share_w`pass', by(spdomain product );               
 
                 sort spdomain f_share_w`pass';
                 by spdomain: gen cumshr`pass'= sum(f_share_w`pass');
@@ -337,9 +337,9 @@ while `pass' <= `maxit' {;
 		
 				* Number of spatials domains a food product appears ;
                 gen numreg=1;
-                collapse (sum) numreg cumshr`pass', by (product descript);
+                collapse (sum) numreg cumshr`pass', by (product );
 
-                keep product numreg descript;
+                keep product numreg ;
                 display _N;
 
                 sort product;
@@ -347,7 +347,7 @@ while `pass' <= `maxit' {;
 *                merge product using "$path/work/products.dta";
 *                tab _merge;
 *                keep if _merge==3;
-                keep product descript numreg;  
+                keep product  numreg;  
                 sort product;     
                 display _N;  
 
@@ -377,10 +377,10 @@ use "$path/in/cons_cod_trans.dta", clear;
 *drop value   ;
 *drop quantity;
 
-keep hhid product food_cat valuez quantityz unit;
+keep hhid product food_cat valuez quantity unit;
 
 rename valuez    value;
-rename quantityz quantity;
+*rename quantityz quantity;
 
 *drop count;
 
@@ -550,7 +550,7 @@ drop if quantity==0 ;
                 merge product spdomain using "$path/work/price_unit_flex_it`pass'.dta";
         
                 tab _merge;
-                list product spdomain descript if _merge==1;
+                list product spdomain  if _merge==1;
         
                 drop if _merge ~=3;
                 drop _merge;
@@ -561,7 +561,7 @@ drop if quantity==0 ;
 				
                 * This tells where we are lacking calorie info or are lacking quantity info due to 
                 * missing price info above;
-                list product spdomain descript if _merge==1;
+                list product spdomain  if _merge==1;
         
                 drop if _merge~=3;
                 drop _merge;

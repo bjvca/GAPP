@@ -1,0 +1,2381 @@
+----------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  /home/bjvca/data/data/GAP/Haruna/UNPS_2005_06//rep/090_temp_index.log
+  log type:  text
+ opened on:  10 Mar 2014, 14:47:06
+
+. clear
+
+. set more off
+
+. #delimit ;
+delimiter now ;
+. **************************************************************************
+> * 090_temp_index.do     (start)
+> **************************************************************************;
+. *do "$path/new/010_initial.do";
+. **************************************************************************
+> * Program to compute the temporal price index (intra-survey)
+> * 
+> * The index is based on 6 regions (North/Center/South by rural/urban) 
+> * and four quarters. For IAF 2002/03 (t=t1) it is based on the same 9
+> * commodities used for the analysis of the 1996 IAF (t=t0), 
+> * except that we have to go to 8 commodities because the 2002-03 survey 
+> * does not distinguish between large and small groundnuts, which were 
+> * separate items in the old index. For IOF 2008/09 (t=t2) we expand the
+> * the food basket to include the 15 most important food products among
+> * the poorest.
+> *
+> * The commodity weights for the items vary by the 6 regions, and are 
+> * calculated from the observations in the IAF2002, using the relatively 
+> * poor households (below median nominal consumption per capita).
+> *
+> * The unit values (prices) calculated here are also based on the prices 
+> * paid by the relatively poor, using the same definition.
+> *
+> * K Simler, Sep 2003
+> * CA
+> * MAH, April 2010
+> * URB, Feb 2013 (automatization to any number of n_tpi's)
+> **************************************************************************;
+. /*
+> This file uses:
+>         work/own.dta
+>         work/receipts.dta
+>         work/daily.dta
+>         work/hhdata
+>         work/cons_cat.dta
+> 
+> This file creates:
+>         work/tpi_unit_val_quarterly.dta
+>         work/tpi_unit_val_monthly.dta
+>         work/tpi_news_share.dta
+>         work/tpi_reg_tpi_share.dta
+>         work/temp_index_news.dta
+>         work/temp_index_reg_tpi.dta
+> */      
+> 
+> 
+> **************************************************************************
+> * Either the products used for intertemporal price index is specified
+> * explicitly, or they are automatically found as the the n_tpi products
+> * with the highest weighted expenditure shares among the $bottom % poorest
+> * part of the population
+> **************************************************************************;
+. * Generating the n_tpi most important food items for the poorest $bottom % ;
+. **************************************************************************
+> * Find the n_tpi most important food products among the lowest $bottom %
+> * (start)
+> **************************************************************************;
+. *------------------------------------------------------------------------*
+> * Population weights for each HH
+> *------------------------------------------------------------------------*;
+. use "$path/work/hhdata.dta", clear;
+
+. keep hhid hhweight hhsize;
+
+. gen popwt = hhweight*hhsize;
+(4 missing values generated)
+
+. lab var popwt "Population weights = hhsize X hhweight";
+
+. sort hhid;
+
+. tempfile popwt;
+
+. save `popwt', replace;
+(note: file /tmp/St02564.000001 not found)
+file /tmp/St02564.000001 saved
+
+. sum;
+
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+        hhid |      3123    2.43e+09    1.16e+09   1.01e+09   4.19e+09
+    hhweight |      3119    1673.657     752.607   140.8407   5553.862
+      hhsize |      3123    5.366314    3.108797          1         29
+       popwt |      3119    9029.887     6948.95     201.98   61536.83
+
+. *------------------------------------------------------------------------*
+> * Make list of all consumed products
+> *------------------------------------------------------------------------*;
+. *use "$path/in/cons_cod.dta", clear;
+. *save "$path/work/cons_cod.dta", replace;
+. use "$path/work/cons_cod.dta", clear;
+
+. keep product descript;
+
+. collapse product, by(descript);
+
+. sort product;
+
+. tempfile descript;
+
+. save `descript', replace;
+(note: file /tmp/St02564.000002 not found)
+file /tmp/St02564.000002 saved
+
+. sum;
+
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+    descript |        71    134.0986    30.19988          1        172
+     product |        71     150.174    104.0955        100        999
+
+. *------------------------------------------------------------------------*
+> * Find the poorest part of the population
+> *------------------------------------------------------------------------*;
+. use
+> "$path/work/cons_cod.dta", clear;
+
+. *use
+> *"$path/work/cons_cod.dta", clear;
+. ********************************************check the COICOP categories to create the variab
+> le prod_cat, for the moment it is equal to food_cat******;
+. keep hhid prod_cat product cod_hh_nom;
+
+. sort hhid;
+
+. sum;
+
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+        hhid |     42120    2.35e+09    1.17e+09   1.01e+09   4.19e+09
+     product |     42975    193.7532    225.9257        100        999
+    prod_cat |     42975    1.072647     .259559          1          2
+  cod_hh_nom |     42975    430.3994    1512.109          0   72488.63
+
+. merge hhid using `popwt';
+variable hhid does not uniquely identify observations in the master data
+
+. sum;
+
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+        hhid |     42121    2.35e+09    1.17e+09   1.01e+09   4.19e+09
+     product |     42975    193.7532    225.9257        100        999
+    prod_cat |     42975    1.072647     .259559          1          2
+  cod_hh_nom |     42975    430.3994    1512.109          0   72488.63
+    hhweight |     42063    1663.904    765.4544   140.8407   5553.862
+-------------+--------------------------------------------------------
+      hhsize |     42121    5.699366    3.142954          1         29
+       popwt |     42063    9531.535    7231.145     201.98   61536.83
+      _merge |     42976    2.960187    .2793194          1          3
+
+. drop _merge;
+
+. preserve;
+
+. collapse (sum) cod_hh_nom (mean) popwt hhweight hhsize, by(hhid);
+
+. gen cod_pc_nom = cod_hh_nom/hhsize;
+(1 missing value generated)
+
+.         sum cod_pc_nom [aw=popwt] , detail;
+
+                         cod_pc_nom
+-------------------------------------------------------------
+      Percentiles      Smallest
+ 1%     186.1903              0
+ 5%     275.7369       103.3254
+10%     353.8824       125.3987       Obs                3119
+25%     489.4693       126.4294       Sum of Wgt.  28164219.1
+
+50%     769.2858                      Mean           1059.709
+                        Largest       Std. Dev.       1073.31
+75%     1221.598       20495.57
+90%     2053.998       20954.27       Variance        1151995
+95%     2859.285       22853.78       Skewness       5.701393
+99%     5168.295       23846.89       Kurtosis        70.5224
+
+.         global medcpc_= r(p$tpi_bottom);
+
+.         gen bottom_ = cod_pc_nom <= $medcpc_;
+
+. sum [aw=popwt];
+
+    Variable |     Obs      Weight        Mean   Std. Dev.       Min        Max
+-------------+-----------------------------------------------------------------
+        hhid |    3119  28164219.1    2.48e+09   1.19e+09   1.01e+09   4.19e+09
+  cod_hh_nom |    3119  28164219.1    7210.542   7751.913          0   84210.06
+       popwt |    3119  28164219.1    14375.74   9296.074     201.98   61536.83
+    hhweight |    3119  28164219.1    2006.475   790.1052   140.8407   5553.862
+      hhsize |    3119  28164219.1    7.167363   3.433959          1         29
+-------------+-----------------------------------------------------------------
+  cod_pc_nom |    3119  28164219.1    1059.709    1073.31          0   23846.89
+     bottom_ |    3119  28164219.1    .5005946   .5000798          0          1
+
+. sum [aw=hhweight];
+
+    Variable |     Obs      Weight        Mean   Std. Dev.       Min        Max
+-------------+-----------------------------------------------------------------
+        hhid |    3119  5220136.65    2.44e+09   1.20e+09   1.01e+09   4.19e+09
+  cod_hh_nom |    3119  5220136.65    5717.451   6407.983          0   84210.06
+       popwt |    3119  5220136.65    10825.54   7890.683     201.98   61536.83
+    hhweight |    3119  5220136.65     2011.98   812.8751   140.8407   5553.862
+      hhsize |    3119  5220136.65    5.395303    3.09255          1         29
+-------------+-----------------------------------------------------------------
+  cod_pc_nom |    3119  5220136.65    1248.649   1406.246          0   23846.89
+     bottom_ |    3119  5220136.65    .4413824   .4966317          0          1
+
+. sum;
+
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+        hhid |      3123    2.43e+09    1.16e+09   1.01e+09   4.19e+09
+  cod_hh_nom |      3124    5920.748    6787.715          0   84210.06
+       popwt |      3119    9029.887     6948.95     201.98   61536.83
+    hhweight |      3119    1673.657     752.607   140.8407   5553.862
+      hhsize |      3123    5.366314    3.108797          1         29
+-------------+--------------------------------------------------------
+  cod_pc_nom |      3123     1329.67    1627.455          0   23846.89
+     bottom_ |      3124    .4372599    .4961275          0          1
+
+. keep if bottom_==1;
+(1758 observations deleted)
+
+. keep hhid;
+
+. sort hhid;
+
+. tempfile hhid;
+
+. save `hhid';
+file /tmp/St02564.000004 saved
+
+. restore;
+
+. sort hhid;
+
+. sum;
+
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+        hhid |     42121    2.35e+09    1.17e+09   1.01e+09   4.19e+09
+     product |     42975    193.7532    225.9257        100        999
+    prod_cat |     42975    1.072647     .259559          1          2
+  cod_hh_nom |     42975    430.3994    1512.109          0   72488.63
+    hhweight |     42063    1663.904    765.4544   140.8407   5553.862
+-------------+--------------------------------------------------------
+      hhsize |     42121    5.699366    3.142954          1         29
+       popwt |     42063    9531.535    7231.145     201.98   61536.83
+
+. merge hhid using `hhid';
+variable hhid does not uniquely identify observations in the master data
+
+. tab _m;
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |     27,655       64.35       64.35
+          3 |     15,321       35.65      100.00
+------------+-----------------------------------
+      Total |     42,976      100.00
+
+. keep if _m==3;
+(27655 observations deleted)
+
+. sum;
+
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+        hhid |     15321    2.68e+09    9.79e+08   1.02e+09   4.19e+09
+     product |     15320    208.0257    247.8593        100        999
+    prod_cat |     15320    1.089099    .2848962          1          2
+  cod_hh_nom |     15320     265.924     418.148          0   7644.004
+    hhweight |     15292    1691.487    626.3613   140.8407     4498.1
+-------------+--------------------------------------------------------
+      hhsize |     15321     6.45715    2.964676          1         29
+       popwt |     15292    10866.38    6567.464    225.125   56511.65
+      _merge |     15321           3           0          3          3
+
+. *------------------------------------------------------------------------*
+> * Keep only food product expenditure by the poor. Calculate food product
+> * share of total food expenditure by the poor
+> *------------------------------------------------------------------------*;
+. keep if prod_cat==1;
+(1366 observations deleted)
+
+. sum;
+
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+        hhid |     13955    2.68e+09    9.79e+08   1.02e+09   4.19e+09
+     product |     13955     130.657    16.01476        100        161
+    prod_cat |     13955           1           0          1          1
+  cod_hh_nom |     13955    195.7463    277.9207          0       4000
+    hhweight |     13929     1691.59    624.9568   140.8407     4498.1
+-------------+--------------------------------------------------------
+      hhsize |     13955    6.487567    2.968187          1         29
+       popwt |     13929     10917.5    6581.081    225.125   56511.65
+      _merge |     13955           3           0          3          3
+
+. sort product;
+
+. *preserve;
+. collapse (sum) cod_hh_nom [aw=hhweight], by(product);
+
+. sort cod;
+
+. egen total=sum(cod_hh_nom);
+
+. gen sh=100*cod_hh_nom/total;
+
+. *------------------------------------------------------------------------*
+> * Include product labels
+> *------------------------------------------------------------------------*;
+. sum;
+
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+     product |        53    130.3019    16.22034        100        161
+  cod_hh_nom |        53    51685.07     70019.9          0   285452.1
+       total |        53     2739309           0    2739309    2739309
+          sh |        53    1.886792    2.556116          0   10.42059
+
+. sort product;
+
+. merge product using `descript';
+
+. tab _merge;
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          2 |         18       25.35       25.35
+          3 |         53       74.65      100.00
+------------+-----------------------------------
+      Total |         71      100.00
+
+. keep if _merge==1 | _merge==3;
+(18 observations deleted)
+
+. drop _merge;
+
+. sort sh;
+
+. *list;
+. list in -$product_tpi_n/-1;
+
+     +----------------------------------------------------+
+     | product   cod_hh~m     total         sh   descript |
+     |----------------------------------------------------|
+ 24. |     146   23070.11   2739309   .8421873        146 |
+ 25. |     150   25316.98   2739309   .9242105        150 |
+ 26. |     157   27412.62   2739309   1.000713        157 |
+ 27. |     143   28630.19   2739309   1.045161        143 |
+ 28. |     144   29305.61   2739309   1.069818        144 |
+     |----------------------------------------------------|
+ 29. |     134   30007.02   2739309   1.095423        134 |
+ 30. |     109   31458.23   2739309     1.1484        109 |
+ 31. |     161    31797.2   2739309   1.160775        161 |
+ 32. |     119   32056.73   2739309   1.170249        119 |
+ 33. |     110   35221.35   2739309   1.285775        110 |
+     |----------------------------------------------------|
+ 34. |     138   35735.55   2739309   1.304546        138 |
+ 35. |     121   38001.51   2739309   1.387266        121 |
+ 36. |     112   44222.42   2739309   1.614364        112 |
+ 37. |     136   46645.93   2739309   1.702836        136 |
+ 38. |     140   47757.93   2739309    1.74343        140 |
+     |----------------------------------------------------|
+ 39. |     115   54456.53   2739309   1.987966        115 |
+ 40. |     122   55961.67   2739309   2.042912        122 |
+ 41. |     116   57174.44   2739309   2.087185        116 |
+ 42. |     127   57759.82   2739309   2.108555        127 |
+ 43. |     139   60254.97   2739309   2.199641        139 |
+     |----------------------------------------------------|
+ 44. |     125   67827.11   2739309   2.476067        125 |
+ 45. |     123   74151.96   2739309   2.706959        123 |
+ 46. |     117   96047.05   2739309   3.506251        117 |
+ 47. |     147   119788.4   2739309   4.372942        147 |
+ 48. |     107   150986.5   2739309   5.511846        107 |
+     |----------------------------------------------------|
+ 49. |     108   208942.2   2739309   7.627553        108 |
+ 50. |     100   237663.9   2739309   8.676054        100 |
+ 51. |     141   240267.8   2739309   8.771111        141 |
+ 52. |     113   251597.5   2739309   9.184708        113 |
+ 53. |     105   285452.1   2739309   10.42059        105 |
+     +----------------------------------------------------+
+
+. list product descript in -$product_tpi_n/-1;
+
+     +--------------------+
+     | product   descript |
+     |--------------------|
+ 24. |     146        146 |
+ 25. |     150        150 |
+ 26. |     157        157 |
+ 27. |     143        143 |
+ 28. |     144        144 |
+     |--------------------|
+ 29. |     134        134 |
+ 30. |     109        109 |
+ 31. |     161        161 |
+ 32. |     119        119 |
+ 33. |     110        110 |
+     |--------------------|
+ 34. |     138        138 |
+ 35. |     121        121 |
+ 36. |     112        112 |
+ 37. |     136        136 |
+ 38. |     140        140 |
+     |--------------------|
+ 39. |     115        115 |
+ 40. |     122        122 |
+ 41. |     116        116 |
+ 42. |     127        127 |
+ 43. |     139        139 |
+     |--------------------|
+ 44. |     125        125 |
+ 45. |     123        123 |
+ 46. |     117        117 |
+ 47. |     147        147 |
+ 48. |     107        107 |
+     |--------------------|
+ 49. |     108        108 |
+ 50. |     100        100 |
+ 51. |     141        141 |
+ 52. |     113        113 |
+ 53. |     105        105 |
+     +--------------------+
+
+. *restore;
+. *------------------------------------------------------------------------*
+> * Keep the required number of most important food products
+> *------------------------------------------------------------------------*;
+. keep in -$product_tpi_n/-1;
+(23 observations deleted)
+
+. list;
+
+     +----------------------------------------------------+
+     | product   cod_hh~m     total         sh   descript |
+     |----------------------------------------------------|
+  1. |     146   23070.11   2739309   .8421873        146 |
+  2. |     150   25316.98   2739309   .9242105        150 |
+  3. |     157   27412.62   2739309   1.000713        157 |
+  4. |     143   28630.19   2739309   1.045161        143 |
+  5. |     144   29305.61   2739309   1.069818        144 |
+     |----------------------------------------------------|
+  6. |     134   30007.02   2739309   1.095423        134 |
+  7. |     109   31458.23   2739309     1.1484        109 |
+  8. |     161    31797.2   2739309   1.160775        161 |
+  9. |     119   32056.73   2739309   1.170249        119 |
+ 10. |     110   35221.35   2739309   1.285775        110 |
+     |----------------------------------------------------|
+ 11. |     138   35735.55   2739309   1.304546        138 |
+ 12. |     121   38001.51   2739309   1.387266        121 |
+ 13. |     112   44222.42   2739309   1.614364        112 |
+ 14. |     136   46645.93   2739309   1.702836        136 |
+ 15. |     140   47757.93   2739309    1.74343        140 |
+     |----------------------------------------------------|
+ 16. |     115   54456.53   2739309   1.987966        115 |
+ 17. |     122   55961.67   2739309   2.042912        122 |
+ 18. |     116   57174.44   2739309   2.087185        116 |
+ 19. |     127   57759.82   2739309   2.108555        127 |
+ 20. |     139   60254.97   2739309   2.199641        139 |
+     |----------------------------------------------------|
+ 21. |     125   67827.11   2739309   2.476067        125 |
+ 22. |     123   74151.96   2739309   2.706959        123 |
+ 23. |     117   96047.05   2739309   3.506251        117 |
+ 24. |     147   119788.4   2739309   4.372942        147 |
+ 25. |     107   150986.5   2739309   5.511846        107 |
+     |----------------------------------------------------|
+ 26. |     108   208942.2   2739309   7.627553        108 |
+ 27. |     100   237663.9   2739309   8.676054        100 |
+ 28. |     141   240267.8   2739309   8.771111        141 |
+ 29. |     113   251597.5   2739309   9.184708        113 |
+ 30. |     105   285452.1   2739309   10.42059        105 |
+     +----------------------------------------------------+
+
+. gen product_tpi=1;
+
+. keep product product_tpi;
+
+. list;
+
+     +--------------------+
+     | product   produc~i |
+     |--------------------|
+  1. |     146          1 |
+  2. |     150          1 |
+  3. |     157          1 |
+  4. |     143          1 |
+  5. |     144          1 |
+     |--------------------|
+  6. |     134          1 |
+  7. |     109          1 |
+  8. |     161          1 |
+  9. |     119          1 |
+ 10. |     110          1 |
+     |--------------------|
+ 11. |     138          1 |
+ 12. |     121          1 |
+ 13. |     112          1 |
+ 14. |     136          1 |
+ 15. |     140          1 |
+     |--------------------|
+ 16. |     115          1 |
+ 17. |     122          1 |
+ 18. |     116          1 |
+ 19. |     127          1 |
+ 20. |     139          1 |
+     |--------------------|
+ 21. |     125          1 |
+ 22. |     123          1 |
+ 23. |     117          1 |
+ 24. |     147          1 |
+ 25. |     107          1 |
+     |--------------------|
+ 26. |     108          1 |
+ 27. |     100          1 |
+ 28. |     141          1 |
+ 29. |     113          1 |
+ 30. |     105          1 |
+     +--------------------+
+
+. sort product;
+
+. tempfile product_tpi;
+
+. save `product_tpi', replace;
+(note: file /tmp/St02564.000005 not found)
+file /tmp/St02564.000005 saved
+
+. sum;
+
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+     product |        30       127.5    16.77591        100        161
+ product_tpi |        30           1           0          1          1
+
+. clear;
+
+. **************************************************************************
+> * Find the n_tpi most important food products among the lowest $bottom %
+> * (end)
+> **************************************************************************;
+. **************************************************************************;
+. * First, need to calculate the average prices for the food items, by 
+> * strata and quarter. For this, we are using the "unit values"
+> * (value/quantity) for the observations in the consumption questionnaires,
+> * including daily, own and receipts-in-kind.
+> *
+> * The unit values are constructed as sum(value)/sum(quantity), which effectively
+> * weights them by the quantity and value of the transaction. Sampling
+> * weights are also used.
+> *
+> * Get the own consumption file, and limit analysis to the observations
+> * in KGs where both value and quantity are available.
+> **************************************************************************;
+. use "$path/work/cons_cod.dta";
+
+. *use "$path/work/cons_cod.dta";
+. keep if prod_cat==1;
+(3122 observations deleted)
+
+. drop if quantityd==0 | quantityd==.;
+(2057 observations deleted)
+
+. *keep if quantityd!=. & cod_hh_nom2!=.;
+. sum;
+
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+        hhid |     37796    2.36e+09    1.17e+09   1.01e+09   4.19e+09
+     product |     37796     129.612    15.56369        100        158
+    food_cat |     37796           1           0          1          1
+    prod_cat |     37796           1           0          1          1
+    descript |     37796    124.8312    28.44431          1        158
+-------------+--------------------------------------------------------
+       untcd |     37796    41.40547    29.19073          1         99
+   quantityd |     37796     .542288    .9857734   .0057143   57.14286
+      valuez |     37796    238.0692    351.5228          0       7500
+      untdes |     36432    39.82636     28.4377          1         99
+     qkg_uca |     36284    2.194586    4.830398       .001     113.25
+-------------+--------------------------------------------------------
+    quantity |     36284    .9826587    2.842728      .0001      135.2
+  cod_hh_nom |     37796    238.0692    351.5228          0       7500
+
+. sort product;
+
+. merge product using `product_tpi';
+variable product does not uniquely identify observations in the master data
+
+. tab _merge;
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |      8,873       23.47       23.47
+          2 |          2        0.01       23.48
+          3 |     28,923       76.52      100.00
+------------+-----------------------------------
+      Total |     37,798      100.00
+
+. drop _merge;
+
+. keep if $product_tpi;
+(8873 observations deleted)
+
+. *        replace valued_ac=0 if valued_ac==.;
+. *        replace quantityd_ac=0 if quantityd_ac==.;
+.         gen valued_tot=cod_hh_nom;
+(2 missing values generated)
+
+.         gen quantityd_tot=quantityd;
+(2 missing values generated)
+
+. *               replace quantityd_tot=0 if (valued_tot>0 & valued_tot<.) & quantityd_tot==.;
+.         keep if quantityd_tot!=. & valued_tot!=.;
+(2 observations deleted)
+
+.                 collapse (sum) valued_tot quantityd_tot, by(hhid product);
+
+.                 sort hhid;
+
+. tempfile acredd;
+
+. save `acredd' , replace;
+(note: file /tmp/St02564.000006 not found)
+file /tmp/St02564.000006 saved
+
+. sum;
+
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+        hhid |     28800    2.39e+09    1.16e+09   1.01e+09   4.19e+09
+     product |     28800    127.6664    15.94733        100        150
+  valued_tot |     28800    274.7174     386.191   1.428571       7500
+quantityd_~t |     28800    .5733206    .9622761   .0071429         50
+
+. /*
+> **************************************************************************;
+> * Create a data set with an empty 1 observation. Used to avoid empty data
+> * sets when the survey do not have the Mozambican set up
+> **************************************************************************;
+> use "$path/work/own.dta";
+> 
+> preserve;
+> keep in 1;
+> drop unit valued quantityd;
+> gen unit=2;
+> gen valued=0;
+> gen quantityd=0;
+> tempfile 1obs;
+> save `1obs';
+> restore;
+> 
+> **************************************************************************;
+> * Own consumption
+> **************************************************************************;
+> sum;
+> sort product;
+> merge product using `product_tpi';
+> tab _merge;
+> drop _merge;
+> 
+> keep if $product_tpi;
+> 
+> 
+> 
+> * Comment out below if IAF 2002/03 ( START ) ;
+> 
+> rename quantityd quantity;
+> do "$path/new/110a_conversions.do";
+> rename quantity quantityd;
+> 
+> * Comment out below if IAF 2002/03 ( END ) ;
+> 
+> 
+> 
+>         keep if unit==2 & quantityd!=. & valued!=.;
+>         collapse (sum) valued quantityd , by(hhid product);
+>         rename valued valued_ac;
+>         rename quantityd quantityd_ac;
+>         compress;
+>         sort hhid product;
+>         tempfile ac;
+> save `ac', replace;
+> 
+> **************************************************************************;
+> * Now do a similar thing with receipts-in-kind file.
+> **************************************************************************;
+> use "$path/work/receipts.dta";
+> 
+> sum;
+> sort product;
+> merge product using `product_tpi';
+> tab _merge;
+> drop _merge;
+> 
+> 
+> 
+> keep if $product_tpi;
+> append using `1obs';
+> 
+> 
+> 
+> * Comment out below if IAF 2002/03 ( START ) ;
+> 
+> rename quantityd quantity;
+> do "$path/new/110a_conversions.do";
+> rename quantity quantityd;
+> 
+> * Comment out below if IAF 2002/03 ( END ) ;
+> 
+> 
+> 
+>         keep if unit==2 & quantityd!=. & valued!=.;
+>         collapse (sum) valued quantityd , by(hhid product);
+>         rename valued valued_re;
+>         rename quantityd quantityd_re;
+>         compress;
+>         sort hhid product;
+>         tempfile re;
+> save `re', replace;
+> 
+> **************************************************************************;
+> * And also with the daily expenditure file.
+> **************************************************************************;
+> use "$path/work/daily.dta";
+> 
+> sum;
+> sort product;
+> merge product using `product_tpi';
+> tab _merge;
+> drop _merge;
+> 
+> keep if $product_tpi;
+> 
+> 
+> 
+> * Comment out below if IAF 2002/03 ( START ) ;
+> 
+> *rename quantityd quantity;
+> do "$path/new/110a_conversions.do";
+> *rename quantity quantityd;
+> 
+> * Comment out below if IAF 2002/03 ( END ) ;
+> 
+> 
+> 
+>         collapse (sum) value quantity days , 
+>                 by(hhid product unit);
+> 
+>         gen valued=value/7 if days<=7;
+>         replace valued=value/days if days>7 & days<.;
+>         gen quantityd=quantity/7 if days<=7;
+>         replace quantityd=quantity/days if days>7 & days<.;
+> 
+>         keep if unit==2 & quantityd!=. & valued!=.;
+>         collapse (sum) valued quantityd , by(hhid product);
+> 
+>         rename valued valued_dd;
+>         rename quantityd quantityd_dd;
+>         compress;
+>         sort hhid product;
+>         tempfile dd;
+> save `dd', replace;
+> 
+> 
+> 
+> 
+> **************************************************************************;
+> * Merge the three components (own, daily, receipts) together at the HH/product level, 
+> * then aggregate to the regional level, using the sample weights (hhweight).
+> * We DON'T want to weight by "hhsize" because the quantity and value are
+> * already for the household (i.e., other things equal, larger households
+> * are buying larger quantities, and therefore already getting more weight).
+> * Then calculate sum(val)/sum(quantity) to get the quantity weighted mean
+> * unit value in each strata in each quarter.
+> **************************************************************************;
+> use `ac';
+>         sort hhid product;
+>         merge hhid product using `re';
+>         tab _m;
+>         drop _m;
+>         
+>         sort hhid product;
+>         merge hhid product using `dd';
+>         tab _m;
+>         drop _m;
+>         
+>         replace valued_ac=0 if valued_ac==.;
+>         replace valued_re=0 if valued_re==.;
+>         replace valued_dd=0 if valued_dd==.;
+>         replace quantityd_ac=0 if quantityd_ac==.;
+>         replace quantityd_re=0 if quantityd_re==.;
+>         replace quantityd_dd=0 if quantityd_dd==.;
+> 
+>         gen valued_tot=valued_ac+valued_re+valued_dd;
+>         gen quantityd_tot=quantityd_ac+quantityd_re+quantityd_dd;
+> 
+>         sort hhid;
+> 
+>         tempfile acredd;
+> save `acredd' , replace;
+> */
+> 
+> 
+> 
+> use "$path/work/hhdata.dta";
+
+.         keep strata hhid hhweight hhsize rural survmon survquar news spdomain reg_tpi;
+
+.         sort hhid;
+
+.         tempfile hhd;
+
+. save `hhd' , replace;
+(note: file /tmp/St02564.000007 not found)
+file /tmp/St02564.000007 saved
+
+. use `acredd', clear;
+
+.         merge hhid using `hhd';
+variable hhid does not uniquely identify observations in the master data
+
+.         tab _merge;
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          2 |        109        0.38        0.38
+          3 |     28,800       99.62      100.00
+------------+-----------------------------------
+      Total |     28,909      100.00
+
+.         drop _merge;
+
+.                 tab survquar , miss;
+
+   Sequential Survey |
+ Quarter (May-Nov'05 |
+      & May-Nov '06) |      Freq.     Percent        Cum.
+---------------------+-----------------------------------
+   May '05 - Jul-'05 |      9,769       33.79       33.79
+          Aug-Oct 05 |      8,847       30.60       64.40
+Nov '05 & May-Jun 06 |        530        1.83       66.23
+       Jul-Sept 2006 |      7,537       26.07       92.30
+         Oct-Nov '06 |      2,185        7.56       99.86
+                   . |         41        0.14      100.00
+---------------------+-----------------------------------
+               Total |     28,909      100.00
+
+.                 tab survmon survquar, miss;
+
+Sequential |
+    Survey |
+     Month |
+ (November |
+    2011 = |
+   January |       Sequential Survey Quarter (May-Nov'05 & May-Nov '06)
+      '13) | May '05 -  Aug-Oct 0  Nov '05 &  Jul-Sept   Oct-Nov '          . |     Total
+-----------+------------------------------------------------------------------+----------
+    May 05 |     3,058          0          0          0          0          0 |     3,058 
+    Jun 05 |     4,288          0          0          0          0          0 |     4,288 
+    Jul 05 |     2,423          0          0          0          0          0 |     2,423 
+    Aug 05 |         0      3,043          0          0          0          0 |     3,043 
+   Sept 05 |         0      3,412          0          0          0          0 |     3,412 
+    Oct 05 |         0      2,392          0          0          0          0 |     2,392 
+    Nov 05 |         0          0         84          0          0          0 |        84 
+    May 06 |         0          0        118          0          0          0 |       118 
+    Jun 06 |         0          0        328          0          0          0 |       328 
+    Jul 06 |         0          0          0      1,521          0          0 |     1,521 
+    Aug 06 |         0          0          0      2,995          0          0 |     2,995 
+   Sept 06 |         0          0          0      3,021          0          0 |     3,021 
+    Oct 06 |         0          0          0          0      2,109          0 |     2,109 
+    Nov 06 |         0          0          0          0         76          0 |        76 
+         . |         0          0          0          0          0         41 |        41 
+-----------+------------------------------------------------------------------+----------
+     Total |     9,769      8,847        530      7,537      2,185         41 |    28,909 
+
+
+.         compress;
+product was float now int
+survquar was float now byte
+survmon was float now byte
+strata was float now byte
+rural was float now byte
+spdomain was float now byte
+news was float now byte
+hhsize was long now byte
+
+.         sort hhid;
+
+. save `acredd', replace;
+file /tmp/St02564.000006 saved
+
+. sum;
+
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+        hhid |     28909    2.39e+09    1.16e+09   1.01e+09   4.19e+09
+     product |     28800    127.6664    15.94733        100        150
+  valued_tot |     28800    274.7174     386.191   1.428571       7500
+quantityd_~t |     28800    .5733206    .9622761   .0071429         50
+    hhweight |     28868    1670.244    757.6454   140.8407   5553.862
+-------------+--------------------------------------------------------
+    survquar |     28868    2.429195    1.377738          1          5
+     survmon |     28868    6.230394    4.164311          1         14
+      strata |     28868    4.299051    2.452283          1          8
+       rural |     28868    .7014341    .4576369          0          1
+     reg_tpi |     28868    2.298808    1.154778          1          4
+-------------+--------------------------------------------------------
+    spdomain |     28868    3.140051    1.370939          1          5
+        news |     28868    2.298808    1.154778          1          4
+      hhsize |     28909    5.744543    3.100327          1         29
+
+. **************************************************************************;
+. * Need to merge with the file that has nominal consumption per household,
+> * and compute nominal consumption per capita from that, so that we can
+> * choose the relatively poor (i.e., below median nominal consumption per
+> * capita).
+> **************************************************************************;
+. use "$path/work/conpc.dta", clear;
+
+. keep hhid cons_hh_nom;
+
+. *use "$path/in/cons_cat.dta" ;
+. *save "$path/work/cons_cat.dta", replace ;
+. *use "$path/work/cons_cat.dta" ;
+. *CA modified to merge in hhdata for bootstrap;
+.        sort hhid;
+
+.         merge hhid using "$path/work/hhdata.dta";
+
+.           tab _m;
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |          1        0.03        0.03
+          3 |      3,123       99.97      100.00
+------------+-----------------------------------
+      Total |      3,124      100.00
+
+.  drop _m;
+
+.         collapse (mean) cons_hh_nom hhsize hhweight , by(hhid);
+
+.         gen cpc=cons_hh_nom/hhsize;
+(2 missing values generated)
+
+.         sum cpc [aw=hhsize*hhweight] , detail;
+
+                             cpc
+-------------------------------------------------------------
+      Percentiles      Smallest
+ 1%     192.6279       103.3254
+ 5%     279.1713       125.3987
+10%     353.8824       126.4294       Obs                3118
+25%       489.79       141.0714       Sum of Wgt.  28155664.2
+
+50%     769.2858                      Mean           1060.031
+                        Largest       Std. Dev.      1073.314
+75%     1221.598       20495.57
+90%     2062.153       20954.27       Variance        1152003
+95%     2859.285       22853.78       Skewness       5.702454
+99%     5168.295       23846.89       Kurtosis       70.53564
+
+.         global medcpc=r(p$tpi_bottom);
+
+.         gen bottom_tpi=cpc<=$medcpc;
+
+.         keep hhid bottom_tpi;
+
+.         sort hhid;
+
+.         tempfile bottom_tpi;
+
+. save `bottom_tpi', replace;
+(note: file /tmp/St02564.000008 not found)
+file /tmp/St02564.000008 saved
+
+. sum;
+
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+        hhid |      3123    2.43e+09    1.16e+09   1.01e+09   4.19e+09
+  bottom_tpi |      3124    .4369398    .4960869          0          1
+
+. use `acredd' ;
+
+.         merge hhid using `bottom_tpi';
+variable hhid does not uniquely identify observations in the master data
+
+.         tab _merge;
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          2 |          1        0.00        0.00
+          3 |     28,909      100.00      100.00
+------------+-----------------------------------
+      Total |     28,910      100.00
+
+.         drop _merge;
+
+.         keep if bottom_tpi;
+(17832 observations deleted)
+
+. sum;
+
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+        hhid |     11078    2.69e+09    9.81e+08   1.02e+09   4.19e+09
+     product |     11066    128.5111    15.93723        100        150
+  valued_tot |     11066    221.6525    297.9822   3.571429       4000
+quantityd_~t |     11066    .6175737    .9334974   .0142857         26
+    hhweight |     11055    1695.147    627.2694   140.8407     4498.1
+-------------+--------------------------------------------------------
+    survquar |     11055    2.335866    1.388388          1          5
+     survmon |     11055    5.907644    4.143839          1         14
+      strata |     11055     5.07924    1.990764          1          8
+       rural |     11055     .885934    .3179058          0          1
+     reg_tpi |     11055    2.596653    .9812092          1          4
+-------------+--------------------------------------------------------
+    spdomain |     11055    3.578381    1.019346          1          5
+        news |     11055    2.596653    .9812092          1          4
+      hhsize |     11078    6.444485     2.92606          1         29
+  bottom_tpi |     11078           1           0          1          1
+
+. * Drop one HH with extremely high quantity and low value in IAF 2002/03 (t=t1) ;
+. *        drop if hhid==263001;
+.         preserve;
+
+.                 collapse (sum) valued_tot quantityd_tot [aw=hhweight] , 
+>                                 by(reg_tpi news product survmon);
+
+.                         drop if product==.;
+(8 observations deleted)
+
+.                         gen ppkg=valued_tot/quantityd_tot;
+
+.                         lab var ppkg "Unit value per kg";
+
+.                         sort reg_tpi product ;
+
+.                         compress;
+
+.                         tempfile uvm;
+
+.                 save `uvm', replace;
+(note: file /tmp/St02564.00000a not found)
+file /tmp/St02564.00000a saved
+
+.                 save "$path/work/tpi_unit_val_monthly.dta", replace;
+file /home/bjvca/data/data/GAP/Haruna/UNPS_2005_06//work/tpi_unit_val_monthly.dta saved
+
+.         restore;
+
+.         preserve;
+
+.                 collapse (sum) valued_tot quantityd_tot [aw=hhweight] , 
+>                                 by(reg_tpi news product survquar);
+
+.                         drop if product==.;
+(6 observations deleted)
+
+.                         gen ppkg=valued_tot/quantityd_tot;
+
+.                         sort reg_tpi product survquar;
+
+.                         list in  1/3;
+
+     +----------------------------------------------------------------------------------+
+     | product            survquar   reg_tpi      news   valued~t   quanti~t       ppkg |
+     |----------------------------------------------------------------------------------|
+  1. |     100   May '05 - Jul-'05   Central   Central   15969.55   12.19603   1309.405 |
+  2. |     100          Aug-Oct 05   Central   Central   11058.25   7.464759   1481.394 |
+  3. |     100       Jul-Sept 2006   Central   Central   16799.21   12.75837   1316.721 |
+     +----------------------------------------------------------------------------------+
+
+.                         list in -3/-1;
+
+     +------------------------------------------------------------------------------+
+     | product        survquar   reg_tpi      news   valued~t   quanti~t       ppkg |
+     |------------------------------------------------------------------------------|
+439. |     150      Aug-Oct 05   Western   Western     1271.7   6.681939    190.319 |
+440. |     150   Jul-Sept 2006   Western   Western   1944.216   9.488426   204.9039 |
+441. |     150     Oct-Nov '06   Western   Western   322.1541   1.559935   206.5177 |
+     +------------------------------------------------------------------------------+
+
+.                         tempfile uvq;
+
+.                 save "$path/work/tpi_unit_val_quarterly.dta", replace;
+file /home/bjvca/data/data/GAP/Haruna/UNPS_2005_06//work/tpi_unit_val_quarterly.dta saved
+
+.                 save `uvq', replace;
+(note: file /tmp/St02564.00000c not found)
+file /tmp/St02564.00000c saved
+
+.         restore;
+
+.         **************************************************************************;
+. * Toss out the bottom 5% and top 5% of the HH-LEVEL prices per kg in
+> * each reg_tpi & product combination. This should eliminate outliers that
+> * may have an undue influence on the price calculation. Then use sample
+> * weighting PLUS quantity weighting on those HH-level observations.
+> **************************************************************************;
+.         preserve;
+
+.                 gen hhppkg=valued_tot/quantityd_tot;
+(12 missing values generated)
+
+.                 egen lower5=pctile(hhppkg), p(5) by(reg_tpi product);
+(12 missing values generated)
+
+.                 egen upper5=pctile(hhppkg), p(95) by(reg_tpi product);
+(12 missing values generated)
+
+.                 keep if hhppkg>=lower5 & hhppkg<=upper5;
+(556 observations deleted)
+
+.                                 gen hhqtywt=hhweight*quantityd_tot;
+(35 missing values generated)
+
+.                                 collapse (sum) valued_tot quantityd_tot [aw=hhqtywt] , 
+>                                 by(reg_tpi news product survquar);
+
+.                         drop if product==.;
+(0 observations deleted)
+
+.                         gen ppkg_trim=valued_tot/quantityd_tot;
+
+.                         lab var ppkg_trim "90% trimmed unit value per kg";
+
+.                         sort reg_tpi product survquar;
+
+.                         list , nol;
+
+     +----------------------------------------------------------------------+
+     | product   survquar   reg_tpi   news   valued~t   quanti~t   ppkg_t~m |
+     |----------------------------------------------------------------------|
+  1. |     100          1         1      1   31050.14   22.36237     1388.5 |
+  2. |     100          2         1      1   13470.42   11.59048   1162.197 |
+  3. |     100          4         1      1    19063.2   14.84122   1284.477 |
+  4. |     100          5         1      1   6346.565   4.335784   1463.764 |
+  5. |     105          1         1      1   24914.17   31.09283   801.2834 |
+     |----------------------------------------------------------------------|
+  6. |     105          2         1      1   19079.73    22.3184   854.8879 |
+  7. |     105          4         1      1   20121.33   28.23954   712.5235 |
+  8. |     105          5         1      1   13213.03    7.26683   1818.266 |
+  9. |     107          1         1      1   18021.82   37.45608   481.1454 |
+ 10. |     107          2         1      1   16158.36   21.82102   740.4952 |
+     |----------------------------------------------------------------------|
+ 11. |     107          4         1      1   9745.876   13.41197   726.6553 |
+ 12. |     107          5         1      1   3900.957   6.024129   647.5554 |
+ 13. |     108          1         1      1   2720.338   6.321983   430.2983 |
+ 14. |     108          2         1      1   321.4645   .7501794   428.5168 |
+ 15. |     108          4         1      1   3401.845   7.382059   460.8261 |
+     |----------------------------------------------------------------------|
+ 16. |     108          5         1      1   2452.092   7.603622     322.49 |
+ 17. |     109          1         1      1   761.9048   .4761905       1600 |
+ 18. |     109          2         1      1   710.5352   1.003751   707.8802 |
+ 19. |     109          4         1      1   1434.724   1.428571   1004.307 |
+ 20. |     110          1         1      1   2998.664   2.794584   1073.027 |
+     |----------------------------------------------------------------------|
+ 21. |     110          2         1      1   5952.055   5.302676   1122.462 |
+ 22. |     110          4         1      1   2505.805   2.746029   912.5195 |
+ 23. |     110          5         1      1   762.3681   .6353068       1200 |
+ 24. |     112          1         1      1   8638.122   96.81876    89.2195 |
+ 25. |     112          2         1      1   285.7143   1.428571        200 |
+     |----------------------------------------------------------------------|
+ 26. |     112          4         1      1    414.132   3.385985   122.3077 |
+ 27. |     113          1         1      1   25646.89   40.02989   640.6935 |
+ 28. |     113          2         1      1   47552.62   83.14722   571.9087 |
+ 29. |     113          4         1      1   20051.33   37.02082   541.6231 |
+ 30. |     113          5         1      1   8404.481   14.25764   589.4721 |
+     |----------------------------------------------------------------------|
+ 31. |     115          1         1      1   924.0752   2.247082   411.2334 |
+ 32. |     115          2         1      1   404.3108   .4147557   974.8168 |
+ 33. |     115          4         1      1   407.8501   1.387114   294.0278 |
+ 34. |     115          5         1      1   788.5464   1.750934   450.3576 |
+ 35. |     116          1         1      1   14.28571   .2857143         50 |
+     |----------------------------------------------------------------------|
+ 36. |     117          1         1      1   4327.102   1.868485   2315.834 |
+ 37. |     117          2         1      1   3759.464   1.511288    2487.59 |
+ 38. |     117          4         1      1   4539.488   1.951237   2326.467 |
+ 39. |     117          5         1      1   1255.535   .4757439   2639.099 |
+ 40. |     119          1         1      1   257.1429   .1428571       1800 |
+     |----------------------------------------------------------------------|
+ 41. |     119          2         1      1   314.2857   .1428571       2200 |
+ 42. |     121          1         1      1   987.4776   .2857143   3456.172 |
+ 43. |     121          2         1      1   1290.389   .2857143   4516.363 |
+ 44. |     121          4         1      1   1327.876   .5714286   2323.783 |
+ 45. |     122          1         1      1   4336.329   10.68984   405.6497 |
+     |----------------------------------------------------------------------|
+ 46. |     122          2         1      1   7925.481    8.99736   880.8674 |
+ 47. |     122          4         1      1   3949.882   6.681002   591.2111 |
+ 48. |     122          5         1      1   1051.435   1.850639   568.1468 |
+ 49. |     123          1         1      1   3376.936    11.7405   287.6313 |
+ 50. |     123          2         1      1   1578.245   7.862275   200.7364 |
+     |----------------------------------------------------------------------|
+ 51. |     123          4         1      1   1486.409   6.312201   235.4819 |
+ 52. |     123          5         1      1   2798.025   27.16512   103.0007 |
+ 53. |     125          1         1      1   9014.344   26.59099   338.9999 |
+ 54. |     125          2         1      1   6265.147   29.62701   211.4674 |
+ 55. |     125          4         1      1   3337.475   12.68168    263.173 |
+     |----------------------------------------------------------------------|
+ 56. |     125          5         1      1   10353.41   49.32473    209.903 |
+ 57. |     127          1         1      1    2339.56   28.11753   83.20646 |
+ 58. |     127          2         1      1   1919.657   23.25116   82.56177 |
+ 59. |     127          4         1      1   2062.639   25.74401   80.12114 |
+ 60. |     127          5         1      1   699.5163   9.489016   73.71854 |
+     |----------------------------------------------------------------------|
+ 61. |     134          1         1      1   2830.762    14.2602   198.5078 |
+ 62. |     134          2         1      1    3011.99   6.420524    469.119 |
+ 63. |     134          4         1      1   12570.08   29.56691   425.1401 |
+ 64. |     134          5         1      1   1368.208   6.999391   195.4753 |
+ 65. |     136          1         1      1   3967.915   39.02188   101.6844 |
+     |----------------------------------------------------------------------|
+ 66. |     136          2         1      1   3402.726   29.46202   115.4953 |
+ 67. |     136          4         1      1    2930.76   26.17429   111.9709 |
+ 68. |     136          5         1      1   841.4545   7.897409   106.5482 |
+ 69. |     138          1         1      1   2137.343    21.5845   99.02212 |
+ 70. |     138          2         1      1   5029.618    47.0823   106.8261 |
+     |----------------------------------------------------------------------|
+ 71. |     138          4         1      1   1004.165   9.893947   101.4929 |
+ 72. |     138          5         1      1   727.4298   8.249875   88.17464 |
+ 73. |     139          1         1      1    625.902   6.286078   99.56956 |
+ 74. |     139          2         1      1   550.3973   5.214247   105.5564 |
+ 75. |     139          4         1      1   769.0334   7.794882   98.65876 |
+     |----------------------------------------------------------------------|
+ 76. |     139          5         1      1   644.4208   7.163976   89.95295 |
+ 77. |     140          1         1      1   8451.925   28.33922   298.2412 |
+ 78. |     140          2         1      1   368.5357   1.197043   307.8718 |
+ 79. |     140          4         1      1   257.1429   .8571429        300 |
+ 80. |     141          1         1      1   7860.869   22.16986   354.5747 |
+     |----------------------------------------------------------------------|
+ 81. |     141          2         1      1      12443    30.2139   411.8304 |
+ 82. |     141          4         1      1   13073.09   27.93229    468.028 |
+ 83. |     141          5         1      1   8579.286   15.02531   570.9891 |
+ 84. |     143          1         1      1   2155.047   3.442937   625.9327 |
+ 85. |     143          2         1      1   169.9573   .2578785   659.0594 |
+     |----------------------------------------------------------------------|
+ 86. |     143          4         1      1   753.3078   .6605421   1140.439 |
+ 87. |     144          1         1      1   569.5909   1.703622   334.3411 |
+ 88. |     144          2         1      1   4046.539   11.60391   348.7221 |
+ 89. |     144          4         1      1   2451.214   7.486633   327.4121 |
+ 90. |     144          5         1      1   847.0567   4.825843   175.5251 |
+     |----------------------------------------------------------------------|
+ 91. |     146          1         1      1   71.42857   .0714286       1000 |
+ 92. |     146          2         1      1   57.14286   .2857143        200 |
+ 93. |     147          1         1      1   10030.75   5.522516   1816.336 |
+ 94. |     147          2         1      1      12787   8.095111   1579.595 |
+ 95. |     147          4         1      1    10350.8   6.578101   1573.523 |
+     |----------------------------------------------------------------------|
+ 96. |     147          5         1      1   3497.648   2.219922   1575.572 |
+ 97. |     150          1         1      1   1175.517   6.912663   170.0527 |
+ 98. |     150          2         1      1   1325.627   6.934003   191.1778 |
+ 99. |     150          4         1      1   915.2883   5.463646   167.5234 |
+100. |     150          5         1      1    526.957   2.890811   182.2869 |
+     |----------------------------------------------------------------------|
+101. |     100          1         2      2   7199.485   6.701557     1074.3 |
+102. |     100          2         2      2   25997.67   20.76133   1252.216 |
+103. |     100          4         2      2      30661   21.32415   1437.854 |
+104. |     100          5         2      2   14092.53   16.90049   833.8532 |
+105. |     105          1         2      2   66653.79    145.904   456.8333 |
+     |----------------------------------------------------------------------|
+106. |     105          2         2      2   64764.03    104.472   619.9175 |
+107. |     105          3         2      2   332.1429   1.214286   273.5294 |
+108. |     105          4         2      2   28631.32   32.29985   886.4227 |
+109. |     105          5         2      2   3039.184   3.979407   763.7278 |
+110. |     107          1         2      2   14334.03   25.72579   557.1852 |
+     |----------------------------------------------------------------------|
+111. |     107          2         2      2   9113.504   10.89238   836.6865 |
+112. |     107          3         2      2   128.5714   .4285714        300 |
+113. |     107          4         2      2   9036.914   17.37915    519.986 |
+114. |     107          5         2      2    4284.21   4.964618   862.9486 |
+115. |     108          1         2      2   66299.99    179.971   368.3927 |
+     |----------------------------------------------------------------------|
+116. |     108          2         2      2   11442.33   38.62062   296.2751 |
+117. |     108          4         2      2   13376.97    43.1264   310.1806 |
+118. |     108          5         2      2    6392.56   17.60043   363.2049 |
+119. |     109          1         2      2   105.4431   .2857143   369.0507 |
+120. |     109          2         2      2   485.8338   1.020273   476.1804 |
+     |----------------------------------------------------------------------|
+121. |     109          4         2      2   357.1429   .7142857        500 |
+122. |     110          1         2      2   9379.672   10.32681   908.2839 |
+123. |     110          2         2      2   7632.524   9.537962   800.2259 |
+124. |     110          3         2      2   267.8571   .3571429        750 |
+125. |     110          4         2      2   3672.132   3.660146   1003.275 |
+     |----------------------------------------------------------------------|
+126. |     110          5         2      2    3049.25    2.81177   1084.459 |
+127. |     112          1         2      2    23096.3   294.0182   78.55399 |
+128. |     112          2         2      2   3074.602   59.58986   51.59605 |
+129. |     113          1         2      2   46740.54   87.07559   536.7813 |
+130. |     113          2         2      2   42753.76   109.8079   389.3506 |
+     |----------------------------------------------------------------------|
+131. |     113          3         2      2   1418.076   4.134111   343.0183 |
+132. |     113          4         2      2   32987.91   70.53026   467.7128 |
+133. |     113          5         2      2   25992.28   55.51959    468.164 |
+134. |     115          1         2      2   17312.27   29.92039   578.6112 |
+135. |     115          2         2      2   7892.361   20.80586   379.3336 |
+     |----------------------------------------------------------------------|
+136. |     115          4         2      2   6589.507   14.10947   467.0273 |
+137. |     115          5         2      2   10364.86   28.19486   367.6154 |
+138. |     116          1         2      2    17234.3    128.705   133.9055 |
+139. |     116          2         2      2   995.3412   3.822424   260.3953 |
+140. |     116          4         2      2   3115.137   22.10295   140.9376 |
+     |----------------------------------------------------------------------|
+141. |     116          5         2      2   124.2045   .4722403   263.0113 |
+142. |     117          1         2      2   27123.64   11.05744   2452.976 |
+143. |     117          2         2      2   11280.37   4.642283   2429.918 |
+144. |     117          3         2      2   142.8571   .0714286       2000 |
+145. |     117          4         2      2   9159.621   3.742912   2447.191 |
+     |----------------------------------------------------------------------|
+146. |     117          5         2      2   971.1666   .4046528       2400 |
+147. |     119          1         2      2   8761.363   3.500906   2502.599 |
+148. |     119          2         2      2   526.8841   .2142857   2458.792 |
+149. |     119          4         2      2   523.4845   .2331708   2245.069 |
+150. |     119          5         2      2   3473.379   1.447241       2400 |
+     |----------------------------------------------------------------------|
+151. |     121          1         2      2   7527.598   2.401398   3134.673 |
+152. |     121          2         2      2   4620.345   1.494158   3092.272 |
+153. |     121          4         2      2   2693.196   .8571429   3142.062 |
+154. |     121          5         2      2   1749.904   .5714286   3062.332 |
+155. |     122          1         2      2   25990.55   34.05213   763.2576 |
+     |----------------------------------------------------------------------|
+156. |     122          2         2      2   3884.959   5.859834   662.9811 |
+157. |     122          4         2      2   5651.907   10.73887    526.304 |
+158. |     122          5         2      2   911.1735   1.294677   703.7845 |
+159. |     123          1         2      2   16696.37   48.10662   347.0701 |
+160. |     123          2         2      2   5010.975   14.11866   354.9187 |
+     |----------------------------------------------------------------------|
+161. |     123          3         2      2   71.42857   .7142857        100 |
+162. |     123          4         2      2   7885.568   23.07918   341.6745 |
+163. |     123          5         2      2   3192.284   13.35988   238.9456 |
+164. |     125          1         2      2   20106.53   95.04843   211.5398 |
+165. |     125          2         2      2   7404.022   32.68016   226.5601 |
+     |----------------------------------------------------------------------|
+166. |     125          3         2      2        200          2        100 |
+167. |     125          4         2      2   3918.958   18.20266   215.2959 |
+168. |     125          5         2      2   4442.436   23.78972   186.7377 |
+169. |     127          1         2      2   8226.069   131.1404   62.72718 |
+170. |     127          2         2      2   6952.387      94.14   73.85157 |
+     |----------------------------------------------------------------------|
+171. |     127          3         2      2   57.14286   .5714286   99.99999 |
+172. |     127          4         2      2   8407.001   131.3132   64.02252 |
+173. |     127          5         2      2   3016.704   39.54492    76.2855 |
+174. |     134          1         2      2   5729.161   10.19897   561.7393 |
+175. |     134          2         2      2   980.2945   2.317878   422.9276 |
+     |----------------------------------------------------------------------|
+176. |     134          4         2      2    6361.27   18.23098   348.9263 |
+177. |     134          5         2      2   1479.078   9.214026   160.5246 |
+178. |     136          1         2      2   17280.03   141.5853   122.0468 |
+179. |     136          2         2      2   3750.861   35.00291   107.1585 |
+180. |     136          3         2      2   28.57143   .2857143   99.99999 |
+     |----------------------------------------------------------------------|
+181. |     136          4         2      2   4358.046   37.52402   116.1402 |
+182. |     136          5         2      2    4567.81   34.02384   134.2532 |
+183. |     138          1         2      2   10274.57    104.983   97.86884 |
+184. |     138          2         2      2   6979.165   57.91332   120.5105 |
+185. |     138          3         2      2   42.85714   .4285714        100 |
+     |----------------------------------------------------------------------|
+186. |     138          4         2      2   6774.006   53.23784   127.2404 |
+187. |     138          5         2      2   4982.448   65.36463   76.22543 |
+188. |     139          1         2      2   20102.28   217.4746   92.43506 |
+189. |     139          2         2      2   4677.759   48.78619   95.88284 |
+190. |     139          3         2      2   165.7143   1.657143        100 |
+     |----------------------------------------------------------------------|
+191. |     139          4         2      2   4510.176   43.54403   103.5774 |
+192. |     139          5         2      2   3422.066   33.08124   103.4443 |
+193. |     140          1         2      2   3897.419    15.7478   247.4898 |
+194. |     140          2         2      2   2722.638   7.363594   369.7431 |
+195. |     140          4         2      2   178.5714   .3571429        500 |
+     |----------------------------------------------------------------------|
+196. |     140          5         2      2   42.85714   .1428571        300 |
+197. |     141          1         2      2   35632.17   104.7127   340.2851 |
+198. |     141          2         2      2   8094.866   22.90144   353.4654 |
+199. |     141          3         2      2   171.4286   .2857143        600 |
+200. |     141          4         2      2   9281.632    15.1991   610.6697 |
+     |----------------------------------------------------------------------|
+201. |     141          5         2      2   3836.587   4.869616   787.8624 |
+202. |     143          1         2      2   5865.148   28.57389   205.2625 |
+203. |     143          2         2      2   1291.546    5.48361   235.5284 |
+204. |     143          3         2      2        200          2        100 |
+205. |     143          4         2      2   3735.457    7.90057   472.8086 |
+     |----------------------------------------------------------------------|
+206. |     143          5         2      2   619.6393   .7992913   775.2358 |
+207. |     144          1         2      2   2946.637   16.54455   178.1032 |
+208. |     144          2         2      2   3412.961   10.65731    320.246 |
+209. |     144          3         2      2   28.57143   .2857143   99.99999 |
+210. |     144          4         2      2   3485.979   14.90004   233.9577 |
+     |----------------------------------------------------------------------|
+211. |     144          5         2      2   2013.474   13.64064   147.6085 |
+212. |     146          1         2      2   655.8042   1.525141   429.9957 |
+213. |     146          2         2      2   42.85714   .1428571        300 |
+214. |     146          4         2      2   401.1453   .6553973   612.0643 |
+215. |     147          1         2      2   27035.16   19.49232   1386.964 |
+     |----------------------------------------------------------------------|
+216. |     147          2         2      2   17328.13   17.14604    1010.62 |
+217. |     147          3         2      2      712.5   .4464286       1596 |
+218. |     147          4         2      2   11715.73   7.887061   1485.437 |
+219. |     147          5         2      2   7874.616   5.316633   1481.128 |
+220. |     150          1         2      2   3085.388   18.62915   165.6215 |
+     |----------------------------------------------------------------------|
+221. |     150          2         2      2   1707.664   12.68932   134.5749 |
+222. |     150          3         2      2   59.52381   .3928572   151.5151 |
+223. |     150          4         2      2   1664.072   9.927602   167.6207 |
+224. |     150          5         2      2   792.4355   4.849155   163.4173 |
+225. |     100          1         3      3    378.327    .496062   762.6608 |
+     |----------------------------------------------------------------------|
+226. |     100          2         3      3        100   .1428571   699.9999 |
+227. |     100          3         3      3   3855.737   1.728453   2230.745 |
+228. |     100          4         3      3   338.3396   .2857143   1184.189 |
+229. |     105          1         3      3   19373.97   103.4535   187.2723 |
+230. |     105          2         3      3   13506.06   57.65408   234.2602 |
+     |----------------------------------------------------------------------|
+231. |     105          3         3      3   3531.237   14.11329   250.2065 |
+232. |     105          4         3      3   16155.26   68.39981   236.1887 |
+233. |     107          1         3      3   25485.35   94.01256   271.0845 |
+234. |     107          2         3      3    20969.7   70.46394   297.5948 |
+235. |     107          3         3      3    3129.77   14.03646   222.9743 |
+     |----------------------------------------------------------------------|
+236. |     107          4         3      3   25322.59   86.00251   294.4401 |
+237. |     107          5         3      3   57.14286   .1428571        400 |
+238. |     108          1         3      3   40151.92   253.8609    158.165 |
+239. |     108          2         3      3    17911.8   69.18621   258.8926 |
+240. |     108          3         3      3    18965.2   69.34852   273.4766 |
+     |----------------------------------------------------------------------|
+241. |     108          4         3      3   24506.94   157.6042   155.4967 |
+242. |     108          5         3      3   2592.857   1.163265   2228.948 |
+243. |     109          1         3      3   42.85714   .1428571        300 |
+244. |     109          4         3      3   85.71429   .4285714        200 |
+245. |     110          1         3      3   1150.776   1.585297   725.9053 |
+     |----------------------------------------------------------------------|
+246. |     110          2         3      3   682.6998   1.337749   510.3348 |
+247. |     110          3         3      3   85.71429   .0714286       1200 |
+248. |     110          4         3      3   1600.262   3.066602   521.8356 |
+249. |     112          1         3      3   9976.777   119.1061    83.7638 |
+250. |     112          2         3      3   13756.72   161.1557   85.36289 |
+     |----------------------------------------------------------------------|
+251. |     112          4         3      3   28.57143   .2857143   99.99999 |
+252. |     113          1         3      3   32258.18   215.6159   149.6094 |
+253. |     113          2         3      3   27718.66   191.8597   144.4736 |
+254. |     113          3         3      3   6297.851   61.54399   102.3309 |
+255. |     113          4         3      3   21734.01   133.1294   163.2548 |
+     |----------------------------------------------------------------------|
+256. |     115          1         3      3   6346.507   56.02795   113.2739 |
+257. |     115          2         3      3   4775.515   38.10229   125.3341 |
+258. |     115          3         3      3   192.8571   1.285714        150 |
+259. |     115          4         3      3   10947.55   71.90379   152.2527 |
+260. |     116          1         3      3   21516.29    132.731   162.1045 |
+     |----------------------------------------------------------------------|
+261. |     116          2         3      3   8523.057   52.13503   163.4804 |
+262. |     116          3         3      3        200          2        100 |
+263. |     116          4         3      3   23273.86   122.1411   190.5489 |
+264. |     116          5         3      3   185.7143   1.857143        100 |
+265. |     117          1         3      3    5284.54   2.198922   2403.242 |
+     |----------------------------------------------------------------------|
+266. |     117          2         3      3   9729.745   3.965071   2453.864 |
+267. |     117          3         3      3   876.6579   .3506632       2500 |
+268. |     117          4         3      3   14259.51   6.055076   2354.968 |
+269. |     119          1         3      3   2243.472    1.19786   1872.899 |
+270. |     119          2         3      3   5003.518   3.016396   1658.774 |
+     |----------------------------------------------------------------------|
+271. |     119          3         3      3   1390.399   1.214347   1144.976 |
+272. |     119          4         3      3   12279.46   5.935045   2068.976 |
+273. |     121          1         3      3   3935.423   1.142857   3443.495 |
+274. |     121          2         3      3   3209.522    1.34293   2389.939 |
+275. |     121          3         3      3   1389.469   .4902245   2834.353 |
+     |----------------------------------------------------------------------|
+276. |     121          4         3      3   7094.181   2.148056   3302.605 |
+277. |     122          1         3      3   6415.298   43.02032   149.1225 |
+278. |     122          2         3      3   2328.272    1.89654   1227.642 |
+279. |     122          3         3      3   714.2857   .4761905       1500 |
+280. |     122          4         3      3   3610.949   5.571543   648.1058 |
+     |----------------------------------------------------------------------|
+281. |     123          1         3      3   11238.39   50.90057    220.791 |
+282. |     123          2         3      3   7528.825   30.46615    247.121 |
+283. |     123          3         3      3   3845.737   7.357995    522.661 |
+284. |     123          4         3      3   10319.18   31.84796   324.0138 |
+285. |     125          1         3      3   4303.167   29.30909   146.8202 |
+     |----------------------------------------------------------------------|
+286. |     125          2         3      3   8969.032   80.56241   111.3302 |
+287. |     125          4         3      3   7698.461   41.58231   185.1379 |
+288. |     127          1         3      3   9247.367   99.18546   93.23309 |
+289. |     127          2         3      3   11278.05   92.18477   122.3418 |
+290. |     127          3         3      3   1838.827   12.87337   142.8396 |
+     |----------------------------------------------------------------------|
+291. |     127          4         3      3   11660.75   109.4786   106.5117 |
+292. |     127          5         3      3   28.57143   .5714286         50 |
+293. |     134          1         3      3   646.5477   5.183231   124.7384 |
+294. |     134          2         3      3   474.2204   4.742204        100 |
+295. |     134          4         3      3   593.6421   2.840218   209.0129 |
+     |----------------------------------------------------------------------|
+296. |     136          1         3      3   3980.208   35.17219   113.1635 |
+297. |     136          2         3      3    5912.09   45.97603   128.5907 |
+298. |     136          3         3      3   562.5074   5.031091   111.8063 |
+299. |     136          4         3      3   2839.657   22.91418   123.9258 |
+300. |     138          1         3      3   3050.415   37.46634   81.41749 |
+     |----------------------------------------------------------------------|
+301. |     138          2         3      3   737.3316    8.49449   86.80116 |
+302. |     138          3         3      3   100.9201   1.028295   98.14317 |
+303. |     138          4         3      3   1662.936   13.65208   121.8083 |
+304. |     139          1         3      3   29358.39      345.7   84.92447 |
+305. |     139          2         3      3    13302.6   137.6319   96.65352 |
+     |----------------------------------------------------------------------|
+306. |     139          3         3      3   1477.566   22.30568   66.24169 |
+307. |     139          4         3      3   11458.25   143.2321   79.99783 |
+308. |     139          5         3      3   57.14286    .952381         60 |
+309. |     140          1         3      3   2193.584   11.25486   194.9011 |
+310. |     140          2         3      3   6595.465   34.63333   190.4369 |
+     |----------------------------------------------------------------------|
+311. |     141          1         3      3   41528.47    169.516   244.9826 |
+312. |     141          2         3      3   28566.77   114.8472   248.7372 |
+313. |     141          3         3      3   11126.19   53.96189   206.1861 |
+314. |     141          4         3      3      44197   205.3512   215.2265 |
+315. |     141          5         3      3   1218.045   2.774436   439.0244 |
+     |----------------------------------------------------------------------|
+316. |     143          1         3      3   3544.486   31.87277   111.2073 |
+317. |     143          2         3      3   4232.483    28.8011   146.9556 |
+318. |     143          3         3      3   1122.329   10.74163   104.4841 |
+319. |     143          4         3      3   3146.676   25.33604   124.1976 |
+320. |     144          1         3      3   171.4286   .8571429        200 |
+     |----------------------------------------------------------------------|
+321. |     144          4         3      3   123.6423   .2857143    432.748 |
+322. |     146          1         3      3   10319.62   50.60872   203.9098 |
+323. |     146          2         3      3   4480.607   16.08158   278.6174 |
+324. |     146          3         3      3   2652.356    16.7205    158.629 |
+325. |     146          4         3      3   10094.91   39.96539   252.5912 |
+     |----------------------------------------------------------------------|
+326. |     146          5         3      3   571.4286   2.857143        200 |
+327. |     147          1         3      3   9443.149   38.72586   243.8461 |
+328. |     147          2         3      3   10193.39    25.7653   395.6247 |
+329. |     147          3         3      3   3296.624   21.75947    151.503 |
+330. |     147          4         3      3   11593.39   28.27507   410.0215 |
+     |----------------------------------------------------------------------|
+331. |     147          5         3      3   85.71429   .4285714        200 |
+332. |     150          1         3      3   3460.231   31.03369   111.4992 |
+333. |     150          2         3      3   2294.165   18.08048   126.8863 |
+334. |     150          3         3      3   818.9608   7.371365   111.1003 |
+335. |     150          4         3      3   2704.006   19.40228   139.3654 |
+     |----------------------------------------------------------------------|
+336. |     150          5         3      3   52.04082   .5204082        100 |
+337. |     100          1         4      4   91626.24   56.67748   1616.625 |
+338. |     100          2         4      4      24213   21.02853   1151.436 |
+339. |     100          4         4      4   59291.93   51.74507   1145.847 |
+340. |     100          5         4      4   5906.718   3.402249   1736.122 |
+     |----------------------------------------------------------------------|
+341. |     105          1         4      4   42959.38   45.51204   943.9124 |
+342. |     105          2         4      4   16373.67   22.52246   726.9929 |
+343. |     105          4         4      4   28128.81   20.42452   1377.208 |
+344. |     105          5         4      4   3670.155   1.923703   1907.859 |
+345. |     107          1         4      4   13898.52   19.44127   714.8975 |
+     |----------------------------------------------------------------------|
+346. |     107          2         4      4   15539.77   24.61611   631.2845 |
+347. |     107          4         4      4   18099.54    22.6771   798.1421 |
+348. |     107          5         4      4   4659.516   15.24905    305.561 |
+349. |     108          1         4      4   13087.59   100.5098   130.2122 |
+350. |     108          2         4      4   15434.22   73.15989   210.9655 |
+     |----------------------------------------------------------------------|
+351. |     108          4         4      4   19873.84   100.9422   196.8833 |
+352. |     108          5         4      4   10913.27   16.99183   642.2657 |
+353. |     109          1         4      4   22540.24   18.58565   1212.776 |
+354. |     109          2         4      4   2759.562   4.166276   662.3569 |
+355. |     109          4         4      4   6762.517   6.031243   1121.248 |
+     |----------------------------------------------------------------------|
+356. |     109          5         4      4   857.1429   .2857143       3000 |
+357. |     110          1         4      4   2977.825   5.214624   571.0526 |
+358. |     110          2         4      4   282.1967   .4641781   607.9492 |
+359. |     110          4         4      4   4558.865   4.979353   915.5536 |
+360. |     112          1         4      4   11688.28   153.1888   76.29986 |
+     |----------------------------------------------------------------------|
+361. |     112          4         4      4   751.4995   14.65687   51.27284 |
+362. |     113          1         4      4   41460.18   83.63968      495.7 |
+363. |     113          2         4      4   18855.57   89.73698   210.1204 |
+364. |     113          4         4      4   19079.21   74.81256   255.0268 |
+365. |     113          5         4      4   1060.575   4.891467   216.8215 |
+     |----------------------------------------------------------------------|
+366. |     115          1         4      4   19213.11   46.19314   415.9299 |
+367. |     115          2         4      4   3375.674   9.098119   371.0299 |
+368. |     115          4         4      4   6526.351   20.26636   322.0288 |
+369. |     115          5         4      4   382.4965   .9562412        400 |
+370. |     116          1         4      4   7566.026   15.57352   485.8263 |
+     |----------------------------------------------------------------------|
+371. |     116          2         4      4   1211.426   5.935877   204.0854 |
+372. |     116          4         4      4   193.2143   .7482144   258.2339 |
+373. |     117          1         4      4   9905.652   4.660649   2125.381 |
+374. |     117          2         4      4   6372.654   2.977197   2140.488 |
+375. |     117          4         4      4   13538.89   6.083515   2225.505 |
+     |----------------------------------------------------------------------|
+376. |     117          5         4      4   1597.313   .7986567       2000 |
+377. |     119          1         4      4   572.4499   .2453843   2332.871 |
+378. |     119          2         4      4   727.4125   .3026439   2403.526 |
+379. |     119          4         4      4   5123.252   2.242924   2284.185 |
+380. |     121          2         4      4   1399.076   .4285714    3264.51 |
+     |----------------------------------------------------------------------|
+381. |     121          4         4      4   2001.106   .5714286   3501.935 |
+382. |     121          5         4      4   571.4286   .2857143       2000 |
+383. |     122          1         4      4   678.0171   .5306788   1277.641 |
+384. |     122          2         4      4   2067.331   3.612219   572.3161 |
+385. |     122          4         4      4   4961.527   3.784728   1310.933 |
+     |----------------------------------------------------------------------|
+386. |     123          1         4      4   1781.204   2.679742   664.6924 |
+387. |     123          2         4      4   3210.207   3.257946    985.347 |
+388. |     123          4         4      4    7105.37   7.278644   976.1943 |
+389. |     123          5         4      4   1026.811   1.142857   898.4597 |
+390. |     125          1         4      4   10778.95   60.35729   178.5858 |
+     |----------------------------------------------------------------------|
+391. |     125          2         4      4   1839.056   11.36651   161.7961 |
+392. |     125          4         4      4   6590.826    33.6811   195.6832 |
+393. |     125          5         4      4   1855.317   10.32778   179.6434 |
+394. |     127          1         4      4   2529.517   20.18435   125.3207 |
+395. |     127          2         4      4     558.32   3.557831   156.9271 |
+     |----------------------------------------------------------------------|
+396. |     127          4         4      4   2378.084    16.0141   148.4994 |
+397. |     127          5         4      4   840.1196   8.378963   100.2653 |
+398. |     134          1         4      4   1709.931   10.86813   157.3345 |
+399. |     134          2         4      4   2007.389   23.26647   86.27821 |
+400. |     134          4         4      4   2054.398   16.02095    128.232 |
+     |----------------------------------------------------------------------|
+401. |     134          5         4      4   57.14286   1.142857         50 |
+402. |     136          1         4      4   3263.538   25.27314   129.1307 |
+403. |     136          2         4      4   4035.656   24.97969   161.5575 |
+404. |     136          4         4      4   3015.463   19.05719   158.2323 |
+405. |     136          5         4      4    619.753   3.242196   191.1522 |
+     |----------------------------------------------------------------------|
+406. |     138          1         4      4   4946.664   45.58166   108.5231 |
+407. |     138          2         4      4   2050.038   13.76324   148.9503 |
+408. |     138          4         4      4   2154.449   27.22131   79.14567 |
+409. |     138          5         4      4   698.6798   7.960438   87.76901 |
+410. |     139          1         4      4   2344.531   20.97858   111.7583 |
+     |----------------------------------------------------------------------|
+411. |     139          2         4      4   3095.796   23.51724   131.6394 |
+412. |     139          4         4      4   246.1545   1.411155   174.4348 |
+413. |     140          1         4      4   34644.92   117.3369   295.2603 |
+414. |     140          2         4      4   1234.244   1.414903    872.317 |
+415. |     140          4         4      4   7340.503   16.16053   454.2242 |
+     |----------------------------------------------------------------------|
+416. |     141          1         4      4   33542.67   93.06965   360.4039 |
+417. |     141          2         4      4   25931.12   79.38882   326.6345 |
+418. |     141          4         4      4   35142.84   82.04635   428.3291 |
+419. |     141          5         4      4   8176.142   19.98008   409.2146 |
+420. |     143          1         4      4   1743.989   3.331035   523.5577 |
+     |----------------------------------------------------------------------|
+421. |     143          2         4      4    2114.02   4.701605    449.638 |
+422. |     143          4         4      4   2696.988   4.849624   556.1232 |
+423. |     143          5         4      4    370.109   .7109869   520.5568 |
+424. |     144          1         4      4   10094.22   18.95455   532.5488 |
+425. |     144          2         4      4   7171.987   12.76068    562.038 |
+     |----------------------------------------------------------------------|
+426. |     144          4         4      4    3220.66   6.297252   511.4389 |
+427. |     144          5         4      4        250          1        250 |
+428. |     146          2         4      4   235.4197   .5714286   411.9844 |
+429. |     146          4         4      4   71.42857   1.428571         50 |
+430. |     146          5         4      4   431.3975   1.260911   342.1316 |
+     |----------------------------------------------------------------------|
+431. |     147          1         4      4   8912.133    6.03984   1475.558 |
+432. |     147          2         4      4   4126.054   2.859719   1442.818 |
+433. |     147          4         4      4   5365.207   3.333597   1609.435 |
+434. |     147          5         4      4   1305.525   .9574323   1363.569 |
+435. |     150          1         4      4   3245.487   15.80602   205.3324 |
+     |----------------------------------------------------------------------|
+436. |     150          2         4      4    1474.83   8.004668   184.2462 |
+437. |     150          4         4      4   2117.508   11.16862   189.5945 |
+438. |     150          5         4      4   367.2519   1.781368   206.1629 |
+     +----------------------------------------------------------------------+
+
+.                         tempfile uvq2;
+
+.                         keep reg_tpi product survquar ppkg_trim;
+
+.                 save `uvq2', replace;
+(note: file /tmp/St02564.00000e not found)
+file /tmp/St02564.00000e saved
+
+.                                 use `uvq' ;
+
+.                         merge reg_tpi product survquar using `uvq2';
+(label lsurvquar already defined)
+(label lregion already defined)
+
+.                         tab _merge;
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |          3        0.68        0.68
+          3 |        438       99.32      100.00
+------------+-----------------------------------
+      Total |        441      100.00
+
+.                         drop _merge;
+
+.                 save `uvq', replace;
+file /tmp/St02564.00000c saved
+
+.                 save "$path/work/tpi_unit_val_quarterly.dta", replace;
+file /home/bjvca/data/data/GAP/Haruna/UNPS_2005_06//work/tpi_unit_val_quarterly.dta saved
+
+.         restore;
+
+. **************************************************************************;
+. * Now calculate the weights for the temporal price index. The weights
+> * will be based on the bottom 50% of the national nominal consumption
+> * per capita (see below). We let the weights vary by strata (3 regions X rural/urban).
+> *
+> * First, make a small file that has the total nominal HH daily consumption,
+> * to use as our denominator. We cannot simply use the `bottom_tpi' file that
+> * was created earlier because we will need some other variables from
+> * the cons_cat.dta file.
+> **************************************************************************;
+. use "$path/work/conpc.dta", clear;
+
+. keep hhid cons_hh_nom;
+
+. *use "$path/in/cons_cat.dta", clear ;
+. *CA modified to merge in hhdata for bootstrap;
+.        sort hhid;
+
+.         merge hhid using "$path/work/hhdata.dta";
+
+.           tab _m;
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |          1        0.03        0.03
+          3 |      3,123       99.97      100.00
+------------+-----------------------------------
+      Total |      3,124      100.00
+
+.         collapse (mean) cons_hh_nom hhsize strata hhweight rural news survquar reg_tpi,
+>                 by(hhid);
+
+.         lab var cons_hh_nom "Nominal daily HH consumption";
+
+.         rename hhsize   cc_hhs;
+
+.         rename strata   cc_reg;
+
+.         rename hhweight cc_hhw;
+
+.         rename rural    cc_rur;
+
+.         rename news     cc_news;
+
+.         rename survquar cc_qua;
+
+.         rename reg_tpi  cc_reg_tpi;
+
+.         sort hhid;
+
+.         tempfile thhcons;
+
+. save `thhcons', replace;
+(note: file /tmp/St02564.00000f not found)
+file /tmp/St02564.00000f saved
+
+. **************************************************************************;
+. * Merge the file with consumption on the food products with HH consumption file,
+> * then use "fillin" to take care of cases where a household did not
+> * consume all n_tpi commodities. Note that we need to do the merge
+> * first because there are some households that are not in `acredd' at
+> * all, because they did not consume *any* of the n_tpi items. Then replace
+> * missing values in the "filled in" observations with the relevant values 
+> * for that household.
+> **************************************************************************;
+. use `acredd';
+
+.         cap drop _merge;
+
+.         drop if product==.;
+(109 observations deleted)
+
+.         merge hhid using `thhcons';
+variable hhid does not uniquely identify observations in the master data
+
+.         tab _merge;
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          2 |        110        0.38        0.38
+          3 |     28,800       99.62      100.00
+------------+-----------------------------------
+      Total |     28,910      100.00
+
+.         for var valued_tot quantityd_tot : replace X=0 if _merge==2;
+
+->  replace valued_tot=0 if _merge==2
+(110 real changes made)
+
+->  replace quantityd_tot=0 if _merge==2
+(110 real changes made)
+
+.                 /*
+>         for var valued_ac quantityd_ac valued_re quantityd_re valued_dd quantityd_dd 
+>                 valued_tot quantityd_tot : replace X=0 if _merge==2;
+>                                 */
+> 
+>         replace hhsize  =cc_hhs     if _merge==2;
+(109 real changes made)
+
+.         replace strata  =cc_reg     if _merge==2;
+(109 real changes made)
+
+.         replace hhweight=cc_hhw     if _merge==2;
+(109 real changes made)
+
+.         replace rural   =cc_rur     if _merge==2;
+(109 real changes made)
+
+.         replace news    =cc_news        if _merge==2;
+(109 real changes made)
+
+.         replace survquar=cc_qua     if _merge==2;
+(109 real changes made)
+
+.         replace reg_tpi =cc_reg_tpi     if _merge==2;
+(109 real changes made)
+
+.         drop _merge cc_* ;
+
+.                 fillin hhid product;
+
+.         replace valued_tot=0 if _fillin;
+(61686 real changes made)
+
+.                 for var quantityd_tot 
+>                 strata rural hhweight hhsize survquar survmon news reg_tpi cons_hh_nom :
+>                 egen tmp=mean(X), by(hhid) \
+>                 replace X=tmp if _fillin \
+>                 drop tmp;
+
+->  egen tmp=mean(quantityd_tot), by(hhid)
+
+->  replace quantityd_tot=tmp if _fillin
+(61686 real changes made)
+
+->  drop tmp
+
+->  egen tmp=mean(strata), by(hhid)
+(145 missing values generated)
+
+->  replace strata=tmp if _fillin
+(61583 real changes made)
+
+->  drop tmp
+
+->  egen tmp=mean(rural), by(hhid)
+(145 missing values generated)
+
+->  replace rural=tmp if _fillin
+(61583 real changes made)
+
+->  drop tmp
+
+->  egen tmp=mean(hhweight), by(hhid)
+(145 missing values generated)
+
+->  replace hhweight=tmp if _fillin
+(61583 real changes made)
+
+->  drop tmp
+
+->  egen tmp=mean(hhsize), by(hhid)
+(29 missing values generated)
+
+->  replace hhsize=tmp if _fillin
+(61658 real changes made)
+
+->  drop tmp
+
+->  egen tmp=mean(survquar), by(hhid)
+(145 missing values generated)
+
+->  replace survquar=tmp if _fillin
+(61583 real changes made)
+
+->  drop tmp
+
+->  egen tmp=mean(survmon), by(hhid)
+(3306 missing values generated)
+
+->  replace survmon=tmp if _fillin
+(58531 real changes made)
+
+->  drop tmp
+
+->  egen tmp=mean(news), by(hhid)
+(145 missing values generated)
+
+->  replace news=tmp if _fillin
+(61583 real changes made)
+
+->  drop tmp
+
+->  egen tmp=mean(reg_tpi), by(hhid)
+(145 missing values generated)
+
+->  replace reg_tpi=tmp if _fillin
+(61583 real changes made)
+
+->  drop tmp
+
+->  egen tmp=mean(cons_hh_nom), by(hhid)
+(29 missing values generated)
+
+->  replace cons_hh_nom=tmp if _fillin
+(61658 real changes made)
+
+->  drop tmp
+
+.                                 /*
+>         for var valued_ac quantityd_ac valued_re quantityd_re valued_dd quantityd_dd 
+>                 quantityd_tot 
+>                 strata rural hhweight hhsize survquar survmon news reg_tpi cons_hh_nom :
+>                 egen tmp=mean(X), by(hhid) \
+>                 replace X=tmp if _fillin \
+>                 drop tmp;
+>                                 */
+> 
+> **************************************************************************;
+. * Now calculate the shares, and then the mean shares in each strata, 
+> * using hhweight*hhsize weighting. 
+> * Note that we are not doing quantity weighting now for the shares.
+> **************************************************************************;
+.         gen share = valued_tot/cons_hh_nom ;
+(58 missing values generated)
+
+.         gen popwt = hhsize*hhweight;
+(145 missing values generated)
+
+.         lab var share "HH share in total consumption";
+
+.         lab var popwt "Population weight: hhsize*hhweight";
+
+. **************************************************************************;
+. * Select the bottom 50% (weighted) of the distribution of nominal per 
+> * capita consumption.
+> **************************************************************************;
+.         gen cpc=cons_hh_nom/hhsize;
+(58 missing values generated)
+
+.         sum cpc [aw=hhweight] , detail;
+
+                             cpc
+-------------------------------------------------------------
+      Percentiles      Smallest
+ 1%     197.5413       103.3254
+ 5%     297.8005       103.3254
+10%      376.696       103.3254       Obs               90422
+25%     534.2612       103.3254       Sum of Wgt.   151348521
+
+50%      851.058                      Mean           1248.942
+                        Largest       Std. Dev.      1406.063
+75%     1406.032       23846.89
+90%     2557.521       23846.89       Variance        1977014
+95%     3482.337       23846.89       Skewness       5.749453
+99%     6548.099       23846.89       Kurtosis       61.60169
+
+.         global medcpc=r(p$tpi_bottom);
+
+. * MAH ;
+.  sum;
+
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+        hhid |     90567    2.43e+09    1.16e+09   1.01e+09   4.19e+09
+     product |     87472      125.25    14.67179        100        150
+  valued_tot |     90596    87.33123    252.5384          0       7500
+quantityd_~t |     90596    .5735846    .6567883          0         50
+    hhweight |     90451    1673.657    752.4905   140.8407   5553.862
+-------------+--------------------------------------------------------
+    survquar |     90451    2.438602    1.384203          1          5
+     survmon |     87290    6.217276    4.164974          1         14
+      strata |     90451    4.414877    2.449579          1          8
+       rural |     90451    .7242706    .4468835          0          1
+     reg_tpi |     90451    2.345303    1.154768          1          4
+-------------+--------------------------------------------------------
+    spdomain |     28759    3.142216    1.369879          1          5
+        news |     90451    2.345303    1.154768          1          4
+      hhsize |     90567    5.366314    3.108316          1         29
+ cons_hh_nom |     90567    5922.644    6786.925          0   84210.06
+     _fillin |     90596     .680891    .4661339          0          1
+-------------+--------------------------------------------------------
+       share |     90538    .0176602    .0483751          0          1
+       popwt |     90451    9029.887    6947.874     201.98   61536.83
+         cpc |     90538    1330.096     1627.29   103.3254   23846.89
+
+.  codebook hhid;
+
+----------------------------------------------------------------------------------------------
+hhid                                                   Unique HH Identifier Across Panel Waves
+----------------------------------------------------------------------------------------------
+
+                  type:  numeric (double)
+
+                 range:  [1.013e+09,4.193e+09]        units:  1
+         unique values:  3123                     missing .:  29/90596
+
+                  mean:   2.4e+09
+              std. dev:   1.2e+09
+
+           percentiles:        10%       25%       50%       75%       90%
+                           1.0e+09   1.1e+09   2.2e+09   3.2e+09   4.1e+09
+
+.         keep if cpc<=$medcpc;
+(46110 observations deleted)
+
+. sum;
+
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+        hhid |     44486    2.71e+09    1.00e+09   1.02e+09   4.19e+09
+     product |     42952      125.25    14.67188        100        150
+  valued_tot |     44486    64.41537    190.2396          0       4000
+quantityd_~t |     44486    .6369598    .6198901          0         26
+    hhweight |     44399    1704.946    659.9521   140.8407   5553.862
+-------------+--------------------------------------------------------
+    survquar |     44399    2.354017    1.387212          1          5
+     survmon |     43993    5.941332    4.130882          1         14
+      strata |     44399    5.109079    2.042163          1          8
+       rural |     44399    .8850425    .3189743          0          1
+     reg_tpi |     44399    2.612018    1.004748          1          4
+-------------+--------------------------------------------------------
+    spdomain |     12716    3.547421    1.051875          1          5
+        news |     44399    2.612018    1.004748          1          4
+      hhsize |     44486    6.065189    2.892215          1         29
+ cons_hh_nom |     44486    3137.395    1825.995        150   15722.37
+     _fillin |     44486    .7133255    .4522132          0          1
+-------------+--------------------------------------------------------
+       share |     44486    .0207117    .0571617          0          1
+       popwt |     44399    10313.72    6505.607    225.125    57829.4
+         cpc |     44486    527.9537    178.9447   103.3254    851.058
+
+.                 collapse (mean) share (median) medshare=share [aw=popwt] , 
+>                         by(reg_tpi product);
+
+.                 egen sumsh=sum(share) , by(reg_tpi);
+
+.                 replace share=share/sumsh;
+(112 real changes made)
+
+.                 drop sumsh;
+
+.                 egen sumsh=sum(medshare) , by(reg_tpi);
+
+.                 replace medshare=medshare/sumsh;
+(24 real changes made)
+
+.                 drop sumsh;
+
+.                 lab var share "Reg 6: Mean HH share of total consumption";
+
+.                 lab var medshare "Reg 6: Median HH share of total consumption";
+
+.                 sort reg_tpi product;
+
+.                 save "$path/work/tpi_reg_tpi_share.dta", replace;
+file /home/bjvca/data/data/GAP/Haruna/UNPS_2005_06//work/tpi_reg_tpi_share.dta saved
+
+.                 tempfile tempwt6;
+
+.                 save `tempwt6', replace;
+(note: file /tmp/St02564.00000g not found)
+file /tmp/St02564.00000g saved
+
+. use `uvq', clear;
+
+.         sort reg_tpi product;
+
+. save , replace;
+file /tmp/St02564.00000c saved
+
+. use `tempwt6';
+
+.         merge reg_tpi product using `uvq';
+variables reg_tpi product do not uniquely identify observations in /tmp/St02564.00000c
+(label lregion already defined)
+
+.         tab _merge;
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |          4        0.90        0.90
+          3 |        441       99.10      100.00
+------------+-----------------------------------
+      Total |        445      100.00
+
+.         gen tpi1     =ppkg     *share;
+(4 missing values generated)
+
+.         gen tpi1_trim=ppkg_trim*share;
+(7 missing values generated)
+
+. sum;
+
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+     product |       441    125.5442    14.78831        100        150
+     reg_tpi |       445    2.498876    1.085583          1          4
+       share |       445    .0383485    .0407269          0   .1976485
+    medshare |       445    .0404494    .1027744          0   .6404065
+    survquar |       441    2.848073    1.471564          1          5
+-------------+--------------------------------------------------------
+        news |       441    2.498866    1.085283          1          4
+  valued_tot |       441    5545.762    7720.548   14.28571   60589.15
+quantityd_~t |       441     15.4772    22.73993   .0714286   173.9763
+        ppkg |       441    692.7551    758.9424         50   4516.363
+   ppkg_trim |       438    652.3875    771.3226         50   4516.363
+-------------+--------------------------------------------------------
+      _merge |       445    2.982022    .1889765          1          3
+        tpi1 |       441    28.71811     47.2602   .0012743   333.6888
+   tpi1_trim |       438    26.71146    45.53869   .0012743   343.1419
+
+. keep if survquar!=.;
+(4 observations deleted)
+
+. sum;
+
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+     product |       441    125.5442    14.78831        100        150
+     reg_tpi |       441    2.498866    1.085283          1          4
+       share |       441    .0386964    .0407464   .0000255   .1976485
+    medshare |       441    .0408163    .1031678          0   .6404065
+    survquar |       441    2.848073    1.471564          1          5
+-------------+--------------------------------------------------------
+        news |       441    2.498866    1.085283          1          4
+  valued_tot |       441    5545.762    7720.548   14.28571   60589.15
+quantityd_~t |       441     15.4772    22.73993   .0714286   173.9763
+        ppkg |       441    692.7551    758.9424         50   4516.363
+   ppkg_trim |       438    652.3875    771.3226         50   4516.363
+-------------+--------------------------------------------------------
+      _merge |       441           3           0          3          3
+        tpi1 |       441    28.71811     47.2602   .0012743   333.6888
+   tpi1_trim |       438    26.71146    45.53869   .0012743   343.1419
+
+. list in  1/3;
+
+     +----------------------------------------------------------------------------------+
+  1. | product | reg_tpi |    share | medshare |          survquar |    news | valued~t |
+     |     100 | Central | .1245395 |        0 | May '05 - Jul-'05 | Central | 15969.55 |
+     |-----------------------------------------+----------------------------------------|
+     |  quanti~t   |      ppkg   |  ppkg_t~m   |  _merge   |      tpi1   |   tpi1_t~m   |
+     |  12.19603   |  1309.405   |    1388.5   |       3   |  163.0727   |    172.923   |
+     +----------------------------------------------------------------------------------+
+
+     +----------------------------------------------------------------------------------+
+  2. | product | reg_tpi |    share | medshare |          survquar |    news | valued~t |
+     |     105 | Central | .1627478 | .3548732 | May '05 - Jul-'05 | Central | 19836.72 |
+     |-----------------------------------------+----------------------------------------|
+     |  quanti~t   |      ppkg   |  ppkg_t~m   |  _merge   |      tpi1   |   tpi1_t~m   |
+     |  21.78891   |  910.4047   |  801.2834   |       3   |  148.1664   |   130.4071   |
+     +----------------------------------------------------------------------------------+
+
+     +----------------------------------------------------------------------------------+
+  3. | product | reg_tpi |    share | medshare |          survquar |    news | valued~t |
+     |     107 | Central | .0871047 |        0 | May '05 - Jul-'05 | Central | 9570.623 |
+     |-----------------------------------------+----------------------------------------|
+     |  quanti~t   |      ppkg   |  ppkg_t~m   |  _merge   |      tpi1   |   tpi1_t~m   |
+     |  15.48085   |  618.2235   |  481.1454   |       3   |  53.85015   |   41.91001   |
+     +----------------------------------------------------------------------------------+
+
+. list in -3/-1;
+
+     +-----------------------------------------------------------------------------+
+439. | product | reg_tpi |   share | medshare |      survquar |    news | valued~t |
+     |     150 | Western | .010944 | .0249144 |    Aug-Oct 05 | Western |   1271.7 |
+     |-----------------------------------------------------------------------------|
+     |  quanti~t  |      ppkg  |  ppkg_t~m  |  _merge  |      tpi1   |  tpi1_t~m   |
+     |  6.681939  |   190.319  |  184.2462  |       3  |  2.082845   |  2.016385   |
+     +-----------------------------------------------------------------------------+
+
+     +-----------------------------------------------------------------------------+
+440. | product | reg_tpi |   share | medshare |      survquar |    news | valued~t |
+     |     150 | Western | .010944 | .0249144 | Jul-Sept 2006 | Western | 1944.216 |
+     |-----------------------------------------------------------------------------|
+     |  quanti~t  |      ppkg  |  ppkg_t~m  |  _merge  |      tpi1   |  tpi1_t~m   |
+     |  9.488426  |  204.9039  |  189.5945  |       3  |  2.242463   |  2.074916   |
+     +-----------------------------------------------------------------------------+
+
+     +-----------------------------------------------------------------------------+
+441. | product | reg_tpi |   share | medshare |      survquar |    news | valued~t |
+     |     150 | Western | .010944 | .0249144 |   Oct-Nov '06 | Western | 322.1541 |
+     |-----------------------------------------------------------------------------|
+     |  quanti~t  |      ppkg  |  ppkg_t~m  |  _merge  |      tpi1   |  tpi1_t~m   |
+     |  1.559935  |  206.5177  |  206.1629  |       3  |  2.260123   |  2.256241   |
+     +-----------------------------------------------------------------------------+
+
+.         **************************************************************************;
+. * Find TPI level and indexes for non-trimmed and trimmed prices
+> **************************************************************************;
+. * Not trimmed ;
+.         collapse (sum) tpi1 tpi1_trim  , by(reg_tpi survquar);
+
+.                 for num 1/$n_tpi :
+>                         sum tpi1 if reg_tpi==X & survquar==2 , meanonly \
+>                         sum tpi1 if reg_tpi==X & survquar==4 , meanonly \
+>                         global baseX=r(mean);
+
+->  sum tpi1 if reg_tpi==1 & survquar==2 , meanonly
+
+->  sum tpi1 if reg_tpi==1 & survquar==4 , meanonly
+
+->  global base1=r(mean)
+
+->  sum tpi1 if reg_tpi==2 & survquar==2 , meanonly
+
+->  sum tpi1 if reg_tpi==2 & survquar==4 , meanonly
+
+->  global base2=r(mean)
+
+->  sum tpi1 if reg_tpi==3 & survquar==2 , meanonly
+
+->  sum tpi1 if reg_tpi==3 & survquar==4 , meanonly
+
+->  global base3=r(mean)
+
+->  sum tpi1 if reg_tpi==4 & survquar==2 , meanonly
+
+->  sum tpi1 if reg_tpi==4 & survquar==4 , meanonly
+
+->  global base4=r(mean)
+
+->  sum tpi1 if reg_tpi==5 & survquar==2 , meanonly
+
+->  sum tpi1 if reg_tpi==5 & survquar==4 , meanonly
+
+->  global base5=r(mean)
+
+.                 lab var tpi1 "Temporal price index before normalization";
+
+.                                 foreach v of numlist 1/$n_tpi { ;
+  2.                                         if `v'==1 { ;
+  3.                                                 gen tpi=tpi1/${base`v'} if reg_tpi==`v' ;
+  4.                                         } ;
+  5.                                         if `v'>1 { ;
+  6.                                                 replace tpi=tpi1/${base`v'} if reg_tpi==`
+> v' ;
+  7.                                         } ;
+  8.                                 } ;
+(14 missing values generated)
+(5 real changes made)
+(5 real changes made)
+(4 real changes made)
+(0 real changes made)
+
+.                                                                                             
+>     *gen     tpi=tpi1/$base1 if reg_tpi==1;
+.                 *replace tpi=tpi1/$base2 if reg_tpi==2;
+.                 *replace tpi=tpi1/$base3 if reg_tpi==3;
+.                 *replace tpi=tpi1/$base4 if reg_tpi==4;
+.                 *replace tpi=tpi1/$base5 if reg_tpi==5;
+.                 *replace tpi=tpi1/$base6 if reg_tpi==6;
+.                                                                                 lab var tpi 
+> "Temporal price index (Q4=1)";
+
+. * Trimmed ;
+.                 for num 1/$n_tpi :
+>                         sum tpi1_trim if reg_tpi==X & survquar==2 , meanonly \
+>                         sum tpi1_trim if reg_tpi==X & survquar==4 , meanonly \
+>                         global baseX=r(mean);
+
+->  sum tpi1_trim if reg_tpi==1 & survquar==2 , meanonly
+
+->  sum tpi1_trim if reg_tpi==1 & survquar==4 , meanonly
+
+->  global base1=r(mean)
+
+->  sum tpi1_trim if reg_tpi==2 & survquar==2 , meanonly
+
+->  sum tpi1_trim if reg_tpi==2 & survquar==4 , meanonly
+
+->  global base2=r(mean)
+
+->  sum tpi1_trim if reg_tpi==3 & survquar==2 , meanonly
+
+->  sum tpi1_trim if reg_tpi==3 & survquar==4 , meanonly
+
+->  global base3=r(mean)
+
+->  sum tpi1_trim if reg_tpi==4 & survquar==2 , meanonly
+
+->  sum tpi1_trim if reg_tpi==4 & survquar==4 , meanonly
+
+->  global base4=r(mean)
+
+->  sum tpi1_trim if reg_tpi==5 & survquar==2 , meanonly
+
+->  sum tpi1_trim if reg_tpi==5 & survquar==4 , meanonly
+
+->  global base5=r(mean)
+
+.                 lab var tpi1_trim "Six regions: TRIMMED Temporal price index before normaliz
+> ation";
+
+.                                 foreach v of numlist 1/$n_tpi { ;
+  2.                                         if `v'==1 { ;
+  3.                                                 gen tpi_trim=tpi1_trim/${base`v'} if reg_
+> tpi==`v' ;
+  4.                                         } ;
+  5.                                         if `v'>1 { ;
+  6.                                                 replace tpi_trim=tpi1_trim/${base`v'} if 
+> reg_tpi==`v' ;
+  7.                                         } ;
+  8.                                 } ;
+(14 missing values generated)
+(5 real changes made)
+(5 real changes made)
+(4 real changes made)
+(0 real changes made)
+
+.                                                 lab var tpi_trim "TRIMMED Temporal price ind
+> ex (Q4=1)";
+
+.                 sort reg_tpi survquar;
+
+.             drop if reg_tpi<1 | reg_tpi>$n_tpi;
+(0 observations deleted)
+
+. gen tpi_diff = tpi - tpi_trim;
+
+. lab var tpi_diff "TPI difference btw trimmed/untrimmed";
+
+. twoway (connected tpi_trim survquar),yline(1) by(, title("TPI: Trimmed"))
+> by(reg_tpi) sav("$path/work/reg_tpi-tpi_trim", replace);
+(file /home/bjvca/data/data/GAP/Haruna/UNPS_2005_06//work/reg_tpi-tpi_trim.gph saved)
+
+. graph export "$path/work/reg_tpi-tpi_trim.tif", replace;
+(file /home/bjvca/data/data/GAP/Haruna/UNPS_2005_06//work/reg_tpi-tpi_trim.tif written in TIFF
+>  format)
+
+. list reg_tpi survquar tpi tpi_trim tpi_diff;
+
+     +-------------------------------------------------------------------+
+     |  reg_tpi               survquar        tpi   tpi_trim    tpi_diff |
+     |-------------------------------------------------------------------|
+  1. |  Central      May '05 - Jul-'05   1.023404   1.037946    -.014542 |
+  2. |  Central             Aug-Oct 05   1.145034   1.058962    .0860724 |
+  3. |  Central          Jul-Sept 2006          1          1           0 |
+  4. |  Central            Oct-Nov '06   1.123757   1.223628   -.0998706 |
+  5. |  Eastern      May '05 - Jul-'05   1.058028   .8873101     .170718 |
+     |-------------------------------------------------------------------|
+  6. |  Eastern             Aug-Oct 05   .9829763   .8727097    .1102666 |
+  7. |  Eastern   Nov '05 & May-Jun 06    .329728   .4442574   -.1145294 |
+  8. |  Eastern          Jul-Sept 2006          1          1           0 |
+  9. |  Eastern            Oct-Nov '06   1.087058   .9541122    .1329454 |
+ 10. | Northern      May '05 - Jul-'05   .8942134    .936161   -.0419477 |
+     |-------------------------------------------------------------------|
+ 11. | Northern             Aug-Oct 05   .9299877     .98029   -.0503023 |
+ 12. | Northern   Nov '05 & May-Jun 06   .9631566   .9508332    .0123234 |
+ 13. | Northern          Jul-Sept 2006          1          1           0 |
+ 14. | Northern            Oct-Nov '06   .9321731    1.04144    -.109267 |
+ 15. |  Western      May '05 - Jul-'05   .9381497   1.015202   -.0770526 |
+     |-------------------------------------------------------------------|
+ 16. |  Western             Aug-Oct 05   .9113454   .8591004     .052245 |
+ 17. |  Western          Jul-Sept 2006          1          1           0 |
+ 18. |  Western            Oct-Nov '06   1.152315   1.181831   -.0295157 |
+     +-------------------------------------------------------------------+
+
+.                 sort reg_tpi survquar;
+
+. keep reg_tpi survquar tpi_trim;
+
+. save "$path/work/temp_index_reg_tpi.dta", replace;
+file /home/bjvca/data/data/GAP/Haruna/UNPS_2005_06//work/temp_index_reg_tpi.dta saved
+
+.                        *********************************************************************
+> *****
+> * 090_temp_index.do     (end)
+> **************************************************************************;
+. cap log close;

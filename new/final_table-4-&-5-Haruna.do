@@ -121,6 +121,7 @@ keep hhid h4q13f
 sort hhid
  ** since total education expenses were clooected in h4q10f and since is at yearly basis, we divided it by 365 to get daily expenses on education
 gen educationd = h4q13f/365
+replace educationd=0
 la var educationd "daily household expense on education"
 drop h4q13f
 save "$path/out/hhdeducationexp.dta", replace
@@ -133,6 +134,7 @@ sort hhid
 keep hhid h5q10 h5q11
 egen medicalexp = rowtotal ( h5q10 h5q11)
 gen medicalexpd = medicalexp/30
+replace medicalexpd=0
 la var medicalexpd "household daily expenditure"
 drop h5q10 h5q11 medicalexp
 save "$path/out/hhdmedicalexp.dta", replace
@@ -151,8 +153,8 @@ gen assetvalue = h8q5/10
 ** ** i took land, bicycle, motor cycle and other transport equipment-012, that in 2009 were motor vehicles, as durables and assumed that a year, the household can use 1% of these assests. **there was no land in 2005 assets
  ** house not treated as an asset as the toolkit takes care of imputed rent
 ************************************************************************************************************************
- gen dassetvalue = (assetvalue)/365
- replace dassetvalue=0
+ gen dassetvalue = (assetvalue*0.1)/365
+
 la var dassetvalue "household daily durables expenditure"
 rename hh hhid
 sort hhid
@@ -202,7 +204,7 @@ sort hh
 rename hh hhid
 egen hhsemidurables = rowtotal ( h10cq3 h10cq4 h10cq5)
 sort hhid
-gen hhdsemidurs = (hhsemidurables*0.20)/365
+gen hhdsemidurs = (hhsemidurables*0.5)/365
 
 la var hhdsemidurs "household daily semi durables goods and seervices expenses"
 drop hhsemidurables

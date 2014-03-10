@@ -1,0 +1,983 @@
+------------------------------------------------------------
+      name:  <unnamed>
+       log:  /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP
+> 3//rep/110_price_unit_flex.log
+  log type:  text
+ opened on:  23 Oct 2013, 16:01:35
+
+. clear
+
+. set more off
+
+. #delimit ;
+delimiter now ;
+. **********************************************************
+> ******************************
+> * 110_price_unit_flex.do                (start)
+> *
+> * Purpose: This do file creates a price_unit_flex database
+>  with the unit prices of the
+> * goods of the flexible food basket in order to determine 
+> the poverty lines per spatial
+> * domain. It uses the files work/daily.dta and work/own.dt
+> a file and draw unit prices
+> * by: sum of values and quantity
+> **********************************************************
+> ******************************;
+. *CA modified to bring in work/hhdata.dta for bootstrap
+> *CA check for price calcs conditional on number of observa
+> tions;
+. /*
+> This file uses:
+>         work/daily.dta
+>         work/own.dta
+>         work/hhdata.dta
+>         work/consump_nom.dta
+>         work/codes_food_basket_flex.dta
+>         work/temp_index_reg_tpi.dta
+>           new/conversions.do
+> 
+> This file creates:
+>         work/price_unit_flex.dta
+>         work/bottom_basket.dta
+> */
+> 
+> 
+> 
+> 
+> *do "$path/new/010_initial.do";
+. **********************************************************
+> ****************************
+> * Create sorted data set with daily and own and the matche
+> d codes
+> **********************************************************
+> ****************************;
+. use "$path/work/cons_cod_trans.dta", clear;
+(HH food cons. (1 rec per item cons. cat A& B per HH; Cat B:
+>  only T6SQ1 + T6AEQ3))
+
+. *use "$path/in/cons_cod_trans.dta", clear;
+. *save "$path/work/cons_cod_trans.dta", replace;
+. *drop if quantityd==0 ;
+. keep hhid product food_cat valuez quantityz unit;
+
+. rename valuez    value;
+
+. rename quantityz quantity;
+
+. drop if quantity==0 ;
+(779 observations deleted)
+
+. *drop count;
+.         sort product;
+
+.         gen count=1;
+
+.                 tempfile dd_acsort;
+
+. save `dd_acsort', replace;
+(note: file /tmp/St09373.000001 not found)
+file /tmp/St09373.000001 saved
+
+. /*
+> use "$path/work/daily.dta";
+> tempfile dd_acsort;
+>         drop days;
+>         sort product;
+>         tempfile dd_acsort;
+> save `dd_acsort', replace;
+> 
+> use "$path/work/own.dta";
+>         keep hhid product valued quantityd unit;
+>         rename valued value;
+>         rename quantityd quantity;
+> 
+>         *CHECK THE ZEROS IN quantity FOR NOW DELETE;
+>         drop if quantity==0;
+> 
+>         append using `dd_acsort';
+> 
+> *CA modified to merge in work/hhdata.dta for bootstrap;
+>         sort hhid;
+>       merge hhid using "$path/work/hhdata.dta";
+>       tab _m;
+> 
+> * Drop observations if non existent in HH data set;
+> drop if _m!=3;
+> drop _m;
+> 
+> 
+>         sort product;
+>         gen count=1;
+> 
+> 
+> save `dd_acsort', replace;
+> */
+> 
+> 
+> **********************************************************
+> ****************************;
+. * Merge the flexible food basket codes with the daily and 
+> own data sets
+> * Drop all codes not a part of the flexible food basket
+> **********************************************************
+> ****************************;
+.         merge product using "$path/work/codes_food_basket_
+> flex.dta";
+variable product does not uniquely identify observations
+    in the master data
+product was int now float
+
+.         tab _merge;
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |      6,091       18.11       18.11
+          2 |          2        0.01       18.12
+          3 |     27,534       81.88      100.00
+------------+-----------------------------------
+      Total |     33,627      100.00
+
+.         drop if _merge~=3;
+(6093 observations deleted)
+
+.         drop _merge;
+
+. **********************************************************
+> ****************************;
+. * Drop observations where product code or quantity or valu
+> e information is unavailable
+> **********************************************************
+> ****************************;
+.                                 codebook hhid;
+
+------------------------------------------------------------
+hhid                                            household id
+------------------------------------------------------------
+
+                  type:  numeric (double)
+
+                 range:  [1.013e+09,2.115e+14]        units:
+>   1
+         unique values:  2581                     missing .:
+>   148/27534
+
+                  mean:   1.5e+11
+              std. dev:   4.4e+12
+
+           percentiles:        10%       25%       50%      
+>  75%                                                      
+>            90%
+                           1.1e+09   1.1e+09   2.2e+09   4.0
+> e+09                                                      
+>        1.1e+11
+
+. *        drop if product==. | value==. | quantity==.  ;
+.                                 codebook hhid;
+
+------------------------------------------------------------
+hhid                                            household id
+------------------------------------------------------------
+
+                  type:  numeric (double)
+
+                 range:  [1.013e+09,2.115e+14]        units:
+>   1
+         unique values:  2581                     missing .:
+>   148/27534
+
+                  mean:   1.5e+11
+              std. dev:   4.4e+12
+
+           percentiles:        10%       25%       50%      
+>  75%                                                      
+>            90%
+                           1.1e+09   1.1e+09   2.2e+09   4.0
+> e+09                                                      
+>        1.1e+11
+
+. **********************************************************
+> ****************************;
+. * Convert non-KG quantities (units and liters) to kilogram
+> s;
+. **********************************************************
+> ****************************;
+. *do "$path/new/110a_conversions.do"
+> 
+> **********************************************************
+> **********
+> * There remain a few difficult to interpret observations s
+> uch as liters
+> * of fish and liters of pasta. These are dropped
+> **********************************************************
+> **********;
+. *        drop if unit~=2;
+. **********************************************************
+> **********
+> * Merge in labels for the 13 spatial domains
+> **********************************************************
+> **********;
+.         preserve;
+
+.                 use "$path/work/hhdata.dta", clear;
+(Household master record (1 record per household))
+
+.                                                           
+>               keep hhid spdomain reg_tpi survquar;
+
+.                         sort hhid;
+
+.                         tempfile spdomainreg_tpi;
+
+.                 save `spdomainreg_tpi', replace;
+(note: file /tmp/St09373.000003 not found)
+file /tmp/St09373.000003 saved
+
+.                                 codebook hhid;
+
+------------------------------------------------------------
+hhid                                            Household ID
+------------------------------------------------------------
+
+                  type:  numeric (double)
+
+                 range:  [1.013e+09,2.115e+14]        units:
+>   1
+         unique values:  2716                     missing .:
+>   0/2716
+
+                  mean:   1.3e+11
+              std. dev:   4.1e+12
+
+           percentiles:        10%       25%       50%      
+>  75%                                                      
+>            90%
+                           1.1e+09   1.1e+09   3.0e+09   4.0
+> e+09                                                      
+>        1.1e+11
+
+.         restore;
+
+.                 sort hhid;
+
+.         merge hhid using `spdomainreg_tpi';
+variable hhid does not uniquely identify observations in
+    the master data
+
+.         tab _merge;
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |        148        0.53        0.53
+          2 |        135        0.49        1.02
+          3 |     27,386       98.98      100.00
+------------+-----------------------------------
+      Total |     27,669      100.00
+
+.         drop _merge;
+
+.         drop if product==.;
+(157 observations deleted)
+
+. codebook hhid;
+
+------------------------------------------------------------
+hhid                                            household id
+------------------------------------------------------------
+
+                  type:  numeric (double)
+
+                 range:  [1.013e+09,2.115e+14]        units:
+>   1
+         unique values:  2559                     missing .:
+>   148/27512
+
+                  mean:   1.5e+11
+              std. dev:   4.4e+12
+
+           percentiles:        10%       25%       50%      
+>  75%                                                      
+>            90%
+                           1.1e+09   1.1e+09   2.2e+09   4.0
+> e+09                                                      
+>        1.1e+11
+
+. tab spd;
+
+    Spatial |
+   domains: |
+  each with |
+own poverty |
+ line (they |
+     are 4) |      Freq.     Percent        Cum.
+------------+-----------------------------------
+    Central |      8,786       32.11       32.11
+    Eastern |      6,958       25.43       57.54
+   Northern |      7,102       25.95       83.49
+    Western |      4,518       16.51      100.00
+------------+-----------------------------------
+      Total |     27,364      100.00
+
+. sum if spd>=3;
+
+    Variable |       Obs        Mean    Std. Dev.       Min 
+>        Max
+-------------+----------------------------------------------
+> ----------
+        hhid |     11620    6.16e+10    2.67e+11   1.07e+09 
+>   2.32e+12
+     product |     11768    130.8119    15.27799        101 
+>        166
+    quantity |     11620    .5797112    .9695324   .0142857 
+>         30
+       value |     11620    443.9768    676.2261   3.571429 
+>      15000
+        unit |     11620           1           0          1 
+>          1
+-------------+----------------------------------------------
+> ----------
+    food_cat |     11620           1           0          1 
+>          1
+       count |     11768           1           0          1 
+>          1
+    descript |     11768           1           0          1 
+>          1
+      numreg |     11768    3.198844    1.020097          1 
+>          4
+    survquar |     11620    2.543718    1.106701          1 
+>          4
+-------------+----------------------------------------------
+> ----------
+     reg_tpi |     11620    3.388812    .4875016          3 
+>          4
+    spdomain |     11620    3.388812    .4875016          3 
+>          4
+
+. table spdomain, content(mean quantity count quantity count
+>  hhid) row missing;
+
+----------------------------------------------------------
+Spatial   |
+domains:  |
+each with |
+own       |
+poverty   |
+line      |
+(they are |
+4)        | mean(quantity)     N(quantity)         N(hhid)
+----------+-----------------------------------------------
+  Central |       .4984302           8,786           8,786
+  Eastern |       .6435321           6,958           6,958
+ Northern |       .5598714           7,102           7,102
+  Western |       .6108981           4,518           4,518
+          | 
+    Total |       .5698417          27,364          27,364
+----------------------------------------------------------
+
+.         drop if product==. | value==. | quantity==.  ;
+(148 observations deleted)
+
+. codebook hhid;
+
+------------------------------------------------------------
+hhid                                            household id
+------------------------------------------------------------
+
+                  type:  numeric (double)
+
+                 range:  [1.013e+09,2.115e+14]        units:
+>   1
+         unique values:  2559                     missing .:
+>   0/27364
+
+                  mean:   1.5e+11
+              std. dev:   4.4e+12
+
+           percentiles:        10%       25%       50%      
+>  75%                                                      
+>            90%
+                           1.1e+09   1.1e+09   2.2e+09   4.0
+> e+09                                                      
+>        1.1e+11
+
+. tab spd;
+
+    Spatial |
+   domains: |
+  each with |
+own poverty |
+ line (they |
+     are 4) |      Freq.     Percent        Cum.
+------------+-----------------------------------
+    Central |      8,786       32.11       32.11
+    Eastern |      6,958       25.43       57.54
+   Northern |      7,102       25.95       83.49
+    Western |      4,518       16.51      100.00
+------------+-----------------------------------
+      Total |     27,364      100.00
+
+. **********************************************************
+> **********
+> * Merge in temporal price index to convert nominal value t
+> o real
+> **********************************************************
+> **********;
+.         sort reg_tpi survquar;
+
+.         merge reg_tpi survquar using "$path/work/temp_inde
+> x_reg_tpi.dta";
+variables reg_tpi survquar do not uniquely identify
+    observations in the master data
+(label lsurvquar already defined)
+(label lbreg already defined)
+
+.         tab _merge;
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          3 |     27,364      100.00      100.00
+------------+-----------------------------------
+      Total |     27,364      100.00
+
+.         drop if _merge ~= 3;
+(0 observations deleted)
+
+.         drop _merge;
+
+.         gen value_r=value/tpi_trim;
+
+. **********************************************************
+> ****************;
+. * Identify relatively poor households, based on nominal te
+> mporally adjusted
+> * consumption per capita. Only work with these households 
+> for the price
+> * calculations.
+> **********************************************************
+> ****************;
+.                 preserve;
+
+.                         use "$path/work/conpc.dta", clear;
+
+. *                       use "$path/work/consump_nom.dta", 
+> clear;
+. *CA modified to merge in work/hhdata.dta for bootstrap;
+.         sort hhid;
+
+.       merge hhid using "$path/work/hhdata.dta";
+
+.       tab _m;
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |          1        0.04        0.04
+          3 |      2,716       99.96      100.00
+------------+-----------------------------------
+      Total |      2,717      100.00
+
+.       drop _m;
+
+. *CA modified to keep bswt;
+.                                 keep hhid hhweight hhsize 
+> cons_pc_nom bswt ;
+
+.                                 sort hhid;
+
+.                                 merge hhid using `spdomain
+> reg_tpi';
+(label lbreg already defined)
+(label lsurvquar already defined)
+(label lspdomain already defined)
+
+.                                 tab _merge;
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |          1        0.04        0.04
+          3 |      2,716       99.96      100.00
+------------+-----------------------------------
+      Total |      2,717      100.00
+
+.                                 drop _merge;
+
+.                                 sort reg_tpi survquar;
+
+.                                 cap drop _merge;
+
+.                                 merge reg_tpi survquar usi
+> ng "$path/work/temp_index_reg_tpi.dta";
+variables reg_tpi survquar do not uniquely identify
+    observations in the master data
+(label lsurvquar already defined)
+(label lbreg already defined)
+
+.                                 tab _merge;
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |         49        1.80        1.80
+          3 |      2,668       98.20      100.00
+------------+-----------------------------------
+      Total |      2,717      100.00
+
+.                                 drop _merge;
+
+.                                 sort hhid;
+
+.                                 merge hhid using "$path/wo
+> rk/conpc.dta";
+
+.                                 tab _merge;
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          3 |      2,717      100.00      100.00
+------------+-----------------------------------
+      Total |      2,717      100.00
+
+.                                 drop _merge;
+
+.                                 gen food_pc_tpi  = food_pc
+> _nom /tpi_trim;
+(49 missing values generated)
+
+.                                 lab var food_pc_tpi "Temp-
+> adjusted per capita food consumption/day";
+
+.                                                           
+>       * Non-food not TPI adjusted ;
+.                                 gen cons_pc_tpi = food_pc_
+> tpi + nf_pc_nom;
+(49 missing values generated)
+
+.                                 lab var cons_pc_tpi "Temp 
+> adjusted total consumption/day";
+
+.                                 gen one=1;
+
+.                                 tempfile contpi;
+
+.                                 save `contpi', replace;
+(note: file /tmp/St09373.000005 not found)
+file /tmp/St09373.000005 saved
+
+.                                 collapse (p$bottom) one co
+> ns_pc_tpi [aw=hhsize*hhweight], by(spdomain) ;
+
+.                                 rename cons_pc_tpi pctile_
+> 60;
+
+.                                 tempfile 60pct;
+
+.                                 sort spdomain;
+
+.                                 save `60pct', replace;
+(note: file /tmp/St09373.000006 not found)
+file /tmp/St09373.000006 saved
+
+.                                 use `contpi';
+
+.                                         sort spdomain;
+
+.                                         merge spdomain usi
+> ng `60pct';
+variable spdomain does not uniquely identify observations
+    in the master data
+(label lspdomain already defined)
+
+.                                         tab _merge;
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          3 |      2,717      100.00      100.00
+------------+-----------------------------------
+      Total |      2,717      100.00
+
+.                                         drop _merge;
+
+.                                         drop one;
+
+.                                         sort spdomain;
+
+.                                         gen bottom_basket=
+> cons_pc_tpi< pctile_60;
+
+.                                         by spdomain: tab b
+> ottom_basket [aw=hhsize*hhweight];
+
+------------------------------------------------------------
+-> spdomain = Central
+
+bottom_bask |
+         et |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          0 | 419.564632       50.37       50.37
+          1 | 413.435368       49.63      100.00
+------------+-----------------------------------
+      Total |        833      100.00
+
+------------------------------------------------------------
+-> spdomain = Eastern
+
+bottom_bask |
+         et |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          0 | 326.267964       50.51       50.51
+          1 | 319.732036       49.49      100.00
+------------+-----------------------------------
+      Total |        646      100.00
+
+------------------------------------------------------------
+-> spdomain = Northern
+
+bottom_bask |
+         et |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          0 | 352.603665       50.88       50.88
+          1 | 340.396335       49.12      100.00
+------------+-----------------------------------
+      Total |        693      100.00
+
+------------------------------------------------------------
+-> spdomain = Western
+
+bottom_bask |
+         et |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          0 | 279.528852       52.25       52.25
+          1 | 255.471148       47.75      100.00
+------------+-----------------------------------
+      Total |        535      100.00
+
+------------------------------------------------------------
+-> spdomain = .
+
+bottom_bask |
+         et |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          0 |          7      100.00      100.00
+------------+-----------------------------------
+      Total |          7      100.00
+
+
+.                                         lab var bottom_bas
+> ket "=1 if in bottom (60%) of PCE";
+
+.                                         sort hhid;
+
+.                                                           
+>       save "$path/work/bottom_basket.dta", replace;
+file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/
+> bottom_basket.dta saved
+
+.         restore;
+
+.         sort hhid;
+
+.         merge hhid using "$path/work/bottom_basket.dta";
+variable hhid does not uniquely identify observations in
+    the master data
+(label lspdomain already defined)
+(label lsurvquar already defined)
+(label lbreg already defined)
+
+.         tab _merge;
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          2 |        158        0.57        0.57
+          3 |     27,364       99.43      100.00
+------------+-----------------------------------
+      Total |     27,522      100.00
+
+.         drop _merge;
+
+.                         * Only keep price observations for
+>  the poor ;
+.         keep if bottom_basket==1;
+(16183 observations deleted)
+
+.         **************************************************
+> ************************;
+. * Toss out the bottom 5% and top 5% of the HH-LEVEL prices
+>  per kg in
+> * for each spdomain & product combination. This should eli
+> minate outliers
+> * that may have an undue influence on the price calculatio
+> n. 
+> **********************************************************
+> ****************;
+.                 gen hhppkg=value_r/quantity;
+(53 missing values generated)
+
+.                 egen lower5=pctile(hhppkg), p(5) by(spdoma
+> in product);
+(53 missing values generated)
+
+.                 egen upper5=pctile(hhppkg), p(95) by(spdom
+> ain product);
+(53 missing values generated)
+
+. sum;
+
+    Variable |       Obs        Mean    Std. Dev.       Min 
+>        Max
+-------------+----------------------------------------------
+> ----------
+        hhid |     11339    4.06e+10    2.24e+11   1.01e+09 
+>   2.31e+12
+     product |     11286     130.827    15.02754        101 
+>        166
+    quantity |     11286    .5601898     1.04634   .0142857 
+>   34.28571
+       value |     11286    387.5792    581.1725   2.857143 
+>   10285.71
+        unit |     11286           1           0          1 
+>          1
+-------------+----------------------------------------------
+> ----------
+    food_cat |     11286           1           0          1 
+>          1
+       count |     11286           1           0          1 
+>          1
+    descript |     11286           1           0          1 
+>          1
+      numreg |     11286    3.256601    .9765928          1 
+>          4
+    survquar |     11339    2.424111    1.085165          1 
+>          4
+-------------+----------------------------------------------
+> ----------
+     reg_tpi |     11339    2.206456    1.064082          1 
+>          4
+    spdomain |     11339    2.206456    1.064082          1 
+>          4
+    tpi_trim |     11339    .9554574    .0931922   .8253922 
+>   1.169799
+     value_r |     11286    404.0295    595.0896   3.351598 
+>    10665.7
+ cons_pc_nom |     11339    901.0073    410.5481          0 
+>   2191.746
+-------------+----------------------------------------------
+> ----------
+    hhweight |     11339    1977.479    1464.357   308.1181 
+>   8736.727
+        bswt |     11339           1           0          1 
+>          1
+      hhsize |     11339    7.811447    3.184635          1 
+>         29
+ cons_hh_nom |     11339    7012.918    4573.879          0 
+>   30491.16
+ food_pc_nom |     11339    573.3774    293.6895          0 
+>   2048.572
+-------------+----------------------------------------------
+> ----------
+   nf_pc_nom |     11339    327.6299    240.6677          0 
+>   1927.743
+ food_pc_tpi |     11339    597.6076    288.4402          0 
+>   1876.895
+ cons_pc_tpi |     11339    925.2375    401.9649          0 
+>   2008.056
+   pctile_60 |     11339    1412.929     435.109   979.4053 
+>   2011.312
+bottom_bas~t |     11339           1           0          1 
+>          1
+-------------+----------------------------------------------
+> ----------
+      hhppkg |     11286    1296.305    1788.427   3.179535 
+>   51290.88
+      lower5 |     11286    465.8754    716.6225   20.81838 
+>   5618.524
+      upper5 |     11286    2715.726     2566.56   112.3705 
+>   16427.04
+
+. describe;
+
+Contains data from /tmp/St09373.000001
+  obs:        11,339                          HH food
+                                                cons. (1 rec
+                                                per item
+                                                cons. cat A&
+                                                B per HH;
+                                                Cat B: only
+                                                T6SQ1 +
+                                                T6AEQ3)
+ vars:            28                          23 Oct 2013 16
+> :01
+ size:     1,372,019                          (_dta has note
+> s)
+------------------------------------------------------------
+              storage  display     value
+variable name   type   format      label      variable label
+------------------------------------------------------------
+hhid            double %10.0g                 household id
+product         float  %39.0g      itmds      Food product
+                                        code: numerical
+quantity        float  %9.0g                  daily
+                                        household food
+                                        consumption
+value           float  %9.0g                  daily value of
+                                        consumption in UGX
+                                        per per household
+unit            float  %9.0g                  set equal to
+                                        one since all
+                                        observations are
+                                        converted into kg
+food_cat        float  %9.0g                  food category
+                                        equals 1, if product
+                                        is food and 0 if non
+                                        food
+count           float  %9.0g                  
+descript        float  %9.0g       descrip    product
+                                        description
+                                        including product
+                                        code but equals 2
+                                        for all non-foods
+numreg          double %9.0g                  number of
+                                        goods in the basket
+survquar        float  %14.0g      lsurvquar
+                                              Sequential
+                                        Survey Quarter
+                                        (Oct-Dec 10 = 1)
+reg_tpi         byte   %24.0g      lbreg      Regions used
+                                        for temporal price
+                                        index calculations
+spdomain        float  %9.0g       lspdomain
+                                              Spatial
+                                        domains: each with
+                                        own poverty line
+                                        (they are 4)
+tpi_trim        float  %9.0g                  TRIMMED
+                                        Temporal price index
+                                        (Q4=1)
+value_r         float  %9.0g                  
+cons_pc_nom     float  %9.0g                  
+hhweight        float  %9.0g                  Household
+                                        sample weight
+bswt            float  %9.0g                  bootstrap
+                                        weights; and all
+                                        equal to 1 for all
+                                        households, as a
+                                        toolkit requireme
+hhsize          long   %9.0g                  number of
+                                        household menbers
+cons_hh_nom     double %9.0g                  (sum)
+                                        cod_hh_nom
+food_pc_nom     float  %9.0g                  nominal food
+                                        consumption per
+                                        capita
+nf_pc_nom       float  %9.0g                  nominal
+                                        non-food consumption
+                                        per capita
+food_pc_tpi     float  %9.0g                  Temp-adjusted
+                                        per capita food
+                                        consumption/day
+cons_pc_tpi     float  %9.0g                  Temp adjusted
+                                        total
+                                        consumption/day
+pctile_60       float  %9.0g                  (p 50)
+                                        cons_pc_tpi
+bottom_basket   float  %9.0g                  =1 if in
+                                        bottom (60%) of PCE
+hhppkg          float  %9.0g                  
+lower5          float  %9.0g                  
+upper5          float  %9.0g                  
+------------------------------------------------------------
+Sorted by:  
+     Note:  dataset has changed since last saved
+
+. keep if hhppkg-lower5>=0 & hhppkg-upper5<=0;
+(920 observations deleted)
+
+. **********************************************************
+> ***********
+> * Note that we do prices in three ways. First, by summing 
+> quantity and value 
+> * This average price price_unitw is thus quantity/value we
+> ighted. Second, we
+> * calculate the price and take simple means for a transact
+> ion weighted
+> * price, price_unitt. Last we take the median, price_unitm
+> . But in the end
+> * we only use price_unitw
+> **********************************************************
+> ***********;
+.         gen price_unitt=value_r/(quantity*1000);
+
+.         gen price_unitm=price_unitt;
+
+.                 *CA modified to count the boot sample weig
+> ht bswt;
+.         collapse (sum) quantity value_r count bswt 
+>                  (mean) price_unitt 
+>                  (median) price_unitm [aw=hhweight], by(sp
+> domain product);
+
+.         *Generate weighted price per gram ;
+.         gen price_unitw=value_r/(quantity*1000);
+
+.         drop value_r quantity;
+
+.         sort spdomain product;
+
+.         lab var price_unitt "simple average of calculated 
+> prices - transaction weighted";
+
+.         lab var price_unitm "median of prices";
+
+.         lab var price_unitw "value share weighted mean pri
+> ces";
+
+. * Get an idea of the difference between the price measures
+> ;
+.         gen ratiotw=price_unitt/price_unitw;
+
+.         gen ratiomw=price_unitm/price_unitw;
+
+.         sum ratiotw ratiomw;
+
+    Variable |       Obs        Mean    Std. Dev.       Min 
+>        Max
+-------------+----------------------------------------------
+> ----------
+     ratiotw |       140    1.257942    .4200054    .611376 
+>   3.380153
+     ratiomw |       140    1.065038    .4184307   .2974508 
+>   3.838698
+
+.         sort product;
+
+.         merge product using "$path/work/codes_food_basket_
+> flex.dta";
+variable product does not uniquely identify observations
+    in the master data
+
+.         tab _m;
+
+     _merge |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          2 |          3        2.10        2.10
+          3 |        140       97.90      100.00
+------------+-----------------------------------
+      Total |        143      100.00
+
+.         count if _merge~=3;
+    3
+
+.         drop if _merge~=3;
+(3 observations deleted)
+
+.         drop _merge;
+
+.         sort product spdomain;
+
+. save "$path/work/price_unit_flex.dta", replace;
+file /home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3//work/
+> price_unit_flex.dta saved
+
+. **********************************************************
+> ******************************
+> * 110_price_unit_flex.do                (end)
+> **********************************************************
+> ******************************;
+. cap log close;

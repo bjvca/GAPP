@@ -488,6 +488,8 @@ keep hhid h4q10f
 sort hhid
  ** since total education expenses were clooected in h4q10f and since is at yearly basis, we divided it by 365 to get daily expenses on education
 gen educationd = h4q10f/365
+replace educationd=0 
+*** already included in nonfood expenses
 la var educationd "daily household expense on education"
 drop h4q10f
 save "$path/out/hhdeducationexp.dta", replace
@@ -500,6 +502,8 @@ sort hhid
 keep hhid h5q10 h5q11
 egen medicalexp = rowtotal ( h5q10 h5q11)
 gen medicalexpd = medicalexp/30
+replace medicalexpd = 0 
+*** already included in nonfood expenses
 la var medicalexpd "household daily expenditure"
 drop h5q10 h5q11 medicalexp
 save "$path/out/hhdmedicalexp.dta", replace
@@ -520,7 +524,7 @@ drop  if h12aq2==1
  ** house not treated as an asset as the toolkit takes care of imputed rent
  ************************************************************************************************************************
  gen dassetvalue = (assetvalue)/365
-replace dassetvalue=0
+replace dassetvalue=dassetvalue*0.1
 la var dassetvalue "household daily durables expenditure"
 rename hh hhid
 sort hhid
@@ -586,7 +590,7 @@ rename hh hhid
 
 egen hhsemidurables = rowtotal( h14cq3 h14cq4)
 sort hhid
-gen hhdsemidurs = (hhsemidurables*0.20)/365
+gen hhdsemidurs = (hhsemidurables)/365
 la var hhdsemidurs "household daily semi durables goods and seervices expenses"
 
 save "$path/out/hhdsemidurablesexp.dta", replace

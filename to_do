@@ -1,0 +1,8 @@
+bugst that need to be addressed before running 
+
+collapse matooke categories into one category: 100 in table file
+correct error on drop nonfood items: in 100
+look for all quantitiyz: in 110 and 14
+check one is using the correct coversions file
+comment out label drop all 2 times: in table file
+collapes by product only, not descriptions: in 100; 140.
