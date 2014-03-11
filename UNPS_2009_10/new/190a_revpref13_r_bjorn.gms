@@ -16,7 +16,7 @@ $offtext
 SETS
  cod        200910 codes for products used in basket
 /
-$include C:\Users\Haruna\Desktop\GAPP\UNPS_2009_10\work/product_flex.inc
+$include /home/bjvca/data/data/GAP/Haruna/UNPS_2009_10/work/product_flex.inc
 /
 
  reg        5 spatial domains /1*5/
@@ -61,12 +61,12 @@ PARAMETERS
 
 Table  price(cod,reg,ptit)  price and related information
                         count   price_uw5
-$include C:\Users\Haruna\Desktop\GAPP\UNPS_2009_10\work\price_unit_flex.inc
+$include /home/bjvca/data/data/GAP/Haruna/UNPS_2009_10/work/price_unit_flex.inc
 ;
 
 Table   quan(cod,reg,qtit)   quantity and related information
                            calperg          quan5           calpp      povline_a_flex5
-$include C:\Users\Haruna\Desktop\GAPP\UNPS_2009_10\work/quan_flex.inc
+$include /home/bjvca/data/data/GAP/Haruna/UNPS_2009_10/work/quan_flex.inc
 ;
 
   shr(cod,reg)$quan(cod,reg,'povline_a_flex5')
@@ -161,7 +161,7 @@ Equations
   display povline.l;
 
 *print the revealed preference matrix prior to optimisation;
-file povline_rp/C:\Users\Haruna\Desktop\GAPP\UNPS_2009_10\work\povline_rp_inout.csv/;
+file povline_rp/"/home/bjvca/data/data/GAP/Haruna/UNPS_2009_10/work/povline_rp_inout.csv"/;
 put povline_rp;
 povline_rp.pc=5;
 povline_rp.nd=0;
@@ -222,7 +222,7 @@ PARAMETERS
 
    display perc_chng, povline_ent, povline_ali;
 
-   file res/C:\Users\Haruna\Desktop\GAPP\UNPS_2009_10\work\qent.csv/;
+   file res/"/home/bjvca/data/data/GAP/Haruna/UNPS_2009_10/work/qent.csv"/;
 
    put res;
    res.pc=5;
@@ -250,7 +250,7 @@ PARAMETERS
        );
    );
 
-   file lin/C:\Users\Haruna\Desktop\GAPP\UNPS_2009_10\work\povline_food_ent.csv/;
+   file lin/"/home/bjvca/data/data/GAP/Haruna/UNPS_2009_10/work/povline_food_ent.csv"/;
 
    put lin;
    lin.pc=5;

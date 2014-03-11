@@ -11,7 +11,9 @@ global path "C:\Users\Haruna\Desktop\GAPP\UNPS_2005_06"
 
 
 
-
+shell rm $path/work/*
+shell rm $path/out/*
+*/
 version 10.1
 
 cd "$path"

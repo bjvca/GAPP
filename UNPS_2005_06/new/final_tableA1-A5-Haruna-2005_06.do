@@ -380,22 +380,7 @@ rename HHID hhid
 sort hhid
 save "$path/out/hhddurablesexp.dta", replace
 clear
-**----------------------calculating expenses on basic non durable assest
-use "$path/in/GSEC12A.dta"
-save "$path/out/hhnondurables.dta", replace
-rename HHID hhid
-drop if inlist(  h12aq2 ,01,02,03,10,11,12,13)
-gen nondurablevalue = h12aq5
-** also discounted them by 1% to get rough value used per year, we considered furniture-04, Hh appliances as Kettle,flat iron-05, electronics as tv-06, 
-*radio-07, generators-08, solar-panel-09, other transport mean -14, jewelry&watches-15, mobilephone-16, computer-17, internet-18, other elwctronics-19, 
-*otherassets as lawn mores-20,  others;-21 & 22, NOTE: figures are codes in data set
-la var nondurablevalue "household daily non-durables expenditure"
-sort hhid
-gen dnondurables = (nondurablevalue*0.01)/365
-la var dnondurables "household daily non-durables expenditure"
-keep hhid dnondurables nondurablevalue
-save "$path/out/hhdnondurablesexp.dta", replace
-clear
+
 ***-------------------calculating expenses on basic frequently bought items
 use "$path/in/GSEC14B.dta"
 des
@@ -407,7 +392,7 @@ sort hhid
 * others-459, tires-461, petrol-462, bus fares-464, bodaboda fare-465, stamps/envelops-466, mobilephoneairtime-467 and others-469,health fees as 
 *consultation-501, medicine-502, hospitalcharges-503, traditionaldoctors-504, others-505 since medical expenses were cosidered in section 5, 
 * sports/theater-601, drycleaning-602, houseboys-603, barbers&beauty shops-604 and lodging-605. THESE HAVE BEEN CONSIDERED NON BASIC
-drop if inlist( h14bq2 ,311,455,456,457,458,459,461,462,464,465,466,467,469,501,502,503,504,505,601,602,603,604,605)
+*drop if inlist( h14bq2 ,311,455,456,457,458,459,461,462,464,465,466,467,469,501,502,503,504,505,601,602,603,604,605)
 egen hhfrequents = rowtotal ( h14bq5 h14bq7 h14bq9)
 gen dhhfrequents = hhfrequents/30
 la var dhhfrequents "daily household expenditure on frequently bought commodities"
@@ -443,7 +428,7 @@ sort HHID
 rename HHID hhid
 ** we only considered graduated tax-904, that may cause arrest if not paid and it used to be per head paid to local government annually
 ** and dropped income tax-901, property tax-902, user fees-903, social security payments-905, remmitances-906, funerals-907 and others-909
-drop if inlist( itmcd ,901,902,903,905,906,907,909)
+drop if inlist( itmcd ,906)
 gen hhdnonconsumpexp = value/365
 la var hhdnonconsumpexp "hh daily expenditure on taxes, contributions, donations, duties, etc"
 sort hhid 
@@ -475,8 +460,9 @@ merge 1:1 hhid using "$path/out/hhddurablesexp.dta"
 drop _merge
 sort hhid
 save "$path/out/hhdeduc&medic&durabex.dta", replace
-use "$path/out/hhdnondurablesexp.dta"
-collapse (sum) dnondurables , by(hhid)
+*use "$path/out/hhdnondurablesexp.dta"
+*collapse (sum) dnondurables , by(hhid)
+gen dnondurables=0
 sort hhid
 save "$path/out/hhdnondurablesexp.dta", replace
 use "$path/out/hhdeduc&medic&durabex.dta"

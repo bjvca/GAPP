@@ -207,7 +207,7 @@ use `food_basket_flex';
 			*drop descript;
 			*gen descript = 0;
 
-            collapse (sum) f_share_w, by(spdomain product );         
+            collapse (sum) f_share_w, by(spdomain product descript);         
 
             sort spdomain f_share_w;
           by spdomain: gen cumshr= sum(f_share_w);
@@ -224,9 +224,9 @@ save "$path/work/food_basket_flex.dta", replace;
 list product spdomain f_share_w cumshr if spdomain==1;
           
           gen numreg=1;
-          collapse (sum) numreg cumshr, by (product );
+          collapse (sum) numreg cumshr, by (product descript);
                 
-          keep product  numreg;
+          keep product descript numreg;
           display _N;
           
           lab var numreg "number of goods in the basket";
@@ -236,7 +236,7 @@ list product spdomain f_share_w cumshr if spdomain==1;
             tab _merge;
           keep if _merge==3;
 */
-          keep product  numreg;  
+          keep product descript numreg;  
           sort product;     
           display _N;  
 

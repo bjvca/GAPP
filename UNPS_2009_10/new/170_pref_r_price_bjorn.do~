@@ -115,7 +115,7 @@ forvalues i=1/$n_spdom {		;
 
                 use "$path/work/price_unit_flex_it$it_n.dta";
         
-                        keep product spdomain price_uw$it_n  count bswt;
+                        keep product spdomain price_uw$it_n descript count bswt;
                         sort product;
                 keep if spdomain==`j';
                 sort product;
