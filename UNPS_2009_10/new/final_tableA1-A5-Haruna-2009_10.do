@@ -360,7 +360,7 @@ gen assetvalue = h14q5
 ** the household can use 0.1% of these assests, just to limit the influence of assests that were inflating unnecessarily especially the urban poverty estimates,
 ** house not treated as an asset as the toolkit takes care of imputed rent
 gen dassetvalue = (assetvalue*0.1)/365
-
+*replace dassetvalue=0
 la var dassetvalue "household daily durables expenditure"
 rename HHID hhid
 sort hhid
@@ -402,11 +402,34 @@ rename hh hhid
 egen hhsemidurables = rowtotal ( h15dq3 h15dq4 h15dq5)
 sort hhid
 gen hhdsemidurs = (hhsemidurables*0.5)/365
+*replace hhdsemidurs=0
 la var hhdsemidurs "household daily semi durables goods and seervices expenses"
 drop hhsemidurables
 tostring hhid, force replace
 save "$path/out/hhdsemidurablesexp.dta", replace
 clear
+
+use "$path/in/GSEC15E.dta"
+sort hh
+rename hh hhid
+save "$path/in/hhnonconsmpexptaxes.dta", replace
+
+** we only considered graduated tax-904, that may cause arrest if not paid and it used to be per head paid to local government annually
+** and dropped income tax-901, property tax-902, user fees-903, social security payments-905, remmitances-906, funerals-907 and others-909
+drop if inlist( itmcd ,806)
+gen hhdnonconsumpexp = h15eq3/365
+*replace hhdnonconsumpexp=0
+la var hhdnonconsumpexp "hh daily expenditure on taxes, contributions, donations, duties, etc"
+sort hhid 
+collapse hhdnonconsumpexp, by (hhid)
+save "$path/out/hhdnonconsumpexp.dta", replace
+clear
+
+
+
+
+
+
 ****-----------------------calculating basic non-consumption expenses
 ** The file GSEC15E.dta, where this information was kept was absent
 ** after generating all daily non food total household expenditures of various considered items, then we start merging these  SIX hhd--- prefixed files, and ending with sufix exp to get all non food hh daily expenditure
@@ -464,7 +487,23 @@ merge 1:1 hhid using "$path/out/hhdsemidurablesexp.dta"
 drop _merge
 sort hhid
 save "$path/out/hhdeduc&medic&durab&nondurab&freqs&semidurabex.dta", replace
-gen hhnonfoodexp =  educationd+medicalexpd+dassetvalue+dnondurables+dhhfrequents+hhdsemidurs
+
+use "$path/out/hhdnonconsumpexp.dta"
+tostring hhid, force replace
+collapse (sum) hhdnonconsumpexp , by(hhid)
+sort hhid
+tostring hhid, force replace
+save "$path/out/hhdsemidurablesexp.dta", replace
+use "$path/out/hhdeduc&medic&durab&nondurab&freqs&semidurabex.dta"
+merge 1:1 hhid using "$path/out/hhdsemidurablesexp.dta"
+drop _merge
+sort hhid
+*save "$path/out/hhdeduc&medic&durab&nondurab&freqs&semidurabex.dta", replace
+
+
+
+
+gen hhnonfoodexp =  educationd+medicalexpd+dassetvalue+dnondurables+dhhfrequents+hhdsemidurs + hhdnonconsumpexp
 la var hhnonfoodexp "household total non food expenditure"
 keep hhid hhnonfoodexp
 gen product = 0
