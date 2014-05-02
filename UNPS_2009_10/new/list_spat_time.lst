@@ -1,0 +1,429 @@
+GAMS 24.1.2  r40979 Released Jun 16, 2013 LEX-LEG x86_64/Linux                                                                                                                                                                         03/11/14 14:56:28 Page 1
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+   1  * Filename: 195a_spat_temp_consistent.gms
+   2   
+   3  * Using stata input files representing CBS poverty lines etc.,
+   4  * this gams file adjusts these poverty lines such that they are
+   5  * consistent across space and over time (spatial domains and years)
+   6   
+      This file uses:
+               work\product_flex.inc
+               in\price_t1.inc
+               in\povline_t1_cc.inc
+               work\povline_food_fix.inc
+               work\price_unit_flex.inc
+               work\quan_flex.inc
+       
+      This file creates:
+               work\qent.csv
+               work\povline_food_ent.csv
+               work\povline_rp_inout.csv
+       
+  22   
+  23  SETS
+  24   cod        year t2 (e.g. 2002) codes for products used in basket
+  25  /
+  26  $include work\product_flex.inc
+****                               $282
+  27  /
+****  $460
+  28   
+  29   reg        12 spatial domains /1*12/
+  30   r(reg)     dynamic set on spatial regions
+  31   
+  32   ptit       price table titles
+  33  /
+  34    count      number of observations making up the price average
+  35    price_uw5  average price
+  36  /
+  37   
+  38   qtit       quantity table titles
+  39  /
+  40    calperg          calories per gram
+  41    quan5            quantities in grams
+  42    calpp            calories per person by region
+  43    povline_f_flex5  value of flexible food bundle
+  44  /
+  45   
+  46   
+  47    posquan(cod,reg)  mark positive quantities in each region
+  48    posprice(cod,reg) mark the existence of acceptable price info in each region
+  49    pmiss_t1(cod,reg) mark year t1 (e.g. 1996) missing prices
+  50    chkprice(cod,reg) ensure that prices exist once all estimated
+  51  ;
+  52   
+  53  *****************************************************
+GAMS 24.1.2  r40979 Released Jun 16, 2013 LEX-LEG x86_64/Linux                                                                                                                                                                         03/11/14 14:56:28 Page 2
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+  54  *Work first on all regions
+  55  *********************************************************
+  56   
+  57   r(reg)=yes;
+  58   
+  59  alias(reg,regq);
+  60  alias(r,rq);
+  61   
+  62  SCALAR
+  63     caltarg single level of calories to target across regions /2150/
+  64   ;
+  65   
+  66  PARAMETERS
+  67    price_t1(cod,reg)     price information and poverty line for year t1 (e.g. 1996)
+  68  /
+  69  $include in\2001\price_t1.inc
+****                              $282
+  70  /
+****  $460
+  71    foodpov_t1(reg)       food pov line P_t1*Q_t1 ADJUSTED to hit 2150 calories
+  72  /
+  73  $include in\2001\povline_t1_cc.inc
+****                                   $282
+  74  /
+****  $460
+  75    shr(cod,reg)           shares in each basket by region
+  76    chkshr(reg)            check that the calculated shares sum to .9
+  77    shrmiss(regq,reg)      shares missing in each region pair
+  78    povline_food(reg)      food poverty line
+  79    perc_chng(reg)         percent change in line
+  80    origmiss(reg)          original share of items without price obs in year t1 (e.g. 1996)
+  81    finmiss(reg)           final missing shares post optimization procedure
+  82    povline_food_fix(reg)  food pov line Q_t1*P_t2 NOT adjusted to 2150 calories
+  83   /
+  84  $include in\2001\povline_food_fix.inc
+****                                      $282
+  85   /
+****   $460
+  86   ;
+  87   
+  88  Table  price(cod,reg,ptit)  price and related information
+****                                                          $361
+  89                          count   price_uw5
+  90  $include work\price_unit_flex.inc
+****                                  $282
+  91  ;
+****  $462
+  92   
+  93  Table   quan(cod,reg,qtit)   quantity and related information
+****                                                              $361
+  94                             calperg          quan5           calpp      povline_f_flex5
+  95  $include work\quan_flex.inc
+****                            $282
+GAMS 24.1.2  r40979 Released Jun 16, 2013 LEX-LEG x86_64/Linux                                                                                                                                                                         03/11/14 14:56:28 Page 3
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+  96  ;
+****  $462
+  97   
+  98  *CA March 2009 - adjust fixed bundle line to hit 2150 calories
+  99    loop(cod$(ord(cod) eq 1),
+ 100      povline_food_fix(reg)= povline_food_fix(reg)*2150/quan(cod,reg,'calpp');
+ 101    );
+ 102   
+ 103    shr(cod,reg)$quan(cod,reg,'povline_f_flex5')
+ 104                        =price(cod,reg,'price_uw5')*quan(cod,reg,'quan5')/
+ 105                         quan(cod,reg,'povline_f_flex5');
+ 106   
+ 107    chkshr(reg)=sum(cod,shr(cod,reg));
+ 108   
+ 109  loop(reg,
+ 110    abort$(abs(chkshr(reg)-.9) gt .0001) "share does not sum to .9", chkshr ;
+ 111  );
+ 112   
+ 113   
+ 114  *turn on dynamic sets to indicate positive quantities and existence of
+ 115  *price info for each region
+ 116   
+ 117   posprice(cod,reg)$(price(cod,reg,'price_uw5')
+ 118                        AND price(cod,reg,'count') gt 4) = yes;
+ 119   
+ 120   posquan(cod,reg)$quan(cod,reg,'quan5')=yes;
+ 121   
+ 122   pmiss_t1(cod,reg)$(NOT price_t1(cod,reg) AND posquan(cod,reg))=yes;
+ 123   
+ 124   display pmiss_t1;
+ 125   
+ 126    loop(reg,
+ 127         abort$(foodpov_t1(reg) eq 0) "missing a food poverty line", foodpov_t1;
+ 128   );
+ 129   
+ 130   shrmiss(regq,reg)=sum(cod$(NOT posprice(cod,reg)), shr(cod,regq));
+ 131   display shrmiss;
+ 132   
+ 133   origmiss(reg)=sum(cod$pmiss_t1(cod,reg), shr(cod,reg));
+ 134   display origmiss;
+ 135   
+ 136    povline_food(reg)=sum(cod$posquan(cod,reg),price(cod,reg,'price_uw5')*
+ 137                                             quan(cod,reg,'quan5'))/.9;
+ 138   
+ 139    display povline_food;
+ 140   
+ 141   
+ 142  *boost values so shares sum to one;
+ 143  shr(cod,reg)=shr(cod,reg)/chkshr(reg);
+ 144   
+ 145  *fill out price matrix with maximum observed price outside of Maputo
+ 146   r(reg)=no;
+ 147   r(reg)$(ord(reg) le 10)=yes;
+GAMS 24.1.2  r40979 Released Jun 16, 2013 LEX-LEG x86_64/Linux                                                                                                                                                                         03/11/14 14:56:28 Page 4
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+ 148  loop((cod,r)$(NOT posprice(cod,r) AND posquan(cod,r)),
+ 149           loop(rq,
+ 150                   price(cod,r,'price_uw5')=max(price(cod,r,'price_uw5'),
+ 151                                                price(cod,rq,'price_uw5'));
+ 152           );
+ 153  );
+ 154   
+ 155  *fill out price matrix with maximum observed price within Maputo
+ 156   r(reg)=no;
+ 157   r(reg)$(ord(reg) gt 10)=yes;
+ 158  loop((cod,r)$(NOT posprice(cod,r) AND posquan(cod,r)),
+ 159           loop(rq,
+ 160                   price(cod,r,'price_uw5')=max(price(cod,r,'price_uw5'),
+ 161                                                price(cod,rq,'price_uw5'));
+ 162           );
+ 163  );
+ 164   
+ 165  *Back to r indexing all regions
+ 166   r(reg)=yes;
+ 167   
+ 168  chkprice(cod,reg)$(NOT price(cod,reg,'price_uw5') AND posquan(cod,reg))=yes;
+ 169   
+ 170  display 'should be an empty set', chkprice;
+ 171   
+ 172  Variables
+ 173     z                 objective value
+ 174     q(cod,reg)        revised maximum entropy quanties in grams
+ 175     s(cod,reg)        derived maximum entropy shares
+ 176     povline(regq,reg) estimated revealed preference matrix
+ 177     povline_t1(regq)  value of estimated bundle at year t1 (e.g. 1996) prices
+ 178  ;
+ 179   
+ 180   
+ 181  Equations
+ 182     obj              objective equation
+ 183     rev(regq,reg)    revealed preference tests
+ 184     deflin(regq,reg) define revealed preference matrix
+ 185     defshr(cod,regq) define the endogenous budget shares
+ 186     deflin_t1(reg)   define the value of the bundle at year t1 (e.g. 1996) prices
+ 187     cals(regq)       ensure that each bundle hits the calorie
+ 188   
+ 189  ;
+ 190   
+ 191     obj ..  z=e= sum((cod,rq)$posquan(cod,rq),
+ 192                     s(cod,rq)*log(s(cod,rq)/shr(cod,rq)));
+ 193   
+ 194     deflin(rq,r) .. povline(rq,r) =e= sum(cod$posquan(cod,rq),
+ 195                            q(cod,rq)*price(cod,r,'price_uw5'));
+ 196   
+ 197     rev(rq,r) ..    povline(r,rq)=g=povline(rq,rq);
+ 198   
+ 199     defshr(cod,rq)$posquan(cod,rq) ..
+ 200               povline(rq,rq)*s(cod,rq)=e= q(cod,rq)*price(cod,rq,'price_uw5');
+GAMS 24.1.2  r40979 Released Jun 16, 2013 LEX-LEG x86_64/Linux                                                                                                                                                                         03/11/14 14:56:28 Page 5
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+ 201   
+ 202     deflin_t1(rq) .. povline_t1(rq)*(.9-sum(cod$pmiss_t1(cod,rq),s(cod,rq))) =e=
+ 203                         sum(cod$(posquan(cod,rq) AND NOT pmiss_t1(cod,rq)),
+ 204                           q(cod,rq)*price_t1(cod,rq));
+ 205   
+ 206     cals(rq) .. sum(cod$posquan(cod,rq),
+ 207                      q(cod,rq)*quan(cod,rq,'calperg'))=e=.95*caltarg;
+ 208   
+ 209  *set bounds and starting values for variables
+ 210   
+ 211    q.lo(cod,reg)=.00001;
+ 212    q.up(cod,reg)=inf;
+ 213    q.l(cod,reg)=quan(cod,reg,'quan5');
+ 214    q.fx(cod,reg)$(NOT posquan(cod,reg))=0;
+ 215   
+ 216    povline.l(regq,reg)= sum(cod$posquan(cod,regq),
+ 217                            q.l(cod,regq)*price(cod,reg,'price_uw5'));
+ 218   
+ 219    povline.up(regq,regq)=povline_food_fix(regq)*.9;
+ 220   
+ 221    display povline.l;
+ 222   
+ 223  *print the revealed preference matrix prior to optimisation;
+ 224  file povline_rp /work\povline_rp_inout.csv/;
+ 225  put povline_rp;
+ 226  povline_rp.pc=5;
+ 227  povline_rp.nd=0;
+ 228  put " ";
+ 229  loop(reg,
+ 230        put reg.tl;
+ 231  );
+ 232  put /;
+ 233  loop(regq,
+ 234       put regq.tl;
+ 235       loop(reg,
+ 236           put povline.l(regq,reg);
+ 237       );
+ 238       put /;
+ 239  );
+ 240  put /; put /; put /;
+ 241   
+ 242     s.l(cod,regq)= q.l(cod,regq)*price(cod,regq,'price_uw5')/povline.l(regq,regq);
+ 243     s.lo(cod,regq)=.0001;
+ 244     s.fx(cod,regq)$(NOT posquan(cod,regq))=0;
+ 245   
+ 246     povline_t1.l(reg)=1.2*foodpov_t1(reg);
+ 247     povline_t1.lo(reg)=foodpov_t1(reg);
+ 248   
+ 249     model revpref /obj, deflin, rev, defshr, deflin_t1, cals/;
+ 250     model revprefnotemp /obj, deflin, rev, defshr, cals/;
+ 251   
+ 252     revpref.holdfixed=1;
+ 253   
+GAMS 24.1.2  r40979 Released Jun 16, 2013 LEX-LEG x86_64/Linux                                                                                                                                                                         03/11/14 14:56:28 Page 6
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+ 254     option limrow=100;
+ 255   
+ 256     option nlp=conopt;
+ 257   
+ 258  *run procedure on all regions
+ 259     r(reg)=yes;
+ 260   
+ 261  *CAtemp
+ 262  *Check without temporal conditions  ***NEED TO UNDO THIS!!!!!!!!!!!!!!!!!!!!
+ 263   
+ 264  *   solve revpref using nlp minimizing z;
+ 265   
+ 266    povline.up(regq,regq)=inf;
+ 267   
+ 268     solve revpref using nlp minimizing z;
+****                                         $257
+ 269   
+ 270   
+ 271     abort$(revpref.modelstat ne 2) "Model did not solve properly";
+ 272   
+ 273     povline.l(regq,reg)$(NOT rq(regq) OR NOT r(reg))=0;
+ 274     display "this is without adjustment for calorie target or 90%", povline.l;
+ 275   
+ 276  put /;
+ 277  loop(rq,
+ 278       put rq.tl;
+ 279       loop(r,
+ 280           put povline.l(rq,r);
+ 281       );
+ 282       put /;
+ 283  );
+ 284  put /;
+ 285   
+ 286   
+ 287     finmiss(r)=sum(cod$pmiss_t1(cod,r),s.l(cod,r));
+ 288     display finmiss;
+ 289   
+ 290  PARAMETERS
+ 291     qent(cod,reg)  entropy quantities with all adjustments accounted for
+ 292     povline_ent(reg) entropy line that hits calorie targets (100% food expen)
+ 293    ;
+ 294  *readjust quantities to hit regional calorie target and calculate line;
+ 295     qent(cod,r)=q.l(cod,r)*quan(cod,r,'calpp')/caltarg;
+ 296   
+ 297     povline_ent(r)=sum(cod$posquan(cod,r),price(cod,r,'price_uw5')*
+ 298                                             qent(cod,r))/.9;
+ 299   
+ 300     perc_chng(r)=100*(povline_ent(r)/povline_food(r)-1);
+ 301   
+ 302  *CA March 2009 - adjust fixed bundle line to hit 2150 calories
+ 303    loop(cod$(ord(cod) eq 1),
+ 304       povline_food_fix(reg)= povline_food_fix(reg)*quan(cod,reg,'calpp')/2150;
+ 305    );
+GAMS 24.1.2  r40979 Released Jun 16, 2013 LEX-LEG x86_64/Linux                                                                                                                                                                         03/11/14 14:56:28 Page 7
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+ 306     display perc_chng, povline_ent, povline_food;
+ 307   
+ 308     file res /work\qent.csv/;
+ 309   
+ 310     put res;
+ 311     res.pc=5;
+ 312     res.nd=6;
+ 313   
+ 314  *recall that the basket reflects 90% of expenditure and 95% of calories";
+ 315     put "spdomain" ;
+ 316     put "product" ;
+ 317     put "quan5";
+ 318     put "qent";
+ 319     put "price";
+ 320     put "calperg";
+ 321   
+ 322     put /;
+ 323   
+ 324     loop(reg,
+ 325         loop(cod,
+ 326             put reg.tl;
+ 327             put cod.tl;
+ 328             put quan(cod,reg,'quan5');
+ 329             put qent(cod,reg);
+ 330             put price(cod,reg,'price_uw5')
+ 331             put quan(cod,reg,'calperg');
+ 332             put /;
+ 333         );
+ 334     );
+ 335   
+ 336     file lin /work\povline_food_ent.csv/;
+ 337   
+ 338     put lin;
+ 339     lin.pc=5;
+ 340  *Flexible, entropy, and fixed food pov lines at 100% expenditure
+ 341   
+ 342     put "spdomain";
+ 343     put "flex";
+ 344     put "ent";
+ 345     put "fix";
+ 346     put /;
+ 347   
+ 348     loop(reg,
+ 349           put reg.tl;
+ 350           put povline_food(reg);
+ 351           put povline_ent(reg);
+ 352           put povline_food_fix(reg);
+ 353           put /;
+ 354     );
+GAMS 24.1.2  r40979 Released Jun 16, 2013 LEX-LEG x86_64/Linux                                                                                                                                                                         03/11/14 14:56:28 Page 8
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Error Messages
+
+
+257  Solve statement not checked because of previous errors
+282  Unable to open include file
+361  Values for domain 1 are unknown - no checking possible
+460  Empty data statements not allowed. You may want to use $ON/OFFEMPTY
+462  The row section in the previous table is missing
+
+**** 15 ERROR(S)   0 WARNING(S)
+
+
+COMPILATION TIME     =        0.003 SECONDS      3 MB  24.1.2 r40979 LEX-LEG
+
+
+USER: Computer Services                              G130401:1333CP-GEN
+      International Food Policy Research Institute               DC2119
+
+
+**** FILE SUMMARY
+
+Input      /home/bjvca/data/data/GAP/Haruna/UNPS_2009_10/new/195a_spat_temp_consistent.gms
+Output     /home/bjvca/data/data/GAP/Haruna/UNPS_2009_10/new/list_spat_time.lst
+
+**** USER ERROR(S) ENCOUNTERED

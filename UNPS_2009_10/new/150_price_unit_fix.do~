@@ -108,12 +108,12 @@ save `dd_acsort', replace;
 save `build';
 
 
-use "$path/in/match_t1_t2.dta", clear;
+use "$path\in\match_t1_t2.dta", clear;
 *rename $product   product;
 *rename $product_t1 product_t1;
         drop if product==.;
         sort product;
-save "$path/work/match_t1_t2.dta", replace; 
+save "$path\work\match_t1_t2.dta", replace; 
 
 **************************************************************************************;
 *Merge the matched codes with the dd  and own data set;

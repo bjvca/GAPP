@@ -56,7 +56,7 @@ rename price  mppg_ir;
 rename qent      tgrpdpc_ir;
 
 * Amount spend on food item (national currency) in PS;
-rename $povline_f_fix tvrpdpc_r;
+rename povline_a_fix tvrpdpc_r;
 
 * Total calories per person in PS, by region;
 rename calpp      calnecpp;
