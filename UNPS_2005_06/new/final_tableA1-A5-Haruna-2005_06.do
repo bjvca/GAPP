@@ -93,7 +93,7 @@ replace strata = 5 if region ==3 & urban==1
 replace strata = 6 if region ==3 & urban==0
 replace strata = 7 if region ==4 & urban==1
 replace strata = 8 if region ==4 & urban==0
-la define lstrata 1 "central urban" 2 "central rural" 3 "Eastern urban" 4 "Eastern rural" 5 "Northern urban" 6 "Northern rural" 7 "Western Urban" 8 "Western rural"
+la define lstrata 1 "central urban" 2 "central rural" 3 "Eastern urbfao adult equivalence scalesan" 4 "Eastern rural" 5 "Northern urban" 6 "Northern rural" 7 "Western Urban" 8 "Western rural"
 la values strata lstrata
 label variable strata "Geographical stratification variable during sampling (ranging from 1 to 6 sub regions)"
 tab strata
@@ -137,12 +137,17 @@ tab strata
 * In the Arndt & Simler 2010 paper the spatial domains are a combinaison of regions and rural/urban delimitations + the capital
 * city, however in the 2010/11 some urban sections have far less than 200 respondents, so we shall combine all other regions 
 * (rural + urban)except the central since its urban would be boosted by Kampala, getting us 5 spatial domains
-gen float spdomain=1 if strata==1 | strata==1
+gen float spdomain=1 if strata==1
 replace spdomain=2 if strata==2
-replace spdomain=3 if strata==3 | strata==4
-replace spdomain=4 if strata==5 | strata==6
-replace spdomain=5 if strata==7 | strata==8
-label define lspdomain 1 "Central Urban" 2 "Central Rural" 3 "Eastern" 4 "Northern" 5 "Western" 
+replace spdomain=3 if strata==3 
+replace spdomain=4 if strata==4 
+replace spdomain=5 if strata==5
+replace spdomain=6 if strata==6
+replace spdomain=7 if strata==7
+replace spdomain=8 if strata==8
+
+
+label define lspdomain 1 "Central Urban" 2 "Central Rural" 3 "Eastern Urban" 4 "Eastern Rural" 5 "Northern Urban" 6 "Northern Rural" 7 "Western Urban" 8 "Western Rural"
 label values spdomain lspdomain
 label variable spdomain "Spatial domains: each with own poverty line (they are 5)"
 tab spdomain
@@ -166,11 +171,46 @@ save "$path/out/hhdata_hhsize.dta",replace
 ** Since we need Household size in the hhdata.dta, and it was unavailable in the GSEC1.dta, we use the Unique person identifier in GSEC2.dta
 clear 
 use "$path/in/GSEC2.dta"
+keep if tid==1
 rename pid indlin
 bysort HHID: gen pid=_n
 order HH pid
-collapse (count) pid, by (HHID)
-rename pid hhsize
+
+gen equiv=.
+replace equiv=.33 if  (h2q9==0) 
+replace equiv=.46 if  (h2q9==1) 
+replace equiv=.54 if  (h2q9==2) 
+replace equiv=.62 if  (h2q9==3 | h2q9==4) 
+
+replace equiv=.74 if h2q4==1 &  (h2q9==5 | h2q9==6) 
+replace equiv=.70 if h2q4==2 &  (h2q9==5 | h2q9==6) 
+
+replace equiv=.84 if h2q4==1 &  (h2q9>6 & h2q9<10) 
+replace equiv=.72 if h2q4==2 & (h2q9>6 & h2q9<10) 
+
+replace equiv=.88 if h2q4==1 &  (h2q9==10 | h2q9==11) 
+replace equiv=.78 if h2q4==2 &  (h2q9==10 | h2q9==11) 
+
+replace equiv=.96 if h2q4==1 &  (h2q9==12 | h2q9==13) 
+replace equiv=.84 if h2q4==2 &  (h2q9==12 | h2q9==13) 
+
+replace equiv=1.06 if h2q4==1 &  (h2q9==14 | h2q9==15) 
+replace equiv=.86 if h2q4==2 &  (h2q9==14 | h2q9==15) 
+
+replace equiv=1.14 if h2q4==1 &  (h2q9==16 | h2q9==17) 
+replace equiv=.86 if h2q4==2 &  (h2q9==16 | h2q9==17) 
+
+replace equiv=1.04 if h2q4==1 &  (h2q9>17 & h2q9<30) 
+replace equiv=.80 if h2q4==2 & (h2q9>17 & h2q9<30) 
+
+replace equiv=1.00 if h2q4==1 &  (h2q9>29 & h2q9<60) 
+replace equiv=.82 if h2q4==2 & (h2q9>29 & h2q9<60) 
+
+replace equiv=0.84 if h2q4==1 &  (h2q9>59 ) 
+replace equiv=.74 if h2q4==2 & (h2q9>59) 
+
+collapse (sum) equiv, by (HHID)
+rename equiv hhsize
 la var hhsize "number of household menbers"
 rename HHID hhid
 sort hhid
@@ -280,7 +320,7 @@ la var hhid "household id"
 ** cigarettes-155, other tobacco-156 and beer taken in restaurants-159, just like we did in the 2009 poverty calculations
 rename h14aq2 itmcd
 rename h14aq3 untcd
-drop if inlist( itmcd ,152,153,155,156,159)
+drop if inlist( itmcd ,152,153, 155,156,159)
 duplicates report  hhid itmcd
 *duplicates list  hhid itmcd
 codebook hhid
@@ -374,7 +414,7 @@ gen assetvalue = h12aq5
 ** the household can use 0.1% of these assests, just to limit the influence of assests that were inflating unnecessarily especially the urban poverty estimates,
 ** house not treated as an asset as the toolkit takes care of imputed rent
 gen dassetvalue = (assetvalue*0.1)/365
-*replace dassetvalue = 0
+replace dassetvalue = 0
 la var dassetvalue "household daily durables expenditure"
 rename HHID hhid
 sort hhid
@@ -392,7 +432,7 @@ sort hhid
 * others-459, tires-461, petrol-462, bus fares-464, bodaboda fare-465, stamps/envelops-466, mobilephoneairtime-467 and others-469,health fees as 
 *consultation-501, medicine-502, hospitalcharges-503, traditionaldoctors-504, others-505 since medical expenses were cosidered in section 5, 
 * sports/theater-601, drycleaning-602, houseboys-603, barbers&beauty shops-604 and lodging-605. THESE HAVE BEEN CONSIDERED NON BASIC
-*drop if inlist( h14bq2 ,311,455,456,457,458,459,461,462,464,465,466,467,469,501,502,503,504,505,601,602,603,604,605)
+drop if inlist( h15cq2 , 311,459,469, 502,503,601,602,603,605)
 egen hhfrequents = rowtotal ( h14bq5 h14bq7 h14bq9)
 gen dhhfrequents = hhfrequents/30
 la var dhhfrequents "daily household expenditure on frequently bought commodities"
@@ -416,7 +456,7 @@ rename HHID hhid
 egen hhsemidurables = rowtotal ( h14cq3 h14cq4 h14cq5)
 sort hhid
 gen hhdsemidurs = (hhsemidurables*0.5)/365
-*replace hhdsemidurs=0
+replace hhdsemidurs=0
 la var hhdsemidurs "household daily semi durables goods and seervices expenses"
 drop hhsemidurables
 tostring hhid, force replace
@@ -431,7 +471,7 @@ rename HHID hhid
 ** and dropped income tax-901, property tax-902, user fees-903, social security payments-905, remmitances-906, funerals-907 and others-909
 drop if inlist( itmcd ,906)
 gen hhdnonconsumpexp = value/365
-*replace hhdnonconsumpexp=0
+replace hhdnonconsumpexp=0
 la var hhdnonconsumpexp "hh daily expenditure on taxes, contributions, donations, duties, etc"
 sort hhid 
 collapse hhdnonconsumpexp, by (hhid)
