@@ -47,15 +47,16 @@ This file creates:
 * Create sorted data set with daily and own and the matched codes
 **************************************************************************************;
 use "$path/work/cons_cod_trans.dta", clear;
+drop if quantity >30000;
 *use "$path/in/cons_cod_trans.dta", clear;
 *save "$path/work/cons_cod_trans.dta", replace;
 
 *drop if quantityd==0 ;
 
-keep hhid product food_cat valuez quantityz unit;
+keep hhid product food_cat valuez quantity unit;
 
 rename valuez    value;
-rename quantityz quantity;
+*rename quantityz quantity;
 
 drop if quantity==0 ;
 
@@ -288,6 +289,8 @@ keep if hhppkg-lower5>=0 & hhppkg-upper5<=0;
         lab var price_unitm "median of prices";
         lab var price_unitw "value share weighted mean prices";
 
+       *replace price_unitw = price_unitw*189.48/230.58;
+         
 * Get an idea of the difference between the price measures;
         gen ratiotw=price_unitt/price_unitw;
         gen ratiomw=price_unitm/price_unitw;

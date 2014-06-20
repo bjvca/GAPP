@@ -45,7 +45,7 @@ use "$path/work/food_basket_flex.dta";
         sort product;
 
         * merge in information on calories per gram;
-        merge product using "$path/work/calperg.dta";
+        merge product using  "/home/bjvca/data/data/GAP/Haruna/calperg_joint.dta";
         tab _merge;
 
         * This tells where we are lacking calorie info or are lacking quantity info due to 
@@ -80,7 +80,7 @@ use "$path/work/food_basket_flex.dta";
 
         * merge in calorie requirements;
         sort spdomain;
-        merge spdomain using "$path/work/calpp.dta";
+        merge spdomain using "/home/bjvca/data/data/GAP/Haruna/calpp_joint.dta";
         tab _merge;
         drop _merge;
 
@@ -104,7 +104,7 @@ use "$path/work/food_basket_flex.dta";
         * the sum of the value of the goods in the bundle is assumed to represent 90% of expenditure;
         by spdomain: egen povline_f_flex90=sum(val_ir);
         replace povline_f_flex=povline_f_flex90/.9;
-
+save "$path/work/povline_food_flex_investigate.dta", replace;
         collapse (mean) povline_f_flex, by (spdomain);
 		
 lab var povline_f_flex "Food poverty line. Flexible basket";

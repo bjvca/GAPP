@@ -51,7 +51,7 @@ gen crap=1;
          1  ".";
  lab val crap crap;
 
-outsheet product crap reg bswt price_uw$it_n using "$path/work/price_unit_flex.inc",  noquote noname replace ;
+outsheet product crap reg bswt price_um$it_n using "$path/work/price_unit_flex.inc",  noquote noname replace ;
 
 collapse (min) spdomain, by(product);
 outsheet product  using "$path/work/product_flex.inc", noname replace;
@@ -91,9 +91,9 @@ forvalues i=1/$n_spdom {		;
         clear;
 
                 use "$path/work/quan_flex_it$it_n.dta", clear;
-                keep product spdomain quan$it_n price_uw$it_n val_ir$it_n povline_f_flex90_$it_n calpp;
+                keep product spdomain quan$it_n price_um$it_n val_ir$it_n povline_f_flex90_$it_n calpp;
         gen share=val_ir$it_n/povline_f_flex90_$it_n;
-        rename price_uw$it_n pquanreg;
+        rename price_um$it_n pquanreg;
         rename spdomain spdomainq;
         drop if spdomainq~= `i';
         sort product;
@@ -115,7 +115,7 @@ forvalues i=1/$n_spdom {		;
 
                 use "$path/work/price_unit_flex_it$it_n.dta";
         
-                        keep product spdomain price_uw$it_n descript count bswt;
+                        keep product spdomain price_um$it_n  count bswt;
                         sort product;
                 keep if spdomain==`j';
                 sort product;
@@ -131,7 +131,7 @@ forvalues i=1/$n_spdom {		;
                 drop if _m==1;
                 
                 *CA modified to handle the counting of bswt instead of count
-                  replace price_uw$it_n=. if round(bswt)<5;
+                  replace price_um$it_n=. if round(bswt)<5;
                         gen pricemiss=0;
                   replace spdomain=`j' if _m==2 ;
                   replace pricemiss=1 if _m==2 | round(bswt)<5;
@@ -161,7 +161,7 @@ forvalues i=1/$n_spdom {		;
                         keep if _m==3 ;
                                 *exclude Maputo province and city from other price calculation;
                                 drop if spdomain>10;
-                        collapse (max) price_uw$it_n, by(product);
+                        collapse (max) price_um$it_n, by(product);
 
                   *this file contains the code and the max price;
                   save `codmiss', replace;
@@ -176,7 +176,7 @@ forvalues i=1/$n_spdom {		;
                         
                         else use `getmiss', clear;
 
-                        gen val_q=quan_s*price_uw$it_n;
+                        gen val_q=quan_s*price_um$it_n;
                         
                         collapse (sum) val_q pricemiss (mean) spdomainq ratquan, by(spdomain);
                   gen linf_q=val_q/.9;

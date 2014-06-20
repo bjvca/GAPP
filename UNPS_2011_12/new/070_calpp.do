@@ -132,7 +132,7 @@ sum;
 
 * MAH ; sum; codebook hhid;
 
-collapse (mean) calpp[aw=hhsize*hhweight], by (spdomain);
+collapse (mean) calpp[aw=num*hhweight], by (spdomain);
 
 sort spdomain;
 

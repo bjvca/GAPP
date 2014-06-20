@@ -556,7 +556,7 @@ drop if quantity==0 ;
                 drop _merge;
                 sort product;
         
-                merge product using "$path/work/calperg.dta";
+                 merge product using  "/home/bjvca/data/data/GAP/Haruna/calperg_joint.dta";
                 tab _merge;
 				
                 * This tells where we are lacking calorie info or are lacking quantity info due to 

@@ -1,17 +1,18 @@
 
 
 if c(os)=="Unix" {
-global path "/home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3/"
+global path "/home/bjvca/data/data/GAP/Haruna/UNPS_2011_12/"
 }
 else{
-global path "C:\Users\Templeton\Desktop\GAPP\GAPP-UGANDA-HARUNA\UNPS_2011\GAPP3"
+global path "C:\Users\Haruna\Desktop\GAPP\UNPS_2011_12"
 }
 
 
 
+shell rm $path/work/*
 
-
-
+shell rm $path/out/*
+*/
 version 10.1
 
 cd "$path"
@@ -27,7 +28,7 @@ log using "$path/rep/000_boom.log"  , name(log_000_boom) replace
 display "* # * # * # * # * # * # * # * # * # * # * # * # * # * # * # * # *"
 display ""
 display "Generel information:"
-display "   UGANDA HOUSEHOLD BUDGET SURVEY 2009/10"
+display "   UGANDA HOUSEHOLD BUDGET SURVEY 2011/12"
 display "   Poverty rate estimation"
 display "   Methodology: Iterative procedure and revealed preferences tests"
 display ""
@@ -63,6 +64,7 @@ noisily display "Start time: " "$S_TIME"
 **************************************************************************
 * Macros. Region definitions. Demographic definitions.
 **************************************************************************
+do "$path/new/final_tableA1-A5-Haruna-2011_12.do"
 do "$path/new/010_initial.do"
 
 *do "C:\user\gapp\z_data_preb/new/100_collect_expen_moz.do"
@@ -139,6 +141,11 @@ $no_temp_rev	do "$path/new/160_food_basket_fix.do"	/* Fixed food basket */
 $no_temp_rev	do "$path/new/180_povline_food_fix.do"	/* Inflating year t1's poverty lines to year t2 */
 
 				shell "$path/new/$revpref"				/* Adjusting flexible basket: inside pref. constraints */
+*** execute as super user:
+
+				
+				
+shell /usr/GAMS/gams24.1_linux_x64_64_sfx/gams "/home/bjvca/data/data/GAP/Haruna/UNPS_2011_12/new/190a_revpref13_r_bjorn.gms" o="/home/bjvca/data/data/GAP/Haruna/UNPS_2011_12/new/list.lst"	
 
 $no_temp_rev	do "$path/new/200_povmeas_fix.do"		/* Fixed basket: Poverty rates */
 				do "$path/new/210_povmeas_ent_flex.do"	/* Flexible basket, adjusted: Poverty rates */

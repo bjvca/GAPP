@@ -140,8 +140,8 @@ $no_temp_rev	do "$path/new/160_food_basket_fix.do"	/* Fixed food basket */
 				do "$path/new/170_pref_r_price_bjorn.do"		/* Revealed preference tests */
 $no_temp_rev	do "$path/new/180_povline_food_fix.do"	/* Inflating year t1's poverty lines to year t2 */
 
-				*shell /usr/GAMS/gams24.1_linux_x64_64_sfx/gams "/home/bjvca/data/data/GAP/Haruna/new/190a_revpref13_r_bjorn.gms" o="/home/bjvca/data/data/GAP/Haruna/new/list.lst"				/* Adjusting flexible basket: inside pref. constraints */
-				shell /usr/GAMS/gams24.1_linux_x64_64_sfx/gams "/home/bjvca/data/data/GAP/Haruna/new/195a_spat_temp_consistent_bjorn.gms" o="/home/bjvca/data/data/GAP/Haruna/new/list2.lst"
+				shell /usr/GAMS/gams24.1_linux_x64_64_sfx/gams "/home/bjvca/data/data/GAP/Haruna/new/190a_revpref13_r_bjorn.gms" o="/home/bjvca/data/data/GAP/Haruna/new/list.lst"				/* Adjusting flexible basket: inside pref. constraints */
+				*shell /usr/GAMS/gams24.1_linux_x64_64_sfx/gams "/home/bjvca/data/data/GAP/Haruna/new/195a_spat_temp_consistent_bjorn.gms" o="/home/bjvca/data/data/GAP/Haruna/new/list2.lst"
 				
 
 $no_temp_rev	do "$path/new/200_povmeas_fix.do"		/* Fixed basket: Poverty rates */

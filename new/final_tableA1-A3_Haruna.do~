@@ -46,7 +46,7 @@ use "$path/in/HSEC1.dta"
 ***------- Primary Sampling Unit
 * The primary sampling unit for the 2009 UNHS is the enumeration area.
 codebook ea 
-	/* There are 711 unique values, the UNHS report mentions 712 */
+** There are 711 unique values, the UNHS report mentions 712 
 rename ea psu
 label variable psu "Primary Sampling Unit"
 
@@ -56,7 +56,7 @@ label variable psu "Primary Sampling Unit"
 * as follows: Sept-Nov 08, Dec08-Feb09, Mar-May 08 and June-Aug 08.
 * I will use the same framework
 tab month Year,m 
-	/* According to the repartition of months and year, the survey ran from May 2009 to April 2010. I will define the
+	* According to the repartition of months and year, the survey ran from May 2009 to April 2010. I will define the
 	 * the quarters accordingly. It should be noted that no data was collected in August 2009 so the 2nd quarter I am 
 	 * defining only has two months's worth of survey data */
 gen float survquar=1 if month>=5 & month<=7 & Year==2009
@@ -82,20 +82,18 @@ replace survmon=9 if month==1 & Year==2010
 replace survmon=10 if month==2 & Year==2010
 replace survmon=11 if month==3 & Year==2010
 replace survmon=12 if month==4 & Year==2010
-#delim;
-label define lsurvmon 1 "May 09" 2 "Jun 09" 3 "Jul 09" 4 "Aug 09" 5 " Sep 09" 6 "Oct 09"
-						7 "Nov 09" 8 "Dec 09" 9 "Jan 10" 10 "Feb 10" 11 "Mar 10" 12 "Apr 10";
-#delim cr
+
+label define lsurvmon 1 "May 09" 2 "Jun 09" 3 "Jul 09" 4 "Aug 09" 5 " Sep 09" 6 "Oct 09" 7 "Nov 09" 8 "Dec 09" 9 "Jan 10" 10 "Feb 10" 11 "Mar 10" 12 "Apr 10"
 label values survmon lsurvmon
 tab survmon month,m
 label variable survmon "Sequential Survey Month (May 2009=1)"
 
 ***------- Household Sample Weight
-rename hmult hhweight
+rename mult hhweight
 label variable hhweight "Household sample weight"
 
 ***------- Household id
-codebook hh /*there are  6775 different values and 6775 observations in the dataset so the variable "hh" uniquely identifies the observations */
+codebook hh
 rename hh hhid
 label variable hhid "Household ID"
 
@@ -134,15 +132,22 @@ tab regurb
 * city as a separate domain (confirmed in the Mozambique data file)
 *--> for uganda; urban sub regions of eastern, northern and western had very few households 132, 172, 107 respectively, 
 ** thus we only separated the central region into rural/urban and others were aggregated for northern, eastern and western to have 5 spatial domains
-gen float spdomain=1 if regurb==10 | regurb==11  
+*gen spdomain = 1 if rural==1
+*replace spdomain = 2 if rural ==0
+*gen spdomain = 1 if regurb==11 & district==102
 
-replace spdomain=2 if regurb==20 | regurb==21
-replace spdomain=3 if regurb==30 | regurb==31
-replace spdomain=4 if regurb==40 | regurb==41
+*replace spdomain = 2 if regurb==10
 
-label define lspdomain 1 "Central" 2 "Eastern" 3 "Northern" 4 "Western"  
-label values spdomain lspdomain
-label variable spdomain "Spatial domains: each with own poverty line (they are 4)"
+*replace spdomain = 3 if regurb==20
+
+*replace spdomain = 4 if regurb==30
+
+*replace spdomain = 5 if regurb==40
+
+*replace spdomain = 6 if (regurb==11 | regurb==21 | regurb==31 | regurb==41)  & district!=102
+*label define lspdomain 1 "Kampala"  2 "Central Rural" 3  "Eastern Rural" 4 "Northern Rural" 5 "Western Rural" 6 "Other Urban" 
+*gen spdomain=1
+clonevar spdomain =  region
 
 ***-----News; another way to specify variables, is the traditional Uganda regions, North east central and western, represented in region
 tab region
@@ -167,11 +172,82 @@ rename new news
 
 gen float bswt=1
 label variable bswt "bootstrap weights; and all equal to 1 for all households, as a toolkit requirement"
+drop hhsize
+sort hhid
+save "$path/out/hhdata_hhsize.dta",replace
+save "$path/in/hhdata_hhsize.dta",replace
+save "$path/work/hhdata_hhsize.dta",replace
+
+
+clear
+use "$path/in/HSEC2.dta" 
+
+keep if h2q5==1
+rename hh hhid
+gen counter=1
+bysort hhid: gen pid2=_n
+order hhid pid2
+
+gen equiv=.
+replace equiv=.33 if  (h2q8==0) 
+replace equiv=.46 if  (h2q8==1) 
+replace equiv=.54 if  (h2q8==2) 
+replace equiv=.62 if  (h2q8==3 | h2q8==4) 
+
+replace equiv=.74 if h2q3==1 &  (h2q8==5 | h2q8==6) 
+replace equiv=.70 if h2q3==2 &  (h2q8==5 | h2q8==6) 
+
+replace equiv=.84 if h2q3==1 &  (h2q8>6 & h2q8<10) 
+replace equiv=.72 if h2q3==2 & (h2q8>6 & h2q8<10) 
+
+replace equiv=.88 if h2q3==1 &  (h2q8==10 | h2q8==11) 
+replace equiv=.78 if h2q3==2 &  (h2q8==10 | h2q8==11) 
+
+replace equiv=.96 if h2q3==1 &  (h2q8==12 | h2q8==13) 
+replace equiv=.84 if h2q3==2 &  (h2q8==12 | h2q8==13) 
+
+replace equiv=1.06 if h2q3==1 &  (h2q8==14 | h2q8==15) 
+replace equiv=.86 if h2q3==2 &  (h2q8==14 | h2q8==15) 
+
+replace equiv=1.14 if h2q3==1 &  (h2q8==16 | h2q8==17) 
+replace equiv=.86 if h2q3==2 &  (h2q8==16 | h2q8==17) 
+
+replace equiv=1.04 if h2q3==1 &  (h2q8>17 & h2q8<30) 
+replace equiv=.80 if h2q3==2 & (h2q8>17 & h2q8<30) 
+
+replace equiv=1.00 if h2q3==1 &  (h2q8>29 & h2q8<60) 
+replace equiv=.82 if h2q3==2 & (h2q8>29 & h2q8<60) 
+
+replace equiv=0.84 if h2q3==1 &  (h2q8>59 ) 
+replace equiv=.74 if h2q3==2 & (h2q8>59) 
+
+collapse (sum) equiv counter, by (hhid)
+
+rename counter hhsize
+
+la var hhsize "number of household menbers"
+
+
+
 
 sort hhid
+save "$path/in/hhsize.dta",replace
+
+
+
+clear 
+use "$path/in/hhdata_hhsize.dta"
+merge 1:1 hhid using "$path/in/hhsize.dta"
+
+drop _m 
+sort hhid
+destring hhid, replace
+destring psu, replace
 save "$path/out/hhdata.dta",replace
 save "$path/in/hhdata.dta",replace
-save "$path/work/hhdata.dta",replace
+
+
+
 
 ************************************************************
 * Table A2: Individual characteristics - demographics
@@ -182,27 +258,8 @@ use "$path/in/HSEC2.dta"
 
 
 ***----- Household members
-/* According to the enumerator manual, Usual and Regular household members are defined as follows:
 
-Usual members are defined as those persons who have been living in the household for 6 months or
-more during the last 12 months. However, members who have come to stay in the household permanently
-are to be included as usual members, even though they have lived in this household for less than 6
-months. Furthermore, children born to usual members on any date during the last 12 months will be taken
-as usual members. Both these categories will be given code "1" or "2" depending upon whether they are
-present or absent on the date of the interview.
 
-Regular members refer to those persons who would have been usual members of this household, but
-have been away for more than six months during the last 12 months, for education purposes, search of
-employment, business transactions etc. and living in boarding schools, lodging houses or hostels etc.
-These categories will be given code "3" or "4" depending upon presence or absence on the date of the
-interview. */
-
-/* 
-* For the purposes of the calculation of a poverty line we'll exclude from the household the members who have left 
-the household permanently or died
-*  We'll keep the members away for more than 6 months but present on the day of the interview
---> We'll remove some of these members later on depending on the expenditure aggregates being computed
-*/
 
 rename  h2q5 resident
 drop if resident==7
@@ -247,7 +304,7 @@ tab h3q3,m
 *!!!! There are 14,795  (ie 42.47 %) missing responses  !!!!*
 *!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*
 * They have four categories: 1: Yes 2: No, Alive 3: No, Dead 4:No, Don't know. I will group them 
-gen motherhh=1 if h3q3==1 
+gen motherhh=1 if h3q3==1 | h3q3==.
 replace motherhh=0 if h3q3==2 | h3q3==3 | h3q3==4
 label variable motherhh "Mother lives in hh"
 label define lmoth 0 "No" 1 "Yes"

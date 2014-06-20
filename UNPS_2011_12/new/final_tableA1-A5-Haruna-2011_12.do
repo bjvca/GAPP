@@ -28,7 +28,7 @@ use "$path/in/GSEC1.dta"
 ***------- Primary Sampling Unit
 * The primary sampling unit for the 2012 is the comm, using codes as of 2005/6 UNHS and is the enumeration area.
 codebook comm 
-	/* There are 321 unique values, the UNHS 10/11 report mentions 322, located in C:\Users\Haruna\Desktop\GAPP\UNHS_2011\GAPP3\working-files */
+	** There are 321 unique values, the UNHS 10/11 report mentions 322, located in C:\Users\Haruna\Desktop\GAPP\UNHS_2011\GAPP3\working-files */
 rename comm psu
 label variable psu "Primary Sampling Unit"
 ***------Interview date
@@ -40,7 +40,7 @@ label variable psu "Primary Sampling Unit"
 * as follows: Sept-Nov 08, Dec08-Feb09, Mar-May 08 and June-Aug 08.
 * I will use the same framework
 tab month year,m 
-	/* According to the repartition of months and year, the survey ran from November 2011 to January 2013. I will define the
+	** According to the repartition of months and year, the survey ran from November 2011 to January 2013. I will define the
 	 * the quarters accordingly */
 gen float survquar=1 if month>=11 & month<=12 & year==2011 | month ==1 & year ==2012
 replace survquar=2 if month>=2 & month<=4  & year==2012
@@ -77,7 +77,7 @@ label variable survmon "Sequential Survey Month (November 2011 = January '13)"
 rename mult hhweight
 label variable hhweight "Household sample weight"
 ***------- Household id
-codebook HHID /*there are  2,850 unique values and 2,850 observations in the dataset so the variable "hh" uniquely identifies the observations */
+codebook HHID 
 rename HHID hhid
 label variable hhid "Household ID"
 ***------- Geographical Stratification during sampling
@@ -92,10 +92,7 @@ label define lrural 1 "Rural" 0 "Urban"
 la values rural lrural
 label variable rural "Rural/Urban Location"
 tab rural,m
-***-----Regions used for temporal price index calculations
-tab region,m 
-clonevar reg_tpi = region 
-label variable reg_tpi "Regions used for temporal price index calculations"
+
 ***------ Spatial domains (each with its own poverty line)
 tab regurb
 *RegionxRural/ |
@@ -116,15 +113,21 @@ tab regurb
 * city, however in the 2010/11 some urban sections have far less than 200 respondents, so we shall combine all other regions 
 * (rural + urban)except the central since its urban would be boosted by Kampala, getting us 5 spatial domains
 drop if regurb == 1
-gen float spdomain=1 if regurb==11
-replace spdomain=2 if regurb==10
-replace spdomain=3 if regurb==20 | regurb==21
-replace spdomain=4 if regurb==30 | regurb==31
-replace spdomain=5 if regurb==40 | regurb==41
-label define lspdomain 1 "Central Urban" 2 "Central Rural" 3 "Eastern" 4 "Northern" 5 "Western" 
+
+gen float spdomain=1  if regurb==10 | regurb==11
+replace spdomain=2 if regurb==20 | regurb==21
+replace spdomain=3 if regurb==30 | regurb==31
+replace spdomain=4 if regurb==40 | regurb==41
+
+
+label define lspdomain 1 "Central" 2 "Eastern" 3 "Northern" 4 "Western" 
 label values spdomain lspdomain
-label variable spdomain "Spatial domains: each with own poverty line (they are 5)"
-tab spdomain
+label variable spdomain "Spatial domains: each with own poverty line (they are 4)"
+*just to confirm allocations
+
+***-----Regions used for temporal price index calculations
+tab region,m 
+
 ***---------------News; another way to specify variables, is the traditional Uganda regions, North east central and western, represented in region
 gen float news=1 if regurb==11 | regurb==10
 replace news=2  if regurb==20 | regurb==21
@@ -133,7 +136,11 @@ replace news=4  if regurb==40 | regurb==41
 label define lnews 1 "Central" 2 "Eastern" 3 "Northern" 4 "Western" 
 label values news lnews
 label variable new "regions north, east, central and western; other ways to dissagregate poverty lines"
-tab news
+
+clonevar reg_tpi =news 
+label variable reg_tpi "Regions used for temporal price index calculations"
+
+
 ****-------geo1-geo?; other administrative geographical boundariies where a survey is representative is not required as also done in news rural and others
 *** -------------------Bootstrap weights: the toolkit requires that this should be=1 for all households and we generate it below
 gen float bswt=1
@@ -143,16 +150,58 @@ save "$path/in/hhdata_hhsize.dta",replace
 save "$path/out/hhdata_hhsize.dta",replace
 **** --------------------------------Household size
 ** Since we need Household size in the hhdata.dta, and it was unavailable in the GSEC1.dta, we use the Unique person identifier in GSEC2.dta
-clear 
+**** --------------------------------Household size
+** Since we need Household size in the hhdata.dta, and it was unavailable in the GSEC1.dta, we use the Unique person identifier in GSEC2.dta
+
 use "$path/in/GSEC2.dta"
+keep if h2q7==1
 bysort HHID: gen pid=_n
 order HH pid
-collapse (count) pid, by (HHID)
-rename pid hhsize
+gen counter=1
+gen equiv=.
+replace equiv=.33 if  (h2q8==0) 
+replace equiv=.46 if  (h2q8==1) 
+replace equiv=.54 if  (h2q8==2) 
+replace equiv=.62 if  (h2q8==3 | h2q8==4) 
+
+replace equiv=.74 if h2q3==1 &  (h2q8==5 | h2q8==6) 
+replace equiv=.70 if h2q3==0 &  (h2q8==5 | h2q8==6) 
+
+replace equiv=.84 if h2q3==1 &  (h2q8>6 & h2q8<10) 
+replace equiv=.72 if h2q3==0 & (h2q8>6 & h2q8<10) 
+
+replace equiv=.88 if h2q3==1 &  (h2q8==10 | h2q8==11) 
+replace equiv=.78 if h2q3==0 &  (h2q8==10 | h2q8==11) 
+
+replace equiv=.96 if h2q3==1 &  (h2q8==12 | h2q8==13) 
+replace equiv=.84 if h2q3==0 &  (h2q8==12 | h2q8==13) 
+
+replace equiv=1.06 if h2q3==1 &  (h2q8==14 | h2q8==15) 
+replace equiv=.86 if h2q3==0 &  (h2q8==14 | h2q8==15) 
+
+replace equiv=1.14 if h2q3==1 &  (h2q8==16 | h2q8==17) 
+replace equiv=.86 if h2q3==0 &  (h2q8==16 | h2q8==17) 
+
+replace equiv=1.04 if h2q3==1 &  (h2q8>17 & h2q8<30) 
+replace equiv=.80 if h2q3==0 & (h2q8>17 & h2q8<30) 
+
+replace equiv=1.00 if h2q3==1 &  (h2q8>29 & h2q8<60) 
+replace equiv=.82 if h2q3==0 & (h2q8>29 & h2q8<60) 
+
+replace equiv=0.84 if h2q3==1 &  (h2q8>59 ) 
+replace equiv=.74 if h2q3==0 & (h2q8>59) 
+
+collapse (sum) equiv counter, by (HHID)
+
+
+
+rename counter hhsize
+
 la var hhsize "number of household menbers"
 rename HHID hhid
 sort hhid
 save "$path/in/hhsize.dta",replace
+
 clear 
 use "$path/in/hhdata_hhsize.dta"
 merge 1:1 hhid using "$path/in/hhsize.dta"
@@ -255,7 +304,7 @@ rename HHID hhid
 la var hhid "household id"
 ** we drop alcoholic and tobacco as these were not considered basic in foods generally and by GAPP, these included beer-152, other alcoholic dricns-153
 ** cigarettes-155, other tobacco-156 and beer taken in restaurants-159, just like we did in the 2009 poverty calculations
-drop if inlist( itmcd ,152,153,155,156,159)
+drop if inlist( itmcd ,152,153, 155,156, 157, 158,159)
 duplicates report  hhid itmcd
 duplicates list  hhid itmcd
 codebook hhid
@@ -282,9 +331,12 @@ save "$path/in/household_table4.dta", replace
 save "$path/out/household_table4.dta", replace
 count
 sort product untcd
+
+replace product=100 if product==101  | product==102  | product==103  | product==104
+
 ** to convert quantities of food in standard units, the Kilograms, a file called "conversions_all.dta" generated by Fiona with equivalents of local units into 
 * kilograms located in the "in" folder was used. for UNPS 2009, and 2010 data we used "Conversionfactors.dta", by Haruna, also in "in" folder
-merge m:1 product untcd using  "$path/in/conversions_all.dta"
+merge m:1 product untcd using "/home/bjvca/data/data/GAP/Haruna/conversionfactors_corrected_onlyUNPS.dta"
 tab _m
 drop _m
 *label drop _all
@@ -294,7 +346,7 @@ gen quantity = quantityz * qkg_uca
 la var quantity "daily quantity consumed in Kgs per household"
 la var value  "daily value of consumption in UGX per per household"
 sort hhid
-*label drop _all
+label drop _all
 destring hhid, replace
 save "$path/out/cons_cod_trans.dta", replace
 save "$path/in/cons_cod_trans.dta", replace
@@ -326,6 +378,7 @@ sort hhid
 keep hhid h5q12 
 rename h5q12 medicalexp
 gen medicalexpd = medicalexp/30
+replace medicalexpd=0
 la var medicalexpd "household daily expenditure"
 save "$path/out/hhdmedicalexp.dta", replace
 clear
@@ -339,6 +392,7 @@ gen assetvalue = h14q5
 ** the household can use 0.1% of these assests, just to limit the influence of assests that were inflating unnecessarily especially the urban poverty estimates,
 ** house not treated as an asset as the toolkit takes care of imputed rent
 gen dassetvalue = (assetvalue*0.001)/365
+replace dassetvalue=0
 la var dassetvalue "household daily durables expenditure"
 rename HHID hhid
 sort hhid
@@ -348,14 +402,15 @@ clear
 use "$path/in/GSEC14.dta"
 save "$path/out/hhnondurables.dta", replace
 rename HHID hhid
-drop if inlist(  h14q2 ,01,02,03,10,11,12,13)
+*drop if inlist(  h14q2 ,01,02,03,10,11,12,13)
 gen nondurablevalue = h14q5
 ** also discounted them by 1% to get rough value used per year, we considered furniture-04, Hh appliances as Kettle,flat iron-05, electronics as tv-06, 
 *radio-07, generators-08, solar-panel-09, other transport mean -14, jewelry&watches-15, mobilephone-16, computer-17, internet-18, other elwctronics-19, 
 *otherassets as lawn mores-20,  others;-21 & 22, NOTE: figures are codes in data set
 la var nondurablevalue "household daily non-durables expenditure"
 sort hhid
-gen dnondurables = (nondurablevalue*0.01)/365
+gen dnondurables = (nondurablevalue)/365
+replace dnondurables=0
 la var dnondurables "household daily non-durables expenditure"
 save "$path/out/hhdnondurablesexp.dta", replace
 clear
@@ -393,10 +448,31 @@ drop if inlist( h15dq2 ,204,205,208,209,301,302,303,306,401,403,404,405,406,407,
 egen hhsemidurables = rowtotal ( h15dq5 h15dq7 h15dq9)
 sort hhid
 gen hhdsemidurs = (hhsemidurables*0.01)/365
+replace hhdsemidurs=0
 la var hhdsemidurs "household daily semi durables goods and seervices expenses"
 drop hhsemidurables
 save "$path/out/hhdsemidurablesexp.dta", replace
 clear
+
+
+
+use "$path/in/GSEC15D.dta"
+keep if h15dq2>800 & h15dq2<900
+save "$path/in/hhnonconsmpexptaxes.dta", replace
+sort HHID
+rename HHID hhid
+** we only considered graduated tax-904, that may cause arrest if not paid and it used to be per head paid to local government annually
+** and dropped income tax-901, property tax-902, user fees-903, social security payments-905, remmitances-906, funerals-907 and others-909
+
+gen hhdnonconsumpexp = h15dq5/365
+
+*replace hhdnonconsumpexp=0
+la var hhdnonconsumpexp "hh daily expenditure on taxes, contributions, donations, duties, etc"
+sort hhid
+save "$path/out/hhdnonconsumpexp.dta", replace
+clear
+
+
 ****-----------------------calculating basic non-consumption expenses
 ** The file GSEC15E.dta, where this information was kept was absent
 ** after generating all daily non food total household expenditures of various considered items, then we start merging these  SIX hhd--- prefixed files, and ending with sufix exp to get all non food hh daily expenditure
@@ -422,8 +498,8 @@ merge 1:1 hhid using "$path/out/hhddurablesexp.dta"
 drop _merge
 sort hhid
 save "$path/out/hhdeduc&medic&durabex.dta", replace
-use "$path/out/hhdnondurablesexp.dta"
-collapse (sum) dnondurables , by(hhid)
+
+gen dnondurables=0
 sort hhid
 save "$path/out/hhdnondurablesexp.dta", replace
 use "$path/out/hhdeduc&medic&durabex.dta"
@@ -433,8 +509,10 @@ sort hhid
 save "$path/out/hhdeduc&medic&durab&nondurabex.dta", replace
 clear
 use "$path/out/hhdfrequentsexp.dta"
+tostring hhid, force replace
 collapse (sum) dhhfrequents , by(hhid)
 sort hhid
+tostring hhid, force replace
 save "$path/out/hhdfrequentsexp.dta", replace
 use "$path/out/hhdeduc&medic&durab&nondurabex.dta"
 merge 1:1 hhid using "$path/out/hhdfrequentsexp.dta" 
@@ -442,15 +520,40 @@ drop _merge
 sort hhid
 save "$path/out/hhdeduc&medic&durab&nondurab&freqsex.dta", replace
 use "$path/out/hhdsemidurablesexp.dta"
+tostring hhid, force replace
 collapse (sum) hhdsemidurs , by(hhid)
 sort hhid
+tostring hhid, force replace
 save "$path/out/hhdsemidurablesexp.dta", replace
 use "$path/out/hhdeduc&medic&durab&nondurab&freqsex.dta"
 merge 1:1 hhid using "$path/out/hhdsemidurablesexp.dta"
 drop _merge
 sort hhid
 save "$path/out/hhdeduc&medic&durab&nondurab&freqs&semidurabex.dta", replace
-gen hhnonfoodexp =  educationd+medicalexpd+dassetvalue+dnondurables+dhhfrequents+hhdsemidurs
+
+use "$path/out/hhdnonconsumpexp.dta"
+tostring hhid, force replace
+collapse (sum) hhdnonconsumpexp , by(hhid)
+sort hhid
+tostring hhid, force replace
+save "$path/out/hhdnonconsumpexp.dta", replace
+use "$path/out/hhdeduc&medic&durab&nondurab&freqs&semidurabex.dta"
+merge 1:1 hhid using "$path/out/hhdnonconsumpexp.dta"
+drop _merge
+sort hhid
+*save "$path/out/hhdeduc&medic&durab&nondurab&freqs&semidurabex.dta", replace
+
+replace educationd=0 if educationd==.
+replace medicalexpd=0 if medicalexp==.
+replace dassetvalue=0 if dassetvalue==.
+replace dnondurables=0 if dnondurables==.
+replace dhhfrequents=0 if dhhfrequents==.
+replace hhdsemidurs=0 if hhdsemidurs==.
+replace hhdnonconsumpexp=0 if hhdnonconsumpexp==.
+
+
+
+gen hhnonfoodexp =  educationd+medicalexpd+dassetvalue+dnondurables+dhhfrequents+hhdsemidurs + hhdnonconsumpexp
 la var hhnonfoodexp "household total non food expenditure"
 keep hhid hhnonfoodexp
 gen product = 0
@@ -467,8 +570,7 @@ save "$path/out/hhtotalnonfoodexp.dta", replace
 label define descrip 2 " non food", add
 label values descript descrip
 label define descrip 1 " food", add
-replace descript = 1 in 6
-replace descript = 2 in 6
+
 sort hhid
 destring hhid, replace
 save "$path/out/hhtotalnonfoodexp.dta", replace
@@ -484,7 +586,8 @@ sort hhid
 replace product = 999 if product==2
 la var product "product code is 999, if product is non food"
 replace prod_cat = 1 if prod_cat==.
-replace descript=1 if descript==.
+replace descript=product if descript==.
+drop if descript==1
 *label drop _all
 save "$path/out/cons_cod.dta", replace
 save "$path/in/cons_cod.dta", replace

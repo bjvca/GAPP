@@ -1,4 +1,4 @@
-GAMS 24.1.2  r40979 Released Jun 16, 2013 LEX-LEG x86_64/Linux                                                                                                                                                                         03/11/14 14:56:28 Page 1
+GAMS 24.1.2  r40979 Released Jun 16, 2013 LEX-LEG x86_64/Linux                                                                                                                                                                         06/03/14 17:41:35 Page 1
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 C o m p i l a t i o n
 
@@ -31,7 +31,7 @@ C o m p i l a t i o n
   27  /
 ****  $460
   28   
-  29   reg        12 spatial domains /1*12/
+  29   reg        5 spatial domains /1*5/
   30   r(reg)     dynamic set on spatial regions
   31   
   32   ptit       price table titles
@@ -56,7 +56,7 @@ C o m p i l a t i o n
   51  ;
   52   
   53  *****************************************************
-GAMS 24.1.2  r40979 Released Jun 16, 2013 LEX-LEG x86_64/Linux                                                                                                                                                                         03/11/14 14:56:28 Page 2
+GAMS 24.1.2  r40979 Released Jun 16, 2013 LEX-LEG x86_64/Linux                                                                                                                                                                         06/03/14 17:41:35 Page 2
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 C o m p i l a t i o n
 
@@ -114,7 +114,7 @@ C o m p i l a t i o n
   94                             calperg          quan5           calpp      povline_f_flex5
   95  $include work\quan_flex.inc
 ****                            $282
-GAMS 24.1.2  r40979 Released Jun 16, 2013 LEX-LEG x86_64/Linux                                                                                                                                                                         03/11/14 14:56:28 Page 3
+GAMS 24.1.2  r40979 Released Jun 16, 2013 LEX-LEG x86_64/Linux                                                                                                                                                                         06/03/14 17:41:35 Page 3
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 C o m p i l a t i o n
 
@@ -172,7 +172,7 @@ C o m p i l a t i o n
  145  *fill out price matrix with maximum observed price outside of Maputo
  146   r(reg)=no;
  147   r(reg)$(ord(reg) le 10)=yes;
-GAMS 24.1.2  r40979 Released Jun 16, 2013 LEX-LEG x86_64/Linux                                                                                                                                                                         03/11/14 14:56:28 Page 4
+GAMS 24.1.2  r40979 Released Jun 16, 2013 LEX-LEG x86_64/Linux                                                                                                                                                                         06/03/14 17:41:35 Page 4
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 C o m p i l a t i o n
 
@@ -230,7 +230,7 @@ C o m p i l a t i o n
  198   
  199     defshr(cod,rq)$posquan(cod,rq) ..
  200               povline(rq,rq)*s(cod,rq)=e= q(cod,rq)*price(cod,rq,'price_uw5');
-GAMS 24.1.2  r40979 Released Jun 16, 2013 LEX-LEG x86_64/Linux                                                                                                                                                                         03/11/14 14:56:28 Page 5
+GAMS 24.1.2  r40979 Released Jun 16, 2013 LEX-LEG x86_64/Linux                                                                                                                                                                         06/03/14 17:41:35 Page 5
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 C o m p i l a t i o n
 
@@ -288,7 +288,7 @@ C o m p i l a t i o n
  251   
  252     revpref.holdfixed=1;
  253   
-GAMS 24.1.2  r40979 Released Jun 16, 2013 LEX-LEG x86_64/Linux                                                                                                                                                                         03/11/14 14:56:28 Page 6
+GAMS 24.1.2  r40979 Released Jun 16, 2013 LEX-LEG x86_64/Linux                                                                                                                                                                         06/03/14 17:41:35 Page 6
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 C o m p i l a t i o n
 
@@ -346,7 +346,7 @@ C o m p i l a t i o n
  303    loop(cod$(ord(cod) eq 1),
  304       povline_food_fix(reg)= povline_food_fix(reg)*quan(cod,reg,'calpp')/2150;
  305    );
-GAMS 24.1.2  r40979 Released Jun 16, 2013 LEX-LEG x86_64/Linux                                                                                                                                                                         03/11/14 14:56:28 Page 7
+GAMS 24.1.2  r40979 Released Jun 16, 2013 LEX-LEG x86_64/Linux                                                                                                                                                                         06/03/14 17:41:35 Page 7
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 C o m p i l a t i o n
 
@@ -400,7 +400,7 @@ C o m p i l a t i o n
  352           put povline_food_fix(reg);
  353           put /;
  354     );
-GAMS 24.1.2  r40979 Released Jun 16, 2013 LEX-LEG x86_64/Linux                                                                                                                                                                         03/11/14 14:56:28 Page 8
+GAMS 24.1.2  r40979 Released Jun 16, 2013 LEX-LEG x86_64/Linux                                                                                                                                                                         06/03/14 17:41:35 Page 8
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Error Messages
 
@@ -414,7 +414,7 @@ Error Messages
 **** 15 ERROR(S)   0 WARNING(S)
 
 
-COMPILATION TIME     =        0.003 SECONDS      3 MB  24.1.2 r40979 LEX-LEG
+COMPILATION TIME     =        0.007 SECONDS      3 MB  24.1.2 r40979 LEX-LEG
 
 
 USER: Computer Services                              G130401:1333CP-GEN

@@ -115,7 +115,7 @@ forvalues i=1/$n_spdom {		;
 
                 use "$path/work/price_unit_flex_it$it_n.dta";
         
-                        keep product spdomain price_uw$it_n descript count bswt;
+                        keep product spdomain price_uw$it_n  count bswt;
                         sort product;
                 keep if spdomain==`j';
                 sort product;
@@ -161,7 +161,7 @@ forvalues i=1/$n_spdom {		;
                         keep if _m==3 ;
                                 *exclude Maputo province and city from other price calculation;
                                 drop if spdomain>10;
-                        collapse (max) price_uw$it_n, by(product);
+                        collapse (max) price_um$it_n, by(product);
 
                   *this file contains the code and the max price;
                   save `codmiss', replace;
@@ -176,7 +176,7 @@ forvalues i=1/$n_spdom {		;
                         
                         else use `getmiss', clear;
 
-                        gen val_q=quan_s*price_uw$it_n;
+                        gen val_q=quan_s*price_um$it_n;
                         
                         collapse (sum) val_q pricemiss (mean) spdomainq ratquan, by(spdomain);
                   gen linf_q=val_q/.9;

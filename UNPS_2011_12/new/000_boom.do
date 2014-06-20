@@ -9,9 +9,10 @@ global path "C:\Users\Haruna\Desktop\GAPP\UNPS_2011_12"
 
 
 
+shell rm $path/work/*
 
-
-
+shell rm $path/out/*
+*/
 version 10.1
 
 cd "$path"
@@ -142,10 +143,9 @@ $no_temp_rev	do "$path/new/180_povline_food_fix.do"	/* Inflating year t1's pover
 				shell "$path/new/$revpref"				/* Adjusting flexible basket: inside pref. constraints */
 *** execute as super user:
 
-* "C:\Users\Haruna\Desktop\GAPP\UNPS_2011_12\190a_revpref13_r_bjorn.gms
-** sudo ./gams "/home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3/new/190a_revpref13_r_bjorn.gms" o="/home/bjvca/data/data/GAP/Haruna/UNPS_2011/GAPP3/new/list.lst"				
 				
-*sudo ./gams "C:/Users/Templeton/Desktop/GAPP/GAPP-UGANDA-HARUNA/UNPS_2011/GAPP3/new/190a_revpref13_r_bjorn.gms" o="/C:/Users/Templeton/Desktop/GAPP/GAPP-UGANDA-HARUNA/UNPS_2011/GAPP3/new/list.lst"				
+				
+shell /usr/GAMS/gams24.1_linux_x64_64_sfx/gams "/home/bjvca/data/data/GAP/Haruna/UNPS_2011_12/new/190a_revpref13_r_bjorn.gms" o="/home/bjvca/data/data/GAP/Haruna/UNPS_2011_12/new/list.lst"	
 
 $no_temp_rev	do "$path/new/200_povmeas_fix.do"		/* Fixed basket: Poverty rates */
 				do "$path/new/210_povmeas_ent_flex.do"	/* Flexible basket, adjusted: Poverty rates */

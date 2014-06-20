@@ -45,7 +45,7 @@ use "$path/work/food_basket_flex.dta";
         sort product;
 
         * merge in information on calories per gram;
-        merge product using "$path/work/calperg.dta";
+        merge product using "/home/bjvca/data/data/GAP/Haruna/calperg_joint.dta";
         tab _merge;
 
         * This tells where we are lacking calorie info or are lacking quantity info due to 

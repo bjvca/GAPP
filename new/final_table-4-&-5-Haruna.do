@@ -38,7 +38,8 @@ rename hh hhid
 la var hhid "household id"
 ** we drop alcoholic and tobacco as these were not considered basic in foods generally and by GAPP, these included beer-152, other alcoholic dricns-153
 ** cigarettes-155, other tobacco-156 and beer taken in restaurants-159
-drop if inlist( itmcd ,152,153,155,156,159)
+
+drop if inlist( itmcd ,152,153, 155,156, 157, 158,159)
 duplicates report  hh itmcd
 duplicates list  hh itmcd
 codebook hhid
@@ -76,12 +77,12 @@ sort product untcd
 
 replace product=100 if product==101  | product==102  | product==103  | product==104
 
-merge m:1 product untcd using  "$path/in/conversionfactors.dta"
+merge m:1 product untcd using  "/home/bjvca/data/data/GAP/Haruna/conversionfactors_corrected_onlyUNPS.dta"
 tab _m
 drop _m
-rename qkg_uca cfactor
+
 save "$path/out/household_table4cf.dta", replace
-gen quantity = quantityz* cfactor
+gen quantity = quantityz * qkg_uca
 **************  ??? this i do not understand
 ************************************************************************************************************
 *** valuez is multiplied by 1 because it had been erroneously multiplied by the unit conversion factors meant for only quantities
@@ -89,7 +90,7 @@ gen quantity = quantityz* cfactor
 la var quantity "daily quantity consumed in Kgs per household"
 la var value  "daily value of consumption in UGX per per household"
 
-drop cfactor
+
 sort hhid
 label drop _all
 destring hhid, replace
@@ -121,7 +122,7 @@ keep hhid h4q13f
 sort hhid
  ** since total education expenses were clooected in h4q10f and since is at yearly basis, we divided it by 365 to get daily expenses on education
 gen educationd = h4q13f/365
-replace educationd=0
+*replace educationd=0
 la var educationd "daily household expense on education"
 drop h4q13f
 save "$path/out/hhdeducationexp.dta", replace
@@ -154,7 +155,7 @@ gen assetvalue = h8q5/10
  ** house not treated as an asset as the toolkit takes care of imputed rent
 ************************************************************************************************************************
  gen dassetvalue = (assetvalue*0.1)/365
-
+replace dassetvalue=0
 la var dassetvalue "household daily durables expenditure"
 rename hh hhid
 sort hhid
@@ -181,7 +182,9 @@ sort hhid
 *** hospitalcharges-503, traditionaldoctors-504, others-509 since medical expenses were cosidered in section 5, sports/theater-701,
 **  drycleaning-702, houseboys-703, barbers&beauty shops-704 and lodging-705. THESE HAVE BEEN CONSIDERED NON BASIC
 
-* drop if inlist( h14bq2 ,311,455,456,457,458,459,461,462,464,465,466,467,469,501,502,503,504,509,701,702,703,704,705)
+
+ 
+drop if inlist( h10bq2 ,502, 501, 462)
  
 egen hhfrequents = rowtotal ( h10bq5 h10bq7 h10bq9)
 gen dhhfrequents = hhfrequents/30
@@ -205,7 +208,7 @@ rename hh hhid
 egen hhsemidurables = rowtotal ( h10cq3 h10cq4 h10cq5)
 sort hhid
 gen hhdsemidurs = (hhsemidurables*0.5)/365
-
+replace hhdsemidurs=0
 la var hhdsemidurs "household daily semi durables goods and seervices expenses"
 drop hhsemidurables
 save "$path/out/hhdsemidurablesexp.dta", replace
@@ -216,9 +219,10 @@ use "$path/in/HSEC10D.dta"
 save "$path/in/hhnonconsmpexptaxes.dta", replace
 sort hh
 rename hh hhid
-drop if h10dq2==906
-gen hhdnonconsumpexp = h10dq3/365
 
+*drop if inlist( h10dq2 ,906)
+gen hhdnonconsumpexp = h10dq3/365
+*replace hhdnonconsumpexp = 0
 la var hhdnonconsumpexp "hh daily expenditure on taxes, contributions, donations, duties, etc"
 sort hhid
 save "$path/out/hhdnonconsumpexp.dta", replace
@@ -290,16 +294,13 @@ drop _merge
 replace hhdsemidurs=0 if hhdsemidurs==.
 sort hhid
 save "$path/out/hhdeduc&medic&durab&nondurab&freqs&semidurabex.dta", replace
-// // use "$path/in/HSEC5.dta"
+
 use "$path/out/hhdnonconsumpexp.dta"
 collapse (sum) hhdnonconsumpexp , by(hhid)
 replace hhdnonconsumpexp=0 if hhdnonconsumpexp==.
 sort hhid
 save "$path/out/hhdnonconsumpexp.dta", replace
-// 
 
-
-// 
 use "$path/out/hhdeduc&medic&durab&nondurab&freqs&semidurabex.dta"
 merge 1:1 hhid using "$path/out/hhdnonconsumpexp.dta"
 drop _merge

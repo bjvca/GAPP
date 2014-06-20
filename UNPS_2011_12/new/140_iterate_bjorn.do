@@ -377,10 +377,10 @@ use "$path/in/cons_cod_trans.dta", clear;
 *drop value   ;
 *drop quantity;
 
-keep hhid product food_cat valuez quantityz unit;
+keep hhid product food_cat valuez quantity unit;
 
 rename valuez    value;
-rename quantityz quantity;
+*rename quantityz quantity;
 
 *drop count;
 
@@ -510,6 +510,8 @@ drop if quantity==0 ;
                 lab var price_ut`pass' "Average of calculated prices - transaction weighted";
                 lab var price_um`pass' "Median of prices";
                 lab var price_uw`pass' "Value share weighted mean prices";
+                
+             * replace price_uw`pass' = price_uw`pass'*189.48/230.58;
 
 * Get an idea of the difference between the price measures;
                 gen ratiotw`pass'=price_ut`pass'/price_uw`pass';
@@ -556,7 +558,7 @@ drop if quantity==0 ;
                 drop _merge;
                 sort product;
         
-                merge product using "$path/work/calperg.dta";
+                merge product using  "/home/bjvca/data/data/GAP/Haruna/calperg_joint.dta";
                 tab _merge;
 				
                 * This tells where we are lacking calorie info or are lacking quantity info due to 
@@ -593,7 +595,7 @@ drop if quantity==0 ;
                 by spdomain: egen calreg=sum(cal_ir);
         
                 sort spdomain;
-                merge spdomain using "$path/work/calpp.dta";
+                merge spdomain using "/home/bjvca/data/data/GAP/Haruna/calpp_joint.dta";
                 tab _merge;
                 drop _merge;
 				
@@ -652,10 +654,11 @@ keep product spdomain quan`pass'  price_uw`pass' val_ir`pass' povline_f_flex90_`
 
                 gen triwt=0;
 
-		replace triwt = 11 - round(50*abs(cons_pc_tpi/povline_f_flex90_`pass'-1)+0.5) if abs(cons_pc_tpi/povline_f_flex90_`pass'-1) <= 0.2;
-				***since the poor were very few in Kampala and Central urban for Uganda we added 1 to weights****;
+               		replace triwt = 11 - round(50*abs(cons_pc_tpi/povline_f_flex90_`pass'-1)+0.5)
+                if abs(cons_pc_tpi/povline_f_flex90_`pass'-1)<=0.2;
+				
 				* Nearness to poverty line and population weights ;
-                gen tripopwt=(0.001+triwt)*hhweight*hhsize;
+                gen tripopwt=triwt*hhweight*hhsize;
 				
                 preserve;
                         collapse (mean) nf_pc_nom [aw=tripopwt] , by(spdomain);
@@ -745,8 +748,8 @@ keep spdomain povline_flex`pass';
 
                 svy: mean h_flex`pass' pg_flex`pass' spg_flex`pass';
                 svy: mean h_flex`pass' pg_flex`pass' spg_flex`pass' , over(rural);
-                svy: mean h_flex`pass' pg_flex`pass' spg_flex`pass' , over(strata);
-                svy: mean h_flex`pass' pg_flex`pass' spg_flex`pass' , over(strata rural);
+                svy: mean h_flex`pass' pg_flex`pass' spg_flex`pass' , over(spdomain);
+                svy: mean h_flex`pass' pg_flex`pass' spg_flex`pass' , over(spdomain rural);
                 svy: mean h_flex`pass' pg_flex`pass' spg_flex`pass' , over(spdomain);
 
 *preserve;
@@ -857,7 +860,7 @@ save `converg'
 
 forvalues X = 1/`maxit' {
 	use "$path/work/cons_real_it`X'.dta", clear
-	collapse (mean) h_flex`X' pg_flex`X' spg_flex`X' [aw=popwt], by(strata)
+	collapse (mean) h_flex`X' pg_flex`X' spg_flex`X' [aw=popwt], by(spdomain)
 	rename h_flex`X' h_flex
 	rename pg_flex`X' pg_flex
 	rename spg_flex`X' spg_flex
@@ -873,7 +876,7 @@ forvalues X = 1/`maxit' {
 use `converg', clear
 sum
 
-twoway (connected h_flex iteration), by(, title(Convergence graph: Poverty rate. %) subtitle(After iterative procedure)) by(strata)
+twoway (connected h_flex iteration), by(, title(Convergence graph: Poverty rate. %) subtitle(After iterative procedure)) by(spdomain)
 graph export "$path/work/converge_pov_rate.tif", replace
 
 sort strata iteration

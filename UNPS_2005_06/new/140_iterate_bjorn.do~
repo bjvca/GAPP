@@ -323,7 +323,7 @@ while `pass' <= `maxit' {;
 
                 gen f_share_w`pass'=(food_share*hhweight)/tothhweight;
 
-                collapse (sum) f_share_w`pass', by(spdomain product descript);               
+                collapse (sum) f_share_w`pass', by(spdomain product );               
 
                 sort spdomain f_share_w`pass';
                 by spdomain: gen cumshr`pass'= sum(f_share_w`pass');
@@ -337,9 +337,9 @@ while `pass' <= `maxit' {;
 		
 				* Number of spatials domains a food product appears ;
                 gen numreg=1;
-                collapse (sum) numreg cumshr`pass', by (product descript);
+                collapse (sum) numreg cumshr`pass', by (product );
 
-                keep product numreg descript;
+                keep product numreg ;
                 display _N;
 
                 sort product;
@@ -347,7 +347,7 @@ while `pass' <= `maxit' {;
 *                merge product using "$path/work/products.dta";
 *                tab _merge;
 *                keep if _merge==3;
-                keep product descript numreg;  
+                keep product  numreg;  
                 sort product;     
                 display _N;  
 
@@ -550,18 +550,18 @@ drop if quantity==0 ;
                 merge product spdomain using "$path/work/price_unit_flex_it`pass'.dta";
         
                 tab _merge;
-                list product spdomain descript if _merge==1;
+                list product spdomain  if _merge==1;
         
                 drop if _merge ~=3;
                 drop _merge;
                 sort product;
         
-                merge product using "$path/work/calperg.dta";
+                merge product using "/home/bjvca/data/data/GAP/Haruna/calperg_joint.dta";
                 tab _merge;
 				
                 * This tells where we are lacking calorie info or are lacking quantity info due to 
                 * missing price info above;
-                list product spdomain descript if _merge==1;
+                list product spdomain  if _merge==1;
         
                 drop if _merge~=3;
                 drop _merge;
@@ -593,7 +593,7 @@ drop if quantity==0 ;
                 by spdomain: egen calreg=sum(cal_ir);
         
                 sort spdomain;
-                merge spdomain using "$path/work/calpp.dta";
+                merge spdomain using "/home/bjvca/data/data/GAP/Haruna/calpp_joint.dta";
                 tab _merge;
                 drop _merge;
 				
@@ -652,10 +652,11 @@ keep product spdomain quan`pass'  price_uw`pass' val_ir`pass' povline_f_flex90_`
 
                 gen triwt=0;
 
-		replace triwt = 11 - round(50*abs(cons_pc_tpi/povline_f_flex90_`pass'-1)+0.5) if abs(cons_pc_tpi/povline_f_flex90_`pass'-1) <= 0.2;
-				***since the poor were very few in Kampala and Central urban for Uganda we added 1 to weights****;
+               		replace triwt = 11 - round(50*abs(cons_pc_tpi/povline_f_flex90_`pass'-1)+0.5)
+                if abs(cons_pc_tpi/povline_f_flex90_`pass'-1)<=0.2;
+				
 				* Nearness to poverty line and population weights ;
-                gen tripopwt=(0.001+triwt)*hhweight*hhsize;
+                gen tripopwt=triwt*hhweight*hhsize;
 				
                 preserve;
                         collapse (mean) nf_pc_nom [aw=tripopwt] , by(spdomain);

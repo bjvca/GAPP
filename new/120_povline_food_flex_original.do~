@@ -56,6 +56,8 @@ use "$path/work/food_basket_flex.dta";
         drop _merge;
         sort spdomain f_share_w;
         
+     save "$path/work/sharesandcost.dta", replace;   
+        
         * CA modified to handle bootstrap counting;
 
         * determine if any quantity has fewer than 10 price observations;

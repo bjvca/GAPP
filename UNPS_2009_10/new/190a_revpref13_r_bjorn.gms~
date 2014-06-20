@@ -19,7 +19,7 @@ SETS
 $include /home/bjvca/data/data/GAP/Haruna/UNPS_2009_10/work/product_flex.inc
 /
 
- reg        5 spatial domains /1*5/
+ reg        4 spatial domains /1*5/
  r(reg)     all included spatial regions /1*5/
 
  ptit       price table titles
@@ -161,7 +161,7 @@ Equations
   display povline.l;
 
 *print the revealed preference matrix prior to optimisation;
-file povline_rp//home/bjvca/data/data/GAP/Haruna/UNPS_2009_10/work/povline_rp_inout.csv/;
+file povline_rp/"/home/bjvca/data/data/GAP/Haruna/UNPS_2009_10/work/povline_rp_inout.csv"/;
 put povline_rp;
 povline_rp.pc=5;
 povline_rp.nd=0;
@@ -222,7 +222,7 @@ PARAMETERS
 
    display perc_chng, povline_ent, povline_ali;
 
-   file res//home/bjvca/data/data/GAP/Haruna/UNPS_2009_10/work/qent.csv/;
+   file res/"/home/bjvca/data/data/GAP/Haruna/UNPS_2009_10/work/qent.csv"/;
 
    put res;
    res.pc=5;
@@ -250,7 +250,7 @@ PARAMETERS
        );
    );
 
-   file lin//home/bjvca/data/data/GAP/Haruna/UNPS_2009_10/work/povline_food_ent.csv/;
+   file lin/"/home/bjvca/data/data/GAP/Haruna/UNPS_2009_10/work/povline_food_ent.csv"/;
 
    put lin;
    lin.pc=5;

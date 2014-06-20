@@ -38,19 +38,19 @@ use "$path/work/food_basket_flex.dta";
         merge product spdomain using "$path/work/price_unit_flex.dta";
 
         tab _merge;
-        list product spdomain descript if _merge==1;
+        list product spdomain  if _merge==1;
 
         drop if _merge ~=3;
         drop _merge;
         sort product;
 
         * merge in information on calories per gram;
-        merge product using "$path/work/calperg.dta";
+        merge product using  "/home/bjvca/data/data/GAP/Haruna/calperg_joint.dta";
         tab _merge;
 
         * This tells where we are lacking calorie info or are lacking quantity info due to 
         * missing price info above;
-        list product spdomain descript if _merge==1;
+        list product spdomain  if _merge==1;
 
         drop if _merge~=3;
         drop _merge;
@@ -74,13 +74,13 @@ use "$path/work/food_basket_flex.dta";
         by spdomain: sum baskshr;
 
         * obtain quantities and calories provided by these quantities;
-        gen quan=f_share_w/price_unitw;			/* how many g in 1 MT exp on food item */
+        gen quan=f_share_w/price_unitm;			/* how many g in 1 MT exp on food item */
         gen cal_ir=quan*calperg;				/* how many cal in 1 MT exp on food item */
         by spdomain: egen calreg=sum(cal_ir);	/* how many cal in 1 MT exp in food basket*/
 
         * merge in calorie requirements;
         sort spdomain;
-        merge spdomain using "$path/work/calpp.dta";
+        merge spdomain using "/home/bjvca/data/data/GAP/Haruna/calpp_joint.dta";
         tab _merge;
         drop _merge;
 
@@ -104,7 +104,7 @@ use "$path/work/food_basket_flex.dta";
         * the sum of the value of the goods in the bundle is assumed to represent 90% of expenditure;
         by spdomain: egen povline_f_flex90=sum(val_ir);
         replace povline_f_flex=povline_f_flex90/.9;
-
+save "$path/work/povline_food_flex_investigate.dta", replace;
         collapse (mean) povline_f_flex, by (spdomain);
 		
 lab var povline_f_flex "Food poverty line. Flexible basket";

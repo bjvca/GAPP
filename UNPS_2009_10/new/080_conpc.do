@@ -84,6 +84,7 @@ gen cons_pc_nom = cons_hh_nom/hhsize
 keep hhid cons_hh_nom cons_pc_nom food_pc_nom nf_pc_nom 
             sort hhid 
 
+            drop if cons_hh_nom==0
 * MAH   sum  codebook hhid 
 save "$path/work/conpc.dta", replace 
 

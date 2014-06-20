@@ -1,0 +1,29 @@
+### code to produce Table 3: Evolution of official cost of basic needs ###
+
+cd /home/bjvca/data/data/UGANDA/UNHS/UNHS_2005/
+
+use cons-2005-06
+replace spline =spline /30
+collapse (mean) spline [fweight = hmult], by(region)
+
+cd /home/bjvca/data/data/UGANDA/UNHS/UNHS_09-10/
+use pov09_05_ubos.dta
+replace spline =spline /30
+collapse (mean) spline [fweight = hmult], by(region)
+
+cd /home/bjvca/data/data/UGANDA/UNHS/UNHS_2005/
+
+use cons-2005-06
+replace spline =spline /30
+replace spline=spline*153.39/100
+
+collapse (mean) spline [fweight = hmult], by(region)
+
+cd /home/bjvca/data/data/UGANDA/UNHS/UNHS_2005/
+
+use cons-2005-06
+replace spline =spline /30
+
+replace spline=spline*189.48/100
+
+collapse (mean) spline [fweight = hmult], by(region)

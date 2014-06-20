@@ -114,10 +114,11 @@ replace triwt = 11 - round(50*abs(cons_pc_tpi/food_povline_ent-1)+0.5)
 	gen tripopwt=triwt*hhweight*hhsize;
 
 	collapse (mean) nf_pc_nom food_povline_ent [aw=tripopwt] ,
-	by(reg_tpi);
+	by(spdomain);
+
 	rename nf_pc_nom povline_nf;
 	lab var povline_nf "Nonfood poverty line";
-	sort reg_tpi;
+	sort spdomain;
 
 *	merge spdomain using "$foodshr_pastSurvey", keep(spdomain $fdshr_t1);
 
@@ -142,7 +143,7 @@ replace triwt = 11 - round(50*abs(cons_pc_tpi/food_povline_ent-1)+0.5)
     lab var povline_ent   "poverty lines with all regions calculated using flexible bundle non-food shares";
 *    lab var povline_ent_m "poverty lines with Maputo regions calculated using flexible bundle non-food shares";
 
-	sort reg_tpi;
+	sort spdomain;
 tempfile povlines_ent;
 save `povlines_ent', replace;
 
@@ -152,8 +153,8 @@ clear;
 * Calculate poverty measures with all regions using flexible year t2 food shares
 **************************************************************************;
 use `contpi';
-	sort reg_tpi;
-	merge reg_tpi using `povlines_ent';
+	sort spdomain;
+	merge spdomain using `povlines_ent';
 	tab _merge;
 	drop _merge;
 
@@ -236,8 +237,8 @@ use `contpi';
 	*set aside the spatial price index;
       tempfile spi;
 *      use "$path/work/povmeas_ent.dta", clear;
-      collapse (mean) spi, by(reg_tpi);
-      sort reg_tpi;
+      collapse (mean) spi, by(spdomain);
+      sort spdomain;
 save `spi', replace;
 
 clear;
@@ -246,8 +247,8 @@ clear;
 * Calculate poverty measures with Maputo regions on flexible food shares
 **************************************************************************;
 use `contpi';
-	sort reg_tpi;
-	merge reg_tpi using `povlines_ent';
+	sort spdomain;
+	merge spdomain using `povlines_ent';
 	tab _merge;
 	drop _merge;
 
@@ -398,21 +399,23 @@ outsheet geo geono h_ent_m pg_ent_m spg_ent_m dum rural news reg_tpi strata spdo
 	*set aside the spatial price index;
       tempfile spi_m;
       use "$path/work/povmeas_ent_flex.dta", clear;
-      collapse (mean) spi, by(reg_tpi);
+      collapse (mean) spi, by(spdomain);
       rename spi spi_m;
-      sort reg_tpi;
+      sort spdomain;
 save `spi_m', replace;
 
 use `povlines_ent';
-       sort reg_tpi;
-       merge reg_tpi using `spi';
+       sort spdomain;
+       merge spdomain using `spi';
        tab _m; drop _m;
-       sort reg_tpi;
-       merge reg_tpi using `spi_m';
+       sort spdomain;
+       merge spdomain using `spi_m';
 	tab _m; drop _m;
 save "$path/work/povlines.dta", replace;
 
-outsheet reg_tpi food_povline_ent povline_ent fdshr using "$path/work/povlines.csv", replace c; 
+
+
+outsheet spdomain food_povline_ent povline_ent fdshr using "$path/work/povlines.csv", replace c; 
 
 *********************************************************************************
 * 210_povmeas_ent_flex.do		(end)
