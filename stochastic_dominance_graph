@@ -400,7 +400,7 @@ resmat[8:15,3,3] <- as.vector( by(unps1011w, unps1011w$regurb, function(unps1011
 unps1011w$cr <- unps1011w$food_pc_nom/unps1011w$tpi_trim + unps1011w$nf_pc_nom 
 unps1011w$ucpline[unps1011w$strata=="Kampala"] <- 1182.935*106.5282311272/100
 unps1011w$ucpline[unps1011w$strata=="Central rural"] <- 892.5259*106.5282311272/100
-unps1011w$ucpline[unps1011w$strata=="East rural "] <- 699.1604*106.5282311272/100
+unps1011w$ucpline[unps1011w$strata=="East rural"] <- 699.1604*106.5282311272/100
 unps1011w$ucpline[unps1011w$strata=="North rural"] <- 971.5269*106.5282311272/100
 unps1011w$ucpline[unps1011w$strata=="West rural"] <- 1060.346*106.5282311272/100
 unps1011w$ucpline[unps1011w$strata=="Other Urban"] <- 962.2184*106.5282311272/100
@@ -531,7 +531,7 @@ unps1112w$stratum  <- factor(unps1112w$stratum ,levels(unps1112w$stratum)[c(5,1,
 
 unps1112w$ucpline[unps1112w$stratum=="Kampala"] <- 1182.935*131.5924716994/100
 unps1112w$ucpline[unps1112w$stratum=="Central rural"] <- 892.5259*131.5924716994/100
-unps1112w$ucpline[unps1112w$stratum=="East rural "] <- 699.1604*131.5924716994/100
+unps1112w$ucpline[unps1112w$stratum=="East rural"] <- 699.1604*131.5924716994/100
 unps1112w$ucpline[unps1112w$stratum=="North rural"] <- 971.5269*131.5924716994/100
 unps1112w$ucpline[unps1112w$stratum=="West rural"] <- 1060.346*131.5924716994/100
 unps1112w$ucpline[unps1112w$stratum=="Other urban"] <- 962.2184*131.5924716994/100
