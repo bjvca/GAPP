@@ -1,13 +1,13 @@
 ### calculates poverty table (and plots stochastic dominance, but they are wrong)
 
-### resmat(x=15,y=4,z)
+### resmat(x=15,y=8,z=6)
 #x = country, rural, urban, central, east, north, west, interactions(region, rururb)
-#y = 2005/06,2009/10,2010/11,2011/12.
+#y = 2005/06: poverty - contribution ,2009/10 poverty - contribution,2010/11 poverty - contribution,2011/12 poverty - contribution.
 #z = (p0,p1,p2) with one poverty line,  (p0,p1,p2) with utility consistent poverty lines
 
 
 library(foreign)
-resmat <- array(NA, c(15, 4, 6))
+resmat <- array(NA, c(15, 8, 6))
 
 
 unhs0910 <- read.dta("/home/bjvca/data/data/GAP/Haruna/work/conpc.dta")
@@ -103,10 +103,18 @@ resmat[1,1,alpha+1] <-sum(((unps0506w$cr2 < unps0506w$ucpline )* unps0506w$hhwei
 
 resmat[2:3,1,alpha+1] <- as.vector( by(unps0506w, unps0506w$urban, function(unps0506w) sum(((unps0506w$cr2 < unps0506w$ucpline )* unps0506w$hhweight*unps0506w$hhsize)*((unps0506w$ucpline - unps0506w$cr2)/unps0506w$ucpline)^alpha, na.rm=T)/sum( unps0506w$hhweight*unps0506w$hhsize, na.rm=T)))
 
+resmat[2:3,2,alpha+1] <- (resmat[2:3,1,alpha+1] * as.vector( by(unps0506w, unps0506w$urban, function(unps0506w) sum(( unps0506w$hhweight*unps0506w$hhsize),na.rm=T)) / sum(( unps0506w$hhweight*unps0506w$hhsize),na.rm=T)))/ resmat[1,1,alpha+1]
+
 
 resmat[4:7,1,alpha+1] <- as.vector( by(unps0506w, unps0506w$region, function(unps0506w) sum(((unps0506w$cr2 < unps0506w$ucpline )* unps0506w$hhweight*unps0506w$hhsize)*((unps0506w$ucpline - unps0506w$cr2)/unps0506w$ucpline)^alpha, na.rm=T)/sum( unps0506w$hhweight*unps0506w$hhsize, na.rm=T)))
 
+
+resmat[4:7,2,alpha+1] <- (resmat[4:7,1,alpha+1] * as.vector( by(unps0506w, unps0506w$region, function(unps0506w) sum(( unps0506w$hhweight*unps0506w$hhsize),na.rm=T)) / sum(( unps0506w$hhweight*unps0506w$hhsize),na.rm=T)))/resmat[1,1,alpha+1]
+
 resmat[8:15,1,alpha+1] <- as.vector( by(unps0506w, unps0506w$regurb, function(unps0506w) sum(((unps0506w$cr2 < unps0506w$ucpline )* unps0506w$hhweight*unps0506w$hhsize)*((unps0506w$ucpline - unps0506w$cr2)/unps0506w$ucpline)^alpha, na.rm=T)/sum( unps0506w$hhweight*unps0506w$hhsize, na.rm=T)))
+
+resmat[8:15,2,alpha+1] <- (resmat[8:15,1,alpha+1] * as.vector( by(unps0506w, unps0506w$regurb, function(unps0506w) sum(( unps0506w$hhweight*unps0506w$hhsize),na.rm=T)) / sum(( unps0506w$hhweight*unps0506w$hhsize),na.rm=T)))/ resmat[1,1,alpha+1]
+
 }
 
  
@@ -137,8 +145,14 @@ unps0506w$z <-  unps0506w$cr2 < unps0506w$ucpline
 
 
 resmat[2:3,1, alpha + 4] <-  as.vector( by(unps0506w, unps0506w$urban, function(unps0506w) sum(((unps0506w$cr2 < unps0506w$ucpline )* unps0506w$hhweight*unps0506w$hhsize)*((unps0506w$ucpline - unps0506w$cr2)/unps0506w$ucpline)^alpha, na.rm=T)/sum( unps0506w$hhweight*unps0506w$hhsize, na.rm=T)))
-resmat[4:7,1, alpha + 4] <-  as.vector( by(unps0506w, unps0506w$urban, function(unps0506w) sum(((unps0506w$cr2 < unps0506w$ucpline )* unps0506w$hhweight*unps0506w$hhsize)*((unps0506w$ucpline - unps0506w$cr2)/unps0506w$ucpline)^alpha, na.rm=T)/sum( unps0506w$hhweight*unps0506w$hhsize, na.rm=T)))
-resmat[8:15,1, alpha + 4] <-  as.vector( by(unps0506w, unps0506w$urban, function(unps0506w) sum(((unps0506w$cr2 < unps0506w$ucpline )* unps0506w$hhweight*unps0506w$hhsize)*((unps0506w$ucpline - unps0506w$cr2)/unps0506w$ucpline)^alpha, na.rm=T)/sum( unps0506w$hhweight*unps0506w$hhsize, na.rm=T)))
+resmat[2:3,2,alpha+4] <- (resmat[2:3,1,alpha+4] * as.vector( by(unps0506w, unps0506w$urban, function(unps0506w) sum(( unps0506w$hhweight*unps0506w$hhsize),na.rm=T)) / sum(( unps0506w$hhweight*unps0506w$hhsize),na.rm=T)))/ resmat[1,1,alpha+4]
+
+resmat[4:7,1, alpha + 4] <-  as.vector( by(unps0506w, unps0506w$region, function(unps0506w) sum(((unps0506w$cr2 < unps0506w$ucpline )* unps0506w$hhweight*unps0506w$hhsize)*((unps0506w$ucpline - unps0506w$cr2)/unps0506w$ucpline)^alpha, na.rm=T)/sum( unps0506w$hhweight*unps0506w$hhsize, na.rm=T)))
+resmat[4:7,2,alpha+4] <- (resmat[4:7,1,alpha+4] * as.vector( by(unps0506w, unps0506w$region, function(unps0506w) sum(( unps0506w$hhweight*unps0506w$hhsize),na.rm=T)) / sum(( unps0506w$hhweight*unps0506w$hhsize),na.rm=T)))/resmat[1,1,alpha+4]
+
+resmat[8:15,1, alpha + 4] <-  as.vector( by(unps0506w, unps0506w$regurb, function(unps0506w) sum(((unps0506w$cr2 < unps0506w$ucpline )* unps0506w$hhweight*unps0506w$hhsize)*((unps0506w$ucpline - unps0506w$cr2)/unps0506w$ucpline)^alpha, na.rm=T)/sum( unps0506w$hhweight*unps0506w$hhsize, na.rm=T)))
+
+resmat[8:15,2,alpha+4] <- (resmat[8:15,1,alpha+4] * as.vector( by(unps0506w, unps0506w$regurb, function(unps0506w) sum(( unps0506w$hhweight*unps0506w$hhsize),na.rm=T)) / sum(( unps0506w$hhweight*unps0506w$hhsize),na.rm=T)))/ resmat[1,1,alpha+4]
 }
 
   
@@ -168,12 +182,24 @@ sum((unps0910w$cr2 < unps0910w$ucpline) * unps0910w$hhweight*unps0910w$hhsize, n
 
 unps0910w <- subset(unps0910w, !is.na(unps0910w$hhweight))
 for (alpha in 0:2 ) {
-resmat[1,2,alpha + 1] <-sum(((unps0910w$cr2 < unps0910w$ucpline )* unps0910w$hhweight*unps0910w$hhsize)*((unps0910w$ucpline - unps0910w$cr2)/unps0910w$ucpline)^alpha, na.rm=T)/sum( unps0910w$hhweight*unps0910w$hhsize, na.rm=T)
+resmat[1,3,alpha + 1] <-sum(((unps0910w$cr2 < unps0910w$ucpline )* unps0910w$hhweight*unps0910w$hhsize)*((unps0910w$ucpline - unps0910w$cr2)/unps0910w$ucpline)^alpha, na.rm=T)/sum( unps0910w$hhweight*unps0910w$hhsize, na.rm=T)
 
 unps0910w$z <-  unps0910w$cr2 < unps0910w$ucpline
-resmat[2:3,2,alpha + 1] <- as.vector( by(unps0910w, unps0910w$urban, function(unps0910w) sum(((unps0910w$cr2 < unps0910w$ucpline )* unps0910w$hhweight*unps0910w$hhsize)*((unps0910w$ucpline - unps0910w$cr2)/unps0910w$ucpline)^alpha, na.rm=T)/sum( unps0910w$hhweight*unps0910w$hhsize, na.rm=T)))
-resmat[4:7,2,alpha + 1] <-as.vector( by(unps0910w, unps0910w$urban, function(unps0910w) sum(((unps0910w$cr2 < unps0910w$ucpline )* unps0910w$hhweight*unps0910w$hhsize)*((unps0910w$ucpline - unps0910w$cr2)/unps0910w$ucpline)^alpha, na.rm=T)/sum( unps0910w$hhweight*unps0910w$hhsize, na.rm=T)))
-resmat[8:15,2,alpha + 1] <-as.vector( by(unps0910w, unps0910w$urban, function(unps0910w) sum(((unps0910w$cr2 < unps0910w$ucpline )* unps0910w$hhweight*unps0910w$hhsize)*((unps0910w$ucpline - unps0910w$cr2)/unps0910w$ucpline)^alpha, na.rm=T)/sum( unps0910w$hhweight*unps0910w$hhsize, na.rm=T)))
+resmat[2:3,3,alpha + 1] <- as.vector( by(unps0910w, unps0910w$urban, function(unps0910w) sum(((unps0910w$cr2 < unps0910w$ucpline )* unps0910w$hhweight*unps0910w$hhsize)*((unps0910w$ucpline - unps0910w$cr2)/unps0910w$ucpline)^alpha, na.rm=T)/sum( unps0910w$hhweight*unps0910w$hhsize, na.rm=T)))
+
+
+resmat[2:3,4,alpha+1] <- (resmat[2:3,3,alpha+1] * as.vector( by(unps0910w, unps0910w$urban, function(unps0910w) sum(( unps0910w$hhweight*unps0910w$hhsize),na.rm=T)) / sum(( unps0910w$hhweight*unps0910w$hhsize),na.rm=T)))/ resmat[1,3,alpha+1]
+
+
+resmat[4:7,3,alpha + 1] <-as.vector( by(unps0910w, unps0910w$region, function(unps0910w) sum(((unps0910w$cr2 < unps0910w$ucpline )* unps0910w$hhweight*unps0910w$hhsize)*((unps0910w$ucpline - unps0910w$cr2)/unps0910w$ucpline)^alpha, na.rm=T)/sum( unps0910w$hhweight*unps0910w$hhsize, na.rm=T)))
+
+resmat[4:7,4,alpha+1] <- (resmat[4:7,3,alpha+1] * as.vector( by(unps0910w, unps0910w$region, function(unps0910w) sum(( unps0910w$hhweight*unps0910w$hhsize),na.rm=T)) / sum(( unps0910w$hhweight*unps0910w$hhsize),na.rm=T)))/ resmat[1,3,alpha+1]
+
+
+resmat[8:15,3,alpha + 1] <-as.vector( by(unps0910w, unps0910w$regurb, function(unps0910w) sum(((unps0910w$cr2 < unps0910w$ucpline )* unps0910w$hhweight*unps0910w$hhsize)*((unps0910w$ucpline - unps0910w$cr2)/unps0910w$ucpline)^alpha, na.rm=T)/sum( unps0910w$hhweight*unps0910w$hhsize, na.rm=T)))
+
+resmat[8:15,4,alpha+1] <- (resmat[8:15,3,alpha+1] * as.vector( by(unps0910w, unps0910w$regurb, function(unps0910w) sum(( unps0910w$hhweight*unps0910w$hhsize),na.rm=T)) / sum(( unps0910w$hhweight*unps0910w$hhsize),na.rm=T)))/ resmat[1,3,alpha+1]
+
 }
  
 
@@ -200,12 +226,21 @@ sum((unps0910w$cr2 < unps0910w$ucpline) * unps0910w$hhweight*unps0910w$hhsize, n
 unps0910w <- subset(unps0910w, !is.na(unps0910w$hhweight))
 
 for (alpha in 0:2 ) {
-resmat[1,2,alpha + 4] <-sum(((unps0910w$cr2 < unps0910w$ucpline )* unps0910w$hhweight*unps0910w$hhsize)*((unps0910w$ucpline - unps0910w$cr2)/unps0910w$ucpline)^alpha, na.rm=T)/sum( unps0910w$hhweight*unps0910w$hhsize, na.rm=T)
+resmat[1,3,alpha + 4] <-sum(((unps0910w$cr2 < unps0910w$ucpline )* unps0910w$hhweight*unps0910w$hhsize)*((unps0910w$ucpline - unps0910w$cr2)/unps0910w$ucpline)^alpha, na.rm=T)/sum( unps0910w$hhweight*unps0910w$hhsize, na.rm=T)
 
 unps0910w$z <-  unps0910w$cr2 < unps0910w$ucpline
-resmat[2:3,2,alpha + 4] <- as.vector( by(unps0910w, unps0910w$urban, function(unps0910w) sum(((unps0910w$cr2 < unps0910w$ucpline )* unps0910w$hhweight*unps0910w$hhsize)*((unps0910w$ucpline - unps0910w$cr2)/unps0910w$ucpline)^alpha, na.rm=T)/sum( unps0910w$hhweight*unps0910w$hhsize, na.rm=T)))
-resmat[4:7,2,alpha + 4] <-as.vector( by(unps0910w, unps0910w$urban, function(unps0910w) sum(((unps0910w$cr2 < unps0910w$ucpline )* unps0910w$hhweight*unps0910w$hhsize)*((unps0910w$ucpline - unps0910w$cr2)/unps0910w$ucpline)^alpha, na.rm=T)/sum( unps0910w$hhweight*unps0910w$hhsize, na.rm=T)))
-resmat[8:15,2,alpha + 4] <-as.vector( by(unps0910w, unps0910w$urban, function(unps0910w) sum(((unps0910w$cr2 < unps0910w$ucpline )* unps0910w$hhweight*unps0910w$hhsize)*((unps0910w$ucpline - unps0910w$cr2)/unps0910w$ucpline)^alpha, na.rm=T)/sum( unps0910w$hhweight*unps0910w$hhsize, na.rm=T)))
+resmat[2:3,3,alpha + 4] <- as.vector( by(unps0910w, unps0910w$urban, function(unps0910w) sum(((unps0910w$cr2 < unps0910w$ucpline )* unps0910w$hhweight*unps0910w$hhsize)*((unps0910w$ucpline - unps0910w$cr2)/unps0910w$ucpline)^alpha, na.rm=T)/sum( unps0910w$hhweight*unps0910w$hhsize, na.rm=T)))
+
+resmat[2:3,4,alpha+4] <- (resmat[2:3,3,alpha+4] * as.vector( by(unps0910w, unps0910w$urban, function(unps0910w) sum(( unps0910w$hhweight*unps0910w$hhsize),na.rm=T)) / sum(( unps0910w$hhweight*unps0910w$hhsize),na.rm=T)))/ resmat[1,3,alpha+4]
+
+resmat[4:7,3,alpha + 4] <-as.vector( by(unps0910w, unps0910w$region, function(unps0910w) sum(((unps0910w$cr2 < unps0910w$ucpline )* unps0910w$hhweight*unps0910w$hhsize)*((unps0910w$ucpline - unps0910w$cr2)/unps0910w$ucpline)^alpha, na.rm=T)/sum( unps0910w$hhweight*unps0910w$hhsize, na.rm=T)))
+
+resmat[4:7,4,alpha+4] <- (resmat[4:7,3,alpha+4] * as.vector( by(unps0910w, unps0910w$region, function(unps0910w) sum(( unps0910w$hhweight*unps0910w$hhsize),na.rm=T)) / sum(( unps0910w$hhweight*unps0910w$hhsize),na.rm=T)))/ resmat[1,3,alpha+4]
+
+resmat[8:15,3,alpha + 4] <-as.vector( by(unps0910w, unps0910w$regurb, function(unps0910w) sum(((unps0910w$cr2 < unps0910w$ucpline )* unps0910w$hhweight*unps0910w$hhsize)*((unps0910w$ucpline - unps0910w$cr2)/unps0910w$ucpline)^alpha, na.rm=T)/sum( unps0910w$hhweight*unps0910w$hhsize, na.rm=T)))
+
+resmat[8:15,4,alpha+4] <- (resmat[8:15,3,alpha+4] * as.vector( by(unps0910w, unps0910w$regurb, function(unps0910w) sum(( unps0910w$hhweight*unps0910w$hhsize),na.rm=T)) / sum(( unps0910w$hhweight*unps0910w$hhsize),na.rm=T)))/ resmat[1,3,alpha+4]
+
 }
 
   
@@ -233,12 +268,23 @@ sum((unps1011w$cr2 < unps1011w$ucpline) * unps1011w$hhweight*unps1011w$hhsize, n
 
 unps1011w <- subset(unps1011w, !is.na(unps1011w$hhweight))
 for (alpha in 0:2 ) {
-resmat[1,3,alpha + 1] <-sum(((unps1011w$cr2 < unps1011w$ucpline )* unps1011w$hhweight*unps1011w$hhsize)*((unps1011w$ucpline - unps1011w$cr2)/unps1011w$ucpline)^alpha, na.rm=T)/sum( unps1011w$hhweight*unps1011w$hhsize, na.rm=T)
+resmat[1,5,alpha + 1] <-sum(((unps1011w$cr2 < unps1011w$ucpline )* unps1011w$hhweight*unps1011w$hhsize)*((unps1011w$ucpline - unps1011w$cr2)/unps1011w$ucpline)^alpha, na.rm=T)/sum( unps1011w$hhweight*unps1011w$hhsize, na.rm=T)
 
 unps1011w$z <-  unps1011w$cr2 < unps1011w$ucpline
-resmat[2:3,3,alpha + 1] <- as.vector( by(unps1011w, unps1011w$urban, function(unps1011w) sum(((unps1011w$cr2 < unps1011w$ucpline )* unps1011w$hhweight*unps1011w$hhsize)*((unps1011w$ucpline - unps1011w$cr2)/unps1011w$ucpline)^alpha, na.rm=T)/sum( unps1011w$hhweight*unps1011w$hhsize, na.rm=T)))
-resmat[4:7,3,alpha + 1] <-as.vector( by(unps1011w, unps1011w$urban, function(unps1011w) sum(((unps1011w$cr2 < unps1011w$ucpline )* unps1011w$hhweight*unps1011w$hhsize)*((unps1011w$ucpline - unps1011w$cr2)/unps1011w$ucpline)^alpha, na.rm=T)/sum( unps1011w$hhweight*unps1011w$hhsize, na.rm=T)))
-resmat[8:15,3,alpha + 1] <-as.vector( by(unps1011w, unps1011w$urban, function(unps1011w) sum(((unps1011w$cr2 < unps1011w$ucpline )* unps1011w$hhweight*unps1011w$hhsize)*((unps1011w$ucpline - unps1011w$cr2)/unps1011w$ucpline)^alpha, na.rm=T)/sum( unps1011w$hhweight*unps1011w$hhsize, na.rm=T)))
+resmat[2:3,5,alpha + 1] <- as.vector( by(unps1011w, unps1011w$urban, function(unps1011w) sum(((unps1011w$cr2 < unps1011w$ucpline )* unps1011w$hhweight*unps1011w$hhsize)*((unps1011w$ucpline - unps1011w$cr2)/unps1011w$ucpline)^alpha, na.rm=T)/sum( unps1011w$hhweight*unps1011w$hhsize, na.rm=T)))
+
+resmat[2:3,6,alpha+1] <- (resmat[2:3,5,alpha+1] * as.vector( by(unps1011w, unps1011w$urban, function(unps1011w) sum(( unps1011w$hhweight*unps1011w$hhsize),na.rm=T)) / sum(( unps1011w$hhweight*unps1011w$hhsize),na.rm=T)))/ resmat[1,5,alpha+1]
+
+
+resmat[4:7,5,alpha + 1] <-as.vector( by(unps1011w, unps1011w$region, function(unps1011w) sum(((unps1011w$cr2 < unps1011w$ucpline )* unps1011w$hhweight*unps1011w$hhsize)*((unps1011w$ucpline - unps1011w$cr2)/unps1011w$ucpline)^alpha, na.rm=T)/sum( unps1011w$hhweight*unps1011w$hhsize, na.rm=T)))
+
+resmat[4:7,6,alpha+1] <- (resmat[4:7,5,alpha+1] * as.vector( by(unps1011w, unps1011w$region, function(unps1011w) sum(( unps1011w$hhweight*unps1011w$hhsize),na.rm=T)) / sum(( unps1011w$hhweight*unps1011w$hhsize),na.rm=T)))/ resmat[1,5,alpha+1]
+
+
+resmat[8:15,5,alpha + 1] <-as.vector( by(unps1011w, unps1011w$regurb, function(unps1011w) sum(((unps1011w$cr2 < unps1011w$ucpline )* unps1011w$hhweight*unps1011w$hhsize)*((unps1011w$ucpline - unps1011w$cr2)/unps1011w$ucpline)^alpha, na.rm=T)/sum( unps1011w$hhweight*unps1011w$hhsize, na.rm=T)))
+
+resmat[8:15,6,alpha+1] <- (resmat[8:15,5,alpha+1] * as.vector( by(unps1011w, unps1011w$regurb, function(unps1011w) sum(( unps1011w$hhweight*unps1011w$hhsize),na.rm=T)) / sum(( unps1011w$hhweight*unps1011w$hhsize),na.rm=T)))/ resmat[1,5,alpha+1]
+
 } 
  
 
@@ -267,12 +313,21 @@ sum((unps1011w$cr2 < unps1011w$ucpline) * unps1011w$hhweight*unps1011w$hhsize, n
 
 unps1011w <- subset(unps1011w, !is.na(unps1011w$hhweight))
 for (alpha in 0:2 ) {
-resmat[1,3,alpha + 4] <-sum(((unps1011w$cr2 < unps1011w$ucpline )* unps1011w$hhweight*unps1011w$hhsize)*((unps1011w$ucpline - unps1011w$cr2)/unps1011w$ucpline)^alpha, na.rm=T)/sum( unps1011w$hhweight*unps1011w$hhsize, na.rm=T)
+resmat[1,5,alpha + 4] <-sum(((unps1011w$cr2 < unps1011w$ucpline )* unps1011w$hhweight*unps1011w$hhsize)*((unps1011w$ucpline - unps1011w$cr2)/unps1011w$ucpline)^alpha, na.rm=T)/sum( unps1011w$hhweight*unps1011w$hhsize, na.rm=T)
 
 unps1011w$z <-  unps1011w$cr2 < unps1011w$ucpline
-resmat[2:3,3,alpha + 4] <- as.vector( by(unps1011w, unps1011w$urban, function(unps1011w) sum(((unps1011w$cr2 < unps1011w$ucpline )* unps1011w$hhweight*unps1011w$hhsize)*((unps1011w$ucpline - unps1011w$cr2)/unps1011w$ucpline)^alpha, na.rm=T)/sum( unps1011w$hhweight*unps1011w$hhsize, na.rm=T)))
-resmat[4:7,3,alpha + 4] <-as.vector( by(unps1011w, unps1011w$urban, function(unps1011w) sum(((unps1011w$cr2 < unps1011w$ucpline )* unps1011w$hhweight*unps1011w$hhsize)*((unps1011w$ucpline - unps1011w$cr2)/unps1011w$ucpline)^alpha, na.rm=T)/sum( unps1011w$hhweight*unps1011w$hhsize, na.rm=T)))
-resmat[8:15,3,alpha + 4] <-as.vector( by(unps1011w, unps1011w$urban, function(unps1011w) sum(((unps1011w$cr2 < unps1011w$ucpline )* unps1011w$hhweight*unps1011w$hhsize)*((unps1011w$ucpline - unps1011w$cr2)/unps1011w$ucpline)^alpha, na.rm=T)/sum( unps1011w$hhweight*unps1011w$hhsize, na.rm=T)))
+resmat[2:3,5,alpha + 4] <- as.vector( by(unps1011w, unps1011w$urban, function(unps1011w) sum(((unps1011w$cr2 < unps1011w$ucpline )* unps1011w$hhweight*unps1011w$hhsize)*((unps1011w$ucpline - unps1011w$cr2)/unps1011w$ucpline)^alpha, na.rm=T)/sum( unps1011w$hhweight*unps1011w$hhsize, na.rm=T)))
+
+resmat[2:3,6,alpha+4] <- (resmat[2:3,5,alpha+4] * as.vector( by(unps1011w, unps1011w$urban, function(unps1011w) sum(( unps1011w$hhweight*unps1011w$hhsize),na.rm=T)) / sum(( unps1011w$hhweight*unps1011w$hhsize),na.rm=T)))/ resmat[1,5,alpha+4]
+
+
+resmat[4:7,5,alpha + 4] <-as.vector( by(unps1011w, unps1011w$region, function(unps1011w) sum(((unps1011w$cr2 < unps1011w$ucpline )* unps1011w$hhweight*unps1011w$hhsize)*((unps1011w$ucpline - unps1011w$cr2)/unps1011w$ucpline)^alpha, na.rm=T)/sum( unps1011w$hhweight*unps1011w$hhsize, na.rm=T)))
+
+resmat[4:7,6,alpha+4] <- (resmat[4:7,5,alpha+4] * as.vector( by(unps1011w, unps1011w$region, function(unps1011w) sum(( unps1011w$hhweight*unps1011w$hhsize),na.rm=T)) / sum(( unps1011w$hhweight*unps1011w$hhsize),na.rm=T)))/ resmat[1,5,alpha+4]
+
+resmat[8:15,5,alpha + 4] <-as.vector( by(unps1011w, unps1011w$regurb, function(unps1011w) sum(((unps1011w$cr2 < unps1011w$ucpline )* unps1011w$hhweight*unps1011w$hhsize)*((unps1011w$ucpline - unps1011w$cr2)/unps1011w$ucpline)^alpha, na.rm=T)/sum( unps1011w$hhweight*unps1011w$hhsize, na.rm=T)))
+
+resmat[8:15,6,alpha+4] <- (resmat[8:15,5,alpha+4] * as.vector( by(unps1011w, unps1011w$regurb, function(unps1011w) sum(( unps1011w$hhweight*unps1011w$hhsize),na.rm=T)) / sum(( unps1011w$hhweight*unps1011w$hhsize),na.rm=T)))/ resmat[1,5,alpha+4]
 }
  
 ############################ 2011/12 ##############################
@@ -296,12 +351,21 @@ sum((unps1112w$cr2 < unps1112w$ucpline) * unps1112w$hhweight*unps1112w$hhsize, n
 
 unps1112w <- subset(unps1112w, !is.na(unps1112w$hhweight))
 for (alpha in 0:2 ) {
-resmat[1,4,alpha + 1] <-sum(((unps1112w$cr2 < unps1112w$ucpline )* unps1112w$hhweight*unps1112w$hhsize)*((unps1112w$ucpline - unps1112w$cr2)/unps1112w$ucpline)^alpha, na.rm=T)/sum( unps1112w$hhweight*unps1112w$hhsize, na.rm=T)
+resmat[1,7,alpha + 1] <-sum(((unps1112w$cr2 < unps1112w$ucpline )* unps1112w$hhweight*unps1112w$hhsize)*((unps1112w$ucpline - unps1112w$cr2)/unps1112w$ucpline)^alpha, na.rm=T)/sum( unps1112w$hhweight*unps1112w$hhsize, na.rm=T)
 
 unps1112w$z <-  unps1112w$cr2 < unps1112w$ucpline
-resmat[2:4,2,alpha + 1] <- as.vector( by(unps1112w, unps1112w$urban, function(unps1112w) sum(((unps1112w$cr2 < unps1112w$ucpline )* unps1112w$hhweight*unps1112w$hhsize)*((unps1112w$ucpline - unps1112w$cr2)/unps1112w$ucpline)^alpha, na.rm=T)/sum( unps1112w$hhweight*unps1112w$hhsize, na.rm=T)))
-resmat[4:7,4,alpha + 1] <-as.vector( by(unps1112w, unps1112w$urban, function(unps1112w) sum(((unps1112w$cr2 < unps1112w$ucpline )* unps1112w$hhweight*unps1112w$hhsize)*((unps1112w$ucpline - unps1112w$cr2)/unps1112w$ucpline)^alpha, na.rm=T)/sum( unps1112w$hhweight*unps1112w$hhsize, na.rm=T)))
-resmat[8:15,4,alpha + 1] <-as.vector( by(unps1112w, unps1112w$urban, function(unps1112w) sum(((unps1112w$cr2 < unps1112w$ucpline )* unps1112w$hhweight*unps1112w$hhsize)*((unps1112w$ucpline - unps1112w$cr2)/unps1112w$ucpline)^alpha, na.rm=T)/sum( unps1112w$hhweight*unps1112w$hhsize, na.rm=T)))
+resmat[2:3,7,alpha + 1] <- as.vector( by(unps1112w, unps1112w$urban, function(unps1112w) sum(((unps1112w$cr2 < unps1112w$ucpline )* unps1112w$hhweight*unps1112w$hhsize)*((unps1112w$ucpline - unps1112w$cr2)/unps1112w$ucpline)^alpha, na.rm=T)/sum( unps1112w$hhweight*unps1112w$hhsize, na.rm=T)))
+
+resmat[2:3,8,alpha+1] <- (resmat[2:3,7,alpha+1] * as.vector( by(unps1112w, unps1112w$urban, function(unps1112w) sum(( unps1112w$hhweight*unps1112w$hhsize),na.rm=T)) / sum(( unps1112w$hhweight*unps1112w$hhsize),na.rm=T)))/ resmat[1,7,alpha+1]
+
+resmat[4:7,7,alpha + 1] <-as.vector( by(unps1112w, unps1112w$region, function(unps1112w) sum(((unps1112w$cr2 < unps1112w$ucpline )* unps1112w$hhweight*unps1112w$hhsize)*((unps1112w$ucpline - unps1112w$cr2)/unps1112w$ucpline)^alpha, na.rm=T)/sum( unps1112w$hhweight*unps1112w$hhsize, na.rm=T)))
+
+resmat[4:7,8,alpha+1] <- (resmat[4:7,7,alpha+1] * as.vector( by(unps1112w, unps1112w$region, function(unps1112w) sum(( unps1112w$hhweight*unps1112w$hhsize),na.rm=T)) / sum(( unps1112w$hhweight*unps1112w$hhsize),na.rm=T)))/ resmat[1,7,alpha+1]
+
+resmat[8:15,7,alpha + 1] <-as.vector( by(unps1112w, unps1112w$regurb, function(unps1112w) sum(((unps1112w$cr2 < unps1112w$ucpline )* unps1112w$hhweight*unps1112w$hhsize)*((unps1112w$ucpline - unps1112w$cr2)/unps1112w$ucpline)^alpha, na.rm=T)/sum( unps1112w$hhweight*unps1112w$hhsize, na.rm=T)))
+
+resmat[8:15,8,alpha+1] <- (resmat[8:15,7,alpha+1] * as.vector( by(unps1112w, unps1112w$regurb, function(unps1112w) sum(( unps1112w$hhweight*unps1112w$hhsize),na.rm=T)) / sum(( unps1112w$hhweight*unps1112w$hhsize),na.rm=T)))/ resmat[1,7,alpha+1]
+
 }
 
   
@@ -338,12 +402,22 @@ sum((unps1112w$cr2 < unps1112w$ucpline) * unps1112w$hhweight*unps1112w$hhsize, n
 
 unps1112w <- subset(unps1112w, !is.na(unps1112w$hhweight))
 for (alpha in 0:2 ) {
-resmat[1,4,alpha + 4] <-sum(((unps1112w$cr2 < unps1112w$ucpline )* unps1112w$hhweight*unps1112w$hhsize)*((unps1112w$ucpline - unps1112w$cr2)/unps1112w$ucpline)^alpha, na.rm=T)/sum( unps1112w$hhweight*unps1112w$hhsize, na.rm=T)
+resmat[1,7,alpha + 4] <-sum(((unps1112w$cr2 < unps1112w$ucpline )* unps1112w$hhweight*unps1112w$hhsize)*((unps1112w$ucpline - unps1112w$cr2)/unps1112w$ucpline)^alpha, na.rm=T)/sum( unps1112w$hhweight*unps1112w$hhsize, na.rm=T)
 
 unps1112w$z <-  unps1112w$cr2 < unps1112w$ucpline
-resmat[2:3,4,alpha + 4] <- as.vector( by(unps1112w, unps1112w$urban, function(unps1112w) sum(((unps1112w$cr2 < unps1112w$ucpline )* unps1112w$hhweight*unps1112w$hhsize)*((unps1112w$ucpline - unps1112w$cr2)/unps1112w$ucpline)^alpha, na.rm=T)/sum( unps1112w$hhweight*unps1112w$hhsize, na.rm=T)))
-resmat[4:7,4,alpha + 4] <-as.vector( by(unps1112w, unps1112w$urban, function(unps1112w) sum(((unps1112w$cr2 < unps1112w$ucpline )* unps1112w$hhweight*unps1112w$hhsize)*((unps1112w$ucpline - unps1112w$cr2)/unps1112w$ucpline)^alpha, na.rm=T)/sum( unps1112w$hhweight*unps1112w$hhsize, na.rm=T)))
-resmat[8:15,4,alpha + 4] <-as.vector( by(unps1112w, unps1112w$urban, function(unps1112w) sum(((unps1112w$cr2 < unps1112w$ucpline )* unps1112w$hhweight*unps1112w$hhsize)*((unps1112w$ucpline - unps1112w$cr2)/unps1112w$ucpline)^alpha, na.rm=T)/sum( unps1112w$hhweight*unps1112w$hhsize, na.rm=T)))
+resmat[2:3,7,alpha + 4] <- as.vector( by(unps1112w, unps1112w$urban, function(unps1112w) sum(((unps1112w$cr2 < unps1112w$ucpline )* unps1112w$hhweight*unps1112w$hhsize)*((unps1112w$ucpline - unps1112w$cr2)/unps1112w$ucpline)^alpha, na.rm=T)/sum( unps1112w$hhweight*unps1112w$hhsize, na.rm=T)))
+
+resmat[2:3,8,alpha+4] <- (resmat[2:3,7,alpha+4] * as.vector( by(unps1112w, unps1112w$urban, function(unps1112w) sum(( unps1112w$hhweight*unps1112w$hhsize),na.rm=T)) / sum(( unps1112w$hhweight*unps1112w$hhsize),na.rm=T)))/ resmat[1,7,alpha+4]
+
+
+resmat[4:7,7,alpha + 4] <-as.vector( by(unps1112w, unps1112w$region, function(unps1112w) sum(((unps1112w$cr2 < unps1112w$ucpline )* unps1112w$hhweight*unps1112w$hhsize)*((unps1112w$ucpline - unps1112w$cr2)/unps1112w$ucpline)^alpha, na.rm=T)/sum( unps1112w$hhweight*unps1112w$hhsize, na.rm=T)))
+
+resmat[4:7,8,alpha+4] <- (resmat[4:7,7,alpha+4] * as.vector( by(unps1112w, unps1112w$region, function(unps1112w) sum(( unps1112w$hhweight*unps1112w$hhsize),na.rm=T)) / sum(( unps1112w$hhweight*unps1112w$hhsize),na.rm=T)))/ resmat[1,7,alpha+4]
+
+resmat[8:15,7,alpha + 4] <-as.vector( by(unps1112w, unps1112w$regurb, function(unps1112w) sum(((unps1112w$cr2 < unps1112w$ucpline )* unps1112w$hhweight*unps1112w$hhsize)*((unps1112w$ucpline - unps1112w$cr2)/unps1112w$ucpline)^alpha, na.rm=T)/sum( unps1112w$hhweight*unps1112w$hhsize, na.rm=T)))
+
+resmat[8:15,8,alpha+4] <- (resmat[8:15,7,alpha+4] * as.vector( by(unps1112w, unps1112w$regurb, function(unps1112w) sum(( unps1112w$hhweight*unps1112w$hhsize),na.rm=T)) / sum(( unps1112w$hhweight*unps1112w$hhsize),na.rm=T)))/ resmat[1,7,alpha+4]
+
 }
 
 

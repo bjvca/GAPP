@@ -183,6 +183,16 @@ In this paper, we want to update existing knowledge about the state and
  For instance, we can study how many households are chronically poor and
  how does their characteristics differ from other groups, such as households
  that successfully grew out of poverty.
+ In other words, we will construct a detailed poverty profile that takes
+ dynamic aspects into account, defining groups based on poverty transitions
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Boateng01031992"
+
+\end_inset
+
+.
  
 \end_layout
 
@@ -3270,15 +3280,19 @@ Poverty headcounts 2002-2012 using one spatial domain
 \begin_layout Plain Layout
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="19" columns="5">
+<lyxtabular version="3" rows="20" columns="9">
 <features rotate="0" tabularvalignment="middle">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
 <row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -3287,7 +3301,7 @@ Poverty headcounts 2002-2012 using one spatial domain
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -3296,7 +3310,16 @@ Poverty headcounts 2002-2012 using one spatial domain
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -3305,7 +3328,16 @@ Poverty headcounts 2002-2012 using one spatial domain
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -3314,11 +3346,112 @@ Poverty headcounts 2002-2012 using one spatial domain
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 2011/12
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+P0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+contr
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+P0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+contr
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+P0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+contr
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+P0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+contr
 \end_layout
 
 \end_inset
@@ -3350,7 +3483,7 @@ national
 \uwave off
 \noun off
 \color none
-16.33
+0.163
 \end_layout
 
 \end_inset
@@ -3371,7 +3504,7 @@ national
 \uwave off
 \noun off
 \color none
-15.30
+1.000
 \end_layout
 
 \end_inset
@@ -3392,7 +3525,7 @@ national
 \uwave off
 \noun off
 \color none
-21.07
+0.153
 \end_layout
 
 \end_inset
@@ -3413,13 +3546,133 @@ national
 \uwave off
 \noun off
 \color none
-15.48
+1.000
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.211
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+1.000
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.155
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+1.000
 \end_layout
 
 \end_inset
 </cell>
 </row>
 <row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" usebox="none">
 \begin_inset Text
 
@@ -3492,7 +3745,7 @@ urban
 \uwave off
 \noun off
 \color none
-2.83
+0.035
 \end_layout
 
 \end_inset
@@ -3513,7 +3766,7 @@ urban
 \uwave off
 \noun off
 \color none
-3.30
+0.035
 \end_layout
 
 \end_inset
@@ -3534,7 +3787,7 @@ urban
 \uwave off
 \noun off
 \color none
-3.61
+0.043
 \end_layout
 
 \end_inset
@@ -3555,7 +3808,91 @@ urban
 \uwave off
 \noun off
 \color none
-4.24
+0.045
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.060
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.040
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.047
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.051
 \end_layout
 
 \end_inset
@@ -3587,7 +3924,7 @@ rural
 \uwave off
 \noun off
 \color none
-16.13
+0.189
 \end_layout
 
 \end_inset
@@ -3608,7 +3945,7 @@ rural
 \uwave off
 \noun off
 \color none
-15.21
+0.965
 \end_layout
 
 \end_inset
@@ -3629,7 +3966,7 @@ rural
 \uwave off
 \noun off
 \color none
-18.99
+0.174
 \end_layout
 
 \end_inset
@@ -3650,13 +3987,133 @@ rural
 \uwave off
 \noun off
 \color none
-15.15
+0.955
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.235
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.960
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.177
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.949
 \end_layout
 
 \end_inset
 </cell>
 </row>
 <row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" usebox="none">
 \begin_inset Text
 
@@ -3741,7 +4198,7 @@ Central
 \uwave off
 \noun off
 \color none
-5.68
+0.075
 \end_layout
 
 \end_inset
@@ -3762,7 +4219,7 @@ Central
 \uwave off
 \noun off
 \color none
-4.41
+0.140
 \end_layout
 
 \end_inset
@@ -3783,7 +4240,7 @@ Central
 \uwave off
 \noun off
 \color none
-3.96
+0.063
 \end_layout
 
 \end_inset
@@ -3804,7 +4261,91 @@ Central
 \uwave off
 \noun off
 \color none
-2.21
+0.128
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.055
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.067
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.023
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.033
 \end_layout
 
 \end_inset
@@ -3848,7 +4389,7 @@ Eastern
 \uwave off
 \noun off
 \color none
-13.84
+0.156
 \end_layout
 
 \end_inset
@@ -3869,7 +4410,7 @@ Eastern
 \uwave off
 \noun off
 \color none
-14.43
+0.238
 \end_layout
 
 \end_inset
@@ -3890,7 +4431,7 @@ Eastern
 \uwave off
 \noun off
 \color none
-19.70
+0.148
 \end_layout
 
 \end_inset
@@ -3911,7 +4452,91 @@ Eastern
 \uwave off
 \noun off
 \color none
-14.06
+0.236
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.235
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.299
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.151
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.312
 \end_layout
 
 \end_inset
@@ -3955,7 +4580,7 @@ Northern
 \uwave off
 \noun off
 \color none
-36.47
+0.421
 \end_layout
 
 \end_inset
@@ -3976,7 +4601,7 @@ Northern
 \uwave off
 \noun off
 \color none
-29.55
+0.446
 \end_layout
 
 \end_inset
@@ -3997,7 +4622,7 @@ Northern
 \uwave off
 \noun off
 \color none
-26.83
+0.338
 \end_layout
 
 \end_inset
@@ -4018,7 +4643,91 @@ Northern
 \uwave off
 \noun off
 \color none
-26.19
+0.398
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.340
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.374
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.316
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.426
 \end_layout
 
 \end_inset
@@ -4062,7 +4771,7 @@ Western
 \uwave off
 \noun off
 \color none
-8.49
+0.106
 \end_layout
 
 \end_inset
@@ -4083,7 +4792,7 @@ Western
 \uwave off
 \noun off
 \color none
-11.37
+0.176
 \end_layout
 
 \end_inset
@@ -4104,7 +4813,7 @@ Western
 \uwave off
 \noun off
 \color none
-17.55
+0.136
 \end_layout
 
 \end_inset
@@ -4125,13 +4834,133 @@ Western
 \uwave off
 \noun off
 \color none
-11.49
+0.238
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.223
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.261
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.141
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.229
 \end_layout
 
 \end_inset
 </cell>
 </row>
 <row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" usebox="none">
 \begin_inset Text
 
@@ -4204,7 +5033,7 @@ central urban
 \uwave off
 \noun off
 \color none
-1.15
+0.011
 \end_layout
 
 \end_inset
@@ -4225,7 +5054,7 @@ central urban
 \uwave off
 \noun off
 \color none
-2.19
+0.007
 \end_layout
 
 \end_inset
@@ -4246,7 +5075,7 @@ central urban
 \uwave off
 \noun off
 \color none
-0.57
+0.030
 \end_layout
 
 \end_inset
@@ -4267,7 +5096,91 @@ central urban
 \uwave off
 \noun off
 \color none
-0.13
+0.018
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.010
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.004
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.006
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.002
 \end_layout
 
 \end_inset
@@ -4299,7 +5212,7 @@ central rural
 \uwave off
 \noun off
 \color none
-8.54
+0.110
 \end_layout
 
 \end_inset
@@ -4320,7 +5233,7 @@ central rural
 \uwave off
 \noun off
 \color none
-5.58
+0.133
 \end_layout
 
 \end_inset
@@ -4341,7 +5254,7 @@ central rural
 \uwave off
 \noun off
 \color none
-6.02
+0.078
 \end_layout
 
 \end_inset
@@ -4362,7 +5275,91 @@ central rural
 \uwave off
 \noun off
 \color none
-2.83
+0.109
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.078
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.063
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.028
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.031
 \end_layout
 
 \end_inset
@@ -4394,7 +5391,7 @@ eastern urban
 \uwave off
 \noun off
 \color none
-3.18
+0.036
 \end_layout
 
 \end_inset
@@ -4415,7 +5412,7 @@ eastern urban
 \uwave off
 \noun off
 \color none
-5.81
+0.004
 \end_layout
 
 \end_inset
@@ -4436,7 +5433,7 @@ eastern urban
 \uwave off
 \noun off
 \color none
-9.00
+0.073
 \end_layout
 
 \end_inset
@@ -4457,7 +5454,91 @@ eastern urban
 \uwave off
 \noun off
 \color none
-1.75
+0.013
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.110
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.009
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.011
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.003
 \end_layout
 
 \end_inset
@@ -4489,7 +5570,7 @@ eastern rural
 \uwave off
 \noun off
 \color none
-14.80
+0.164
 \end_layout
 
 \end_inset
@@ -4510,7 +5591,7 @@ eastern rural
 \uwave off
 \noun off
 \color none
-15.66
+0.234
 \end_layout
 
 \end_inset
@@ -4531,7 +5612,7 @@ eastern rural
 \uwave off
 \noun off
 \color none
-20.54
+0.157
 \end_layout
 
 \end_inset
@@ -4552,7 +5633,91 @@ eastern rural
 \uwave off
 \noun off
 \color none
-16.30
+0.224
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.244
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.290
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.175
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.308
 \end_layout
 
 \end_inset
@@ -4584,7 +5749,7 @@ northern urban
 \uwave off
 \noun off
 \color none
-12.21
+0.146
 \end_layout
 
 \end_inset
@@ -4605,7 +5770,7 @@ northern urban
 \uwave off
 \noun off
 \color none
-7.30
+0.021
 \end_layout
 
 \end_inset
@@ -4626,7 +5791,7 @@ northern urban
 \uwave off
 \noun off
 \color none
-15.24
+0.077
 \end_layout
 
 \end_inset
@@ -4647,7 +5812,91 @@ northern urban
 \uwave off
 \noun off
 \color none
-14.69
+0.008
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.263
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.025
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.133
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.024
 \end_layout
 
 \end_inset
@@ -4679,7 +5928,7 @@ northern rural
 \uwave off
 \noun off
 \color none
-39.95
+0.463
 \end_layout
 
 \end_inset
@@ -4700,7 +5949,7 @@ northern rural
 \uwave off
 \noun off
 \color none
-31.48
+0.425
 \end_layout
 
 \end_inset
@@ -4721,7 +5970,7 @@ northern rural
 \uwave off
 \noun off
 \color none
-27.96
+0.362
 \end_layout
 
 \end_inset
@@ -4742,7 +5991,91 @@ northern rural
 \uwave off
 \noun off
 \color none
-28.33
+0.390
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.347
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.349
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.344
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.402
 \end_layout
 
 \end_inset
@@ -4774,7 +6107,7 @@ western urban
 \uwave off
 \noun off
 \color none
-3.41
+0.037
 \end_layout
 
 \end_inset
@@ -4795,7 +6128,7 @@ western urban
 \uwave off
 \noun off
 \color none
-3.38
+0.004
 \end_layout
 
 \end_inset
@@ -4816,7 +6149,7 @@ western urban
 \uwave off
 \noun off
 \color none
-2.31
+0.043
 \end_layout
 
 \end_inset
@@ -4837,7 +6170,91 @@ western urban
 \uwave off
 \noun off
 \color none
-3.89
+0.007
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.024
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.002
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.076
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.022
 \end_layout
 
 \end_inset
@@ -4869,7 +6286,7 @@ western rural
 \uwave off
 \noun off
 \color none
-8.87
+0.110
 \end_layout
 
 \end_inset
@@ -4890,7 +6307,7 @@ western rural
 \uwave off
 \noun off
 \color none
-12.22
+0.172
 \end_layout
 
 \end_inset
@@ -4911,7 +6328,7 @@ western rural
 \uwave off
 \noun off
 \color none
-18.77
+0.145
 \end_layout
 
 \end_inset
@@ -4932,7 +6349,91 @@ western rural
 \uwave off
 \noun off
 \color none
-13.40
+0.232
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.237
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.259
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.155
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.207
 \end_layout
 
 \end_inset
@@ -4971,15 +6472,19 @@ Poverty headcounts 2002-2012 using six spatial domains
 \begin_layout Plain Layout
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="19" columns="5">
+<lyxtabular version="3" rows="20" columns="9">
 <features rotate="0" tabularvalignment="middle">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
 <row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -4988,7 +6493,7 @@ Poverty headcounts 2002-2012 using six spatial domains
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -4997,7 +6502,16 @@ Poverty headcounts 2002-2012 using six spatial domains
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -5006,7 +6520,16 @@ Poverty headcounts 2002-2012 using six spatial domains
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -5015,11 +6538,112 @@ Poverty headcounts 2002-2012 using six spatial domains
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 2011/12
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+P0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+contr
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+P0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+contr
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+P0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+contr
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+P0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+contr
 \end_layout
 
 \end_inset
@@ -5051,7 +6675,7 @@ national
 \uwave off
 \noun off
 \color none
-28.55
+0.285
 \end_layout
 
 \end_inset
@@ -5072,7 +6696,7 @@ national
 \uwave off
 \noun off
 \color none
-26.26
+1.000
 \end_layout
 
 \end_inset
@@ -5093,7 +6717,7 @@ national
 \uwave off
 \noun off
 \color none
-32.65
+0.263
 \end_layout
 
 \end_inset
@@ -5114,13 +6738,133 @@ national
 \uwave off
 \noun off
 \color none
-26.09
+1.000
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.327
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+1.000
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.261
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+1.000
 \end_layout
 
 \end_inset
 </cell>
 </row>
 <row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" usebox="none">
 \begin_inset Text
 
@@ -5193,7 +6937,7 @@ urban
 \uwave off
 \noun off
 \color none
-7.68
+0.107
 \end_layout
 
 \end_inset
@@ -5214,7 +6958,7 @@ urban
 \uwave off
 \noun off
 \color none
-5.76
+0.062
 \end_layout
 
 \end_inset
@@ -5235,7 +6979,7 @@ urban
 \uwave off
 \noun off
 \color none
-9.11
+0.076
 \end_layout
 
 \end_inset
@@ -5256,7 +7000,91 @@ urban
 \uwave off
 \noun off
 \color none
-8.81
+0.046
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.106
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.045
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.111
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.072
 \end_layout
 
 \end_inset
@@ -5288,7 +7116,7 @@ rural
 \uwave off
 \noun off
 \color none
-28.07
+0.321
 \end_layout
 
 \end_inset
@@ -5309,7 +7137,7 @@ rural
 \uwave off
 \noun off
 \color none
-25.87
+0.938
 \end_layout
 
 \end_inset
@@ -5330,7 +7158,7 @@ rural
 \uwave off
 \noun off
 \color none
-30.27
+0.298
 \end_layout
 
 \end_inset
@@ -5351,13 +7179,133 @@ rural
 \uwave off
 \noun off
 \color none
-25.31
+0.954
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.362
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.955
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.292
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.928
 \end_layout
 
 \end_inset
 </cell>
 </row>
 <row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" usebox="none">
 \begin_inset Text
 
@@ -5442,7 +7390,7 @@ Central
 \uwave off
 \noun off
 \color none
-11.87
+0.157
 \end_layout
 
 \end_inset
@@ -5463,7 +7411,7 @@ Central
 \uwave off
 \noun off
 \color none
-8.54
+0.169
 \end_layout
 
 \end_inset
@@ -5484,7 +7432,7 @@ Central
 \uwave off
 \noun off
 \color none
-9.03
+0.121
 \end_layout
 
 \end_inset
@@ -5505,7 +7453,91 @@ Central
 \uwave off
 \noun off
 \color none
-5.77
+0.142
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.106
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.083
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.060
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.050
 \end_layout
 
 \end_inset
@@ -5549,7 +7581,7 @@ Eastern
 \uwave off
 \noun off
 \color none
-14.13
+0.160
 \end_layout
 
 \end_inset
@@ -5570,7 +7602,7 @@ Eastern
 \uwave off
 \noun off
 \color none
-15.09
+0.140
 \end_layout
 
 \end_inset
@@ -5591,7 +7623,7 @@ Eastern
 \uwave off
 \noun off
 \color none
-20.19
+0.153
 \end_layout
 
 \end_inset
@@ -5612,7 +7644,91 @@ Eastern
 \uwave off
 \noun off
 \color none
-14.51
+0.142
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.240
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.197
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.157
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.192
 \end_layout
 
 \end_inset
@@ -5656,7 +7772,7 @@ Northern
 \uwave off
 \noun off
 \color none
-53.97
+0.612
 \end_layout
 
 \end_inset
@@ -5677,7 +7793,7 @@ Northern
 \uwave off
 \noun off
 \color none
-45.47
+0.371
 \end_layout
 
 \end_inset
@@ -5698,7 +7814,7 @@ Northern
 \uwave off
 \noun off
 \color none
-40.87
+0.519
 \end_layout
 
 \end_inset
@@ -5719,7 +7835,91 @@ Northern
 \uwave off
 \noun off
 \color none
-42.95
+0.355
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.512
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.363
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.499
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.400
 \end_layout
 
 \end_inset
@@ -5763,7 +7963,7 @@ Western
 \uwave off
 \noun off
 \color none
-29.24
+0.337
 \end_layout
 
 \end_inset
@@ -5784,7 +7984,7 @@ Western
 \uwave off
 \noun off
 \color none
-29.99
+0.320
 \end_layout
 
 \end_inset
@@ -5805,7 +8005,7 @@ Western
 \uwave off
 \noun off
 \color none
-40.39
+0.354
 \end_layout
 
 \end_inset
@@ -5826,13 +8026,133 @@ Western
 \uwave off
 \noun off
 \color none
-29.38
+0.360
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.474
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.358
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.370
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.357
 \end_layout
 
 \end_inset
 </cell>
 </row>
 <row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" usebox="none">
 \begin_inset Text
 
@@ -5905,7 +8225,7 @@ central urban
 \uwave off
 \noun off
 \color none
-4.68
+0.066
 \end_layout
 
 \end_inset
@@ -5926,7 +8246,7 @@ central urban
 \uwave off
 \noun off
 \color none
-2.69
+0.025
 \end_layout
 
 \end_inset
@@ -5947,7 +8267,7 @@ central urban
 \uwave off
 \noun off
 \color none
-4.71
+0.040
 \end_layout
 
 \end_inset
@@ -5968,7 +8288,91 @@ central urban
 \uwave off
 \noun off
 \color none
-4.35
+0.014
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.034
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.009
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.070
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.013
 \end_layout
 
 \end_inset
@@ -6000,7 +8404,7 @@ central rural
 \uwave off
 \noun off
 \color none
-16.40
+0.208
 \end_layout
 
 \end_inset
@@ -6021,7 +8425,7 @@ central rural
 \uwave off
 \noun off
 \color none
-11.63
+0.143
 \end_layout
 
 \end_inset
@@ -6042,7 +8446,7 @@ central rural
 \uwave off
 \noun off
 \color none
-11.65
+0.156
 \end_layout
 
 \end_inset
@@ -6063,7 +8467,91 @@ central rural
 \uwave off
 \noun off
 \color none
-6.20
+0.128
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.143
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.074
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.057
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.037
 \end_layout
 
 \end_inset
@@ -6095,7 +8583,7 @@ eastern urban
 \uwave off
 \noun off
 \color none
-6.68
+0.102
 \end_layout
 
 \end_inset
@@ -6116,7 +8604,7 @@ eastern urban
 \uwave off
 \noun off
 \color none
-10.04
+0.006
 \end_layout
 
 \end_inset
@@ -6137,7 +8625,7 @@ eastern urban
 \uwave off
 \noun off
 \color none
-15.78
+0.113
 \end_layout
 
 \end_inset
@@ -6158,7 +8646,91 @@ eastern urban
 \uwave off
 \noun off
 \color none
-3.80
+0.011
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.183
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.009
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.038
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.007
 \end_layout
 
 \end_inset
@@ -6190,7 +8762,7 @@ eastern rural
 \uwave off
 \noun off
 \color none
-14.80
+0.164
 \end_layout
 
 \end_inset
@@ -6211,7 +8783,7 @@ eastern rural
 \uwave off
 \noun off
 \color none
-15.81
+0.134
 \end_layout
 
 \end_inset
@@ -6232,7 +8804,7 @@ eastern rural
 \uwave off
 \noun off
 \color none
-20.54
+0.158
 \end_layout
 
 \end_inset
@@ -6253,7 +8825,91 @@ eastern rural
 \uwave off
 \noun off
 \color none
-16.46
+0.131
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.244
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.187
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.177
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.185
 \end_layout
 
 \end_inset
@@ -6285,7 +8941,7 @@ northern urban
 \uwave off
 \noun off
 \color none
-26.61
+0.315
 \end_layout
 
 \end_inset
@@ -6306,7 +8962,7 @@ northern urban
 \uwave off
 \noun off
 \color none
-16.23
+0.026
 \end_layout
 
 \end_inset
@@ -6327,7 +8983,7 @@ northern urban
 \uwave off
 \noun off
 \color none
-26.33
+0.189
 \end_layout
 
 \end_inset
@@ -6348,7 +9004,91 @@ northern urban
 \uwave off
 \noun off
 \color none
-23.01
+0.011
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.341
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.021
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.264
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.028
 \end_layout
 
 \end_inset
@@ -6380,7 +9120,7 @@ northern rural
 \uwave off
 \noun off
 \color none
-57.89
+0.658
 \end_layout
 
 \end_inset
@@ -6401,7 +9141,7 @@ northern rural
 \uwave off
 \noun off
 \color none
-48.01
+0.345
 \end_layout
 
 \end_inset
@@ -6422,7 +9162,7 @@ northern rural
 \uwave off
 \noun off
 \color none
-42.29
+0.549
 \end_layout
 
 \end_inset
@@ -6443,7 +9183,91 @@ northern rural
 \uwave off
 \noun off
 \color none
-46.66
+0.344
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.528
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.342
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.535
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.371
 \end_layout
 
 \end_inset
@@ -6475,7 +9299,7 @@ western urban
 \uwave off
 \noun off
 \color none
-7.68
+0.092
 \end_layout
 
 \end_inset
@@ -6496,7 +9320,7 @@ western urban
 \uwave off
 \noun off
 \color none
-9.40
+0.005
 \end_layout
 
 \end_inset
@@ -6517,7 +9341,7 @@ western urban
 \uwave off
 \noun off
 \color none
-7.85
+0.107
 \end_layout
 
 \end_inset
@@ -6538,7 +9362,91 @@ western urban
 \uwave off
 \noun off
 \color none
-8.43
+0.010
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.119
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.006
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.136
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.024
 \end_layout
 
 \end_inset
@@ -6570,7 +9478,7 @@ western rural
 \uwave off
 \noun off
 \color none
-30.85
+0.353
 \end_layout
 
 \end_inset
@@ -6591,7 +9499,7 @@ western rural
 \uwave off
 \noun off
 \color none
-32.17
+0.315
 \end_layout
 
 \end_inset
@@ -6612,7 +9520,7 @@ western rural
 \uwave off
 \noun off
 \color none
-43.00
+0.378
 \end_layout
 
 \end_inset
@@ -6633,7 +9541,91 @@ western rural
 \uwave off
 \noun off
 \color none
-34.65
+0.350
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.500
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.352
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.422
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.334
 \end_layout
 
 \end_inset
@@ -6697,12 +9689,214 @@ ding to 13.30 and 10.06 percent of the population, respectively.
  
 \end_layout
 
+\begin_layout Subsubsection*
+Location
+\end_layout
+
 \begin_layout Standard
-We will now present poverty profiles for the different categories identified
- on the basis of poverty mobility.
- We will do this using simple frequency tables.
- We start with location.
+We first look at the location of households in the 5 classes in terms of
+ being in urban or rural areas.
+ It is well known that poverty is predominantly rural, and Uganda is no
+ exception.
+ 96 percent of the chronic poor live in rural areas, while 21 percent of
+ the non-poor are found in rural areas.
+ For the other three categories, around 10 percent lives in urban areas.
+ Going one step further, we look at the three groups by region.
+ This is visualized in the mosaic plot in figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Regional-Poverty-Dynamics"
+
+\end_inset
+
+.
+ The figure clearly shows that chronic poverty is concentrated in the North.
+ Here, 72 percent of all the chronic poor can be found.
+ On the other end, the households that never experienced poverty our disproporti
+onately located in the central region: more than 43 percent of the people
+ that are always above the poverty threshold live here.
+ But for the North, there is also good news.
+ It seems a substantial part of the people that escape poverty are those
+ from the North.
+ This is different for the Eastern region, and to a lesser extent for the
+ Western region, where relatively more people are falling back into poverty,
+ and relatively less are escaping.
+ Still, the North hosts a large proportion of vulnerable households as well.
+ Finally, it is worth noting that, despite the already high presence of
+ non-poor in the Central region, many poor households have escaped poverty
+ over time and very few households have slipped back into poverty.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Regional Poverty Dynamics
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Regional-Poverty-Dynamics"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/bjvca/data/data/GAP/Haruna/regionalprof.pdf
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection*
+Household demographics
+\end_layout
+
+\begin_layout Standard
+An indicator that is often central in poverty analysis and household demographic
+ characteristics is female headedness.
+ In general, female headed households are 
+\end_layout
+
+\begin_layout Standard
+Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Poverty-Dynamics-and"
+
+\end_inset
+
+ gives an idea of the distribution household size and child dependency ratios
+ conditional on what poverty dynamics group the households are in.
+ In the left panel (1), we plot boxplots for each of the 5 poverty dynamics
+ classes.
+ While many studies find that household size is a good poverty indicator,
+ the case is not clear cut.
+ It is thought that increased competition for a given food stock reduces
+ consumption.
+ However, 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "RePEc:ecj:econjl:v:105:y:1995:i:433:p:1415-34"
+
+\end_inset
+
+ argue that the negative correlation disappears as one takes economies of
+ scale in household food consumption into account.
+ In terms of production, a larger household may mean more and cheaper labour.
+ But Van Campenhout (mimeo) finds that in Ugandan agricultural households,
+ the reproductive tasks by the mother reduce time devoted to labour, leading
+ to lower production of key food items.
+\end_layout
+
+\begin_layout Standard
+In the right panel (2) we do the same for child dependency ratios.
+ For each household we calculate the share of children under the age of
+ 15 within the total household and use this to plot boxplots by poverty
+ dynamics category.
+ Comparing the two panels, we do not see a clear pattern in (1).
+ While large households seem to be more likely to be chronic poor, they
+ are also more likely to escape poverty.
+ At the same time, the category of households that fall into poverty has
+ the lowest median household size.
+ If we look at the number of children as a percentage of total household
+ size, we find that higher child dependency is associated with chronic poverty,
+ while the non-poor have the lowest median child dependency ratio.
+ Despite the relatively low household size, it now seems that the households
+ that slide below the poverty threshold have a surprisingly high dependency
+ ratio.
+ These may be households where one of the parents has died, or has left
+ the households.
  
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Household Size and Child Dependency Ratios
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Poverty-Dynamics-and"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/bjvca/data/data/GAP/Haruna/dependency.pdf
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Access to services
+\end_layout
+
+\begin_layout Standard
+Eduction
+\end_layout
+
+\begin_layout Standard
+Health
+\end_layout
+
+\begin_layout Standard
+Assets
 \end_layout
 
 \begin_layout Section*
@@ -6764,22 +9958,15 @@ key "RePEc:ucp:ecdecc:v:58:y:2010:i:3:p:449-474"
 \end_layout
 
 \begin_layout Standard
-Applying the above to three nationally representative surveys for Uganda,
- we find that national poverty has been and remains higher than the official
- figures suggest.
- Also somewhat controversial, we find that not the North, but the East and
- more recently the West are the regions that are poorest.
- This can be re-conciliated by the fact that households living in the West
- are disproportionally dependent on matooke for their caloric requirements,
- while the North prefers (or has to rely on because of climatic conditions)
- cassava and sorghum.
- Matooke is at least twice as expensive as cassava, and three times as expensive
- as sorghum to obtain a given amount of kilo-calories.
- This results in a much lower poverty line for the North than the one for
- the West.
- Still, digging deeper, we find that the figure for the North still veils
- quite some differences.
- The karamajong region in the North remains the poorest of all districts.
+While our analysis shows the situation has improved over time in the North,
+ a disturbingly large proportion of the chronic poor remain.
+ In addition, there is also a substantial proportion of vulnerable household
+ residing in the North.
+ The use of utility consistent poverty lines that are allowed to differ
+ in terms of diet by geographic location also point to substantial poverty
+ in the Western region.
+ The fact that in this region, relatively few households are escaping poverty
+ and relatively more households are falling into poverty needs attention.
  
 \end_layout
 
