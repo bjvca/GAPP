@@ -1,5 +1,13 @@
+### calculates poverty table (and plots stochastic dominance, but they are wrong)
+
+### resmat(x=15,y=4,z)
+#x = country, rural, urban, central, east, north, west, interactions(region, rururb)
+#y = 2005/06,2009/10,2010/11,2011/12.
+#z = (p0,p1,p2) with one poverty line,  (p0,p1,p2) with utility consistent poverty lines
+
+
 library(foreign)
-resmat <- array(NA, c(15, 4, 4))
+resmat <- array(NA, c(15, 4, 6))
 
 
 unhs0910 <- read.dta("/home/bjvca/data/data/GAP/Haruna/work/conpc.dta")
@@ -83,75 +91,25 @@ unps0506w$cr2 <- unps0506w$cr/unps0506w$spi
 
 unps0506w$regurb <- unps0506w$strata
 
-sum((unps0506w$cr2 < unps0506w$ucpline) * unps0506w$hhweight*unps0506w$hhsize, na.rm=T)/sum(unps0506w$hhweight*unps0506w$hhsize, na.rm=T)
+for (alpha in 0:2 ) {
 
-unps0506w <- subset(unps0506w, !is.na(unps0506w$hhweight))
-resmat[1,1,1] <- weighted.mean(unps0506w$cr2 < unps0506w$ucpline, unps0506w$hhweight*unps0506w$hhsize, na.rm=T)
-
-unps0506w$z <-  unps0506w$cr2 < unps0506w$ucpline
-resmat[2:3,1,1] <- as.vector( by(unps0506w, unps0506w$urban, function(unps0506w) weighted.mean(unps0506w$z, unps0506w$hhweight,na.rm=T)))
-resmat[4:7,1,1] <- as.vector( by(unps0506w, unps0506w$region, function(unps0506w) weighted.mean(unps0506w$z, unps0506w$hhweight,na.rm=T)))
-resmat[8:15,1,1] <- as.vector( by(unps0506w, unps0506w$regurb, function(unps0506w) weighted.mean(unps0506w$z, unps0506w$hhweight,na.rm=T)))
-
- by(unps0506w, unps0506w$stratum, function(unps0506w) weighted.mean(unps0506w$z, unps0506w$hhweight,na.rm=T))
- 
- 
- ### urban/rural povlines  
-unps0506w$cr <- unps0506w$food_pc_nom/unps0506w$tpi_trim + unps0506w$nf_pc_nom 
- unps0506w$ucpline[unps0506w$rural=="Urban"] <-  1038.93*69.4492673102/100
-unps0506w$ucpline[unps0506w$rural=="Rural"] <- 831.3817*69.4492673102/100
-
-
-linref <- mean(unps0506w$ucpline[unps0506w$rural=="Rural"])
-unps0506w$spi <- unps0506w$ucpline/linref
-unps0506w$cr2 <- unps0506w$cr/unps0506w$spi
-
-unps0506w$spi <-unps0506w$spi*sum(unps0506w$cr2*unps0506w$hhweight*unps0506w$hhsize, na.rm=T)/sum(unps0506w$cr*unps0506w$hhweight*unps0506w$hhsize, na.rm=T)
-unps0506w$ucpline <- unps0506w$ucpline/unps0506w$spi
-unps0506w$cr2 <- unps0506w$cr/unps0506w$spi
-
-sum((unps0506w$cr2 < unps0506w$ucpline) * unps0506w$hhweight*unps0506w$hhsize, na.rm=T)/sum(unps0506w$hhweight*unps0506w$hhsize, na.rm=T)
-
-unps0506w <- subset(unps0506w, !is.na(unps0506w$hhweight))
-resmat[1,1,2] <- weighted.mean(unps0506w$cr2 < unps0506w$ucpline, unps0506w$hhweight*unps0506w$hhsize, na.rm=T)
-
-unps0506w$z <-  unps0506w$cr2 < unps0506w$ucpline
-
-
-resmat[2:3,1,2] <- as.vector( by(unps0506w, unps0506w$urban, function(unps0506w) weighted.mean(unps0506w$z, unps0506w$hhweight,na.rm=T)))
-resmat[4:7,1,2]   <- as.vector( by(unps0506w, unps0506w$region, function(unps0506w) weighted.mean(unps0506w$z, unps0506w$hhweight,na.rm=T)))
-resmat[8:15,1,2]  <- as.vector( by(unps0506w, unps0506w$regurb, function(unps0506w) weighted.mean(unps0506w$z, unps0506w$hhweight,na.rm=T)))
- by(unps0506w, unps0506w$stratum, function(unps0506w) weighted.mean(unps0506w$z, unps0506w$hhweight,na.rm=T))
 
  
-### regional povlines  
-unps0506w$cr <- unps0506w$food_pc_nom/unps0506w$tpi_trim + unps0506w$nf_pc_nom 
-unps0506w$ucpline[unps0506w$region=="Central"] <-  887.82135*69.4492673102/100
-unps0506w$ucpline[unps0506w$region=="Eastern"] <- 599.48358*69.4492673102/100
-unps0506w$ucpline[unps0506w$region=="Northern"] <- 828.47717*69.4492673102/100
-unps0506w$ucpline[unps0506w$region=="Western"] <- 557.02185*69.4492673102/100
-
-linref <- mean(unps0506w$ucpline[unps0506w$region=="Central"])
-unps0506w$spi <- unps0506w$ucpline/linref
-unps0506w$cr2 <- unps0506w$cr/unps0506w$spi
-
-unps0506w$spi <-unps0506w$spi*sum(unps0506w$cr2*unps0506w$hhweight*unps0506w$hhsize, na.rm=T)/sum(unps0506w$cr*unps0506w$hhweight*unps0506w$hhsize, na.rm=T)
-unps0506w$ucpline <- unps0506w$ucpline/unps0506w$spi
-unps0506w$cr2 <- unps0506w$cr/unps0506w$spi
-
-sum((unps0506w$cr2 < unps0506w$ucpline) * unps0506w$hhweight*unps0506w$hhsize, na.rm=T)/sum(unps0506w$hhweight*unps0506w$hhsize, na.rm=T)
 
 unps0506w <- subset(unps0506w, !is.na(unps0506w$hhweight))
-resmat[1,1,3] <- weighted.mean(unps0506w$cr2 < unps0506w$ucpline, unps0506w$hhweight*unps0506w$hhsize, na.rm=T)
-
-unps0506w$z <-  unps0506w$cr2 < unps0506w$ucpline
+resmat[1,1,alpha+1] <-sum(((unps0506w$cr2 < unps0506w$ucpline )* unps0506w$hhweight*unps0506w$hhsize)*((unps0506w$ucpline - unps0506w$cr2)/unps0506w$ucpline)^alpha, na.rm=T)/sum( unps0506w$hhweight*unps0506w$hhsize, na.rm=T)
 
 
-resmat[2:3,1,3] <- as.vector(  by(unps0506w, unps0506w$urban, function(unps0506w) weighted.mean(unps0506w$z, unps0506w$hhweight,na.rm=T)))
-resmat[4:7,1,3] <- as.vector( by(unps0506w, unps0506w$region, function(unps0506w) weighted.mean(unps0506w$z, unps0506w$hhweight,na.rm=T)))
-resmat[8:15,1,3] <- as.vector(by(unps0506w, unps0506w$regurb, function(unps0506w) weighted.mean(unps0506w$z, unps0506w$hhweight,na.rm=T)))
- by(unps0506w, unps0506w$stratum, function(unps0506w) weighted.mean(unps0506w$z, unps0506w$hhweight,na.rm=T))
-  
+
+resmat[2:3,1,alpha+1] <- as.vector( by(unps0506w, unps0506w$urban, function(unps0506w) sum(((unps0506w$cr2 < unps0506w$ucpline )* unps0506w$hhweight*unps0506w$hhsize)*((unps0506w$ucpline - unps0506w$cr2)/unps0506w$ucpline)^alpha, na.rm=T)/sum( unps0506w$hhweight*unps0506w$hhsize, na.rm=T)))
+
+
+resmat[4:7,1,alpha+1] <- as.vector( by(unps0506w, unps0506w$region, function(unps0506w) sum(((unps0506w$cr2 < unps0506w$ucpline )* unps0506w$hhweight*unps0506w$hhsize)*((unps0506w$ucpline - unps0506w$cr2)/unps0506w$ucpline)^alpha, na.rm=T)/sum( unps0506w$hhweight*unps0506w$hhsize, na.rm=T)))
+
+resmat[8:15,1,alpha+1] <- as.vector( by(unps0506w, unps0506w$regurb, function(unps0506w) sum(((unps0506w$cr2 < unps0506w$ucpline )* unps0506w$hhweight*unps0506w$hhsize)*((unps0506w$ucpline - unps0506w$cr2)/unps0506w$ucpline)^alpha, na.rm=T)/sum( unps0506w$hhweight*unps0506w$hhsize, na.rm=T)))
+}
+
+ 
 ### strata povlines  
 unps0506w$cr <- unps0506w$food_pc_nom/unps0506w$tpi_trim + unps0506w$nf_pc_nom 
 unps0506w$ucpline[unps0506w$stratum=="Kampala"] <- 1182.935*69.4492673102/100
@@ -169,18 +127,19 @@ unps0506w$spi <-unps0506w$spi*sum(unps0506w$cr2*unps0506w$hhweight*unps0506w$hhs
 unps0506w$ucpline <- unps0506w$ucpline/unps0506w$spi
 unps0506w$cr2 <- unps0506w$cr/unps0506w$spi
 
-sum((unps0506w$cr2 < unps0506w$ucpline) * unps0506w$hhweight*unps0506w$hhsize, na.rm=T)/sum(unps0506w$hhweight*unps0506w$hhsize, na.rm=T)
+
 
 unps0506w <- subset(unps0506w, !is.na(unps0506w$hhweight))
-resmat[1,1,4] <- weighted.mean(unps0506w$cr2 < unps0506w$ucpline, unps0506w$hhweight*unps0506w$hhsize, na.rm=T)
+for (alpha in 0:2 ) {
+resmat[1,1, alpha + 4] <- sum(((unps0506w$cr2 < unps0506w$ucpline )* unps0506w$hhweight*unps0506w$hhsize)*((unps0506w$ucpline - unps0506w$cr2)/unps0506w$ucpline)^alpha, na.rm=T)/sum( unps0506w$hhweight*unps0506w$hhsize, na.rm=T)
 
 unps0506w$z <-  unps0506w$cr2 < unps0506w$ucpline
 
 
-resmat[2:3,1,4] <- as.vector( by(unps0506w, unps0506w$urban, function(unps0506w) weighted.mean(unps0506w$z, unps0506w$hhweight,na.rm=T)))
-resmat[4:7,1,4] <- as.vector( by(unps0506w, unps0506w$region, function(unps0506w) weighted.mean(unps0506w$z, unps0506w$hhweight,na.rm=T)))
-resmat[8:15,1,4] <- as.vector( by(unps0506w, unps0506w$regurb, function(unps0506w) weighted.mean(unps0506w$z, unps0506w$hhweight,na.rm=T)))
- by(unps0506w, unps0506w$stratum, function(unps0506w) weighted.mean(unps0506w$z, unps0506w$hhweight,na.rm=T))
+resmat[2:3,1, alpha + 4] <-  as.vector( by(unps0506w, unps0506w$urban, function(unps0506w) sum(((unps0506w$cr2 < unps0506w$ucpline )* unps0506w$hhweight*unps0506w$hhsize)*((unps0506w$ucpline - unps0506w$cr2)/unps0506w$ucpline)^alpha, na.rm=T)/sum( unps0506w$hhweight*unps0506w$hhsize, na.rm=T)))
+resmat[4:7,1, alpha + 4] <-  as.vector( by(unps0506w, unps0506w$urban, function(unps0506w) sum(((unps0506w$cr2 < unps0506w$ucpline )* unps0506w$hhweight*unps0506w$hhsize)*((unps0506w$ucpline - unps0506w$cr2)/unps0506w$ucpline)^alpha, na.rm=T)/sum( unps0506w$hhweight*unps0506w$hhsize, na.rm=T)))
+resmat[8:15,1, alpha + 4] <-  as.vector( by(unps0506w, unps0506w$urban, function(unps0506w) sum(((unps0506w$cr2 < unps0506w$ucpline )* unps0506w$hhweight*unps0506w$hhsize)*((unps0506w$ucpline - unps0506w$cr2)/unps0506w$ucpline)^alpha, na.rm=T)/sum( unps0506w$hhweight*unps0506w$hhsize, na.rm=T)))
+}
 
   
   ############################ UNPS 2009/10 ##############################
@@ -208,71 +167,16 @@ unps0910w$cr2 <- unps0910w$cr/unps0910w$spi
 sum((unps0910w$cr2 < unps0910w$ucpline) * unps0910w$hhweight*unps0910w$hhsize, na.rm=T)/sum(unps0910w$hhweight*unps0910w$hhsize, na.rm=T)
 
 unps0910w <- subset(unps0910w, !is.na(unps0910w$hhweight))
-resmat[1,2,1] <- weighted.mean(unps0910w$cr2 < unps0910w$ucpline, unps0910w$hhweight*unps0910w$hhsize, na.rm=T)
+for (alpha in 0:2 ) {
+resmat[1,2,alpha + 1] <-sum(((unps0910w$cr2 < unps0910w$ucpline )* unps0910w$hhweight*unps0910w$hhsize)*((unps0910w$ucpline - unps0910w$cr2)/unps0910w$ucpline)^alpha, na.rm=T)/sum( unps0910w$hhweight*unps0910w$hhsize, na.rm=T)
 
 unps0910w$z <-  unps0910w$cr2 < unps0910w$ucpline
-resmat[2:3,2,1] <- as.vector( by(unps0910w, unps0910w$urban, function(unps0910w) weighted.mean(unps0910w$z, unps0910w$hhweight,na.rm=T)))
-resmat[4:7,2,1] <- as.vector(by(unps0910w, unps0910w$region, function(unps0910w) weighted.mean(unps0910w$z, unps0910w$hhweight,na.rm=T)))
-resmat[8:15,2,1] <- as.vector(by(unps0910w, unps0910w$regurb, function(unps0910w) weighted.mean(unps0910w$z, unps0910w$hhweight,na.rm=T)))
- by(unps0910w, unps0910w$stratum, function(unps0910w) weighted.mean(unps0910w$z, unps0910w$hhweight,na.rm=T))
+resmat[2:3,2,alpha + 1] <- as.vector( by(unps0910w, unps0910w$urban, function(unps0910w) sum(((unps0910w$cr2 < unps0910w$ucpline )* unps0910w$hhweight*unps0910w$hhsize)*((unps0910w$ucpline - unps0910w$cr2)/unps0910w$ucpline)^alpha, na.rm=T)/sum( unps0910w$hhweight*unps0910w$hhsize, na.rm=T)))
+resmat[4:7,2,alpha + 1] <-as.vector( by(unps0910w, unps0910w$urban, function(unps0910w) sum(((unps0910w$cr2 < unps0910w$ucpline )* unps0910w$hhweight*unps0910w$hhsize)*((unps0910w$ucpline - unps0910w$cr2)/unps0910w$ucpline)^alpha, na.rm=T)/sum( unps0910w$hhweight*unps0910w$hhsize, na.rm=T)))
+resmat[8:15,2,alpha + 1] <-as.vector( by(unps0910w, unps0910w$urban, function(unps0910w) sum(((unps0910w$cr2 < unps0910w$ucpline )* unps0910w$hhweight*unps0910w$hhsize)*((unps0910w$ucpline - unps0910w$cr2)/unps0910w$ucpline)^alpha, na.rm=T)/sum( unps0910w$hhweight*unps0910w$hhsize, na.rm=T)))
+}
  
- 
- ### urban/rural povlines  
-unps0910w$cr <- unps0910w$food_pc_nom/unps0910w$tpi_trim + unps0910w$nf_pc_nom 
- unps0910w$ucpline[unps0910w$rural=="Urban"] <-  1038.93
-unps0910w$ucpline[unps0910w$rural=="Rural"] <- 831.3817
 
-
-linref <- mean(unps0910w$ucpline[unps0910w$rural=="Rural"])
-unps0910w$spi <- unps0910w$ucpline/linref
-unps0910w$cr2 <- unps0910w$cr/unps0910w$spi
-
-unps0910w$spi <-unps0910w$spi*sum(unps0910w$cr2*unps0910w$hhweight*unps0910w$hhsize, na.rm=T)/sum(unps0910w$cr*unps0910w$hhweight*unps0910w$hhsize, na.rm=T)
-unps0910w$ucpline <- unps0910w$ucpline/unps0910w$spi
-unps0910w$cr2 <- unps0910w$cr/unps0910w$spi
-
-sum((unps0910w$cr2 < unps0910w$ucpline) * unps0910w$hhweight*unps0910w$hhsize, na.rm=T)/sum(unps0910w$hhweight*unps0910w$hhsize, na.rm=T)
-
-unps0910w <- subset(unps0910w, !is.na(unps0910w$hhweight))
-resmat[1,2,2] <- weighted.mean(unps0910w$cr2 < unps0910w$ucpline, unps0910w$hhweight*unps0910w$hhsize, na.rm=T)
-
-unps0910w$z <-  unps0910w$cr2 < unps0910w$ucpline
-
-
-resmat[2:3,2,2] <- as.vector( by(unps0910w, unps0910w$urban, function(unps0910w) weighted.mean(unps0910w$z, unps0910w$hhweight,na.rm=T)))
-resmat[4:7,2,2] <- as.vector( by(unps0910w, unps0910w$region, function(unps0910w) weighted.mean(unps0910w$z, unps0910w$hhweight,na.rm=T)))
-
-resmat[8:15,2,2] <- as.vector( by(unps0910w, unps0910w$regurb, function(unps0910w) weighted.mean(unps0910w$z, unps0910w$hhweight,na.rm=T)))
- by(unps0910w, unps0910w$stratum, function(unps0910w) weighted.mean(unps0910w$z, unps0910w$hhweight,na.rm=T))
-
- 
-### regional povlines  
-unps0910w$cr <- unps0910w$food_pc_nom/unps0910w$tpi_trim + unps0910w$nf_pc_nom 
-unps0910w$ucpline[unps0910w$region=="Central"] <-  887.82135
-unps0910w$ucpline[unps0910w$region=="Eastern"] <- 599.48358
-unps0910w$ucpline[unps0910w$region=="Northern"] <- 828.47717
-unps0910w$ucpline[unps0910w$region=="Western"] <- 557.02185
-
-linref <- mean(unps0910w$ucpline[unps0910w$region=="Central"])
-unps0910w$spi <- unps0910w$ucpline/linref
-unps0910w$cr2 <- unps0910w$cr/unps0910w$spi
-
-unps0910w$spi <-unps0910w$spi*sum(unps0910w$cr2*unps0910w$hhweight*unps0910w$hhsize, na.rm=T)/sum(unps0910w$cr*unps0910w$hhweight*unps0910w$hhsize, na.rm=T)
-unps0910w$ucpline <- unps0910w$ucpline/unps0910w$spi
-unps0910w$cr2 <- unps0910w$cr/unps0910w$spi
-
-sum((unps0910w$cr2 < unps0910w$ucpline) * unps0910w$hhweight*unps0910w$hhsize, na.rm=T)/sum(unps0910w$hhweight*unps0910w$hhsize, na.rm=T)
-
-unps0910w <- subset(unps0910w, !is.na(unps0910w$hhweight))
-resmat[1,2,3] <- weighted.mean(unps0910w$cr2 < unps0910w$ucpline, unps0910w$hhweight*unps0910w$hhsize, na.rm=T)
-
-unps0910w$z <-  unps0910w$cr2 < unps0910w$ucpline
-
-
-resmat[2:3,2,3]  <- as.vector( by(unps0910w, unps0910w$urban, function(unps0910w) weighted.mean(unps0910w$z, unps0910w$hhweight,na.rm=T)))
-resmat[4:7,2,3] <- as.vector( by(unps0910w, unps0910w$region, function(unps0910w) weighted.mean(unps0910w$z, unps0910w$hhweight,na.rm=T)))
-resmat[8:15,2,3]  <- as.vector(by(unps0910w, unps0910w$regurb, function(unps0910w) weighted.mean(unps0910w$z, unps0910w$hhweight,na.rm=T)))
- by(unps0910w, unps0910w$stratum, function(unps0910w) weighted.mean(unps0910w$z, unps0910w$hhweight,na.rm=T))
   
 ### strata povlines  
 unps0910w$cr <- unps0910w$food_pc_nom/unps0910w$tpi_trim + unps0910w$nf_pc_nom 
@@ -294,15 +198,15 @@ unps0910w$cr2 <- unps0910w$cr/unps0910w$spi
 sum((unps0910w$cr2 < unps0910w$ucpline) * unps0910w$hhweight*unps0910w$hhsize, na.rm=T)/sum(unps0910w$hhweight*unps0910w$hhsize, na.rm=T)
 
 unps0910w <- subset(unps0910w, !is.na(unps0910w$hhweight))
-resmat[1,2,4] <- weighted.mean(unps0910w$cr2 < unps0910w$ucpline, unps0910w$hhweight*unps0910w$hhsize, na.rm=T)
+
+for (alpha in 0:2 ) {
+resmat[1,2,alpha + 4] <-sum(((unps0910w$cr2 < unps0910w$ucpline )* unps0910w$hhweight*unps0910w$hhsize)*((unps0910w$ucpline - unps0910w$cr2)/unps0910w$ucpline)^alpha, na.rm=T)/sum( unps0910w$hhweight*unps0910w$hhsize, na.rm=T)
 
 unps0910w$z <-  unps0910w$cr2 < unps0910w$ucpline
- 
-
-resmat[2:3,2,4] <- as.vector( by(unps0910w, unps0910w$urban, function(unps0910w) weighted.mean(unps0910w$z, unps0910w$hhweight,na.rm=T)))
-resmat[4:7,2,4] <- as.vector( by(unps0910w, unps0910w$region, function(unps0910w) weighted.mean(unps0910w$z, unps0910w$hhweight,na.rm=T)))
-resmat[8:15,2,4] <- as.vector( by(unps0910w, unps0910w$regurb, function(unps0910w) weighted.mean(unps0910w$z, unps0910w$hhweight,na.rm=T)))
- by(unps0910w, unps0910w$stratum, function(unps0910w) weighted.mean(unps0910w$z, unps0910w$hhweight,na.rm=T))
+resmat[2:3,2,alpha + 4] <- as.vector( by(unps0910w, unps0910w$urban, function(unps0910w) sum(((unps0910w$cr2 < unps0910w$ucpline )* unps0910w$hhweight*unps0910w$hhsize)*((unps0910w$ucpline - unps0910w$cr2)/unps0910w$ucpline)^alpha, na.rm=T)/sum( unps0910w$hhweight*unps0910w$hhsize, na.rm=T)))
+resmat[4:7,2,alpha + 4] <-as.vector( by(unps0910w, unps0910w$urban, function(unps0910w) sum(((unps0910w$cr2 < unps0910w$ucpline )* unps0910w$hhweight*unps0910w$hhsize)*((unps0910w$ucpline - unps0910w$cr2)/unps0910w$ucpline)^alpha, na.rm=T)/sum( unps0910w$hhweight*unps0910w$hhsize, na.rm=T)))
+resmat[8:15,2,alpha + 4] <-as.vector( by(unps0910w, unps0910w$urban, function(unps0910w) sum(((unps0910w$cr2 < unps0910w$ucpline )* unps0910w$hhweight*unps0910w$hhsize)*((unps0910w$ucpline - unps0910w$cr2)/unps0910w$ucpline)^alpha, na.rm=T)/sum( unps0910w$hhweight*unps0910w$hhsize, na.rm=T)))
+}
 
   
    
@@ -328,70 +232,16 @@ unps1011w$cr2 <- unps1011w$cr/unps1011w$spi
 sum((unps1011w$cr2 < unps1011w$ucpline) * unps1011w$hhweight*unps1011w$hhsize, na.rm=T)/sum(unps1011w$hhweight*unps1011w$hhsize, na.rm=T)
 
 unps1011w <- subset(unps1011w, !is.na(unps1011w$hhweight))
-resmat[1,3,1] <-weighted.mean(unps1011w$cr2 < unps1011w$ucpline, unps1011w$hhweight*unps1011w$hhsize, na.rm=T)
-
-
-unps1011w$z <-  unps1011w$cr2 < unps1011w$ucpline
-resmat[2:3,3,1]  <- as.vector( by(unps1011w, unps1011w$urban, function(unps1011w) weighted.mean(unps1011w$z, unps1011w$hhweight,na.rm=T)))
-resmat[4:7,3,1]  <- as.vector(by(unps1011w, unps1011w$region, function(unps1011w) weighted.mean(unps1011w$z, unps1011w$hhweight,na.rm=T)))
-
-resmat[8:15,3,1] <- as.vector( by(unps1011w, unps1011w$regurb, function(unps1011w) weighted.mean(unps1011w$z, unps1011w$hhweight,na.rm=T)))
- by(unps1011w, unps1011w$strata, function(unps1011w) weighted.mean(unps1011w$z, unps1011w$hhweight,na.rm=T))
- 
- 
- ### urban/rural povlines  
-unps1011w$cr <- unps1011w$food_pc_nom/unps1011w$tpi_trim + unps1011w$nf_pc_nom 
- unps1011w$ucpline[unps1011w$rural=="Urban"] <-  1038.93*106.5282311272/100
-unps1011w$ucpline[unps1011w$rural=="Rural"] <- 831.3817*106.5282311272/100
-
-
-linref <- mean(unps1011w$ucpline[unps1011w$rural=="Rural"])
-unps1011w$spi <- unps1011w$ucpline/linref
-unps1011w$cr2 <- unps1011w$cr/unps1011w$spi
-
-unps1011w$spi <-unps1011w$spi*sum(unps1011w$cr2*unps1011w$hhweight*unps1011w$hhsize, na.rm=T)/sum(unps1011w$cr*unps1011w$hhweight*unps1011w$hhsize, na.rm=T)
-unps1011w$ucpline <- unps1011w$ucpline/unps1011w$spi
-unps1011w$cr2 <- unps1011w$cr/unps1011w$spi
-
-sum((unps1011w$cr2 < unps1011w$ucpline) * unps1011w$hhweight*unps1011w$hhsize, na.rm=T)/sum(unps1011w$hhweight*unps1011w$hhsize, na.rm=T)
-
-unps1011w <- subset(unps1011w, !is.na(unps1011w$hhweight))
-resmat[1,3,2] <- weighted.mean(unps1011w$cr2 < unps1011w$ucpline, unps1011w$hhweight*unps1011w$hhsize, na.rm=T)
+for (alpha in 0:2 ) {
+resmat[1,3,alpha + 1] <-sum(((unps1011w$cr2 < unps1011w$ucpline )* unps1011w$hhweight*unps1011w$hhsize)*((unps1011w$ucpline - unps1011w$cr2)/unps1011w$ucpline)^alpha, na.rm=T)/sum( unps1011w$hhweight*unps1011w$hhsize, na.rm=T)
 
 unps1011w$z <-  unps1011w$cr2 < unps1011w$ucpline
-resmat[2:3,3,2] <- as.vector( by(unps1011w, unps1011w$urban, function(unps1011w) weighted.mean(unps1011w$z, unps1011w$hhweight,na.rm=T)))
-resmat[4:7,3,2] <- as.vector( by(unps1011w, unps1011w$region, function(unps1011w) weighted.mean(unps1011w$z, unps1011w$hhweight,na.rm=T)))
-
-resmat[8:15,3,2] <- as.vector( by(unps1011w, unps1011w$regurb, function(unps1011w) weighted.mean(unps1011w$z, unps1011w$hhweight,na.rm=T)))
- by(unps1011w, unps1011w$strata, function(unps1011w) weighted.mean(unps1011w$z, unps1011w$hhweight,na.rm=T))
-
+resmat[2:3,3,alpha + 1] <- as.vector( by(unps1011w, unps1011w$urban, function(unps1011w) sum(((unps1011w$cr2 < unps1011w$ucpline )* unps1011w$hhweight*unps1011w$hhsize)*((unps1011w$ucpline - unps1011w$cr2)/unps1011w$ucpline)^alpha, na.rm=T)/sum( unps1011w$hhweight*unps1011w$hhsize, na.rm=T)))
+resmat[4:7,3,alpha + 1] <-as.vector( by(unps1011w, unps1011w$urban, function(unps1011w) sum(((unps1011w$cr2 < unps1011w$ucpline )* unps1011w$hhweight*unps1011w$hhsize)*((unps1011w$ucpline - unps1011w$cr2)/unps1011w$ucpline)^alpha, na.rm=T)/sum( unps1011w$hhweight*unps1011w$hhsize, na.rm=T)))
+resmat[8:15,3,alpha + 1] <-as.vector( by(unps1011w, unps1011w$urban, function(unps1011w) sum(((unps1011w$cr2 < unps1011w$ucpline )* unps1011w$hhweight*unps1011w$hhsize)*((unps1011w$ucpline - unps1011w$cr2)/unps1011w$ucpline)^alpha, na.rm=T)/sum( unps1011w$hhweight*unps1011w$hhsize, na.rm=T)))
+} 
  
-### regional povlines  
-unps1011w$cr <- unps1011w$food_pc_nom/unps1011w$tpi_trim + unps1011w$nf_pc_nom 
-unps1011w$ucpline[unps1011w$region=="Central"] <-  887.82135*106.5282311272/100
-unps1011w$ucpline[unps1011w$region=="Eastern"] <- 599.48358*106.5282311272/100
-unps1011w$ucpline[unps1011w$region=="Northern"] <- 828.47717*106.5282311272/100
-unps1011w$ucpline[unps1011w$region=="Western"] <- 557.02185*106.5282311272/100
 
-linref <- mean(unps1011w$ucpline[unps1011w$region=="Central"])
-unps1011w$spi <- unps1011w$ucpline/linref
-unps1011w$cr2 <- unps1011w$cr/unps1011w$spi
-
-unps1011w$spi <-unps1011w$spi*sum(unps1011w$cr2*unps1011w$hhweight*unps1011w$hhsize, na.rm=T)/sum(unps1011w$cr*unps1011w$hhweight*unps1011w$hhsize, na.rm=T)
-unps1011w$ucpline <- unps1011w$ucpline/unps1011w$spi
-unps1011w$cr2 <- unps1011w$cr/unps1011w$spi
-
-sum((unps1011w$cr2 < unps1011w$ucpline) * unps1011w$hhweight*unps1011w$hhsize, na.rm=T)/sum(unps1011w$hhweight*unps1011w$hhsize, na.rm=T)
-
-unps1011w <- subset(unps1011w, !is.na(unps1011w$hhweight))
-resmat[1,3,3] <- weighted.mean(unps1011w$cr2 < unps1011w$ucpline, unps1011w$hhweight*unps1011w$hhsize, na.rm=T)
-
-unps1011w$z <-  unps1011w$cr2 < unps1011w$ucpline
-
-resmat[2:3,3,3] <- as.vector(by(unps1011w, unps1011w$urban, function(unps1011w) weighted.mean(unps1011w$z, unps1011w$hhweight,na.rm=T)))
- resmat[4:7,3,3] <- as.vector(by(unps1011w, unps1011w$region, function(unps1011w) weighted.mean(unps1011w$z, unps1011w$hhweight,na.rm=T)))
-resmat[8:15,3,3] <- as.vector( by(unps1011w, unps1011w$regurb, function(unps1011w) weighted.mean(unps1011w$z, unps1011w$hhweight,na.rm=T)))
- by(unps1011w, unps1011w$strata, function(unps1011w) weighted.mean(unps1011w$z, unps1011w$hhweight,na.rm=T))
   
 ### strata povlines  
 
@@ -416,17 +266,14 @@ unps1011w$cr2 <- unps1011w$cr/unps1011w$spi
 sum((unps1011w$cr2 < unps1011w$ucpline) * unps1011w$hhweight*unps1011w$hhsize, na.rm=T)/sum(unps1011w$hhweight*unps1011w$hhsize, na.rm=T)
 
 unps1011w <- subset(unps1011w, !is.na(unps1011w$hhweight))
-resmat[1,3,4] <- weighted.mean(unps1011w$cr2 < unps1011w$ucpline, unps1011w$hhweight*unps1011w$hhsize, na.rm=T)
+for (alpha in 0:2 ) {
+resmat[1,3,alpha + 4] <-sum(((unps1011w$cr2 < unps1011w$ucpline )* unps1011w$hhweight*unps1011w$hhsize)*((unps1011w$ucpline - unps1011w$cr2)/unps1011w$ucpline)^alpha, na.rm=T)/sum( unps1011w$hhweight*unps1011w$hhsize, na.rm=T)
 
 unps1011w$z <-  unps1011w$cr2 < unps1011w$ucpline
-
-
-resmat[2:3,3,4] <- as.vector( by(unps1011w, unps1011w$urban, function(unps1011w) weighted.mean(unps1011w$z, unps1011w$hhweight,na.rm=T)))
-resmat[4:7,3,4] <- as.vector( by(unps1011w, unps1011w$region, function(unps1011w) weighted.mean(unps1011w$z, unps1011w$hhweight,na.rm=T)))
-resmat[8:15,3,4] <- as.vector( by(unps1011w, unps1011w$regurb, function(unps1011w) weighted.mean(unps1011w$z, unps1011w$hhweight,na.rm=T)))
- by(unps1011w, unps1011w$strata, function(unps1011w) weighted.mean(unps1011w$z, unps1011w$hhweight,na.rm=T))
-
- 
+resmat[2:3,3,alpha + 4] <- as.vector( by(unps1011w, unps1011w$urban, function(unps1011w) sum(((unps1011w$cr2 < unps1011w$ucpline )* unps1011w$hhweight*unps1011w$hhsize)*((unps1011w$ucpline - unps1011w$cr2)/unps1011w$ucpline)^alpha, na.rm=T)/sum( unps1011w$hhweight*unps1011w$hhsize, na.rm=T)))
+resmat[4:7,3,alpha + 4] <-as.vector( by(unps1011w, unps1011w$urban, function(unps1011w) sum(((unps1011w$cr2 < unps1011w$ucpline )* unps1011w$hhweight*unps1011w$hhsize)*((unps1011w$ucpline - unps1011w$cr2)/unps1011w$ucpline)^alpha, na.rm=T)/sum( unps1011w$hhweight*unps1011w$hhsize, na.rm=T)))
+resmat[8:15,3,alpha + 4] <-as.vector( by(unps1011w, unps1011w$urban, function(unps1011w) sum(((unps1011w$cr2 < unps1011w$ucpline )* unps1011w$hhweight*unps1011w$hhsize)*((unps1011w$ucpline - unps1011w$cr2)/unps1011w$ucpline)^alpha, na.rm=T)/sum( unps1011w$hhweight*unps1011w$hhsize, na.rm=T)))
+}
  
 ############################ 2011/12 ##############################
 unps1112hhdata <- read.dta("/home/bjvca/data/data/GAP/Haruna/UNPS_2011_12/work/hhdata.dta")
@@ -448,72 +295,15 @@ unps1112w$cr2 <- unps1112w$cr/unps1112w$spi
 sum((unps1112w$cr2 < unps1112w$ucpline) * unps1112w$hhweight*unps1112w$hhsize, na.rm=T)/sum(unps1112w$hhweight*unps1112w$hhsize, na.rm=T)
 
 unps1112w <- subset(unps1112w, !is.na(unps1112w$hhweight))
-resmat[1,4,1] <- weighted.mean(unps1112w$cr2 < unps1112w$ucpline, unps1112w$hhweight*unps1112w$hhsize, na.rm=T)
-
-
-unps1112w$z <-  unps1112w$cr2 < unps1112w$ucpline
-resmat[2:3,4,1] <- as.vector(by(unps1112w, unps1112w$urban, function(unps1112w) weighted.mean(unps1112w$z, unps1112w$hhweight,na.rm=T)))
-resmat[4:7,4,1] <- as.vector(by(unps1112w, unps1112w$region, function(unps1112w) weighted.mean(unps1112w$z, unps1112w$hhweight,na.rm=T)))
-resmat[8:15,4,1] <- as.vector( by(unps1112w, unps1112w$regurb, function(unps1112w) weighted.mean(unps1112w$z, unps1112w$hhweight,na.rm=T)))
- by(unps1112w, unps1112w$strata, function(unps1112w) weighted.mean(unps1112w$z, unps1112w$hhweight,na.rm=T))
- 
- 
- ### urban/rural povlines  
-unps1112w$cr <- unps1112w$food_pc_nom/unps1112w$tpi_trim + unps1112w$nf_pc_nom 
- unps1112w$ucpline[unps1112w$rural=="Urban"] <-  1038.93*131.5924716994/100
-unps1112w$ucpline[unps1112w$rural=="Rural"] <- 831.3817*131.5924716994/100
-
-
-linref <- mean(unps1112w$ucpline[unps1112w$rural=="Rural"])
-unps1112w$spi <- unps1112w$ucpline/linref
-unps1112w$cr2 <- unps1112w$cr/unps1112w$spi
-
-unps1112w$spi <-unps1112w$spi*sum(unps1112w$cr2*unps1112w$hhweight*unps1112w$hhsize, na.rm=T)/sum(unps1112w$cr*unps1112w$hhweight*unps1112w$hhsize, na.rm=T)
-unps1112w$ucpline <- unps1112w$ucpline/unps1112w$spi
-unps1112w$cr2 <- unps1112w$cr/unps1112w$spi
-
-sum((unps1112w$cr2 < unps1112w$ucpline) * unps1112w$hhweight*unps1112w$hhsize, na.rm=T)/sum(unps1112w$hhweight*unps1112w$hhsize, na.rm=T)
-
-unps1112w <- subset(unps1112w, !is.na(unps1112w$hhweight))
-resmat[1,4,2] <- weighted.mean(unps1112w$cr2 < unps1112w$ucpline, unps1112w$hhweight*unps1112w$hhsize, na.rm=T)
+for (alpha in 0:2 ) {
+resmat[1,4,alpha + 1] <-sum(((unps1112w$cr2 < unps1112w$ucpline )* unps1112w$hhweight*unps1112w$hhsize)*((unps1112w$ucpline - unps1112w$cr2)/unps1112w$ucpline)^alpha, na.rm=T)/sum( unps1112w$hhweight*unps1112w$hhsize, na.rm=T)
 
 unps1112w$z <-  unps1112w$cr2 < unps1112w$ucpline
+resmat[2:4,2,alpha + 1] <- as.vector( by(unps1112w, unps1112w$urban, function(unps1112w) sum(((unps1112w$cr2 < unps1112w$ucpline )* unps1112w$hhweight*unps1112w$hhsize)*((unps1112w$ucpline - unps1112w$cr2)/unps1112w$ucpline)^alpha, na.rm=T)/sum( unps1112w$hhweight*unps1112w$hhsize, na.rm=T)))
+resmat[4:7,4,alpha + 1] <-as.vector( by(unps1112w, unps1112w$urban, function(unps1112w) sum(((unps1112w$cr2 < unps1112w$ucpline )* unps1112w$hhweight*unps1112w$hhsize)*((unps1112w$ucpline - unps1112w$cr2)/unps1112w$ucpline)^alpha, na.rm=T)/sum( unps1112w$hhweight*unps1112w$hhsize, na.rm=T)))
+resmat[8:15,4,alpha + 1] <-as.vector( by(unps1112w, unps1112w$urban, function(unps1112w) sum(((unps1112w$cr2 < unps1112w$ucpline )* unps1112w$hhweight*unps1112w$hhsize)*((unps1112w$ucpline - unps1112w$cr2)/unps1112w$ucpline)^alpha, na.rm=T)/sum( unps1112w$hhweight*unps1112w$hhsize, na.rm=T)))
+}
 
-
- resmat[2:3,4,2] <- as.vector( by(unps1112w, unps1112w$urban, function(unps1112w) weighted.mean(unps1112w$z, unps1112w$hhweight,na.rm=T)))
- resmat[4:7,4,2] <- as.vector(by(unps1112w, unps1112w$region, function(unps1112w) weighted.mean(unps1112w$z, unps1112w$hhweight,na.rm=T)))
-
-resmat[8:15,4,2] <- as.vector(by(unps1112w, unps1112w$regurb, function(unps1112w) weighted.mean(unps1112w$z, unps1112w$hhweight,na.rm=T)))
- by(unps1112w, unps1112w$strata, function(unps1112w) weighted.mean(unps1112w$z, unps1112w$hhweight,na.rm=T))
-
- 
-### regional povlines  
-unps1112w$cr <- unps1112w$food_pc_nom/unps1112w$tpi_trim + unps1112w$nf_pc_nom 
-unps1112w$ucpline[unps1112w$region=="Central"] <-  887.82135*131.5924716994/100
-unps1112w$ucpline[unps1112w$region=="Eastern"] <- 599.48358*131.5924716994/100
-unps1112w$ucpline[unps1112w$region=="Northern"] <- 828.47717*131.5924716994/100
-unps1112w$ucpline[unps1112w$region=="Western"] <- 557.02185*131.5924716994/100
-
-linref <- mean(unps1112w$ucpline[unps1112w$region=="Central"])
-unps1112w$spi <- unps1112w$ucpline/linref
-unps1112w$cr2 <- unps1112w$cr/unps1112w$spi
-
-unps1112w$spi <-unps1112w$spi*sum(unps1112w$cr2*unps1112w$hhweight*unps1112w$hhsize, na.rm=T)/sum(unps1112w$cr*unps1112w$hhweight*unps1112w$hhsize, na.rm=T)
-unps1112w$ucpline <- unps1112w$ucpline/unps1112w$spi
-unps1112w$cr2 <- unps1112w$cr/unps1112w$spi
-
-sum((unps1112w$cr2 < unps1112w$ucpline) * unps1112w$hhweight*unps1112w$hhsize, na.rm=T)/sum(unps1112w$hhweight*unps1112w$hhsize, na.rm=T)
-
-unps1112w <- subset(unps1112w, !is.na(unps1112w$hhweight))
-resmat[1,4,3] <- weighted.mean(unps1112w$cr2 < unps1112w$ucpline, unps1112w$hhweight*unps1112w$hhsize, na.rm=T)
-
-unps1112w$z <-  unps1112w$cr2 < unps1112w$ucpline
-
-
-resmat[2:3,4,3] <- as.vector(by(unps1112w, unps1112w$urban, function(unps1112w) weighted.mean(unps1112w$z, unps1112w$hhweight,na.rm=T)))
-resmat[4:7,4,3] <- as.vector(by(unps1112w, unps1112w$region, function(unps1112w) weighted.mean(unps1112w$z, unps1112w$hhweight,na.rm=T)))
-resmat[8:15,4,3]<- as.vector( by(unps1112w, unps1112w$regurb, function(unps1112w) weighted.mean(unps1112w$z, unps1112w$hhweight,na.rm=T)))
- by(unps1112w, unps1112w$strata, function(unps1112w) weighted.mean(unps1112w$z, unps1112w$hhweight,na.rm=T))
   
 ### strata povlines  
 unps1112w$cr <- unps1112w$food_pc_nom/unps1112w$tpi_trim + unps1112w$nf_pc_nom 
@@ -547,17 +337,13 @@ unps1112w$cr2 <- unps1112w$cr/unps1112w$spi
 sum((unps1112w$cr2 < unps1112w$ucpline) * unps1112w$hhweight*unps1112w$hhsize, na.rm=T)/sum(unps1112w$hhweight*unps1112w$hhsize, na.rm=T)
 
 unps1112w <- subset(unps1112w, !is.na(unps1112w$hhweight))
-resmat[1,4,4] <- weighted.mean(unps1112w$cr2 < unps1112w$ucpline, unps1112w$hhweight*unps1112w$hhsize, na.rm=T)
+for (alpha in 0:2 ) {
+resmat[1,4,alpha + 4] <-sum(((unps1112w$cr2 < unps1112w$ucpline )* unps1112w$hhweight*unps1112w$hhsize)*((unps1112w$ucpline - unps1112w$cr2)/unps1112w$ucpline)^alpha, na.rm=T)/sum( unps1112w$hhweight*unps1112w$hhsize, na.rm=T)
 
 unps1112w$z <-  unps1112w$cr2 < unps1112w$ucpline
-
-
-
-resmat[2:3,4,4]  <- as.vector(by(unps1112w, unps1112w$urban, function(unps1112w) weighted.mean(unps1112w$z, unps1112w$hhweight,na.rm=T)))
- resmat[4:7,4,4]  <- as.vector(by(unps1112w, unps1112w$region, function(unps1112w) weighted.mean(unps1112w$z, unps1112w$hhweight,na.rm=T)))
-resmat[8:15,4,4] <- as.vector( by(unps1112w, unps1112w$regurb, function(unps1112w) weighted.mean(unps1112w$z, unps1112w$hhweight,na.rm=T)))
- by(unps1112w, unps1112w$strata, function(unps1112w) weighted.mean(unps1112w$z, unps1112w$hhweight,na.rm=T))
-
-
+resmat[2:3,4,alpha + 4] <- as.vector( by(unps1112w, unps1112w$urban, function(unps1112w) sum(((unps1112w$cr2 < unps1112w$ucpline )* unps1112w$hhweight*unps1112w$hhsize)*((unps1112w$ucpline - unps1112w$cr2)/unps1112w$ucpline)^alpha, na.rm=T)/sum( unps1112w$hhweight*unps1112w$hhsize, na.rm=T)))
+resmat[4:7,4,alpha + 4] <-as.vector( by(unps1112w, unps1112w$urban, function(unps1112w) sum(((unps1112w$cr2 < unps1112w$ucpline )* unps1112w$hhweight*unps1112w$hhsize)*((unps1112w$ucpline - unps1112w$cr2)/unps1112w$ucpline)^alpha, na.rm=T)/sum( unps1112w$hhweight*unps1112w$hhsize, na.rm=T)))
+resmat[8:15,4,alpha + 4] <-as.vector( by(unps1112w, unps1112w$urban, function(unps1112w) sum(((unps1112w$cr2 < unps1112w$ucpline )* unps1112w$hhweight*unps1112w$hhsize)*((unps1112w$ucpline - unps1112w$cr2)/unps1112w$ucpline)^alpha, na.rm=T)/sum( unps1112w$hhweight*unps1112w$hhsize, na.rm=T)))
+}
 
 
