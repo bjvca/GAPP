@@ -259,6 +259,164 @@ sum(merged$wgt09[merged$categories=="chronic"]*merged$hhsize.x[merged$categories
 sum(merged$wgt09[merged$categories=="non-poor"]*merged$hhsize.x[merged$categories=="non-poor"])/sum(merged$wgt09*merged$hhsize.x, na.rm=T)
 sum(merged$wgt09[merged$categories=="escape"]*merged$hhsize.x[merged$categories=="escape"])/sum(merged$wgt09*merged$hhsize.x, na.rm=T)
 sum(merged$wgt09[merged$categories=="fall"]*merged$hhsize.x[merged$categories=="fall"])/sum(merged$wgt09*merged$hhsize.x, na.rm=T)
-sum(merged$wgt09[merged$categories=="vulnerable"]*merged$hhsize.x[merged$categories=="vulnerable"])/sum(merged$wgt09*merged$hhsize.x, na.rm=T)
+sum(merged$wgt09[merged$categories=="vulnerable"]*merged$hhsize.x[merged$categories=="vulnerable"], na.rm=T)/sum(merged$wgt09*merged$hhsize.x, na.rm=T)
 
-prop.table(table(merged$categories,merged$region.x),1)
+merged$urban.x <- factor(merged$urban.x)
+levels(merged$urban.x) <- c("rural","urban")
+prop.table(table(merged$categories,merged$urban.x),1)
+
+by(merged$wgt09*merged$hhsize.x,interaction( merged$categories,merged$region.x), sum, na.rm=T)
+
+sum(merged$wgt09[merged$categories=="chronic"]*merged$hhsize.x[merged$categories=="chronic"], na.rm=T)
+
+
+
+pdf("/home/bjvca/data/data/GAP/Haruna/regionalprof.pdf")
+plot(prop.table(xtabs(merged$wgt09*merged$hhsize.x~merged$categories+merged$region.x),1), main="")
+dev.off()
+
+### dem
+
+pdf("/home/bjvca/data/data/GAP/Haruna/hhsize.pdf")
+
+barplot(by(mergedse, mergedse$categories, function(mergedse) weighted.mean(mergedse$h5q13, mergedse$hhweight.x*mergedse$hhsize.x,na.rm=T)))
+
+dev.off()
+
+pairwise.t.test(merged$hhsize.x,merged$categories)
+
+
+gsec2 <- read.dta("/home/bjvca/data/data/GAP/Haruna/UNPS_2005_06/in/GSEC2.dta")
+
+merged_r <- merged
+
+gsec2$femhead <- (gsec2$h2q4 == "FEMALE" &  gsec2$h2q5 == "head")
+merged <- merge(merged_r, aggregate(gsec2$femhead, b=list(gsec2$HHID),FUN=max, na.rm=T), by.x="hhid", by.y="Group.1")
+
+prop.table(xtabs(merged$wgt09*merged$hhsize.x~merged$x+merged$categories),1)
+gsec2$count <- 1
+gsec2$child <- (gsec2$h2q9 < 15)
+
+temp <- aggregate( cbind(gsec2$count, gsec2$child), by=list(gsec2$HHID), FUN=sum, na.rm=T)
+names(temp) <- c("hhid","hhsize","child")
+temp$ch_dep <- temp$child/temp$hhsize
+
+merged <- merge(merged_r, temp, by="hhid")
+
+merged$categories <- factor( merged$categories,levels(factor(merged$categories))[c(4,2,5,3,1)])
+
+
+pdf("/home/bjvca/data/data/GAP/Haruna/dependency.pdf")
+par(mfrow=c(1,2))
+boxplot(merged$hhsize.x[merged$hhsize.x<10]~merged$categories[merged$hhsize.x<10],horizontal=TRUE, col="grey", main="(1)")
+boxplot(merged$ch_dep~merged$categories, horizontal=TRUE, col="grey",main="(2)")
+dev.off()
+
+pdf("/home/bjvca/data/data/GAP/Haruna/regionalprof.pdf")
+plot(prop.table(table(merged$categories,merged$region.x),1), main="")
+dev.off()
+
+heads <- subset(gsec2, gsec2$h2q5 == "head")
+mergeds <- merge(merged_r, heads, by.x="hhid", by.y="HHID")
+tapply(mergeds$h2q9,mergeds$categories, mean)
+
+### cool 
+
+prop.table(xtabs(mergeds$hhweight.x*mergeds$hhsize.x~mergeds$h2q10+mergeds$categories),1)
+
+
+mergedse <-  merge(gsec2,read.dta("/home/bjvca/data/data/GAP/Haruna/UNPS_2005_06/in/GSEC4.dta"), by.x=c("HHID","PID"), by.y=c("HHID","PID"))
+mergedse <- subset(mergedse, mergedse$h2q5 == "head")
+mergedse <- merge(merged_r, mergedse, by.x="hhid", by.y="HHID")
+mergedse$edhuead[is.na(mergedse$h4q4)] <- "none"
+mergedse$edhuead[as.numeric(mergedse$h4q4)<=8] <- "primary"
+mergedse$edhuead[as.numeric(mergedse$h4q4)==18] <- "post primary training/certificate"
+mergedse$edhuead[as.numeric(mergedse$h4q4)>8 & as.numeric(mergedse$h4q4)<=17] <- "secondary"
+mergedse$edhuead[as.numeric(mergedse$h4q4)==19] <- "post secondary training/certificate"
+mergedse$edhuead[as.numeric(mergedse$h4q4)==20] <- "above"
+
+
+mergedse$edhuead <- factor(mergedse$edhuead, levels(factor(mergedse$edhuead))[c(2,5,3,6,4,1)])
+mergedse$categories <- factor(mergedse$categories, levels(factor(mergedse$categories))[c(4,2,5,3,1)])
+
+
+prop.table(xtabs(mergedse$hhweight.x*mergedse$hhsize.x~mergedse$edhuead+mergedse$categories),1)
+ xtabs(mergedse$hhweight.x*mergedse$hhsize.x~mergedse$edhuead)/sum(mergedse$hhweight.x*mergedse$hhsize.x)
+
+ 
+ ##section 11 time to get drinkingwater
+ mergedse <-  merge(merged_r,read.dta("/home/bjvca/data/data/GAP/Haruna/UNPS_2005_06/in/GSEC11.dta"), by.x="hhid", by.y="HHID")
+mergedse$totime <- mergedse$h11q8a1n + mergedse$h11q8b1n
+
+pdf("/home/bjvca/data/data/GAP/Haruna/watertime.pdf")
+plot(density(mergedse$totime[merged$categories=="non-poor"], na.rm=T, bw=20), ylim = c(0,0.01),xlim=c(0,300), main="", xlab="time (incl waiting time) to fetch water" )
+lines(density(mergedse$totime[merged$categories=="chronic"], na.rm=T, bw=20) , col="red")
+#lines(density(mergedse$totime[merged$categories=="fall"], na.rm=T, bw=20) , col="blue")
+#lines(density(mergedse$totime[merged$categories=="escape"], na.rm=T, bw=20) , col="green")
+lines(density(mergedse$totime[merged$categories=="vulnerable"], na.rm=T, bw=20) , col="blue")
+legend("topright", c("non-poor", "chronic", "vulnerable"),lty=c(1,1,1), col=c("black","red","blue"))
+
+dev.off()
+
+mergedse <-  merge(merged_r,read.dta("/home/bjvca/data/data/GAP/Haruna/UNPS_2005_06/in/GSEC16.dta"), by.x="hhid", by.y="HHID")
+
+mergedse  <- subset(mergedse ,mergedse$h16q3=="yes")
+
+mergedse$categories <- factor( mergedse$categories,levels(factor(mergedse$categories))[c(4,2,5,3,1)])
+
+prop.table(xtabs(mergedse$hhweight.x*mergedse$hhsize.x~mergedse$h16q2+mergedse$categories ),1)
+
+dta <- prop.table(xtabs(mergedse$hhweight.x*mergedse$hhsize.x~as.factor(mergedse$h16q7a)+mergedse$categories ),2)
+pdf("/home/bjvca/data/data/GAP/Haruna/coping.pdf")
+#plot.new()
+dotplot(dta[order(dta[,1]),],col = c("black", "blue", "red","green", "orange"),xlab="")
+
+legend(x="bottomright", legend = c("non-poor", "escape","vulnerable","fall", "chronic"),  col = c("black", "blue", "red","green", "orange"), pch = 1, cex=0.8)
+
+## note: this produces a pdf with the first page a blank, which is difficult to import in lyx. I used a linux tool called pfdtk to remove the first page: pdftk coping.pdf cat 2 output coping_fin.pdf
+
+dev.off()
+
+
+
+mergedse <-  merge(merged_r,read.dta("/home/bjvca/data/data/GAP/Haruna/UNPS_2005_06/in/GSEC4.dta"), by.x="hhid", by.y="HHID")
+
+
+gsec4 <- read.dta("/home/bjvca/data/data/GAP/Haruna/UNPS_2005_06/in/GSEC4.dta")
+gsec4 <- subset(gsec4,as.numeric(gsec4$h4q6)<=8)
+
+gsec4 <- aggregate(gsec4$h4q9, list(gsec4$HHID), FUN=mean, na.rm=T)
+names(gsec4) <- c("HHID","schdistance")
+mergedse <-  merge(merged_r,gsec4, by.x="hhid", by.y="HHID")
+
+pdf("/home/bjvca/data/data/GAP/Haruna/distance_school.pdf")
+ boxplot(mergedse$schdistance[mergedse$schdistance<5]~mergedse$categories[mergedse$schdistance<5],col="grey")
+ dev.off()
+
+ gsec5 <- read.dta("/home/bjvca/data/data/GAP/Haruna/UNPS_2005_06/in/GSEC5.dta")
+gsec5 <- subset(gsec5,as.numeric(gsec5$h5q8)>=7 & as.numeric(gsec5$h5q8)<=11)
+
+gsec5 <- aggregate(gsec5$h5q9, list(gsec5$HHID), FUN=mean, na.rm=T)
+names(gsec5) <- c("HHID","healthdistance")
+mergedse <-  merge(merged_r,gsec5, by.x="hhid", by.y="HHID")
+mergedse$categories <- factor( mergedse$categories,levels(factor(mergedse$categories))[c(4,2,5,3,1)])
+pdf("/home/bjvca/data/data/GAP/Haruna/distance_health.pdf")
+boxplot(mergedse$healthdistance[mergedse$healthdistance<20]~mergedse$categories[mergedse$healthdistance<20],col="grey")
+dev.off()
+
+
+#section 15: most important source of earnings
+ mergedse <-  merge(merged_r,read.dta("/home/bjvca/data/data/GAP/Haruna/UNPS_2005_06/in/GSEC15.dta"), by.x="hhid", by.y="HHID")
+ mergedse$categories <- factor( mergedse$categories,levels(factor(mergedse$categories))[c(4,2,5,3,1)])
+ plot(prop.table(xtabs(mergedse$hhweight.x*mergedse$hhsize.x~mergedse$h15q3+mergedse$categories ),2))
+ 
+
+mergedse <-  merge(gsec2,read.dta("/home/bjvca/data/data/GAP/Haruna/UNPS_2005_06/in/GSEC5.dta"), by.x=c("HHID","PID"), by.y=c("HHID","PID"))
+mergedse <- subset(mergedse, mergedse$h2q5 == "head")
+mergedse <- merge(merged_r, mergedse, by.x="hhid", by.y="HHID")
+
+mergedse$h5q13[is.na(mergedse$h5q13)] <- 0
+mergedse$categories <- factor( mergedse$categories,levels(factor(mergedse$categories))[c(4,2,5,3,1)])
+pdf("/home/bjvca/data/data/GAP/Haruna/days_inactive.pdf")
+barplot( by(mergedse, mergedse$categories, function(mergedse) weighted.mean(mergedse$h5q13, mergedse$hhweight.x*mergedse$hhsize.x,na.rm=T)))
+dev.off()
