@@ -377,6 +377,7 @@ legend(x="bottomright", legend = c("non-poor", "escape","vulnerable","fall", "ch
 
 dev.off()
 
+xtabs(mergedse$hhweight.x*mergedse$hhsize.x~mergedse$h16q2) / sum(xtabs(mergedse$hhweight.x*mergedse$hhsize.x~mergedse$h16q2))
 
 
 mergedse <-  merge(merged_r,read.dta("/home/bjvca/data/data/GAP/Haruna/UNPS_2005_06/in/GSEC4.dta"), by.x="hhid", by.y="HHID")
