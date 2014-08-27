@@ -1,0 +1,269 @@
+*File to estimate quantities consistent with revealed preferences
+
+$ontext
+This file uses:
+         work\product_flex.inc
+         work\price_unit_flex.inc
+         work\quan_flex.inc
+
+This file creates:
+         work\qent.csv
+         work\povline_ali_ent.csv
+         work\povline_rp_inout.csv
+
+$offtext
+
+SETS
+ cod        200910 codes for products used in basket
+/
+$include D:\data\GAP\Haruna\UNHS_2005\GAPP2\work\product_flex.inc
+/
+
+ reg        5 spatial domains /1*5/
+ r(reg)     all included spatial regions /1*5/
+
+ ptit       price table titles
+/
+  count      number of observations making up the price average
+  price_uw5  average price
+/
+
+ qtit       quantity table titles
+/
+  calperg          calories per gram
+  quan5            quantities in grams
+  calpp            calories per person by region
+  povline_a_flex5    value of flexible food bundle
+/
+
+
+  posquan(cod,reg)  mark positive quantities in each region
+  posprice(cod,reg) mark the existence of acceptable price info in each region
+  chkprice(cod,reg) ensure that prices exist once all estimated
+;
+
+alias(reg,regq);
+alias(r,rq);
+
+SCALAR
+   caltarg single level of calories to target across regions / 2150 /
+ ;
+
+PARAMETERS
+
+  shr(cod,reg)         shares in each basket by region
+  chkshr(reg)          check that the calculated shares sum to .9
+  shrmiss(regq,reg)    shares missing in each region pair
+  povline_ali(reg)       food poverty line
+  perc_chng(reg)       percent change in line
+  finmiss(reg)         final missing shares post optimization procedure
+ ;
+
+Table  price(cod,reg,ptit)  price and related information
+                        count   price_uw5
+$include D:\data\GAP\Haruna\UNHS_2005\GAPP2\work\price_unit_flex.inc
+;
+
+Table   quan(cod,reg,qtit)   quantity and related information
+                           calperg          quan5           calpp      povline_a_flex5
+$includeD:\data\GAP\Haruna\UNHS_2005\GAPP2\work\quan_flex.inc
+;
+
+  shr(cod,reg)$quan(cod,reg,'povline_a_flex5')
+                      =price(cod,reg,'price_uw5')*quan(cod,reg,'quan5')/
+                       quan(cod,reg,'povline_a_flex5');
+
+  chkshr(reg)=sum(cod,shr(cod,reg));
+
+loop(reg,
+  abort$(abs(chkshr(reg)-.9) gt .0001) "share does not sum to .9", chkshr ;
+);
+
+
+*turn on dynamic sets to indicate positive quantities and existence of
+*price info for each region
+
+ posprice(cod,reg)$(price(cod,reg,'price_uw5')
+                      AND price(cod,reg,'count') gt 4) = yes;
+
+ posquan(cod,reg)$quan(cod,reg,'quan5')=yes;
+
+ shrmiss(regq,reg)=sum(cod$(NOT posprice(cod,reg)), shr(cod,regq));
+ display shrmiss;
+
+  povline_ali(reg)=sum(cod$posquan(cod,reg),price(cod,reg,'price_uw5')*
+                                           quan(cod,reg,'quan5'))/.9;
+
+  display povline_ali;
+
+
+*boost values so shares sum to one;
+shr(cod,reg)=shr(cod,reg)/chkshr(reg);
+
+*fill out price matrix with maximum observed price outside of Maputo
+
+loop((cod,reg)$(NOT posprice(cod,reg) AND posquan(cod,reg)),
+         loop(r,
+                 price(cod,reg,'price_uw5')=max(price(cod,reg,'price_uw5'),
+                                              price(cod,r,'price_uw5'));
+         );
+);
+
+chkprice(cod,reg)$(NOT price(cod,reg,'price_uw5') AND posquan(cod,reg))=yes;
+
+display 'should be an empty set', chkprice;
+
+
+
+
+Variables
+   z                objective value
+   q(cod,reg)       revised maximum entropy quanties in grams
+   s(cod,reg)       derived maximum entropy shares
+   povline(regq,reg)  estimated revealed preference matrix
+;
+
+
+Equations
+   obj              objective equation
+   rev(regq,reg)    revealed preference tests
+   deflin(regq,reg) define revealed preference matrix
+   defshr(cod,regq) define the endogenous budget shares
+   cals(regq)       ensure that each bundle hits the calorie
+
+;
+
+   obj ..  z=e= sum((cod,rq)$posquan(cod,rq),
+                   s(cod,rq)*log(s(cod,rq)/shr(cod,rq)));
+
+   deflin(rq,r) .. povline(rq,r) =e= sum(cod$posquan(cod,rq),
+                          q(cod,rq)*price(cod,r,'price_uw5'));
+
+   rev(rq,r) ..    povline(r,rq)=g=povline(rq,rq);
+
+   defshr(cod,rq)$posquan(cod,rq) ..
+             povline(rq,rq)*s(cod,rq)=e= q(cod,rq)*price(cod,rq,'price_uw5');
+
+   cals(rq) .. sum(cod$posquan(cod,rq),
+                    q(cod,rq)*quan(cod,rq,'calperg'))=e=.95*caltarg;
+
+*set bounds and starting values for variables
+
+  q.lo(cod,reg)=.00001;
+  q.up(cod,reg)=inf;
+  q.l(cod,reg)=quan(cod,reg,'quan5');
+  q.fx(cod,reg)$(NOT posquan(cod,reg))=0;
+
+  povline.l(regq,reg)= sum(cod$posquan(cod,regq),
+                          q.l(cod,regq)*price(cod,reg,'price_uw5'));
+
+
+  display povline.l;
+
+*print the revealed preference matrix prior to optimisation;
+file povline_rp /D:\data\GAP\Haruna\UNHS_2005\GAPP2\work\povline_rp_inout.csv/;
+put povline_rp;
+povline_rp.pc=5;
+povline_rp.nd=0;
+put " ";
+loop(reg,
+      put reg.tl;
+);
+put /;
+loop(regq,
+     put regq.tl;
+     loop(reg,
+         put povline.l(regq,reg);
+     );
+     put /;
+);
+put /; put /; put /;
+
+   s.l(cod,regq)= q.l(cod,regq)*price(cod,regq,'price_uw5')/povline.l(regq,regq);
+   s.lo(cod,regq)=.0001;
+   s.fx(cod,regq)$(NOT posquan(cod,regq))=0;
+
+
+   model revpref /obj, deflin, rev, defshr, cals/;
+
+   revpref.holdfixed=1;
+
+   option limrow=100;
+
+   option nlp=conopt;
+
+   solve revpref using nlp minimizing z;
+
+   povline.l(regq,reg)$(NOT rq(regq) OR NOT r(reg))=0;
+   display "this is without adjustment for calorie target or 90%", povline.l;
+
+put /;
+loop(rq,
+     put rq.tl;
+     loop(r,
+         put povline.l(rq,r);
+     );
+     put /;
+);
+put /;
+
+
+PARAMETERS
+   qent(cod,reg)  entropy quantities with all adjustments accounted for
+   povline_ent(reg) entropy line that hits calorie targets (100% food expen)
+  ;
+*readjust quantities to hit regional calorie target and calculate line;
+   qent(cod,r)=q.l(cod,r)*quan(cod,r,'calpp')/caltarg;
+
+   povline_ent(r)=sum(cod$posquan(cod,r),price(cod,r,'price_uw5')*
+                                           qent(cod,r))/.9;
+
+   perc_chng(r)=100*(povline_ent(r)/povline_ali(r)-1);
+
+   display perc_chng, povline_ent, povline_ali;
+
+   file res /D:\data\GAP\Haruna\UNHS_2005\GAPP2\work\qent.csv/;
+
+   put res;
+   res.pc=5;
+   res.nd=6;
+
+*recall that the basket reflects 90% of expenditure and 95% of calories";
+   put "spdomain" ;
+   put "product" ;
+   put "quan5";
+   put "qent";
+   put "price";
+   put "calperg";
+
+   put /;
+
+   loop(reg,
+       loop(cod,
+           put reg.tl;
+           put cod.tl;
+           put quan(cod,reg,'quan5');
+           put qent(cod,reg);
+           put price(cod,reg,'price_uw5')
+           put quan(cod,reg,'calperg');
+           put /;
+       );
+   );
+
+   file lin /D:\data\GAP\Haruna\UNHS_2005\GAPP2\work\povline_food_ent.csv/;
+
+   put lin;
+   lin.pc=5;
+*Flexible, entropy, and fixed food pov lines at 100% expenditure
+
+   put "spdomain";
+   put "flex";
+   put "ent";
+   put /;
+
+   loop(reg,
+         put reg.tl;
+         put povline_ali(reg);
+         put povline_ent(reg);
+         put /;
+   );
