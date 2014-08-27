@@ -1,4 +1,32 @@
-rep/*.log
-work/*.dta
+UNHS_2005/GAPP2/in/*
+UNHS_2005/GAPP2/rep/*
+UNHS_2005/GAPP2/out/*
+UNHS_2005/GAPP2/work/*
+UNHS_2005/GAPP2/compare/*
+UNHS_2005/GAPP2/working-files/*
 
 
+UNPS_2005_06/in/*
+UNPS_2005_06/rep/*
+UNPS_2005_06/out/*
+UNPS_2005_06/work/*
+
+UNPS_2009_10/in/*
+UNPS_2009_10/rep/*
+UNPS_2009_10/out/*
+UNPS_2009_10/work/*
+
+UNPS_2010_11/in/*
+UNPS_2010_11/rep/*
+UNPS_2010_11/out/*
+UNPS_2010_11/work/*
+
+UNPS_2011_12/in/*
+UNPS_2011_12/rep/*
+UNPS_2011_12/out/*
+UNPS_2011_12/work/*
+
+in/*
+rep/*
+out/*
+work/*

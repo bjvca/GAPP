@@ -1,5 +1,5 @@
-#LyX 2.0 created this file. For more info see http://www.lyx.org/
-\lyxformat 413
+#LyX 2.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 474
 \begin_document
 \begin_header
 \textclass article
@@ -15,13 +15,13 @@ theorems-ams
 \font_roman default
 \font_sans default
 \font_typewriter default
+\font_math auto
 \font_default_family default
 \use_non_tex_fonts false
 \font_sc false
 \font_osf false
 \font_sf_scale 100
 \font_tt_scale 100
-
 \graphics default
 \default_output_format default
 \output_sync 0
@@ -32,15 +32,24 @@ theorems-ams
 \use_hyperref false
 \papersize default
 \use_geometry false
-\use_amsmath 1
-\use_esint 1
-\use_mhchem 1
-\use_mathdots 1
-\cite_engine natbib_authoryear
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 0
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 0
+\use_package mhchem 1
+\use_package stackrel 0
+\use_package stmaryrd 0
+\use_package undertilde 0
+\cite_engine natbib
+\cite_engine_type authoryear
+\biblio_style plainnat
 \use_bibtopic false
 \use_indices false
 \paperorientation portrait
 \suppress_date false
+\justification true
 \use_refstyle 0
 \index Index
 \shortcut idx
@@ -65,7 +74,7 @@ theorems-ams
 
 \begin_layout Title
 The Role of Price and Consumption Bundle Aggregation in Poverty Measurement:
- A Reassessment of Poverty in Uganda
+ Poverty Dynamics in Uganda
 \end_layout
 
 \begin_layout Author
@@ -85,17 +94,9 @@ iar.org
 \end_layout
 
 \begin_layout Abstract
-Uganda has seen substantial poverty reduction, but reported measures are
- flawed because the official poverty line is based on a single national
- food poverty line.
- We use regional consumption patterns to construct poverty lines that account
+We use regional consumption patterns to construct poverty lines that account
  for location specific diets and adjust these poverty lines such that they
  pass revealed preference tests.
- We find poverty to be higher in general, and reductions in poverty were
- slower than official figures suggest.
- We also find that poverty is highest in regions that consume relatively
- more matooke and maize, while the North seems to enjoy cheap calories,
- making them less poor than officially reported.
  
 \end_layout
 
@@ -131,23 +132,63 @@ e growth.
 This growth has been accompanied by equally impressive declines in the levels
  of poverty as reported by the government.
  While aggregate headcount poverty stood at about 57 percent in the early
- 1990s, the most recent estimate puts 24 percent of the population below
- the official poverty line.
+ 1990s, the most recent official estimate puts 24 percent of the population
+ below the official poverty line
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+For the most recent official estimate, we take the poverty estimate based
+ on the 2009/10 Uganda National Household Survey (UNHS).
+ It should be noted that since then, at least more recent surveys have been
+ done that can be used to estimate poverty, the latest being conducted in
+ 2011/12.
+ However, official publications that mention poverty in Uganda keep referring
+ to the 24.1 percent figure based on the 2009/10 UNHS.
+ 
+\end_layout
+
+\end_inset
+
+.
  But despite these successes at the aggregate level, researchers warn that
  this growth has not been shared equally by the population at large.
  Marked spatial heterogeneity in baseline poverty and subsequent poverty
  reductions mean differences in the standard of living between locations
  are much higher now than what they used to be.
- In addition, some argue that the official poverty measures are too high
+ In addition, some argue that the official poverty measures are too low
  if they are compared to non-monetary indicators and qualitative data from
  other countries.
  These observations have raised suspicion about the poverty lines used by
- the government of Uganda.
+ the government of Uganda 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "New10"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
-In light of this, we will reassess poverty in Uganda paying particular attention
- to spatial aspects in the construction of poverty lines.
+In this paper, we want to update existing knowledge about the state and
+ evolution of poverty in Uganda.
+ In 2009, the Uganda Bureau of Statistics decided to track about 3000 households
+ in a yearly panel survey.
+ This survey, known as the Uganda National Panel Survey and supported by
+ the World Bank's Living Standard Measurement Study (LSMS) project, enables
+ us to update the state of poverty up to 2011/12.
+ In addition, we can use the panel nature of the data to look at poverty
+ dynamics.
+ For instance, we can study how many households are chronically poor and
+ how does their characteristics differ from other groups, such as households
+ that successfully grew out of poverty.
+ 
+\end_layout
+
+\begin_layout Standard
+In addition to updating poverty figures in Uganda, we also we also feel
+ official poverty lines are desperately in need of an update.
  Uganda has been using the same Cost of Basic Needs (CBN) basket for over
  two decades now.
  In addition, this consumption basket is the same for the entire Ugandan
@@ -168,29 +209,34 @@ key "RePEc:oup:jafrec:v:12:y:2003:i:4:p:598-624"
  of their calories through sorghum and sesame.
  These diets are not only determined by custom, they are also related to
  the agro-geological characteristics.
- For instance, the dryer North is more suited for cassava than matooke,
- and the low value to weight ratio typical of staple foods essentially renders
- them non-tradables.
+ The dryer North is more suited for cassava than matooke, and the low value
+ to weight ratio typical of staple foods essentially renders them non-tradables.
  If these different diets result in different costs to obtain basic needs,
  this should be accommodated in the poverty measures.
 \end_layout
 
 \begin_layout Standard
-More specifically, we will estimate poverty at three distinct points in
- time during the last decennium in Uganda.
- To account for differences in consumption patterns, we will construct regional
- poverty lines.
- For each of the four regions, we construct a food basket that produces
- a certain minimum of calories that reflects the diets of the poorest households
- in that region.
+To account for differences in consumption patterns, we will construct different
+ poverty lines in different spatial domains (eg.
+ in different regions), following the method developed by 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "RePEc:ucp:ecdecc:v:58:y:2010:i:3:p:449-474"
+
+\end_inset
+
+.
+ For each spatial domain, we construct a food basket that produces a certain
+ minimum of calories that reflects the diets of the poorest households in
+ that region.
  These baskets are then multiplied by prices prevailing in that region to
  come to food poverty lines.
- An allowance for basic non-food necessities is than added to get four regional
- poverty lines.
- We then test these four poverty lines to see if they are utility consistent.
- The idea is that a basic needs bundle in a certain region A should always
- be cheaper than a bundle from any other region valued at prices of region
- A.
+ An allowance for basic non-food necessities is than added to get a set
+ of Cost of Basic Needs (CBN) poverty lines, one in each spatial domain.
+ We then test these poverty lines to see if they are utility consistent.
+ The idea is that a basic needs bundle in a certain spatial domain A should
+ always be cheaper than a bundle from any other region valued at prices
+ of region A.
  If a bundle does not satisfy these revealed preference conditions, we use
  an information theoretic approach to adjust the bundles until they do.
 \end_layout
@@ -218,11 +264,11 @@ There is a substantial literature on poverty and its dynamics in the 1990s.
  Uganda has been conducting national household surveys since 1992, and has
  conducted six such surveys before the turn of the millennium.
  Some of these data sets form a panel.
- The first data set, the Integrated Household Survey conducted in 1992-3
+ The first data set, the Integrated Household Survey conducted in 1992/93
  can be linked to the last survey of the millennium, referred to as the
- first Uganda National Household Survey (UNHS 1999-0).
- In between these two surveys, a series four Monitoring Surveys (1993-4
- up to 1999-0) have been carried out.
+ first Uganda National Household Survey (UNHS 1999/00).
+ In between these two surveys, a series four Monitoring Surveys (1993/94
+ up to 1999/00) have been carried out.
  More information on these data sets can be found in 
 \begin_inset CommandInset citation
 LatexCommand citet
@@ -276,7 +322,7 @@ sideways false
 status open
 
 \begin_layout Plain Layout
-\begin_inset Caption
+\begin_inset Caption Standard
 
 \begin_layout Plain Layout
 Official Poverty Headcounts 1992-2000
@@ -298,14 +344,14 @@ name "tab:Official-Poverty-Headcountsninties"
 \align center
 \begin_inset Tabular
 <lyxtabular version="3" rows="10" columns="7">
-<features tabularvalignment="middle">
-<column alignment="center" valignment="top" width="0">
-<column alignment="center" valignment="top" width="0">
-<column alignment="center" valignment="top" width="0">
-<column alignment="center" valignment="top" width="0">
-<column alignment="center" valignment="top" width="0">
-<column alignment="center" valignment="top" width="0">
-<column alignment="center" valignment="top" width="0">
+<features rotate="0" tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
 <row>
 <cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
 \begin_inset Text
@@ -1054,9 +1100,22 @@ key "New1"
  in the West and the Central region, is matooke, a highly localized staple.
  Matooke appears to be a very expensive source of calories, compared to
  what people in for instance the North consume.
- When they account for this in their analysis, they come to the conclusion
- that poverty is much more pronounced in the Western region than in the
- North.
+ When 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "RePEc:oup:jafrec:v:12:y:2003:i:4:p:598-624"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "New1"
+
+\end_inset
+
+ account for this in their analysis, they come to the conclusion that poverty
+ is much more pronounced in the Western region than in the North.
  Even after correcting for income difference, as regions that consume more
  expensive calories may do so simply because they have higher incomes, 
 \begin_inset CommandInset citation
@@ -1071,8 +1130,9 @@ key "RePEc:oup:jafrec:v:12:y:2003:i:4:p:598-624"
 \end_layout
 
 \begin_layout Standard
-While the above refers to the nineties, progress in the first decade of
- the new millennium is equally impressive.
+While the above refers to the nineties, progress reported by the government
+ of Uganda and the Uganda Bureau of Statistics in the first decade of the
+ new millennium is equally impressive.
  Table 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -1080,12 +1140,27 @@ reference "tab:Official-poverty-headcount00s"
 
 \end_inset
 
- shows that poverty at the national level kept falling at the same rate.
+ shows that poverty at the national level kept falling during the first
+ decade.
  At the same time, differential progress in poverty reduction in different
  regions leads to higher poverty differences between regions by 2009/10.
  For instance, by 2009/10, poverty is more than four times higher in the
  Northern region than in the Central region.
  In 2002/03, the North was 2.7 times poorer than the Central Region.
+ Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Official-poverty-headcount00s"
+
+\end_inset
+
+ also reports semi-official results from the 2010/11 and 2011/12 waves of
+ the UNPS.
+ These are semi-official, because they are taken from dissemination reports
+ and presentations of the respective waves.
+ These figures feature much less prominently in the media and policy fora.
+ Mostly, official government bodies refer back to the 2009/10 UNHS figure
+ of 24.5 percent as the latest available poverty headcount.
 \end_layout
 
 \begin_layout Standard
@@ -1095,14 +1170,10 @@ sideways false
 status open
 
 \begin_layout Plain Layout
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption
+\begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Official poverty headcounts 2002-2010
+Official poverty headcounts 2002-2012
 \begin_inset CommandInset label
 LatexCommand label
 name "tab:Official-poverty-headcount00s"
@@ -1120,12 +1191,14 @@ name "tab:Official-poverty-headcount00s"
 \begin_layout Plain Layout
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="10" columns="4">
-<features tabularvalignment="middle">
-<column alignment="center" valignment="top" width="0">
-<column alignment="center" valignment="top" width="0">
-<column alignment="center" valignment="top" width="0">
-<column alignment="center" valignment="top" width="0">
+<lyxtabular version="3" rows="10" columns="6">
+<features rotate="0" tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
 <row>
 <cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
 \begin_inset Text
@@ -1159,6 +1232,24 @@ name "tab:Official-poverty-headcount00s"
 
 \begin_layout Plain Layout
 2009/10
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2010/11
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2011/12
 \end_layout
 
 \end_inset
@@ -1201,8 +1292,44 @@ national
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+27.2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+32.1
+\end_layout
+
+\end_inset
+</cell>
 </row>
 <row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" usebox="none">
 \begin_inset Text
 
@@ -1277,6 +1404,24 @@ urban
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+7.0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
 </row>
 <row>
 <cell alignment="center" valignment="top" usebox="none">
@@ -1315,8 +1460,44 @@ rural
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+31.2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
 </row>
 <row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" usebox="none">
 \begin_inset Text
 
@@ -1403,6 +1584,24 @@ Central
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+12.3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+11.5
+\end_layout
+
+\end_inset
+</cell>
 </row>
 <row>
 <cell alignment="center" valignment="top" usebox="none">
@@ -1449,6 +1648,24 @@ Eastern
 
 \begin_layout Plain Layout
 24.3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+36.8
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+42.7
 \end_layout
 
 \end_inset
@@ -1503,6 +1720,24 @@ Northern
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+38.9
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+36.8
+\end_layout
+
+\end_inset
+</cell>
 </row>
 <row>
 <cell alignment="center" valignment="top" bottomline="true" usebox="none">
@@ -1553,6 +1788,24 @@ Western
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+26.3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+26.5
+\end_layout
+
+\end_inset
+</cell>
 </row>
 </lyxtabular>
 
@@ -1562,15 +1815,23 @@ Western
 \end_layout
 
 \begin_layout Plain Layout
-\align center
-source: 
+note: 2002/03, 2005/06 and 2009/10 figures are calculated from the respective
+ UNHS 
 \begin_inset CommandInset citation
-LatexCommand citet
+LatexCommand citep
 key "New8,New9"
 
 \end_inset
 
+.
+ 2010/11 and 2011/12 figures are from the UNPS 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "NewUBOS,NewUBOS2"
 
+\end_inset
+
+.
 \end_layout
 
 \end_inset
@@ -1579,13 +1840,16 @@ key "New8,New9"
 \end_layout
 
 \begin_layout Standard
+These official figures have been questioned in recent years, mainly because
+ they seem overly optimistic.
+ 
 \begin_inset CommandInset citation
 LatexCommand citet
-key "New2"
+key "New10"
 
 \end_inset
 
- uses Demographic and Health Survey Data and methods related to poverty
+ uses Demographic and Health Survey (DHS) data and methods related to poverty
  mapping and small area estimation to look at poverty trends across Uganda
  from 1995 to 2010.
  She uses the 2005/06 UNHS survey to estimate regressions that correlate
@@ -1602,9 +1866,7 @@ key "New2"
 \end_layout
 
 \begin_layout Standard
-More in general, there is a view amongst publicists and opinion makers in
- Uganda that the poverty figures reported by the government of Uganda are
- too optimistic.
+This view is shared amongst many publicists and opinion makers in Uganda.
  
 \begin_inset CommandInset citation
 LatexCommand citet
@@ -1659,10 +1921,10 @@ key "RePEc:ucp:ecdecc:v:51:y:2002:i:1:p:77-108"
 \end_inset
 
 .
- While difference in prices in different locations have always been incorporated
- by adjusting local prices to the prices used in the construction of the
- poverty line, it becomes more and more common to also account for spatial
- heterogeneity in consumption bundles (e.g.
+ While differences in prices in different locations are usually incorporated
+ in poverty measurement by adjusting local prices to the prices used in
+ the construction of the poverty line, it becomes more and more common to
+ also account for spatial heterogeneity in consumption bundles (e.g.
  
 \begin_inset CommandInset citation
 LatexCommand citealp
@@ -1686,11 +1948,11 @@ While differences in consumption baskets are interesting in its own right,
  when we evaluate the cost of these basic needs.
  Indeed, what matters for poverty comparisons is that different diets may
  provide the same basic needs (usually a given amount of kilo-calories per
- day per adult equivalent) at significantly different cost.
+ day per adult equivalent) at significantly different costs.
  It is especially in this regard that Uganda is an interesting case.
  Matooke, the main ingredient in the diet of households in the West is a
- very expensive source of food energy, almost three times as expensive as
- sorghum that is consumed in the North.
+ very expensive source of food energy, almost three times as expensive per
+ energy unit as sorghum that is consumed in the North.
  As such, to compare the West to the North on the basis of the same daily
  nutritional requirements, the West will need a much higher poverty line.
 \end_layout
@@ -1855,14 +2117,652 @@ A Reassessment of Poverty in Uganda
 \end_layout
 
 \begin_layout Standard
-We look at data taken from three different surveys.
- The oldest is the Uganda National Household Survey conducted in 2005/06.
- The second is the Uganda National Household survey conducted in 2009/10.
- Finally, we also run the analysis on the second wave of the Uganda National
- Panel Survey (2010/11).
- Unfortunately, this last survey is much smaller than the previous surveys,
- so this survey is designed to be representative only up to the regional
- level.
+We look at data taken from four different surveys that, together, make up
+ the Uganda National Panel Survey (UNPS).
+ The oldest wave is the wave of 2005/06, which is essentially a random subset
+ from the Uganda National Household Survey (UNHS) of 2005/06.
+ The second survey was conducted in 2009/10, when this subset of households
+ was revisited.
+ From this year onward, the panel is yearly, so the third wave reports on
+ the 2010/11 agricltural year and the final wave we will use in our analysis
+ is the 2011/12 wave.
+ 
+\end_layout
+
+\begin_layout Standard
+First of all, we try to reconstruct the official poverty measures using
+ the UNPS
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+The official poverty estimates are calculated using national household surveys,
+ as these have larger sample sizes and allow for a higher level of disaggregatio
+n.
+ The numbers are produced by the Economic Policy Research Centre (EPRC)
+ at Makerere University and added to UBOS data as an aggregate.
+ Unfortunately, EPRC is not very forthcoming with the code used to construct
+ these aggregates, which means the researcher is on his own when he or she
+ wants to know more about the consumption aggregate (eg.
+ what is the share of starchy foods in household consumption).
+ We have been struggling to replicate the official figures when calculating
+ the consumption aggregate ourselves.
+\end_layout
+
+\end_inset
+
+.
+ We include in our consumption aggregate all food items consumed in the
+ last week by the household, excluding tobacco and alcohol, as these items
+ are unlikely to benefit the entire household.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/bjvca/data/data/GAP/Haruna/ww-ug/GAPP_RESULTS_WRITE_UP/GAPP-REFERENCE-documents/dominance.pdf
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Stochastic dominance of well-being in Uganda
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Headcounts using UNPS and official poverty lines
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Official-poverty-UNPS"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="10" columns="5">
+<features rotate="0" tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2005/06
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2009/10
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2010/11
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2011/12
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+national
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+30.0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+25.5
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+31.6
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+28.0
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+urban
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+8.9
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+9.5
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+10.0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+8.5
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+rural
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+39.3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+30.4
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+37.7
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+33.2
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+Central
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+14.3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+9.9
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+14.3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+7.8
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+Eastern
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+47.1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+29.3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+40.8
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+43.3
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+Northern
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+61.5
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+49.1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+46.5
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+46.6
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+Western
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+27.8
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+31.4
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+40.7
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+32.0
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+source: own calculations
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1954,7 +2854,7 @@ sideways false
 status open
 
 \begin_layout Plain Layout
-\begin_inset Caption
+\begin_inset Caption Standard
 
 \begin_layout Plain Layout
 Evolution of cost of basic needs
@@ -1976,14 +2876,14 @@ name "tab:Evolution-of-cost"
 \align center
 \begin_inset Tabular
 <lyxtabular version="3" rows="6" columns="7">
-<features tabularvalignment="middle">
-<column alignment="center" valignment="top" width="0">
-<column alignment="center" valignment="top" width="0">
-<column alignment="center" valignment="top" width="0">
-<column alignment="center" valignment="top" width="0">
-<column alignment="center" valignment="top" width="0">
-<column alignment="center" valignment="top" width="0">
-<column alignment="center" valignment="top" width="0">
+<features rotate="0" tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
 <row>
 <cell alignment="center" valignment="top" usebox="none">
 \begin_inset Text
@@ -2764,7 +3664,7 @@ sideways false
 status open
 
 \begin_layout Plain Layout
-\begin_inset Caption
+\begin_inset Caption Standard
 
 \begin_layout Plain Layout
 Official poverty lines
@@ -2786,12 +3686,12 @@ name "tab:Official-poverty-lines"
 \align center
 \begin_inset Tabular
 <lyxtabular version="3" rows="6" columns="5">
-<features tabularvalignment="middle">
-<column alignment="center" valignment="top" width="0">
-<column alignment="center" valignment="top" width="0">
-<column alignment="center" valignment="top" width="0">
-<column alignment="center" valignment="top" width="0">
-<column alignment="center" valignment="top" width="0">
+<features rotate="0" tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
 <row>
 <cell alignment="center" valignment="top" usebox="none">
 \begin_inset Text
@@ -3339,7 +4239,7 @@ sideways false
 status open
 
 \begin_layout Plain Layout
-\begin_inset Caption
+\begin_inset Caption Standard
 
 \begin_layout Plain Layout
 Utility Consistent Poverty Measures
@@ -3361,17 +4261,17 @@ name "tab:Utility-Consistent-Poverty"
 \align center
 \begin_inset Tabular
 <lyxtabular version="3" rows="23" columns="10">
-<features tabularvalignment="middle">
-<column alignment="right" valignment="top" width="0">
-<column alignment="center" valignment="top" width="0">
-<column alignment="center" valignment="top" width="0">
-<column alignment="center" valignment="top" width="0">
-<column alignment="center" valignment="top" width="0">
-<column alignment="center" valignment="top" width="0">
-<column alignment="center" valignment="top" width="0">
-<column alignment="center" valignment="top" width="0">
-<column alignment="center" valignment="top" width="0">
-<column alignment="center" valignment="top" width="0">
+<features rotate="0" tabularvalignment="middle">
+<column alignment="right" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
 <row>
 <cell alignment="right" valignment="top" usebox="none">
 \begin_inset Text
@@ -7217,7 +8117,7 @@ status open
 \end_layout
 
 \begin_layout Plain Layout
-\begin_inset Caption
+\begin_inset Caption Standard
 
 \begin_layout Plain Layout
 Nutritional status of children
@@ -7251,10 +8151,10 @@ name "tab:Nutritional-status-of"
 \color none
 \begin_inset Tabular
 <lyxtabular version="3" rows="11" columns="3">
-<features tabularvalignment="middle">
-<column alignment="center" valignment="top" width="0">
-<column alignment="center" valignment="top" width="0">
-<column alignment="center" valignment="top" width="0">
+<features rotate="0" tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
 <row>
 <cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
 \begin_inset Text
@@ -7728,7 +8628,7 @@ We already made the case above that poverty measures based on region specific
  in line with studies by independent researchers, such as 
 \begin_inset CommandInset citation
 LatexCommand citet
-key "New2"
+key "New10"
 
 \end_inset
 

@@ -38,9 +38,25 @@
 	year = "1998"
 }
 
-@unpublished{New2,
+@misc{NewUBOS2,
+	author = "Barhyhirwa, S",
+	howpublished = "http://www.ubos.org/onlinefiles/uploads/ubos/pdf\%20documents/unps\%20dissemination\%2025\%2009\%202013.pdf",
+	title = "{Uganda National Panel Survey - wave III findings }",
+	url = "http://www.ubos.org/onlinefiles/uploads/ubos/UNPS/wave2/UNPS",
+	year = "2012"
+}
+
+@misc{NewUBOS,
+	author = "UBOS",
+	howpublished = "http://www.ubos.org/onlinefiles/uploads/ubos/pdf\%20documents/UNHSReport20052006.pdf",
+	title = "{Uganda National Panel Survey 2010/11 - wave II report }",
+	url = "http://www.ubos.org/onlinefiles/uploads/ubos/UNPS/wave2/UNPS",
+	year = "2012"
+}
+
+@techreport{New2,
 	author = "Daniels, Lisa",
-	series = "{e Fourth Global Conference on Agricultural and Rural Household Statistics}",
+	series = "{ Fourth Global Conference on Agricultural and Rural Household Statistics}",
 	title = "{Measuring Poverty Trends in Uganda with Non-monetary Indicators}",
 	year = "2011"
 }
@@ -227,7 +243,125 @@
 	author = "UBOS",
 	howpublished = "http://www.ubos.org/onlinefiles/uploads/ubos/pdf\%20documents/UNHSReport20052006.pdf",
 	title = "{Uganda National Household Survey 2005/06 Report on the Socio Economic Module}",
-	url = "http://www.ubos.org/onlinefiles/uploads/ubos/pdf%20documents/UNHSReport20052006.pdf",
+	url = "http://www.ubos.org/onlinefiles/uploads/ubos/pdf; documents/UNHSReport20052006.pdf",
 	year = "2006"
+}
+
+@article{year={2014},
+	author = "Daniels, Lisa and Minot, Nicholas",
+	doi = "10.1007/s11205-014-0637-3",
+	issn = "0303-8300",
+	journal = "Social Indicators Research",
+	keywords = "Poverty trends; Uganda; Non-monetary indicators; Poverty mapping; Asset index",
+	language = "English",
+	pages = "1--19",
+	publisher = "Springer Netherlands",
+	title = "{Is Poverty Reduction Over-Stated in Uganda? Evidence from Alternative Poverty Measures}",
+	url = "http://dx.doi.org/10.1007/s11205-014-0637-3"
+}
+
+@article{New10,
+	author = "Daniels, Lisa and Minot, Nicholas",
+	doi = "10.1007/s11205-014-0637-3",
+	issn = "0303-8300",
+	journal = "Social Indicators Research",
+	keywords = "Poverty trends; Uganda; Non-monetary indicators; Poverty mapping; Asset index",
+	language = "English",
+	pages = "1--19",
+	publisher = "Springer Netherlands",
+	title = "{Is Poverty Reduction Over-Stated in Uganda? Evidence from Alternative Poverty Measures}",
+	url = "http://dx.doi.org/10.1007/s11205-014-0637-3",
+	year = "2014"
+}
+
+@article{New11
+}
+
+@misc{UBOSBID,
+	author = "UBOS",
+	howpublished = "http://www.ubos.org/onlinefiles/uploads/ubos/pdf\%20documents/UNHSReport20052006.pdf",
+	localfile = "documents/UNHSReport20052006.pdf",
+	title = "{The Uganda National Panel Survey (UNPS) 2009/10 Basic Infomation Document}",
+	url = "http://www.ubos.org/onlinefiles/uploads/ubos/pdf",
+	year = "2010"
+}
+
+@misc{WHO1985,
+	author = "WHO",
+	howpublished = "http://www.ubos.org/onlinefiles/uploads/ubos/pdf\%20documents/UNHSReport20052006.pdf",
+	series = "{Technical Report Series 724}",
+	title = "{Energy and Protein Requirements}",
+	year = "1985"
+}
+
+@misc{FAO1968,
+	author = "FAO",
+	howpublished = "http://www.ubos.org/onlinefiles/uploads/ubos/pdf\%20documents/UNHSReport20052006.pdf",
+	title = "{Food Composition Table for Use in Africa}",
+	url = "http://www.fao.org/docrep/003/x6877e/x6877e00.htm",
+	year = "1986"
+}
+
+@article{RePEc:ecj:econjl:v:105:y:1995:i:433:p:1415-34,
+	abstract = "The widely held view that larger families tend to be poorer in developing countries has influenced research and policy. The scope for size economies in consumption cautions against this view. We find that the correlation between poverty and size vanishes in Pakistan when the size elasticity of the cost of living is about 0-6. This turns out to be the elasticity implied by a modified version of the food share method of setting scales. By contrast, some measures of child nutritional status indicate an elasticity of unity. Considerations of the weight attached to child versus adult welfare may help resolve the non-robustness of demographic profiles of poverty. Copyright 1995 by Royal Economic Society.",
+	author = "Lanjouw, Peter and Ravallion, Martin",
+	journal = "Economic Journal",
+	keywords = "",
+	month = "November",
+	number = "433",
+	pages = "1415--34",
+	title = "{Poverty and Household Size}",
+	url = "http://ideas.repec.org/a/ecj/econjl/v105y1995i433p1415-34.html",
+	volume = "105",
+	year = 1995
+}
+
+@article{Boateng01031992,
+	abstract = "The successes of the Economic Recovery Programme in Ghana are now well-known. Nevertheless, as recognized by the Government of Ghana, many individuals remain in acute poverty. Furthermore, the process of adjustment by its very nature is likely to cause short run hardship for certain vulnerable groups. The first requirement for planning a poverty sensitive strategy of short run adjustment and long run growth is information on the nature of poverty. The object of this paper is to present a baseline poverty profile for Ghana in 1987‐88.",
+	author = "Boateng, E. Oti and Ewusi, Kodwo and Kanbur, Ravi and McKay, Andrew",
+	eprint = "http://jae.oxfordjournals.org/content/1/1/25.full.pdf+html",
+	journal = "Journal of African Economies",
+	number = "1",
+	pages = "25--58",
+	title = "{A Poverty Profile for Ghana, 1987--1988}",
+	url = "http://jae.oxfordjournals.org/content/1/1/25.abstract",
+	volume = "1",
+	year = "1992"
+}
+
+@article{Boateng01031992,
+	abstract = "The successes of the Economic Recovery Programme in Ghana are now well-known. Nevertheless, as recognized by the Government of Ghana, many individuals remain in acute poverty. Furthermore, the process of adjustment by its very nature is likely to cause short run hardship for certain vulnerable groups. The first requirement for planning a poverty sensitive strategy of short run adjustment and long run growth is information on the nature of poverty. The object of this paper is to present a baseline poverty profile for Ghana in 1987‐88.",
+	author = "Boateng, E. Oti and Ewusi, Kodwo and Kanbur, Ravi and McKay, Andrew",
+	eprint = "http://jae.oxfordjournals.org/content/1/1/25.full.pdf+html",
+	journal = "Journal of African Economies",
+	number = "1",
+	pages = "25--58",
+	title = "{A Poverty Profile for Ghana, 1987--1988}",
+	url = "http://jae.oxfordjournals.org/content/1/1/25.abstract",
+	volume = "1",
+	year = "1992"
+}
+
+@misc{UNHS12/13,
+	author = "Ssennono, Fred Vincent",
+	howpublished = "http://www.ubos.org/onlinefiles/uploads/ubos/pdf\%20documents/UNHSReport20052006.pdf",
+	localfile = "documents/UNHSReport20052006.pdf",
+	title = "{Uganda National Household Survey 2012/13}",
+	url = "http://www.ubos.org/onlinefiles/uploads/ubos/pdf",
+	year = "2013"
+}
+
+@article{RePEc:ucp:ecdecc:y:2003:v:52:i:1:p:159-85,
+	abstract = "No abstract is available for this item.",
+	author = "Gibson, John and Rozelle, Scott",
+	journal = "Economic Development and Cultural Change",
+	keywords = "",
+	month = "October",
+	number = "1",
+	pages = "159--85",
+	title = "{Poverty and Access to Roads in Papua New Guinea}",
+	url = "http://ideas.repec.org/a/ucp/ecdecc/y2003v52i1p159-85.html",
+	volume = "52",
+	year = 2003
 }
 
