@@ -1,4 +1,12 @@
 
+if c(os)=="Unix" {
+global path "/home/bjvca/data/data/GAP/Haruna/UNPS_2005_06"
+}
+else{
+global path "E:\IFPRI\GAP\wider\UNHS_2012"
+}
+
+
 
 
 
