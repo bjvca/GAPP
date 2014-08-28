@@ -1,6 +1,0 @@
-if c(os)=="Unix" {
-global path "/home/bjvca/data/data/GAP/Haruna/UNHS_2012/"
-}
-else{
-global path `c(pwd)'
-} 
