@@ -3,8 +3,8 @@
 *********************************************************************
 **
 **     PROGRAMME:    preparing_hhdata_200 for Uganda_tables_A1_to_A3_vXX       
-**     AUTHOR:       HARUNA SEKABIRA
-**     OBJECTIVE:    Create standard tables A1 to A3 for UNHS 2005/2006
+**     AUTHOR:       Fiona Nattembo (F.Nattembo@cgiar.org)
+**     OBJECTIVE:    Create standard tables A1 to A3 for UNHS 2012/23
 **
 **     DATA IN:      GSEC1cln.dta
 **					 GSEC2.dta
@@ -109,10 +109,10 @@ label variable hhid "Household ID"
 preserve
 use "$path/in/GSEC2.dta" , clear
 ta r04
-drop if r04>2 // keeping usual members only
+drop if r04>2 
 gen qhmember=1
 collapse(count) qhmember, by(HHID)
-sum qhmember  // avearge HH size is 4.7
+sum qhmember 
 ren HHID hhid 
 rename qhmember hhsize
 label variable hhsize "Household Size"
@@ -133,24 +133,6 @@ drop _m
 ** Kayunga, Kiboga, Luwero, Mubende, Mukono and Nakasongola; East Central includes Jinja, Iganga, Kamuli, Bugiri and 
 ** Mayuge; and Kampala. We have used the same nomenclature
 
-/*
-tab district
-tab district, nolabel
-
-gen float strata=2 if (district==101|district==105|district==106|district==110|district==111|district==113)
-replace strata=1 if (district==102)
-replace strata=3 if (district==103|district==104|district==107|district==108|district==109|district==112)
-replace strata=4 if (district==201|district==203|district==204|district==205|district==214)
-replace strata=5 if (district==202|district==206|district==209|district==210|district==212|district==215)
-replace strata=6 if (district==302|district==304|district==305|district==307|district==312)
-replace strata=7 if (district==207|district==208|district==211|district==213|district==306|district==308|district==311)
-replace strata=8 if (district==301|district==303|district==309|district==310|district==313)
-replace strata=9 if (district==401|district==403|district==405|district==406|district==407|district==409|district==413|district==415)
-replace strata=10 if (district==402|district==404|district==408|district==410|district==411|district==412|district==414)
-
-label define lstrata  1 "Kampala" 2 "Central 1" 3 "Central 2" 4 "East Central" 5 "Eastern" 6 "Mid Northern" 7 "North East" 8 "West Nile" 9 "Mid Western" 10 "South Western"
-label values strata lstrata
-*/
 clonevar strata=sregion
 label variable strata "Geographical stratification variable during sampling (ranging from 1 to 10 sub regions)"
 clonevar substrat=urb
@@ -159,43 +141,7 @@ clonevar substrat=urb
 ** tabbed the big regions (region) with substrat to ensure that the total numbers of Urban/Rural are the same in both
 tab strata substrat
 tab region substrat
-/* tab strata substrat
-*
-* Geographical |
-*stratificatio |
-*   n variable |
-*       during |
-*     sampling |
-*(ranging from |      
-*1 to 10 sub r |            
-*            |     Rural      Urban |     Total
--------------+----------------------+----------
-     Kampala |         0        639 |       639 
-    Central1 |       413        267 |       680 
-   Central2  |       518        180 |       698 
-East Central |       565        167 |       732 
-     Eastern |       565         99 |       664 
-   Mid-North |       551        144 |       695 
-  North East |       619         59 |       678 
-   West Nile |       600         89 |       689 
-    Mid-West |       530        180 |       710 
-South-westrn |       586        125 |       711 
--------------+----------------------+----------
-       Total |     4,947      1,949 |     6,896
 
-
- tab region substrat
-
-           |  Place of residence
-    region |     Rural      Urban |     Total
------------+----------------------+----------
-   Central |       931      1,086 |     2,017 
-   Eastern |     1,130        266 |     1,396 
-  Northern |     1,770        292 |     2,062 
-   Western |     1,116        305 |     1,421 
------------+----------------------+----------
-     Total |     4,947      1,949 |     6,896 
-*/
 ***------- Rural-Urban Location
 * I checked and the variable is substrat, coded as 0=rural and 1=urban. I will create a new variable with a toolkit same coding 
 tab substrat,m
@@ -211,14 +157,7 @@ tab rural,m
 **
 *tab rural,m
 *
-/*Rural/Urban |
-   Location |      Freq.     Percent        Cum.
-------------+-----------------------------------
-      Urban |      1,949       28.26       28.26
-      Rural |      4,947       71.74      100.00
-------------+-----------------------------------
-      Total |      6,896      100.00
-*/
+
 	  
 ***-----Regions used for temporal price index calculations
 * in the 2009 data analysis, we used the traditions regions that are east, cetral, western and northern. these are well presented in variable region
@@ -254,19 +193,19 @@ ta spdomain region
 tab region
 clonevar new=regurb
 ta new
-/*
-gen new = 1 if spdomain==1 & rural==0
-replace new=2 if spdomain==1 & rural==1
-replace new=3 if spdomain==2 & rural==0
-replace new=4 if spdomain==2 & rural==1
-replace new=5 if spdomain==3 & rural==0
-replace new=6 if spdomain==3 & rural==1
-replace new=7 if spdomain==4 & rural==0
-replace new=8 if spdomain==4 & rural==1
 
-label define lnew 1 "Central Urban" 2 "Central Rural" 3 "Eastern Urban" 4 "Eastern Rural" 5 "Northern Urban" 6 "Northern Rural" 7 "Western Urban" 8 "Western Rural"  
-label values new lnew
-*/
+*gen new = 1 if spdomain==1 & rural==0
+*replace new=2 if spdomain==1 & rural==1
+*replace new=3 if spdomain==2 & rural==0
+*replace new=4 if spdomain==2 & rural==1
+*replace new=5 if spdomain==3 & rural==0
+*replace new=6 if spdomain==3 & rural==1
+*replace new=7 if spdomain==4 & rural==0
+*replace new=8 if spdomain==4 & rural==1
+
+*label define lnew 1 "Central Urban" 2 "Central Rural" 3 "Eastern Urban" 4 "Eastern Rural" 5 "Northern Urban" 6 "Northern Rural" 7 "Western Urban" 8 "Western Rural"  
+*label values new lnew
+
 label variable new "other ways to dissagregate poverty lines"
 rename new news
 
@@ -289,7 +228,8 @@ clear
 use "$path/in/GSEC2.dta" 
 
 *REVISIONS TO HH SIZE BY FIONA
-drop if r04>2 // keeping usual members only
+drop if r04>2
+replace r02=r02==1
 gen counter=1
 rename HHID hhid
 bysort hhid: gen pid2=_N
@@ -405,7 +345,7 @@ label variable hhid "Household ID"
 gen id=string(pid, "%02.0f")
 egen indid=concat(hhid id)
 order hhid indid
-duplicates report indid // none
+duplicates report indid
 codebook indid
 	* There are 36,154 different values, and there are 36,154 observations in the dataset so indid uniquely identifies
 		* the individuals
@@ -432,7 +372,7 @@ tostring hhid,replace
 gen id=string(pid, "%02.0f")
 egen indid=concat(hhid id)
 order hhid indid
-duplicates report indid // none
+duplicates report indid 
 codebook indid
 
 *gen double indid=hhid*100 +  pid
@@ -512,11 +452,11 @@ rename HHID hhid
 la var hhid "household id"
 ** we drop alcoholic and tobacco as these were not considered basic in foods generally and by GAPP, these included beer-152, other alcoholic dricns-153
 ** cigarettes-155, other tobacco-156  beer and food taken in restaurants-159, just like we did in the 2009 poverty calculations
-drop if inlist( itmcd ,152,153, 155,156, 157, 158,159)  // 4728 observations dropped
+drop if inlist( itmcd ,152,153, 155,156, 157, 158,159)  
 ta itmcd
 
 duplicates report  hhid itmcd
-duplicates list  hhid itmcd untcd  //none
+duplicates list  hhid itmcd untcd  
 codebook hhid
 egen quantity=rowtotal( ceb06 ceb08 ceb10 ceb12)
  
@@ -565,9 +505,9 @@ sort product untcd
 
 *rename untcd untcd
 replace product=100 if product==101  | product==102  | product==103  | product==104
-*merge m:1 product untcd using  "/home/bjvca/data/data/GAP/Haruna/conversionfactors_corrected_onlyUNPS.dta"
+merge m:1 product untcd using  "$path/conversionfactors_corrected_onlyUNPS.dta"
 
-merge m:1 product untcd using  "$path\in\conversionfactors.dta"
+*merge m:1 product untcd using  "$path\in\conversionfactors.dta"
 
 tab _m
 drop _m
@@ -610,7 +550,7 @@ keep hhid e20a- e20g
 
 *recreating the total education expenditure (by Fiona Nattembo)
 egen totexp=rsum(e20a- e20f)
-misschk e20a	e20b	e20c	e20d	e20e	e20f , gen(noDetails)
+misschk e20a e20b  e20c e20d e20e e20f , gen(noDetails)
 replace totexp=. if totexp==0
 replace totexp=e20g if totexp==. & noDetailsnumber==6 & e20g!=. & e20g!=0
 ***
@@ -636,9 +576,9 @@ keep hhid he17a- he17g
 
 egen medicalexp = rowtotal ( he17a- he17f)
 replace medicalexp=. if medicalexp==0
-misschk he17a	he17b	he17c	he17d	he17e	he17f, gen(empty)
+misschk he17a he17b he17c he17d he17e he17f, gen(empty)
 cou if emptynumber==6 & he17g>0 & he17g!=.					
-replace medicalexp=he17g if emptynumber==6 & he17g>0 & he17g!=.	& medicalexp==.				
+replace medicalexp=he17g if emptynumber==6 & he17g>0 & he17g!=. & medicalexp==.				
 ***
 
 gen medicalexpd = medicalexp/30
@@ -673,8 +613,8 @@ sort hhid
 **Additions by Fiona
 *dropping assets not owned by the HH
 drop if ha03==3 & ha07==3 
-misschk ha04a	ha04b	ha04c	ha05	ha06	ha07	ha08a	ha08b	ha08c	ha09	ha10, gen(empty)	
-drop if emptynumber==11												
+misschk ha04a ha04b ha04c ha05 ha06 ha07 ha08a ha08b ha08c ha09 ha10, gen(empty)	
+drop if emptynumber==11 
 drop empty*
 cou 
 
@@ -710,7 +650,7 @@ sort hhid
 *** hospitalcharges-503, traditionaldoctors-504, others-509 since medical expenses were cosidered in section 5, sports/theater-701,
 **  drycleaning-702, houseboys-703, barbers&beauty shops-704 and lodging-705. THESE HAVE BEEN CONSIDERED NON BASIC
 drop if inlist( cec02 ,502, 501, 462)
-// drop if inlist( itmcd ,311,455,456,457,458,459,461,462,464,465,466,467,469,501,502,503,504,509,701,702,703,704,705)
+** drop if inlist( itmcd ,311,455,456,457,458,459,461,462,464,465,466,467,469,501,502,503,504,509,701,702,703,704,705)
 
 egen hhfrequents = rowtotal ( cec05 cec07 cec09)
 gen dhhfrequents = hhfrequents/30
@@ -728,7 +668,7 @@ clear
 **   just as in kind food consumptions were eliminated in table 4 as per the GAPP guidelines, These have also been discounted by 10% usage per year
 ***************************************************************************************************************************************************
 
-use "$path/in/GSEC6D.dta"
+use "$path/in/GSEC6d.dta"
 save "$path/out/hhsemidurables.dta", replace
 des
 sort HHID
@@ -750,7 +690,7 @@ save "$path/out/hhdsemidurablesexp.dta", replace
 
 clear
 
-use "$path/in/GSEC6E.dta"
+use "$path/in/GSEC6e.dta"
 save "$path/in/hhnonconsmpexptaxes.dta", replace
 sort HHID
 rename HHID hhid
@@ -841,16 +781,16 @@ drop _merge
 replace hhdsemidurs=0 if hhdsemidurs==.
 sort hhid
 save "$path/out/hhdeduc&medic&durab&nondurab&freqs&semidurabex.dta", replace
-// // use "$path/in/GSEC5.dta"
+
 use "$path/out/hhdnonconsumpexp.dta"
 collapse (sum) hhdnonconsumpexp , by(hhid)
 replace hhdnonconsumpexp=0 if hhdnonconsumpexp==.
 sort hhid
 save "$path/out/hhdnonconsumpexp.dta", replace
-// 
 
 
-// 
+
+
 use "$path/out/hhdeduc&medic&durab&nondurab&freqs&semidurabex.dta"
 merge 1:1 hhid using "$path/out/hhdnonconsumpexp.dta"
 drop _merge
