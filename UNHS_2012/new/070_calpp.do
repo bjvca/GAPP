@@ -17,14 +17,14 @@ set more off
 * Purpose: Determine calories required for each person per domain per day.
 *********************************************************************** 
 
-/*
-This file uses:
-	work/indata.dta
-	work/hhdata.dta
 
-This file creates:
-	work/calpp.dta
-*/
+*This file uses:
+*	work/indata.dta
+*	work/hhdata.dta
+
+*This file creates:
+*	work/calpp.dta
+*
 
 *-------------------------------------------------------------------------*
 * Include fertility rates from csv-file
@@ -44,6 +44,7 @@ list
 use "$path/work/indata.dta" 
     replace sex=2 if sex==0
 * CA bootstrap modification 
+destring hhid, replace
 sort hhid 
 merge hhid using "$path/work/hhdata.dta" 
 tab _m 

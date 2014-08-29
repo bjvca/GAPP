@@ -17,14 +17,14 @@ set more off
 * temporal deflation when necessary
 **************************************************************************** 
 
-/*
-This file uses:
-        work/hhdata.dta
-        work/consump_nom.dta
+
+*This file uses:
+*        work/hhdata.dta
+*        work/consump_nom.dta
       
-This file creates:
-        work/conpc.dta
-*/
+*This file creates:
+*        work/conpc.dta
+
 
 
 

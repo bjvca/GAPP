@@ -39,22 +39,22 @@ set more off
 * URB, Feb 2013 (automatization to any number of n_tpi's)
 **************************************************************************;
 
-/*
-This file uses:
-        work/own.dta
-        work/receipts.dta
-        work/daily.dta
-        work/hhdata
-        work/cons_cat.dta
 
-This file creates:
-        work/tpi_unit_val_quarterly.dta
-        work/tpi_unit_val_monthly.dta
-        work/tpi_news_share.dta
-        work/tpi_reg_tpi_share.dta
-        work/temp_index_news.dta
-        work/temp_index_reg_tpi.dta
-*/      
+*This file uses:
+*        work/own.dta
+*        work/receipts.dta
+*        work/daily.dta
+*        work/hhdata
+*        work/cons_cat.dta
+
+*This file creates:
+*        work/tpi_unit_val_quarterly.dta
+*        work/tpi_unit_val_monthly.dta
+*        work/tpi_news_share.dta
+*        work/tpi_reg_tpi_share.dta
+*        work/temp_index_news.dta
+*        work/temp_index_reg_tpi.dta
+      
 
 
 **************************************************************************

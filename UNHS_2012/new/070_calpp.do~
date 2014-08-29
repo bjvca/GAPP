@@ -17,14 +17,14 @@ set more off
 * Purpose: Determine calories required for each person per domain per day.
 *********************************************************************** 
 
-/*
-This file uses:
-	work/indata.dta
-	work/hhdata.dta
 
-This file creates:
-	work/calpp.dta
-*/
+*This file uses:
+*	work/indata.dta
+*	work/hhdata.dta
+
+*This file creates:
+*	work/calpp.dta
+*
 
 *-------------------------------------------------------------------------*
 * Include fertility rates from csv-file
@@ -42,7 +42,7 @@ list
 * Now do the calorie needs for individuals
 *-------------------------------------------------------------------------* 
 use "$path/work/indata.dta" 
-
+    replace sex=2 if sex==0
 * CA bootstrap modification 
 sort hhid 
 merge hhid using "$path/work/hhdata.dta" 
@@ -66,7 +66,7 @@ sum
 * Children (no difference between boys and girls)     
     replace cal =  820 if age < 1 
     
-    replace sex=2 if sex==0
+
 
 * Add 500 cal per day for mothers in first six months of breast feeding
 * We assume that 60% of children under 1 are under six months old
