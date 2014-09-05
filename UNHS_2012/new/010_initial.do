@@ -50,7 +50,7 @@ global it_n "5";
 ******************************************************************************
 * Set the number of regions in the spatial domain;
 ******************************************************************************;
-global n_spdom "4";
+global n_spdom "6";
 
 ******************* we deleted East urban (132 hhds), North urban (172 hhds) and West urban (107 hhds) because too few observations were in those spatial domains; 
 

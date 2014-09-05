@@ -109,7 +109,7 @@ label variable hhid "Household ID"
 preserve
 use "$path/in/GSEC2.dta" , clear
 ta r04
-drop if r04>2 
+drop if r04>=2 
 gen qhmember=1
 collapse(count) qhmember, by(HHID)
 sum qhmember 
@@ -167,24 +167,27 @@ clonevar reg_tpi = region
 label variable reg_tpi "Regions used for temporal price index calculations"
 
 ***------ Spatial domains (each with its own poverty line)
+tab regurb
 * In the Arndt & Simler 2010 paper the spatial domains are a combinaison of regions and rural/urban delimitations + the capital
-* city, however in the 2009/10 data urban sections of the north east and western regions were very small to about 100 observations, yet
-** in 2005 data, the smallest section is the northern urban which has 344, households; therefore, we would generate the spatial domains on the 
-** region, and rural/urban demarcations, however since Kampala is all urban and has 324 households, and is the capital, we shall consider it alone as 
-** in Mozambique, so we have 9 spatial domains
-tab region rural,m
-tab district rural,m
-gen float spdomain=1 if region==1 
-replace spdomain=2 if region==2
-replace spdomain=3 if region==3
-replace spdomain=4 if region==4
+* city as a separate domain (confirmed in the Mozambique data file)
+*--> for uganda; urban sub regions of eastern, northern and western had very few households 132, 172, 107 respectively, 
+** thus we only separated the central region into rural/urban and others were aggregated for northern, eastern and western to have 5 spatial domains
+*gen spdomain = 1 if rural==1
+*replace spdomain = 2 if rural ==0
+gen spdomain = 1 if regurb==11 & district==102
 
+replace spdomain = 2 if regurb==10
 
+replace spdomain = 3 if regurb==20
 
+replace spdomain = 4 if regurb==30
 
-label define lspdomain 1 "Central" 2 "Eastern" 3 "Northern" 4 "Eastern"
-label values spdomain lspdomain
-label variable spdomain "Spatial domains: each with own poverty line (they are 4)"
+replace spdomain = 5 if regurb==40
+
+replace spdomain = 6 if (regurb==11 | regurb==21 | regurb==31 | regurb==41)  & district!=102
+label define lspdomain 1 "Kampala"  2 "Central Rural" 3  "Eastern Rural" 4 "Northern Rural" 5 "Western Rural" 6 "Other Urban" 
+*gen spdomain=1
+*clonevar spdomain =  region
 
 tab spdomain rural
 ta spdomain region
@@ -228,7 +231,7 @@ clear
 use "$path/in/GSEC2.dta" 
 
 *REVISIONS TO HH SIZE BY FIONA
-drop if r04>2
+drop if r04==2
 replace r02=r02==1
 gen counter=1
 rename HHID hhid
@@ -462,16 +465,16 @@ egen quantity=rowtotal( ceb06 ceb08 ceb10 ceb12)
  
 la var quantity "quantity of food consumed by the household including purchases, at home, away from home & kind"
 ** these quantities and values are collected by UBOS at a 7 days basis, thus we divide by 7 to get the daily figures as a requirement by GAPP 
-*gen quantityd = quantity/7
-replace ceb04=7 if (ceb04<1 | ceb04>7) & ceb04!=.
-gen quantityd = quantity/ceb04
+gen quantityd = quantity/7
+*replace ceb04=7 if (ceb04<1 | ceb04>7) & ceb04!=.
+*gen quantityd = quantity/ceb04
 
 drop quantity ceb06 ceb08 ceb10 ceb12
 la var quantityd "daily household food consumption"
 egen value=rowtotal ( ceb07 ceb09 ceb11 ceb13 )
 la var value "household food consumption in seven days"
-*gen valuez = value/7 
-gen valuez = value/ceb04 
+gen valuez = value/7 
+*gen valuez = value/ceb04 
 
 la var valuez "daily value of food consumed by the household"
 *replace valuez = valuez*13 if district==102
@@ -582,7 +585,7 @@ replace medicalexp=he17g if emptynumber==6 & he17g>0 & he17g!=. & medicalexp==.
 ***
 
 gen medicalexpd = medicalexp/30
-*replace medicalexpd = 0 
+replace medicalexpd = 0 
 *** already included in nonfood expenses
 la var medicalexpd "household daily expenditure"
 keep hhid medicalexpd
@@ -605,7 +608,7 @@ drop  if ha02==1
  ** house not treated as an asset as the toolkit takes care of imputed rent
  ************************************************************************************************************************
  gen dassetvalue = (assetvalue)/365
-*replace dassetvalue=0
+replace dassetvalue=0
 la var dassetvalue "household daily durables expenditure"
 rename HHID hhid
 sort hhid
@@ -632,7 +635,7 @@ rename HHID hhid
  la var nondurablevalue "household daily non-durables expenditure"
  sort hhid
  gen dnondurables = (nondurablevalue)/365
- *replace dnondurables = 0
+ replace dnondurables = 0
  la var dnondurables "household daily non-durables expenditure"
  save "$path/out/hhdnondurablesexp.dta", replace
 
