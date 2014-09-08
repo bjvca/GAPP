@@ -455,7 +455,7 @@ rename HHID hhid
 la var hhid "household id"
 ** we drop alcoholic and tobacco as these were not considered basic in foods generally and by GAPP, these included beer-152, other alcoholic dricns-153
 ** cigarettes-155, other tobacco-156  beer and food taken in restaurants-159, just like we did in the 2009 poverty calculations
-drop if inlist( itmcd ,152,153, 155,156, 157, 158,159)  
+**drop if inlist( itmcd ,152,153, 155,156, 157, 158,159)  
 ta itmcd
 
 duplicates report  hhid itmcd
@@ -652,7 +652,7 @@ sort hhid
 *** bus fares-464, bodaboda fare-465, stamps/envelops-466, mobilephoneairtime-467 and others-469,health fees as consultation-501, medicine-502
 *** hospitalcharges-503, traditionaldoctors-504, others-509 since medical expenses were cosidered in section 5, sports/theater-701,
 **  drycleaning-702, houseboys-703, barbers&beauty shops-704 and lodging-705. THESE HAVE BEEN CONSIDERED NON BASIC
-drop if inlist( cec02 ,502, 501, 462)
+*drop if inlist( cec02 ,502, 501, 462)
 ** drop if inlist( itmcd ,311,455,456,457,458,459,461,462,464,465,466,467,469,501,502,503,504,509,701,702,703,704,705)
 
 egen hhfrequents = rowtotal ( cec05 cec07 cec09)
@@ -683,10 +683,10 @@ rename HHID hhid
 ** glass/table ware of codes 441-449, education cost (601-609) as education done in section 4, and others like functions & premiums (801-809)
 ** as these have been consideered NON BASIC
 
-egen hhsemidurables = rowtotal( ced03 ced04)
+egen hhsemidurables = rowtotal( ced03 ced04 ced05)
 sort hhid
 gen hhdsemidurs = (hhsemidurables)/365
-replace hhdsemidurs = 0
+*replace hhdsemidurs = 0
 la var hhdsemidurs "household daily semi durables goods and seervices expenses"
 
 save "$path/out/hhdsemidurablesexp.dta", replace
@@ -703,7 +703,7 @@ rename HHID hhid
 
 gen hhdnonconsumpexp = cee03/365
 
-*replace hhdnonconsumpexp = 0
+replace hhdnonconsumpexp = 0
 la var hhdnonconsumpexp "hh daily expenditure on taxes, contributions, donations, duties, etc"
 sort hhid
 save "$path/out/hhdnonconsumpexp.dta", replace
