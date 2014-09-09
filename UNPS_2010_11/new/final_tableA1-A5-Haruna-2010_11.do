@@ -309,7 +309,7 @@ rename HHID hhid
 la var hhid "household id"
 ** we drop alcoholic and tobacco as these were not considered basic in foods generally and by GAPP, these included beer-152, other alcoholic dricns-153
 ** cigarettes-155, other tobacco-156 and beer taken in restaurants-159, just like we did in the 2009 poverty calculations
-drop if inlist( itmcd ,152,153, 155,156, 157, 158,159)
+*drop if inlist( itmcd ,152,153, 155,156, 157, 158,159)
 duplicates report  hhid itmcd
 duplicates list  hhid itmcd
 codebook hhid
@@ -431,7 +431,7 @@ sort hhid
 * others-459, tires-461, petrol-462, bus fares-464, bodaboda fare-465, stamps/envelops-466, mobilephoneairtime-467 and others-469,health fees as 
 *consultation-501, medicine-502, hospitalcharges-503, traditionaldoctors-504, others-505 since medical expenses were cosidered in section 5, 
 * sports/theater-601, drycleaning-602, houseboys-603, barbers&beauty shops-604 and lodging-605. THESE HAVE BEEN CONSIDERED NON BASIC
-drop if inlist( h15cq2 ,311,455,456,457,458,459,461,462,464,465,466,467,469,501,502,503,504,505,601,602,603,604,605)
+*drop if inlist( h15cq2 ,311,455,456,457,458,459,461,462,464,465,466,467,469,501,502,503,504,505,601,602,603,604,605)
 egen hhfrequents = rowtotal ( h15cq5 h15cq7 h15cq9)
 gen dhhfrequents = hhfrequents/30
 la var dhhfrequents "daily household expenditure on frequently bought commodities"
@@ -450,11 +450,11 @@ rename HHID hhid
 *other footware-209, furniture items-301, carpets-302, curtains&bedsheets-303, others-306, kettles-401, tv&radio-403, byclcles-404, radio-405, motors-406, 
 *motorcycles-407,computers-408, phone handsets-409, others-410, jewelry&watches-411,glass/table ware of codes 501 and 503-506, education cost (601-605)
 *as education done in section 4, and others like functions & premiums (701-703) ** as these have been consideered NON BASIC
-drop if inlist( h15dq2 ,204,205,208,209,301,302,303,306,401,403,404,405,406,407,408,409,410,411,501,503,504,505,506,601,602,603,604,605,701,702,703)
+*drop if inlist( h15dq2 ,204,205,208,209,301,302,303,306,401,403,404,405,406,407,408,409,410,411,501,503,504,505,506,601,602,603,604,605,701,702,703)
 egen hhsemidurables = rowtotal ( h15dq5 h15dq7 h15dq9)
 sort hhid
-gen hhdsemidurs = (hhsemidurables*0.01)/365
-replace hhdsemidurs=0
+gen hhdsemidurs = (hhsemidurables)/365
+*replace hhdsemidurs=0
 la var hhdsemidurs "household daily semi durables goods and seervices expenses"
 drop hhsemidurables
 save "$path/out/hhdsemidurablesexp.dta", replace
@@ -472,7 +472,7 @@ rename HHID hhid
 
 gen hhdnonconsumpexp = h15dq5/365
 
-*replace hhdnonconsumpexp=0
+replace hhdnonconsumpexp=0
 la var hhdnonconsumpexp "hh daily expenditure on taxes, contributions, donations, duties, etc"
 sort hhid
 save "$path/out/hhdnonconsumpexp.dta", replace

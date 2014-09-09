@@ -655,7 +655,7 @@ sort hhid
 *drop if inlist( cec02 ,502, 501, 462)
 ** drop if inlist( itmcd ,311,455,456,457,458,459,461,462,464,465,466,467,469,501,502,503,504,509,701,702,703,704,705)
 
-egen hhfrequents = rowtotal ( cec05 cec07 cec09)
+egen hhfrequents = rowtotal( cec05 cec07 cec09)
 gen dhhfrequents = hhfrequents/30
 *replace dhhfrequents= 0
 

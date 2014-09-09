@@ -337,7 +337,7 @@ rename hh hhid
 la var hhid "household id"
 ** we drop alcoholic and tobacco as these were not considered basic in foods generally and by GAPP, these included beer-152, other alcoholic dricns-153
 ** cigarettes-155, other tobacco-156 and beer taken in restaurants-159, just like we did in the 2009 poverty calculations
-drop if inlist( itmcd ,152,153, 155,156, 157, 158,159)
+*drop if inlist( itmcd ,152,153, 155,156, 157, 158,159)
 duplicates report  hhid itmcd
 *duplicates list  hhid itmcd
 codebook hhid
@@ -469,8 +469,8 @@ rename hh hhid
 *drop if inlist( h15dq2 ,204,205,208,209,301,302,303,306,401,403,404,405,406,407,408,409,410,411,501,503,504,505,506,601,602,603,604,605,701,702,703)
 egen hhsemidurables = rowtotal ( h15dq3 h15dq4 h15dq5)
 sort hhid
-gen hhdsemidurs = (hhsemidurables)
-replace hhdsemidurs=0
+gen hhdsemidurs = (hhsemidurables)/365
+*replace hhdsemidurs=0
 la var hhdsemidurs "household daily semi durables goods and seervices expenses"
 drop hhsemidurables
 tostring hhid, force replace
@@ -486,7 +486,7 @@ save "$path/in/hhnonconsmpexptaxes.dta", replace
 ** and dropped income tax-901, property tax-902, user fees-903, social security payments-905, remmitances-906, funerals-907 and others-909
 drop if inlist( itmcd ,806)
 gen hhdnonconsumpexp = h15eq3/365
-*replace hhdnonconsumpexp=0
+replace hhdnonconsumpexp=0
 la var hhdnonconsumpexp "hh daily expenditure on taxes, contributions, donations, duties, etc"
 sort hhid 
 collapse hhdnonconsumpexp, by (hhid)
