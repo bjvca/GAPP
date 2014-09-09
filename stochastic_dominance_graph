@@ -7,10 +7,10 @@
 
 
 library(foreign)
-resmat <- array(NA, c(15, 8, 6))
+resmat <- array(NA, c(15, 10, 6))
 
 
-unhs0910 <- read.dta("/home/bjvca/data/data/GAP/Haruna/work/conpc.dta")
+unhs1213 <- read.dta("/home/bjvca/data/data/GAP/Haruna/UNHS_2012/work/conpc.dta")
 dta0506 <- read.dta("/home/bjvca/data/data/GAP/Haruna/UNPS_2005_06/work/conpc.dta")
 dta0910 <- read.dta("/home/bjvca/data/data/GAP/Haruna/UNPS_2009_10/work/conpc.dta")
 dta1011 <- read.dta("/home/bjvca/data/data/GAP/Haruna/UNPS_2010_11/work/conpc.dta")
@@ -27,13 +27,13 @@ lines(ecdf(dta1112$cons_pc_nom/189.48*100), xlim=c(beginp,endp), col="green")
 #merge in weights
 
 
-unhs0910hhdata <- read.dta("/home/bjvca/data/data/GAP/Haruna/work/hhdata.dta")
-unhs0910tpi <- read.dta("/home/bjvca/data/data/GAP/Haruna/work/temp_index_reg_tpi.dta")
-unhs0910w <-  merge(unhs0910hhdata, unhs0910tpi, by.x=c("reg_tpi","survquar"), by.y=c("reg_tpi","survquar"))
+unhs1213hhdata <- read.dta("/home/bjvca/data/data/GAP/Haruna/UNHS_2012/work/hhdata.dta")
+unhs1213tpi <- read.dta("/home/bjvca/data/data/GAP/Haruna/UNHS_2012/work/temp_index_reg_tpi.dta")
+unhs1213w <-  merge(unhs0910hhdata, unhs0910tpi, by.x=c("reg_tpi","survquar"), by.y=c("reg_tpi","survquar"))
 
 
 #merge in splines
-unhs0910spl <- read.dta("/home/bjvca/data/data/UGANDA/UNHS/UNHS_09-10/pov09_05_ubos.dta")[,c(1,16)]
+unhs1213spl <- read.dta("/home/bjvca/data/data/UGANDA/UNHS/UNHS_09-10/pov09_05_ubos.dta")[,c(1,16)]
 unhs0910w <- merge(merge(unhs0910w, unhs0910spl, by.x="hhid", by.y="hh"),unhs0910,by.x="hhid", by.y="hhid")
 
 unhs0910w$cr <- unhs0910w$food_pc_nom/unhs0910w$tpi_trim + unhs0910w$nf_pc_nom
@@ -81,7 +81,7 @@ unps0506w <-  merge(merge(unps0506hhdata, unps0506tpi, by.x=c("reg_tpi","survqua
 unps0506w$cr <- unps0506w$food_pc_nom/unps0506w$tpi_trim + unps0506w$nf_pc_nom  
 
 ### national UC povlines
-unps0506w$ucpline <-  696.7761*69.4492673102/100
+unps0506w$ucpline <-  616.09
 unps0506w$spi <- 1
 unps0506w$cr2 <- unps0506w$cr
 
@@ -92,9 +92,6 @@ unps0506w$cr2 <- unps0506w$cr/unps0506w$spi
 unps0506w$regurb <- unps0506w$strata
 
 for (alpha in 0:2 ) {
-
-
- 
 
 unps0506w <- subset(unps0506w, !is.na(unps0506w$hhweight))
 resmat[1,1,alpha+1] <-sum(((unps0506w$cr2 < unps0506w$ucpline )* unps0506w$hhweight*unps0506w$hhsize)*((unps0506w$ucpline - unps0506w$cr2)/unps0506w$ucpline)^alpha, na.rm=T)/sum( unps0506w$hhweight*unps0506w$hhsize, na.rm=T)
@@ -120,12 +117,12 @@ resmat[8:15,2,alpha+1] <- (resmat[8:15,1,alpha+1] * as.vector( by(unps0506w, unp
  
 ### strata povlines  
 unps0506w$cr <- unps0506w$food_pc_nom/unps0506w$tpi_trim + unps0506w$nf_pc_nom 
-unps0506w$ucpline[unps0506w$stratum=="Kampala"] <- 1182.935*69.4492673102/100
-unps0506w$ucpline[unps0506w$stratum=="Central rural"] <- 892.5259*69.4492673102/100
-unps0506w$ucpline[unps0506w$stratum=="East rural "] <- 699.1604*69.4492673102/100
-unps0506w$ucpline[unps0506w$stratum=="North rural"] <- 971.5269*69.4492673102/100
-unps0506w$ucpline[unps0506w$stratum=="West rural"] <- 1060.346*69.4492673102/100
-unps0506w$ucpline[unps0506w$stratum=="Other urban"] <- 962.2184*69.4492673102/100
+unps0506w$ucpline[unps0506w$stratum=="Kampala"] <- 1262.39
+unps0506w$ucpline[unps0506w$stratum=="Central rural"] <- 1029.78
+unps0506w$ucpline[unps0506w$stratum=="East rural "] <- 765.61
+unps0506w$ucpline[unps0506w$stratum=="North rural"] <- 900.38
+unps0506w$ucpline[unps0506w$stratum=="West rural"] <-  973.32
+unps0506w$ucpline[unps0506w$stratum=="Other urban"] <- 983.16
 
 linref <- mean(unps0506w$ucpline[unps0506w$stratum=="Other urban"])
 unps0506w$spi <- unps0506w$ucpline/linref
@@ -170,7 +167,7 @@ unps0910w$regurb  <- factor(unps0910w$regurb ,levels(unps0910w$regurb)[c(2,1,4,3
 unps0910w$cr <- unps0910w$food_pc_nom/unps0910w$tpi_trim + unps0910w$nf_pc_nom  
 
 ### national UC povlines
-unps0910w$ucpline <-  696.7761
+unps0910w$ucpline <-  887.09
 unps0910w$spi <- 1
 unps0910w$cr2 <- unps0910w$cr
 
@@ -206,12 +203,12 @@ resmat[8:15,4,alpha+1] <- (resmat[8:15,3,alpha+1] * as.vector( by(unps0910w, unp
   
 ### strata povlines  
 unps0910w$cr <- unps0910w$food_pc_nom/unps0910w$tpi_trim + unps0910w$nf_pc_nom 
-unps0910w$ucpline[unps0910w$stratum=="Kampala"] <- 1182.935
-unps0910w$ucpline[unps0910w$stratum=="Central rural"] <- 892.5259
-unps0910w$ucpline[unps0910w$stratum=="East rural "] <- 699.1604
-unps0910w$ucpline[unps0910w$stratum=="North rural"] <- 971.5269
-unps0910w$ucpline[unps0910w$stratum=="West rural"] <- 1060.346
-unps0910w$ucpline[unps0910w$stratum=="Other urban"] <- 962.2184
+unps0910w$ucpline[unps0910w$stratum=="Kampala"] <- 1817.68
+unps0910w$ucpline[unps0910w$stratum=="Central rural"] <- 1482.75
+unps0910w$ucpline[unps0910w$stratum=="East rural "] <- 1102.38
+unps0910w$ucpline[unps0910w$stratum=="North rural"] <- 1296.43
+unps0910w$ucpline[unps0910w$stratum=="West rural"] <- 1401.46
+unps0910w$ucpline[unps0910w$stratum=="Other urban"] <- 1415.62
 
 linref <- mean(unps0910w$ucpline[unps0910w$stratum=="Other urban"])
 unps0910w$spi <- unps0910w$ucpline/linref
@@ -256,7 +253,7 @@ unps1011w$regurb  <- factor(unps1011w$regurb ,levels(unps1011w$regurb)[c(2,1,4,3
 unps1011w$cr <- unps1011w$food_pc_nom/unps1011w$tpi_trim + unps1011w$nf_pc_nom  
 
 ### national UC povlines
-unps1011w$ucpline <-  696.7761*106.5282311272/100
+unps1011w$ucpline <-  945.03
 unps1011w$spi <- 1
 unps1011w$cr2 <- unps1011w$cr
 
@@ -294,12 +291,12 @@ resmat[8:15,6,alpha+1] <- (resmat[8:15,5,alpha+1] * as.vector( by(unps1011w, unp
 
 
 unps1011w$cr <- unps1011w$food_pc_nom/unps1011w$tpi_trim + unps1011w$nf_pc_nom 
-unps1011w$ucpline[unps1011w$strata=="Kampala"] <- 1182.935*106.5282311272/100
-unps1011w$ucpline[unps1011w$strata=="Central rural"] <- 892.5259*106.5282311272/100
-unps1011w$ucpline[unps1011w$strata=="East rural"] <- 699.1604*106.5282311272/100
-unps1011w$ucpline[unps1011w$strata=="North rural"] <- 971.5269*106.5282311272/100
-unps1011w$ucpline[unps1011w$strata=="West rural"] <- 1060.346*106.5282311272/100
-unps1011w$ucpline[unps1011w$strata=="Other Urban"] <- 962.2184*106.5282311272/100
+unps1011w$ucpline[unps1011w$strata=="Kampala"] <- 1936.38
+unps1011w$ucpline[unps1011w$strata=="Central rural"] <- 1579.58
+unps1011w$ucpline[unps1011w$strata=="East rural"] <- 1174.37
+unps1011w$ucpline[unps1011w$strata=="North rural"] <- 1381.09
+unps1011w$ucpline[unps1011w$strata=="West rural"] <- 1492.99
+unps1011w$ucpline[unps1011w$strata=="Other Urban"] <- 1508.07
 
 linref <- mean(unps1011w$ucpline[unps1011w$strata=="Other Urban"])
 unps1011w$spi <- unps1011w$ucpline/linref
@@ -339,7 +336,7 @@ unps1112w$regurb  <- factor(unps1112w$regurb ,levels(unps1112w$regurb)[c(2,1,4,3
 unps1112w$cr <- unps1112w$food_pc_nom/unps1112w$tpi_trim + unps1112w$nf_pc_nom  
 
 ### national UC povlines
-unps1112w$ucpline <-  696.7761*131.5924716994/100
+unps1112w$ucpline <-  1167.38
 unps1112w$spi <- 1
 unps1112w$cr2 <- unps1112w$cr
 
@@ -383,12 +380,12 @@ unps1112w$stratum  <- factor(unps1112w$stratum ,levels(unps1112w$stratum)[c(5,1,
 
 
 
-unps1112w$ucpline[unps1112w$stratum=="Kampala"] <- 1182.935*131.5924716994/100
-unps1112w$ucpline[unps1112w$stratum=="Central rural"] <- 892.5259*131.5924716994/100
-unps1112w$ucpline[unps1112w$stratum=="East rural"] <- 699.1604*131.5924716994/100
-unps1112w$ucpline[unps1112w$stratum=="North rural"] <- 971.5269*131.5924716994/100
-unps1112w$ucpline[unps1112w$stratum=="West rural"] <- 1060.346*131.5924716994/100
-unps1112w$ucpline[unps1112w$stratum=="Other urban"] <- 962.2184*131.5924716994/100
+unps1112w$ucpline[unps1112w$stratum=="Kampala"] <- 2392.00
+unps1112w$ucpline[unps1112w$stratum=="Central rural"] <- 1951.24
+unps1112w$ucpline[unps1112w$stratum=="East rural"] <- 1450.68
+unps1112w$ucpline[unps1112w$stratum=="North rural"] <- 1706.05
+unps1112w$ucpline[unps1112w$stratum=="West rural"] <- 1844.27
+unps1112w$ucpline[unps1112w$stratum=="Other urban"] <- 1862.28
 
 linref <- mean(unps1112w$ucpline[unps1112w$stratum=="Other urban"])
 unps1112w$spi <- unps1112w$ucpline/linref
@@ -417,6 +414,96 @@ resmat[4:7,8,alpha+4] <- (resmat[4:7,7,alpha+4] * as.vector( by(unps1112w, unps1
 resmat[8:15,7,alpha + 4] <-as.vector( by(unps1112w, unps1112w$regurb, function(unps1112w) sum(((unps1112w$cr2 < unps1112w$ucpline )* unps1112w$hhweight*unps1112w$hhsize)*((unps1112w$ucpline - unps1112w$cr2)/unps1112w$ucpline)^alpha, na.rm=T)/sum( unps1112w$hhweight*unps1112w$hhsize, na.rm=T)))
 
 resmat[8:15,8,alpha+4] <- (resmat[8:15,7,alpha+4] * as.vector( by(unps1112w, unps1112w$regurb, function(unps1112w) sum(( unps1112w$hhweight*unps1112w$hhsize),na.rm=T)) / sum(( unps1112w$hhweight*unps1112w$hhsize),na.rm=T)))/ resmat[1,7,alpha+4]
+
+}
+
+############################ 2011/12 ##############################
+unhs1213hhdata <- read.dta("/home/bjvca/data/data/GAP/Haruna/UNHS_2012/work/hhdata.dta")
+unhs1213tpi <- read.dta("/home/bjvca/data/data/GAP/Haruna/UNHS_2012/work/temp_index_reg_tpi.dta")
+unhs1213w <-  merge(merge(unhs1213hhdata, unhs1213tpi, by.x=c("reg_tpi","survquar"), by.y=c("reg_tpi","survquar")),unhs1213,by.x="hhid", by.y="hhid")
+
+unhs1213w$regurb  <- factor(unhs1213w$regurb ,levels(unhs1213w$regurb)[c(2,1,4,3,6,5,8,7)])
+unhs1213w$cr <- unhs1213w$food_pc_nom/unhs1213w$tpi_trim + unhs1213w$nf_pc_nom  
+
+### national UC povlines
+unhs1213w$ucpline <-  1167.38
+unhs1213w$spi <- 1
+unhs1213w$cr2 <- unhs1213w$cr
+
+unhs1213w$spi <-unhs1213w$spi*sum(unhs1213w$cr2*unhs1213w$hhweight*unhs1213w$hhsize, na.rm=T)/sum(unhs1213w$cr*unhs1213w$hhweight*unhs1213w$hhsize, na.rm=T)
+unhs1213w$ucpline <- unhs1213w$ucpline/unhs1213w$spi
+unhs1213w$cr2 <- unhs1213w$cr/unhs1213w$spi
+
+sum((unhs1213w$cr2 < unhs1213w$ucpline) * unhs1213w$hhweight*unhs1213w$hhsize, na.rm=T)/sum(unhs1213w$hhweight*unhs1213w$hhsize, na.rm=T)
+
+unhs1213w <- subset(unhs1213w, !is.na(unhs1213w$hhweight))
+for (alpha in 0:2 ) {
+resmat[1,9,alpha + 1] <-sum(((unhs1213w$cr2 < unhs1213w$ucpline )* unhs1213w$hhweight*unhs1213w$hhsize)*((unhs1213w$ucpline - unhs1213w$cr2)/unhs1213w$ucpline)^alpha, na.rm=T)/sum( unhs1213w$hhweight*unhs1213w$hhsize, na.rm=T)
+
+unhs1213w$z <-  unhs1213w$cr2 < unhs1213w$ucpline
+resmat[2:3,9,alpha + 1] <- as.vector( by(unhs1213w, unhs1213w$urban, function(unhs1213w) sum(((unhs1213w$cr2 < unhs1213w$ucpline )* unhs1213w$hhweight*unhs1213w$hhsize)*((unhs1213w$ucpline - unhs1213w$cr2)/unhs1213w$ucpline)^alpha, na.rm=T)/sum( unhs1213w$hhweight*unhs1213w$hhsize, na.rm=T)))
+
+resmat[2:3,10,alpha+1] <- (resmat[2:3,9,alpha+1] * as.vector( by(unhs1213w, unhs1213w$urban, function(unhs1213w) sum(( unhs1213w$hhweight*unhs1213w$hhsize),na.rm=T)) / sum(( unhs1213w$hhweight*unhs1213w$hhsize),na.rm=T)))/ resmat[1,9,alpha+1]
+
+resmat[4:7,9,alpha + 1] <-as.vector( by(unhs1213w, unhs1213w$region, function(unhs1213w) sum(((unhs1213w$cr2 < unhs1213w$ucpline )* unhs1213w$hhweight*unhs1213w$hhsize)*((unhs1213w$ucpline - unhs1213w$cr2)/unhs1213w$ucpline)^alpha, na.rm=T)/sum( unhs1213w$hhweight*unhs1213w$hhsize, na.rm=T)))
+
+resmat[4:7,10,alpha+1] <- (resmat[4:7,9,alpha+1] * as.vector( by(unhs1213w, unhs1213w$region, function(unhs1213w) sum(( unhs1213w$hhweight*unhs1213w$hhsize),na.rm=T)) / sum(( unhs1213w$hhweight*unhs1213w$hhsize),na.rm=T)))/ resmat[1,9,alpha+1]
+
+resmat[8:15,9,alpha + 1] <-as.vector( by(unhs1213w, unhs1213w$regurb, function(unhs1213w) sum(((unhs1213w$cr2 < unhs1213w$ucpline )* unhs1213w$hhweight*unhs1213w$hhsize)*((unhs1213w$ucpline - unhs1213w$cr2)/unhs1213w$ucpline)^alpha, na.rm=T)/sum( unhs1213w$hhweight*unhs1213w$hhsize, na.rm=T)))
+
+resmat[8:15,10,alpha+1] <- (resmat[8:15,9,alpha+1] * as.vector( by(unhs1213w, unhs1213w$regurb, function(unhs1213w) sum(( unhs1213w$hhweight*unhs1213w$hhsize),na.rm=T)) / sum(( unhs1213w$hhweight*unhs1213w$hhsize),na.rm=T)))/ resmat[1,9,alpha+1]
+
+}
+
+  
+### strata povlines  
+unhs1213w$cr <- unhs1213w$food_pc_nom/unhs1213w$tpi_trim + unhs1213w$nf_pc_nom 
+unhs1213w$stratum <- unhs1213w$regurb
+levels(unhs1213w$stratum) <- c(levels(unhs1213w$stratum), "Kampala")
+levels(unhs1213w$stratum) <- c(levels(unhs1213w$stratum), "Other urban")
+
+unhs1213w$stratum[unhs1213w$strata=="Kampala"] <- "Kampala"
+unhs1213w$stratum[ unhs1213w$stratum %in% c("Central urban", "East urban","North urban","West urban")] <- "Other urban"
+unhs1213w$stratum <- factor(unhs1213w$stratum)
+
+unhs1213w$stratum  <- factor(unhs1213w$stratum ,levels(unhs1213w$stratum)[c(5,1,2,3,4,6)])
+
+
+
+unhs1213w$ucpline[unhs1213w$stratum=="Kampala"] <- 2392.00
+unhs1213w$ucpline[unhs1213w$stratum=="Central rural"] <- 1951.24
+unhs1213w$ucpline[unhs1213w$stratum=="East rural"] <- 1450.68
+unhs1213w$ucpline[unhs1213w$stratum=="North rural"] <- 1706.05
+unhs1213w$ucpline[unhs1213w$stratum=="West rural"] <- 1844.27
+unhs1213w$ucpline[unhs1213w$stratum=="Other urban"] <- 1862.28
+
+linref <- mean(unhs1213w$ucpline[unhs1213w$stratum=="Other urban"])
+unhs1213w$spi <- unhs1213w$ucpline/linref
+unhs1213w$cr2 <- unhs1213w$cr/unhs1213w$spi
+
+unhs1213w$spi <-unhs1213w$spi*sum(unhs1213w$cr2*unhs1213w$hhweight*unhs1213w$hhsize, na.rm=T)/sum(unhs1213w$cr*unhs1213w$hhweight*unhs1213w$hhsize, na.rm=T)
+unhs1213w$ucpline <- unhs1213w$ucpline/unhs1213w$spi
+unhs1213w$cr2 <- unhs1213w$cr/unhs1213w$spi
+
+sum((unhs1213w$cr2 < unhs1213w$ucpline) * unhs1213w$hhweight*unhs1213w$hhsize, na.rm=T)/sum(unhs1213w$hhweight*unhs1213w$hhsize, na.rm=T)
+
+unhs1213w <- subset(unhs1213w, !is.na(unhs1213w$hhweight))
+for (alpha in 0:2 ) {
+resmat[1,9,alpha + 4] <-sum(((unhs1213w$cr2 < unhs1213w$ucpline )* unhs1213w$hhweight*unhs1213w$hhsize)*((unhs1213w$ucpline - unhs1213w$cr2)/unhs1213w$ucpline)^alpha, na.rm=T)/sum( unhs1213w$hhweight*unhs1213w$hhsize, na.rm=T)
+
+unhs1213w$z <-  unhs1213w$cr2 < unhs1213w$ucpline
+resmat[2:3,9,alpha + 4] <- as.vector( by(unhs1213w, unhs1213w$urban, function(unhs1213w) sum(((unhs1213w$cr2 < unhs1213w$ucpline )* unhs1213w$hhweight*unhs1213w$hhsize)*((unhs1213w$ucpline - unhs1213w$cr2)/unhs1213w$ucpline)^alpha, na.rm=T)/sum( unhs1213w$hhweight*unhs1213w$hhsize, na.rm=T)))
+
+resmat[2:3,10,alpha+4] <- (resmat[2:3,9,alpha+4] * as.vector( by(unhs1213w, unhs1213w$urban, function(unhs1213w) sum(( unhs1213w$hhweight*unhs1213w$hhsize),na.rm=T)) / sum(( unhs1213w$hhweight*unhs1213w$hhsize),na.rm=T)))/ resmat[1,9,alpha+4]
+
+
+resmat[4:7,9,alpha + 4] <-as.vector( by(unhs1213w, unhs1213w$region, function(unhs1213w) sum(((unhs1213w$cr2 < unhs1213w$ucpline )* unhs1213w$hhweight*unhs1213w$hhsize)*((unhs1213w$ucpline - unhs1213w$cr2)/unhs1213w$ucpline)^alpha, na.rm=T)/sum( unhs1213w$hhweight*unhs1213w$hhsize, na.rm=T)))
+
+resmat[4:7,10,alpha+4] <- (resmat[4:7,9,alpha+4] * as.vector( by(unhs1213w, unhs1213w$region, function(unhs1213w) sum(( unhs1213w$hhweight*unhs1213w$hhsize),na.rm=T)) / sum(( unhs1213w$hhweight*unhs1213w$hhsize),na.rm=T)))/ resmat[1,9,alpha+4]
+
+resmat[8:15,10,alpha + 4] <-as.vector( by(unhs1213w, unhs1213w$regurb, function(unhs1213w) sum(((unhs1213w$cr2 < unhs1213w$ucpline )* unhs1213w$hhweight*unhs1213w$hhsize)*((unhs1213w$ucpline - unhs1213w$cr2)/unhs1213w$ucpline)^alpha, na.rm=T)/sum( unhs1213w$hhweight*unhs1213w$hhsize, na.rm=T)))
+
+resmat[8:15,10,alpha+4] <- (resmat[8:15,9,alpha+4] * as.vector( by(unhs1213w, unhs1213w$regurb, function(unhs1213w) sum(( unhs1213w$hhweight*unhs1213w$hhsize),na.rm=T)) / sum(( unhs1213w$hhweight*unhs1213w$hhsize),na.rm=T)))/ resmat[1,9,alpha+4]
 
 }
 
