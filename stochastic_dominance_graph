@@ -426,7 +426,7 @@ unhs1213w$regurb  <- factor(unhs1213w$regurb ,levels(unhs1213w$regurb)[c(2,1,4,3
 unhs1213w$cr <- unhs1213w$food_pc_nom/unhs1213w$tpi_trim + unhs1213w$nf_pc_nom  
 
 ### national UC povlines
-unhs1213w$ucpline <-  1167.38
+unhs1213w$ucpline <-  1233.42
 unhs1213w$spi <- 1
 unhs1213w$cr2 <- unhs1213w$cr
 
@@ -470,12 +470,12 @@ unhs1213w$stratum  <- factor(unhs1213w$stratum ,levels(unhs1213w$stratum)[c(5,1,
 
 
 
-unhs1213w$ucpline[unhs1213w$stratum=="Kampala"] <- 2392.00
-unhs1213w$ucpline[unhs1213w$stratum=="Central rural"] <- 1951.24
-unhs1213w$ucpline[unhs1213w$stratum=="East rural"] <- 1450.68
-unhs1213w$ucpline[unhs1213w$stratum=="North rural"] <- 1706.05
-unhs1213w$ucpline[unhs1213w$stratum=="West rural"] <- 1844.27
-unhs1213w$ucpline[unhs1213w$stratum=="Other urban"] <- 1862.28
+unhs1213w$ucpline[unhs1213w$stratum=="Kampala"] <- 2527.3
+unhs1213w$ucpline[unhs1213w$stratum=="Central rural"] <- 2061.62
+unhs1213w$ucpline[unhs1213w$stratum=="East rural"] <- 1532.75
+unhs1213w$ucpline[unhs1213w$stratum=="North rural"] <- 1802.56
+unhs1213w$ucpline[unhs1213w$stratum=="West rural"] <- 1948.6
+unhs1213w$ucpline[unhs1213w$stratum=="Other urban"] <- 1968.28
 
 linref <- mean(unhs1213w$ucpline[unhs1213w$stratum=="Other urban"])
 unhs1213w$spi <- unhs1213w$ucpline/linref
