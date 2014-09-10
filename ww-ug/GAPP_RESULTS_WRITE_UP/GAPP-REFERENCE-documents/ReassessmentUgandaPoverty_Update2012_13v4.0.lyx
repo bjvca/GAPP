@@ -9775,23 +9775,23 @@ vulnerable
 \end_layout
 
 \begin_layout Standard
-Looking at poverty transitions, we find that only about 144 of the 2189
+Looking at poverty transitions, we find that only about 257 of the 2195
 \emph on
  
 \emph default
 households that appear in all four waves are poor in each wave.
- This amounts to only 5.88 percent of the households being chronic poor.
+ This amounts to only 11.7 percent of the households being chronic poor.
  However, if we weigh these households by population weights, the number
- of chronic poor individuals increases to 6.85 percent.
+ of chronic poor individuals increases to 12.2 percent.
  This suggests that the chronic poor are on average larger households.
- At the other extreme, we find that 1066 households or 48.70 percent of the
- households are never poor, corresponding to about 48 percent when using
+ At the other extreme, we find that 833 households or 37.9 percent of the
+ households are never poor, corresponding to about 35.7 percent when using
  weights.
- 256 households have escaped poverty and 234 have fallen into poverty, correspon
-ding to 13.30 and 10.06 percent of the population, respectively.
- Finally, there is a sizable class of about 500 vulnerable households, or
- more than 20 percent of the population, that moves in or out of poverty,
- possibly multiple times, over the 4 waves.
+ 387 households have escaped poverty and 198 have fallen into poverty, correspon
+ding to 20.0 and 7.3 percent of the population, respectively.
+ Finally, there is a sizable class of about 520 vulnerable households, or
+ almost a quarter of the population, that moves in or out of poverty, possibly
+ multiple times, over the 4 waves.
  
 \end_layout
 
@@ -9820,9 +9820,9 @@ We first look at the location of households in the 5 classes in terms of
  being in urban or rural areas.
  It is well known that poverty is predominantly rural, and Uganda is no
  exception.
- 96 percent of the chronic poor live in rural areas, while 21 percent of
- the non-poor are found in rural areas.
- For the other three categories, around 10 percent lives in urban areas.
+ Of all the chronic poor, 97.7 percent live in rural areas.
+ Of all the non-poor, this is only 71.9 percent.
+ For Uganda as a whole, 86.7 percent reports to be living in rural areas.
  Going one step further, we look at the three groups by region.
  This is visualized in the mosaic plot in figure 
 \begin_inset CommandInset ref
@@ -9833,17 +9833,19 @@ reference "fig:Regional-Poverty-Dynamics"
 
 .
  The figure clearly shows that chronic poverty is concentrated in the North.
- Here, 72 percent of all the chronic poor can be found.
+ Here, 45.5 percent of all the chronic poor can be found.
  On the other end, the households that never experienced poverty our disproporti
-onately located in the central region: more than 43 percent of the people
+onately located in the central region: more than 44 percent of the people
  that are always above the poverty threshold live here.
- But for the North, there is also good news.
- It seems a substantial part of the people that escape poverty are those
- from the North.
- This is different for the Eastern region, and to a lesser extent for the
- Western region, where relatively more people are falling back into poverty,
- and relatively less are escaping.
- Still, the North hosts a large proportion of vulnerable households as well.
+ If one lives in the Eastern region, one has a relatively higher chance
+ of falling into poverty.People living in the Western region seem to be moving
+ in and out of poverty more than people living in other regions.
+ While the North has a large group of chronic poor, the good news is that
+ the relative share of people escaping poverty is larger than the share
+ that fall into poverty.
+ This is different in the East, where the large share of individuals sliding
+ into poverty happens simultaneously with relatively few people escaping
+ poverty.
  Finally, it is worth noting that, despite the already high presence of
  non-poor in the Central region, many poor households have escaped poverty
  over time and very few households have slipped back into poverty.
@@ -9854,10 +9856,6 @@ onately located in the central region: more than 43 percent of the people
 wide false
 sideways false
 status open
-
-\begin_layout Plain Layout
-
-\end_layout
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -9904,17 +9902,15 @@ An indicator that is often central in poverty analysis and household demographic
  In general, female headed households are poorer and more vulnerable.
  This is what we also find in our data: chronic poor households are more
  likely to be headed by a female.
- In addition, household that were never poor in our panel are more likely
- to be headed by a male.
+ In addition, household that were never poor in our panel, as well as households
+ that are escaping poverty are more likely to be headed by a male.
  For the other categories, we do not find big differences between male and
  female headed households.
- In other words, the gender of the head of the household does not to be
- an important correlate to poverty transitions.
  We also looked at the age of the household head.
  We find that average age of the household head is around 40 for households
  that are chronic poor or have been sliding into poverty.
  Households that have never been poor or that have moved out of poverty
- have a slightly older household head.
+ are on average about 4 years older.
  
 \end_layout
 
@@ -9928,10 +9924,10 @@ reference "fig:Poverty-Dynamics-and"
 
  gives an idea of the distribution household size and child dependency ratios
  conditional on what poverty dynamics group the households are in.
- In the left panel (1), we plot boxplots for each of the 5 poverty dynamics
- classes.
+ In the left panel (1), we plot boxplots for household size for each of
+ the 5 poverty dynamics classes.
  While many studies find that household size is a good poverty indicator,
- the case is not clear cut.
+ the case is not clear cut in for the case of poverty dynamics.
  It is thought that increased competition for a given food stock reduces
  consumption.
  However, 
@@ -9944,9 +9940,9 @@ key "RePEc:ecj:econjl:v:105:y:1995:i:433:p:1415-34"
  argue that the negative correlation disappears as one takes economies of
  scale in household food consumption into account.
  In terms of production, a larger household may mean more and cheaper labour.
- But Van Campenhout (mimeo) finds that in Ugandan agricultural households,
- the reproductive tasks by the mother reduce time devoted to labour, leading
- to lower production of key food items.
+ There is weak evidence that chronic poor households are slightly larger,
+ as are households that escaped poverty.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -9954,19 +9950,19 @@ In the right panel (2) we do the same for child dependency ratios.
  For each household we calculate the share of children under the age of
  15 within the total household and use this to plot boxplots by poverty
  dynamics category.
- Comparing the two panels, we do not see a clear pattern in (1).
- While large households seem to be more likely to be chronic poor, they
- are also more likely to escape poverty.
- At the same time, the category of households that fall into poverty has
- the lowest median household size.
- If we look at the number of children as a percentage of total household
- size, we find that higher child dependency is associated with chronic poverty,
+ We find that higher child dependency is associated with chronic poverty,
  while the non-poor have the lowest median child dependency ratio.
- Despite the relatively low household size, it now seems that the households
- that slide below the poverty threshold have a surprisingly high dependency
- ratio.
+ Looking at both of the charts together, the chronic poor have large households
+ and high dependency rations.
+ Those that are never poor have small households and low dependency rations.
+ Households that slide below the poverty threshold and those that are vulnerable
+ have a surprisingly high dependency ratio given the relatively smaller
+ households.
  These may be households where one of the parents has died, or has left
  the households.
+ Large households with a hight dependency ratio also escape poverty.
+ These may be households that start to benefit from the additional cheap
+ labour provided by children.
  
 \end_layout
 
@@ -10032,8 +10028,8 @@ reference "tab:Marital-status"
 ).
  This allows us to judge the fraction of the total in each type of marriage
  accounted for by each of our poverty transition groups.
- Thus, although the chronic poor account for only about 7 percent of the
- population, they account for almost 10 percent of individuals living in
+ Thus, although the chronic poor account for only about 12.3 percent of the
+ population, they account for almost 20 percent of individuals living in
  households where the head has never been married.
  However, at the same time households where the head is never married are
  clearly more likely to be non-poor, as are households where the head has
@@ -10043,12 +10039,11 @@ reference "tab:Marital-status"
  In addition, households headed by widows appear to have a hard time keeping
  consumption smooth, as is evident by the large proportion classified as
  vulnerable.
- Households where the head is never married are clearly more likely to be
- non-poor.
  Divorced household heads have been more successful in moving out of poverty,
- and they are also more likely to be non-poor.
- Polygamously married households have been disproportionately sliding into
- poverty and are also slightly more likely to be chronic poor.
+ and are underrepresented in the group of chronic poor households.
+ Polygamously married households have been less successful in escaping poverty.
+ Just as widowed household heads, they seem to have a hard time keeping
+ consumption smooth between the different years.
 \end_layout
 
 \begin_layout Standard
@@ -10241,7 +10236,7 @@ married monogamously
 \uwave off
 \noun off
 \color none
-0.479
+0.367
 \end_layout
 
 \end_inset
@@ -10262,7 +10257,7 @@ married monogamously
 \uwave off
 \noun off
 \color none
-0.134
+0.192
 \end_layout
 
 \end_inset
@@ -10283,7 +10278,7 @@ married monogamously
 \uwave off
 \noun off
 \color none
-0.219
+0.230
 \end_layout
 
 \end_inset
@@ -10304,7 +10299,7 @@ married monogamously
 \uwave off
 \noun off
 \color none
-0.107
+0.086
 \end_layout
 
 \end_inset
@@ -10325,7 +10320,7 @@ married monogamously
 \uwave off
 \noun off
 \color none
-0.061
+0.125
 \end_layout
 
 \end_inset
@@ -10369,7 +10364,7 @@ married polygamously
 \uwave off
 \noun off
 \color none
-0.497
+0.348
 \end_layout
 
 \end_inset
@@ -10390,7 +10385,7 @@ married polygamously
 \uwave off
 \noun off
 \color none
-0.109
+0.152
 \end_layout
 
 \end_inset
@@ -10411,7 +10406,7 @@ married polygamously
 \uwave off
 \noun off
 \color none
-0.202
+0.299
 \end_layout
 
 \end_inset
@@ -10432,7 +10427,7 @@ married polygamously
 \uwave off
 \noun off
 \color none
-0.113
+0.081
 \end_layout
 
 \end_inset
@@ -10453,7 +10448,7 @@ married polygamously
 \uwave off
 \noun off
 \color none
-0.080
+0.119
 \end_layout
 
 \end_inset
@@ -10497,7 +10492,7 @@ divorced
 \uwave off
 \noun off
 \color none
-0.531
+0.420
 \end_layout
 
 \end_inset
@@ -10518,7 +10513,7 @@ divorced
 \uwave off
 \noun off
 \color none
-0.176
+0.238
 \end_layout
 
 \end_inset
@@ -10539,7 +10534,7 @@ divorced
 \uwave off
 \noun off
 \color none
-0.183
+0.169
 \end_layout
 
 \end_inset
@@ -10560,7 +10555,7 @@ divorced
 \uwave off
 \noun off
 \color none
-0.075
+0.077
 \end_layout
 
 \end_inset
@@ -10581,7 +10576,7 @@ divorced
 \uwave off
 \noun off
 \color none
-0.035
+0.096
 \end_layout
 
 \end_inset
@@ -10625,7 +10620,7 @@ widowed
 \uwave off
 \noun off
 \color none
-0.416
+0.272
 \end_layout
 
 \end_inset
@@ -10646,7 +10641,7 @@ widowed
 \uwave off
 \noun off
 \color none
-0.153
+0.246
 \end_layout
 
 \end_inset
@@ -10667,7 +10662,7 @@ widowed
 \uwave off
 \noun off
 \color none
-0.280
+0.293
 \end_layout
 
 \end_inset
@@ -10688,7 +10683,7 @@ widowed
 \uwave off
 \noun off
 \color none
-0.090
+0.071
 \end_layout
 
 \end_inset
@@ -10709,7 +10704,7 @@ widowed
 \uwave off
 \noun off
 \color none
-0.062
+0.118
 \end_layout
 
 \end_inset
@@ -10753,7 +10748,7 @@ never married
 \uwave off
 \noun off
 \color none
-0.552
+0.517
 \end_layout
 
 \end_inset
@@ -10774,7 +10769,7 @@ never married
 \uwave off
 \noun off
 \color none
-0.170
+0.125
 \end_layout
 
 \end_inset
@@ -10795,7 +10790,7 @@ never married
 \uwave off
 \noun off
 \color none
-0.128
+0.139
 \end_layout
 
 \end_inset
@@ -10816,7 +10811,7 @@ never married
 \uwave off
 \noun off
 \color none
-0.043
+0.029
 \end_layout
 
 \end_inset
@@ -10837,7 +10832,7 @@ never married
 \uwave off
 \noun off
 \color none
-0.107
+0.190
 \end_layout
 
 \end_inset
@@ -10925,7 +10920,7 @@ all
 \uwave off
 \noun off
 \color none
-0.481
+0.358
 \end_layout
 
 \end_inset
@@ -10946,7 +10941,7 @@ all
 \uwave off
 \noun off
 \color none
-0.133
+0.190
 \end_layout
 
 \end_inset
@@ -10967,7 +10962,7 @@ all
 \uwave off
 \noun off
 \color none
-0.217
+0.247
 \end_layout
 
 \end_inset
@@ -10988,7 +10983,7 @@ all
 \uwave off
 \noun off
 \color none
-0.101
+0.082
 \end_layout
 
 \end_inset
@@ -11009,7 +11004,7 @@ all
 \uwave off
 \noun off
 \color none
-0.069
+0.123
 \end_layout
 
 \end_inset
@@ -11041,19 +11036,20 @@ reference "tab:activities"
 
  looks at what households report to be their major source of earnings at
  the beginning of the panel.
- While in general 48.1 percent of Ugandans fall in the non-poor category,
- only 39 percent of the Ugandan subsistence farmers reported to be non-poor.
+ While in general 35.8 percent of Ugandans fall in the non-poor category,
+ only 25.7 percent of the Ugandan subsistence farmers is in the non-poor
+ sub-group.
  It seems the group of vulnerable households is disproportionately represented
  within the group of subsistence farmers.
  Subsistence farming is indeed a very risky activity and subsistence farmers
  have little assets to insure against adverse shocks such as bad weather
  outcomes or disease.
  Individuals that are living in households that report to be engaged in
- commercial farming appear to be non-poor.
+ commercial farming appear to be more likely to be non-poor.
  Wage employment also seems to be an activity that is prevalent among the
  non-poor.
- But among the wage employed, there is also a slight over-representation
- of vulnerable people.
+ But among the wage employed, there is also an over-representation in the
+ group of people that have fallen into poverty.
 \end_layout
 
 \begin_layout Standard
@@ -11246,7 +11242,7 @@ subsistence farming
 \uwave off
 \noun off
 \color none
-0.391
+0.257
 \end_layout
 
 \end_inset
@@ -11267,7 +11263,7 @@ subsistence farming
 \uwave off
 \noun off
 \color none
-0.153
+0.211
 \end_layout
 
 \end_inset
@@ -11288,7 +11284,7 @@ subsistence farming
 \uwave off
 \noun off
 \color none
-0.261
+0.293
 \end_layout
 
 \end_inset
@@ -11309,7 +11305,7 @@ subsistence farming
 \uwave off
 \noun off
 \color none
-0.118
+0.089
 \end_layout
 
 \end_inset
@@ -11330,7 +11326,7 @@ subsistence farming
 \uwave off
 \noun off
 \color none
-0.076
+0.150
 \end_layout
 
 \end_inset
@@ -11374,7 +11370,7 @@ commercial farming
 \uwave off
 \noun off
 \color none
-0.750
+0.563
 \end_layout
 
 \end_inset
@@ -11395,7 +11391,7 @@ commercial farming
 \uwave off
 \noun off
 \color none
-0.105
+0.160
 \end_layout
 
 \end_inset
@@ -11416,7 +11412,7 @@ commercial farming
 \uwave off
 \noun off
 \color none
-0.126
+0.258
 \end_layout
 
 \end_inset
@@ -11437,7 +11433,7 @@ commercial farming
 \uwave off
 \noun off
 \color none
-0.020
+0.019
 \end_layout
 
 \end_inset
@@ -11502,7 +11498,7 @@ wage employment
 \uwave off
 \noun off
 \color none
-0.589
+0.513
 \end_layout
 
 \end_inset
@@ -11523,7 +11519,7 @@ wage employment
 \uwave off
 \noun off
 \color none
-0.105
+0.145
 \end_layout
 
 \end_inset
@@ -11544,7 +11540,7 @@ wage employment
 \uwave off
 \noun off
 \color none
-0.133
+0.152
 \end_layout
 
 \end_inset
@@ -11565,7 +11561,7 @@ wage employment
 \uwave off
 \noun off
 \color none
-0.120
+0.094
 \end_layout
 
 \end_inset
@@ -11586,7 +11582,7 @@ wage employment
 \uwave off
 \noun off
 \color none
-0.053
+0.097
 \end_layout
 
 \end_inset
@@ -11630,7 +11626,70 @@ non agricultural enterprises
 \uwave off
 \noun off
 \color none
-0.653
+0.535
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.159
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.160
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.060
 \end_layout
 
 \end_inset
@@ -11652,69 +11711,6 @@ non agricultural enterprises
 \noun off
 \color none
 0.086
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
-0.154
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
-0.056
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
-0.051
 \end_layout
 
 \end_inset
@@ -11758,28 +11754,7 @@ property income
 \uwave off
 \noun off
 \color none
-0.965
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
-0.000
+0.865
 \end_layout
 
 \end_inset
@@ -11821,7 +11796,28 @@ property income
 \uwave off
 \noun off
 \color none
-0.000
+0.037
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.064
 \end_layout
 
 \end_inset
@@ -11886,7 +11882,7 @@ transfers
 \uwave off
 \noun off
 \color none
-0.671
+0.555
 \end_layout
 
 \end_inset
@@ -11907,7 +11903,7 @@ transfers
 \uwave off
 \noun off
 \color none
-0.143
+0.207
 \end_layout
 
 \end_inset
@@ -11928,7 +11924,7 @@ transfers
 \uwave off
 \noun off
 \color none
-0.114
+0.168
 \end_layout
 
 \end_inset
@@ -11949,7 +11945,7 @@ transfers
 \uwave off
 \noun off
 \color none
-0.056
+0.048
 \end_layout
 
 \end_inset
@@ -11970,7 +11966,7 @@ transfers
 \uwave off
 \noun off
 \color none
-0.016
+0.021
 \end_layout
 
 \end_inset
@@ -12035,7 +12031,7 @@ organizational support
 \uwave off
 \noun off
 \color none
-0.000
+0.132
 \end_layout
 
 \end_inset
@@ -12056,7 +12052,7 @@ organizational support
 \uwave off
 \noun off
 \color none
-0.128
+0.290
 \end_layout
 
 \end_inset
@@ -12077,7 +12073,7 @@ organizational support
 \uwave off
 \noun off
 \color none
-0.219
+0.057
 \end_layout
 
 \end_inset
@@ -12098,7 +12094,7 @@ organizational support
 \uwave off
 \noun off
 \color none
-0.481
+0.349
 \end_layout
 
 \end_inset
@@ -12198,7 +12194,7 @@ all
 \uwave off
 \noun off
 \color none
-0.481
+0.358
 \end_layout
 
 \end_inset
@@ -12219,7 +12215,7 @@ all
 \uwave off
 \noun off
 \color none
-0.133
+0.190
 \end_layout
 
 \end_inset
@@ -12240,7 +12236,7 @@ all
 \uwave off
 \noun off
 \color none
-0.217
+0.247
 \end_layout
 
 \end_inset
@@ -12261,7 +12257,7 @@ all
 \uwave off
 \noun off
 \color none
-0.101
+0.082
 \end_layout
 
 \end_inset
@@ -12282,7 +12278,7 @@ all
 \uwave off
 \noun off
 \color none
-0.069
+0.123
 \end_layout
 
 \end_inset
@@ -12305,15 +12301,17 @@ Ugandans engaged in non-agricultural enterprises are also likely to fall
  into the non-poor category.
  The most clear results are for those who mention their main source of income
  is property, virtually all are non-poor.
- People that depend on transfers are also non-poor, or are escaping poverty
- over the next four years.
+ People that depend on transfers are also non-poor.
+ Transfers are likely to correlate with social capital, hence the lower
+ probability that households fall into the vulnerable group or in the group
+ that falls into poverty.
  Finally, there was a significant group of people that reported to be depending
  on hand-outs.
  As expected, these are especially the chronic poor or individuals that
- fall into poverty.
- It is, however, also interesting to note that there are some households
- that report organizational support as their main source of income while
- they are never poor in the 4 wave panel.
+ are vulnerable.
+ It is, however, also interesting to note that 17.2 percent of the individuals
+ that report organizational support as their main source of income are never
+ poor in the 4 wave panel.
 \end_layout
 
 \begin_layout Subsubsection*
