@@ -94,21 +94,20 @@ iar.org
 \end_layout
 
 \begin_layout Abstract
-Official poverty figures in Uganda, and especially the evolution of these
- figures over time, has created some controversy.
- In the paper, we tackle two issues that potentially threaten the validity
- of official poverty figures in Uganda.
- First, we estimate a new set of poverty lines that accounts for the widely
- divergent diets throughout the country.
- Second, using this new set of poverty lines, we look at poverty dynamics
- using four waves of the Uganda National Panel Survey, making sure our welfare
- indicator is defined consistently over time.
- We then classify households into categories depending on their change in
- poverty status over time and relate this to characteristics that are likely
- to change only slowly.
- This enables us to explore what characteristics are associated to, for
- instance, households that grow out of poverty and what characteristics
- are related to households that appear to be trapped in poverty.
+Official poverty figures in Uganda are flawed by the fact that the underlying
+ poverty lines are based on a single national food basket that was constructed
+ in the early nineties.
+ In this paper, we estimate a new set of poverty lines that accounts for
+ the widely divergent diets throughout the country using the latest available
+ household survey.
+ Using these updated poverty lines, we then look at poverty dynamics using
+ four waves of the Uganda National Panel Survey.
+ We classify households into categories depending on their change in poverty
+ status over time and relate this to characteristics that are likely to
+ change only slowly.
+ This enables us to explore the characteristics of households that, for
+ instance, grow out of poverty and how they differ from households that
+ appear to be trapped in poverty.
 \end_layout
 
 \begin_layout Description
@@ -124,18 +123,34 @@ Introduction
 \end_layout
 
 \begin_layout Standard
-During the past few decades, Uganda has seen substantial economic growth.
+During the past few decades, Uganda has experienced substantial economic
+ growth.
  Since 1986, when the National Resistance Movement (NRM) took over government,
- real GDP has grown at an annual rate of 6.8, making it one of the fastest
- growing economies in Africa.
+ real GDP has grown at an annual rate of 6.8 percent, making it one of the
+ fastest growing economies in Africa.
  This growth has been attributed to the new government that has implemented
  a far-reaching economic reforms agenda, transforming Uganda into one of
  the most liberal economies in Sub-Saharan Africa.
- With the liberalization of the exchange and trade regime, the abolition
+ Indeed, as argued in 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "WB193"
+
+\end_inset
+
+, 
+\begin_inset Quotes eld
+\end_inset
+
+with the liberalization of the exchange and trade regime, the abolition
  of the Industrial Licensing Act, the promulgation of a new investment code,
  and the gradual liberalization of agricultural pricing and marketing, the
  government has put in place some of what is thought to be the essential
- pre-conditions for sustainable economic growth.
+ pre-conditions for sustainable economic growth
+\begin_inset Quotes erd
+\end_inset
+
+.
  
 \end_layout
 
@@ -152,12 +167,15 @@ status collapsed
 For the most recent official estimate, we take the poverty estimate based
  on the 2012/13 Uganda National Household Survey (UNHS).
  The data on which these estimates are based were obtained from the Uganda
- Bureau of Statistics (UBOS).
- The dataset came with a welfare aggregate based on consumption expenditure
+ Bureau of Statistics (UBOS) in August 2014.
+ As is mostly the case with UNHS data obtained from UBOS, the dataset came
+ with a pre-compiled welfare aggregate based on consumption expenditure
  and a set of official poverty lines.
- Using these, we estimate national headcount poverty to be 19.5 percent.
- Official poverty estimates at the time of the UNHS 2012/13 dissemination
- and reported in the press are slightly higher (22.1 percent).
+ Using the same methods we used to replicate official poverty figures in
+ previous rounds of the UNHS, we estimate national headcount poverty to
+ be 19.5 percent in the UNHS 2012/13.
+ This is slightly lower than official poverty estimates at the time of the
+ UNHS 2012/13 dissemination and reported in the press (22.1 percent).
  
 \end_layout
 
@@ -166,68 +184,48 @@ For the most recent official estimate, we take the poverty estimate based
 .
  But despite these successes at the aggregate level, researchers warn that
  this growth has not been shared equally by the population at large.
- Marked spatial heterogeneity in baseline poverty and subsequent poverty
- reductions mean differences in the standard of living between locations
+ For instance, marked spatial heterogeneity in baseline poverty and subsequent
+ poverty reductions mean differences in the standard of living between locations
  are often much higher now than what they used to be.
  
 \end_layout
 
 \begin_layout Standard
-Recently, concern has been raised about the validity of the reported figures.
+Apart from the observed heterogeneity in terms of poverty and poverty reduction,
+ the figures itself have been called into question as well.
  Some argue that the lack of progress on assets accumulation and non-monetary
  well-being proxies suggest much more modest poverty reductions, raising
  suspicion about the poverty lines and the welfare indicator used by the
  government of Uganda 
 \begin_inset CommandInset citation
 LatexCommand citep
-key "New10"
+key "New10,New4"
 
 \end_inset
 
 .
  Some scholars have also been questioning the spatial pattern of poverty
- as reported in official documents.
- This is a technical artifact of the fact that Uganda has been using the
- same Cost of Basic Needs (CBN) basket for over two decades now, with a
- food component that is the same for the entire Ugandan population.
- However, it is well known that Uganda has an unusually large regional variation
- in diets within the country, with no less than six major food staples being
- eaten 
+ as reported in official documents, arguing that a single national food
+ poverty line is likely overstate poverty in some areas, while underestimating
+ poverty in others 
 \begin_inset CommandInset citation
 LatexCommand citep
-key "RePEc:oup:jafrec:v:12:y:2003:i:4:p:598-624"
+key "RePEc:oup:jafrec:v:12:y:2003:i:4:p:598-624,New1"
 
 \end_inset
 
 .
- For instance, matooke, or cooking bananas, is mainly eaten in the West,
- and to a lesser extent in Central region.
- Households living in the dryer North, however, obtain a substantial share
- of their calories through sorghum and sesame.
- These diets are not only determined by custom, they are also related to
- the agro-geological characteristics.
- The dryer North is more suited for cassava than matooke, and the low value
- to weight ratio typical of staple foods essentially renders them de-facto
- non-tradables.
- If these different diets result in different costs to obtain basic needs,
- this should be accommodated in the poverty measures.
+ 
 \end_layout
 
 \begin_layout Standard
 In this paper, we want to update existing knowledge about the state of poverty
- in Uganda, while addressing at the same time two potential problems with
- the official figures that have been identified in recent studies.
- First, to account for differences in consumption patterns, we will construct
- different poverty thresholds in different spatial domains (eg.
- in different regions), following the method developed by 
-\begin_inset CommandInset citation
-LatexCommand citet
-key "RePEc:ucp:ecdecc:v:58:y:2010:i:3:p:449-474"
-
-\end_inset
-
- to estimate utility consistent poverty lines using the latest available
- nationally representative household survey (UNHS2012/13).
+ and its dynamics in Uganda, while at the same time addressing some of the
+ problems with the official figures that have been identified in recent
+ studies.
+ To account for differences in diets in different locations, we will construct
+ different poverty thresholds for different spatial domains using the latest
+ available nationally representative household survey (UNHS2012/13).
  For each spatial domain, we construct a food basket that produces a certain
  minimum of calories that reflects the diets of the poorest households in
  that region.
@@ -240,25 +238,33 @@ key "RePEc:ucp:ecdecc:v:58:y:2010:i:3:p:449-474"
  always be cheaper than a bundle from any other region valued at prices
  of region A.
  If a bundle does not satisfy these revealed preference conditions, we use
- an information theoretic approach to adjust the bundles until they do.
- Second, we will use the Uganda National Panel Survey (UNPS) to assure consisten
-cy in the calculation of the welfare indicator.
- The UNPS is a yearly panel survey collected by the Uganda Bureau of Statistics
- (UBOS) supported by the World Bank's Living Standard Measurement Study
- (LSMS) project that tracks about 3000 households.
+ an information theoretic approach to adjust the bundles until they do,
+ as outlined in 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "RePEc:ucp:ecdecc:v:58:y:2010:i:3:p:449-474"
+
+\end_inset
+
+.
+ 
 \end_layout
 
 \begin_layout Standard
-While comparing poverty estimates using these new poverty lines and a consistent
- underlying wellbeing indicator to the official estimates is interesting
- in its own right, we can also use the panel nature of the data to look
- at poverty dynamics.
- For instance, we can study how many households are chronically poor and
- investigate how their characteristics differ from other groups, such as
- households that successfully grew out of poverty.
+While comparing poverty estimates using these new poverty lines to the official
+ estimates is interesting in its own right, we will use the utility consistent
+ poverty lines to look at poverty dynamics using the recently released Uganda
+ National Panel Survey (UNPS).
+ The UNPS is a yearly panel survey collected by the Uganda Bureau of Statistics
+ (UBOS) supported by the World Bank's Living Standard Measurement Study
+ (LSMS) project that tracks about 3000 households.
+ We can use the panel nature of this survey to study how many households
+ are chronically poor (defined as always falling below the poverty threshold)
+ and investigate how their characteristics differ from other groups, such
+ as households that successfully escaped poverty.
  In other words, we will construct a detailed poverty profile that takes
  dynamic aspects into account, defining groups based on poverty transitions
- instead of on a simple dichotomous poor/non-poor status 
+ instead of a simple dichotomous poor/non-poor status 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "Boateng01031992"
@@ -266,9 +272,16 @@ key "Boateng01031992"
 \end_inset
 
 .
- For the characteristics we contrast within each group, we confine ourselves
- to characteristics that change only slowly over time, and we look at the
- initial conditions at the start of the panel.
+ As for the characteristics we contrast within each group, we confine ourselves
+ to those that change only slowly over time, and we look at the 
+\begin_inset Quotes eld
+\end_inset
+
+initial conditions
+\begin_inset Quotes erd
+\end_inset
+
+ at the start of the panel.
  We hope that this can enlighten us on the pre-conditions that need to be
  in place to be in a particular poverty dynamics group
 \begin_inset Foot
@@ -276,8 +289,9 @@ status collapsed
 
 \begin_layout Plain Layout
 For example, we could check if households that are always below the poverty
- line are different in terms of their ability to cope with adverse shocks
- than those that grow out of poverty over the course of the panel.
+ line we different in terms of their reported ability to cope with adverse
+ shocks at the start of the panel than those that grow out of poverty over
+ the course of the panel.
 \end_layout
 
 \end_inset
@@ -292,11 +306,11 @@ The remainder of this paper is structured as follows.
  the present official poverty estimates in Uganda.
  We also present some studies that point to shortcomings in official poverty
  measurement.
- In section 3, we briefly explain the reasoning behind the use of regional
- poverty lines and the role of revealed preferences to test for utility
- consistency.
- Section 4 presents our poverty estimates and compares them to poverty figures
- found in other studies.
+ In section 3, we briefly explain the reasoning behind the use of spatially
+ disaggregated poverty lines and the role of revealed preferences to test
+ for utility consistency.
+ Section 4 presents the construction of the new set of poverty lines and
+ our poverty estimates based on the UNHS2012/13.
  Section 5 then looks at poverty dynamics and relates households with differing
  poverty dynamics to a selection of characteristics.
  A final section concludes.
@@ -308,8 +322,8 @@ Poverty in Uganda - Trends and Controversies
 \end_layout
 
 \begin_layout Standard
-In the nineties, poverty decreased substantially, falling by almost 40 percent
- at the national level in Uganda.
+During the nineties, poverty in Uganda decreased substantially, falling
+ by almost 40 percent at the national level.
  Table 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -326,7 +340,7 @@ key "RePEc:oup:jafrec:v:12:y:2003:i:4:p:598-624"
 
 , presents official headcount poverty rates before the year 2000
 \begin_inset Foot
-status collapsed
+status open
 
 \begin_layout Plain Layout
 There is a substantial literature on poverty and its dynamics in the 1990s.
@@ -368,7 +382,7 @@ key "DPR:DPR220"
 \end_inset
 
 .
- What is also puzzling is the sudden drop between 1997/08 and 1999/00.
+ What is also puzzling is the sudden drop between 1997/98 and 1999/00.
  While it took 5 years for poverty to decrease by 20 percent between 1992
  and 1997, it took only 2 years to decrease another 20 percent at the turn
  of the century.
@@ -1139,19 +1153,22 @@ key "RePEc:oup:jafrec:v:12:y:2003:i:4:p:598-624"
 \begin_layout Standard
 One controversy which we will also address in this paper refers to the fact
  that the official poverty estimates are based on poverty lines that are
- rooted in a single food consumption bundle, derived from 1993/1994 data.
- In particular, the food basket was identified with 28 of the most frequently
- consumed food items by households with less than the median income.
- These food items were then converted into their caloric equivalent and
- scaled to generate 3,000 calories per adult equivalent per day using as
- reference the WHO estimates for an 18‐30 year old male.
+ rooted in a single food consumption bundle, derived from 1993/1994 Monitoring
+ Survey data.
+ In particular, a single food basket was identified at the national level
+ with 28 of the most frequently consumed food items by households with less
+ than the median income.
+ The items in this food basket were then converted into caloric equivalents
+ and scaled to generate 3,000 calories per adult equivalent per day using
+ the WHO estimates for an 18‐30 year old male as a reference.
  Next, a non-food allowance was added.
  Non‐food requirements were estimated as the average non‐food expenditure
- of those households whose total expenditure is just equal to the food poverty
+ of those households whose total expenditure was around the food poverty
  line.
  The non-food allowance does allow for spatial heterogeneity, as separate
- averages are calculated for urban/rural location interacted with the four
- regions (Central, East, North,West), using the method described in 
+ averages were calculated for urban/rural locations interacted with the
+ four regions (Central, East, North, West), using the method described in
+ 
 \begin_inset CommandInset citation
 LatexCommand citet
 key "RePEc:oup:wbecrv:v:8:y:1994:i:1:p:75-102"
@@ -1159,8 +1176,8 @@ key "RePEc:oup:wbecrv:v:8:y:1994:i:1:p:75-102"
 \end_inset
 
 .
- As far as we know, these poverty lines have since just been updated by
- the official inflation figures.
+ As far as we know, these poverty lines have since been updated by the official
+ inflation figures each time a new household survey came out.
 \end_layout
 
 \begin_layout Standard
@@ -1177,8 +1194,10 @@ key "New1"
 
 \end_inset
 
- argue that Uganda is unusual in that different regions have very different
- diets.
+ argue that Uganda is unusual in its dietary diversity.
+ Indeed, Uganda has five different staples, matooke, maize, sweet potatoes,
+ cassava, and millet that are more or less important within the diet depending
+ on the region.
  This may not matter very much if the diets are equally cost effective in
  obtaining the same level of basic needs as defined in kilo-calories.
  However, the staple food of choice of a large part of the population, both
@@ -1194,8 +1213,15 @@ Matooke is a variety of starchy banana, commonly referred to as cooking
 \end_inset
 
 .
- Matooke appears to be a very expensive source of calories, compared to
- what people in for instance the North consume.
+ 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "RePEc:oup:jafrec:v:12:y:2003:i:4:p:598-624"
+
+\end_inset
+
+ calculates that, in least in 1993-1994, Matooke appears to be a very expensive
+ source of calories, compared to what people in for instance the North consume.
  When 
 \begin_inset CommandInset citation
 LatexCommand citet
@@ -1221,13 +1247,13 @@ key "RePEc:oup:jafrec:v:12:y:2003:i:4:p:598-624"
 \end_inset
 
  comes to the conclusion that the Western region even overtakes the North
- as the poorest region using 1993 data.
+ as the poorest region.
  
 \end_layout
 
 \begin_layout Standard
-Progress reported by the government of Uganda and the Uganda Bureau of Statistic
-s in the first decade of the new millennium is equally impressive.
+Progress in fighting poverty reported by the government of Uganda and UBOS
+ in the first decade of the new millennium is equally impressive.
  Table 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -1238,15 +1264,35 @@ reference "tab:Official-poverty-headcount00s"
  shows that poverty at the national level kept falling during the first
  decade, shaving another 50 percent off of headcount poverty.
  At the same time, differential progress in poverty reduction in different
- regions persists in the first decade of the new millennium.
+ regions persists, too.
  For instance, by 2012/13, poverty is more than eight times higher in the
  Northern region than in the Central region.
  In 2002/03, the North was only 2.7 times poorer than the Central Region.
- The more disaggregate the numbers, the starker the contrasts become.
- In the North East, a semi-arid area with low rainfall inhabited by the
+ The more disaggregated the numbers, the starker the contrasts become.
+ In the North-East, a semi-arid area with low rainfall inhabited by the
  Karamajong, an agro-pastoralist ethnic group, poverty remains stubbornly
  high, while in the Central and Western parts of the country, poverty is
- almost eradicated.
+ almost eradicated
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+Sub-region of North-East includes the districts of Kotido, Moroto, Nakapiripirit
+i, Katwaki, Amuria, Soroti, Kumi and Kaberamaido; Mid-Northern included
+ Gulu, Kitgum, Pader, Apac, and Lira; West Nile includes Moyo, Adjumani,
+ Yumbe, Arua, Koboko, and Nebbi; Mid-Western includes Masindi, Hoima, Kibaale,
+ Bundibugyo, Kabarole, Kasese, Kyenjojo and Kamwenge; South Western includes
+ Bushenyi, Rukungiri, Kanungu, Kabale, Kisoro, Mbarara, and Ntungamo; Eastern
+ includes Kapchorwa, Mbale, Tororo, Sironko, Paliisa, and Busia; Central
+ 1 includes Kalangala, Masaka, Mpigi, Rakai, Sembabule and Wakiso; Central
+ 2 includes Kayunga, Kiboga, Luwero, Mubende, Mukono and Nakasongola; East
+ Central includes Jinja, Iganga, Kamuli, Bugiri and Mayuge.
+ 
+\end_layout
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -1925,7 +1971,7 @@ Kampala
 \uwave off
 \noun off
 \color none
-Central1
+Central 1
 \end_layout
 
 \end_inset
@@ -1984,7 +2030,7 @@ Central1
 \uwave off
 \noun off
 \color none
-Central2
+Central 2
 \end_layout
 
 \end_inset
@@ -2478,7 +2524,7 @@ key "New10"
  mapping and small area estimation to look at poverty trends across Uganda
  from 1995 to 2010.
  They use the 2005/06 UNHS survey to estimate regressions that correlate
- poverty to a series of household characteristics that also appear in the
+ poverty to a range of household characteristics that also appear in the
  DHS (four such surveys have been carried out between 1995 and 2009/10).
  They then use the DHS surveys to predict poverty in each of the DHS survey
  years.
@@ -2499,7 +2545,7 @@ key "New3"
 
 \end_inset
 
- calls official reported poverty changes 
+ calls officially reported poverty changes 
 \begin_inset Quotes eld
 \end_inset
 
@@ -2521,8 +2567,7 @@ key "New4"
  Uganda to other African countries on six non-monetary poverty indicators,
  such as literacy rates and access to piped water.
  This admittedly partial analysis also points to a much higher incidence
- of poverty, and raises questions about whether the poverty line has been
- increasing sufficiently to account for changes in the cost of living.
+ of poverty than officially reported.
 \end_layout
 
 \begin_layout Section*
@@ -2530,9 +2575,9 @@ Utility Consistent Poverty Lines using Revealed Preferences
 \end_layout
 
 \begin_layout Standard
-One of the main weaknesses of the official poverty measures is the fact
- that it is based on a poverty line that is constructed using a single food
- commodity bundle for the entire country.
+From the above, we learn that one of the main weaknesses of the official
+ poverty measures is the fact that it is based on a poverty line that is
+ constructed using a single food commodity bundle for the entire country.
  In addition, this food basket was constructed in 1993 and has not been
  updated since, apart for simple inflation by the consumption price index.
  However, it is well known that in many instances - for example, if relative
@@ -12332,10 +12377,12 @@ reference "fig:Time-to-fetch"
  hours.
  We find that in general, the non-poor need to spend less time fetching
  water, except maybe for some non-poor that spend about 2 hours.
- While the median is the same for both the chronic poor and the non-poor
- (60 minutes), the mean is 67 minutes for the non-poor and 73 for the poor.
+ The median for the non-poor is about 50 minutes, as opposed to about 60
+ minutes for the chronic poor.
+ The respective means are 63 minutes for the non-poor and 77 for the poor.
  This is also illustrated by the fact that the chronic poor have higher
- densities at the extreme right of the distribution.
+ densities at the extreme right of the distribution, for instance around
+ 4 hours or 240 minutes.
  The vulnerable have a high density around 2 hours.
 \end_layout
 
@@ -12394,20 +12441,18 @@ We next turn to education.
  household head.
  We see that 17.6 percent of all Ugandan household heads have never attended
  school.
- However, within the group of households that are chronic poor, more than
- 41 of the household heads reports never to have attended schooling.
- The majority of Ugandan households is headed by someone who finished primary
- education.
- Such households are distributed somewhat evenly over the five poverty transitio
-n groups.
- We note that primary education seems insufficient to be non-poor.
- From post primary training, things start to look different.
- The proportion of household heads reporting post primary training is about
- twice the national proportion amongst the non-poor.
- About 17.7 percent report secondary education as highest education level.
- These households are likely to be non-poor, and are unlikely to be chronic
- poor.
- There are some higher educated household heads, who are also mostly non-poor.
+ However, within the group of individuals in households that have always
+ been poor, the share or households that are headed by someone without formal
+ education is 37 percent.
+ On the other hand, the share of household with heads without schooling
+ in the sub-group of the non-poor is only 7.8 percent.
+ In the second row, we see that the majority of household heads have finished
+ primary eduction.
+ Primary education also seems insufficient to keep the household permanently
+ out of poverty.
+ Everything above primary education leads to a higher than average chance
+ to be in the non-poor class.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -12620,7 +12665,7 @@ no schooling
 \uwave off
 \noun off
 \color none
-0.093
+0.078
 \end_layout
 
 \end_inset
@@ -12641,7 +12686,7 @@ no schooling
 \uwave off
 \noun off
 \color none
-0.234
+0.190
 \end_layout
 
 \end_inset
@@ -12662,7 +12707,7 @@ no schooling
 \uwave off
 \noun off
 \color none
-0.242
+0.227
 \end_layout
 
 \end_inset
@@ -12683,7 +12728,7 @@ no schooling
 \uwave off
 \noun off
 \color none
-0.209
+0.142
 \end_layout
 
 \end_inset
@@ -12704,7 +12749,7 @@ no schooling
 \uwave off
 \noun off
 \color none
-0.411
+0.366
 \end_layout
 
 \end_inset
@@ -12766,7 +12811,7 @@ primary
 \uwave off
 \noun off
 \color none
-0.492
+0.425
 \end_layout
 
 \end_inset
@@ -12787,7 +12832,7 @@ primary
 \uwave off
 \noun off
 \color none
-0.647
+0.648
 \end_layout
 
 \end_inset
@@ -12808,7 +12853,7 @@ primary
 \uwave off
 \noun off
 \color none
-0.610
+0.627
 \end_layout
 
 \end_inset
@@ -12829,7 +12874,7 @@ primary
 \uwave off
 \noun off
 \color none
-0.607
+0.642
 \end_layout
 
 \end_inset
@@ -12850,7 +12895,7 @@ primary
 \uwave off
 \noun off
 \color none
-0.544
+0.583
 \end_layout
 
 \end_inset
@@ -12912,7 +12957,7 @@ post primary training/certificate
 \uwave off
 \noun off
 \color none
-0.074
+0.085
 \end_layout
 
 \end_inset
@@ -12933,7 +12978,7 @@ post primary training/certificate
 \uwave off
 \noun off
 \color none
-0.021
+0.026
 \end_layout
 
 \end_inset
@@ -12975,7 +13020,7 @@ post primary training/certificate
 \uwave off
 \noun off
 \color none
-0.012
+0.032
 \end_layout
 
 \end_inset
@@ -12996,7 +13041,7 @@ post primary training/certificate
 \uwave off
 \noun off
 \color none
-0.005
+0.010
 \end_layout
 
 \end_inset
@@ -13058,28 +13103,7 @@ secondary
 \uwave off
 \noun off
 \color none
-0.253
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
-0.086
+0.297
 \end_layout
 
 \end_inset
@@ -13121,7 +13145,7 @@ secondary
 \uwave off
 \noun off
 \color none
-0.153
+0.114
 \end_layout
 
 \end_inset
@@ -13142,7 +13166,28 @@ secondary
 \uwave off
 \noun off
 \color none
-0.040
+0.175
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.041
 \end_layout
 
 \end_inset
@@ -13204,7 +13249,7 @@ post secondary training/certificate
 \uwave off
 \noun off
 \color none
-0.066
+0.086
 \end_layout
 
 \end_inset
@@ -13225,7 +13270,7 @@ post secondary training/certificate
 \uwave off
 \noun off
 \color none
-0.011
+0.016
 \end_layout
 
 \end_inset
@@ -13246,7 +13291,7 @@ post secondary training/certificate
 \uwave off
 \noun off
 \color none
-0.005
+0.006
 \end_layout
 
 \end_inset
@@ -13267,7 +13312,7 @@ post secondary training/certificate
 \uwave off
 \noun off
 \color none
-0.019
+0.009
 \end_layout
 
 \end_inset
@@ -13350,7 +13395,7 @@ above
 \uwave off
 \noun off
 \color none
-0.023
+0.029
 \end_layout
 
 \end_inset
@@ -13392,7 +13437,7 @@ above
 \uwave off
 \noun off
 \color none
-0.000
+0.002
 \end_layout
 
 \end_inset
@@ -13559,11 +13604,12 @@ reference "fig:Days-inactive"
  to illness in the last six month in the 2005/06 UNPS wave conditional on
  subsequent poverty transitions.
  For most of the categories, the number of days lost is on average about
- 8.
- However, for households that fall into poverty, the reported number of
- days lost due to illness is much higher, at about 11.5 days.
- This underscores the long run risks associated to health shocks, and the
- role public policy can play here.
+ 8.5 days.
+ We see that people that have lost relatively few days due to illness are
+ more likely to be in the sub-group that subsequently escapes poverty.
+ At the other extreme, the households that report the highest number of
+ days lost by the household head due to illness are those that are in the
+ sub-group of households that eventually fall into poverty.
 \end_layout
 
 \begin_layout Standard
@@ -13625,6 +13671,18 @@ reference "tab:shocks"
  to almost 40 percent in the group of the chronic poor.
  Still, drought also features prominently in the group that subsequently
  escapes poverty.
+ While there is still a substantial share of the non-poor that report to
+ have been exposed to shocks, the share is about 5 percentage points lower
+ than the overall share that reports drought related shocks.
+ Floods, hailstorms and also pest reports do not seem to differ too much
+ between the different groups.
+\end_layout
+
+\begin_layout Standard
+Bad seed quality is reported more amongst the non-poor than average.
+ This may be because especially farmers that are always above the poverty
+ line are more commercially oriented and buy seeds.
+ As such, they are also more prone to counterfeit seeds.
  But probably the most significant result in this table is the disproportionate
  number of people within chronically poor households that report being affected
  by civil strife.
@@ -13633,13 +13691,11 @@ reference "tab:shocks"
 
 \begin_layout Standard
 The non-poor clearly faced different shocks.
- They are much less prone to experiencing weather related shock.
- They do, on the other hand, report more than average losses related to
- robbery and theft.
- This last category also shows up relatively more in the category of households
+ They report more than average losses related to robbery and theft.
+ This category also shows up relatively more in the category of households
  that slide into poverty.
- Fire accidents are also related to vulnerability, falling into poverty
- and chronic poverty.
+ The death of a family member is also disproportionately mentioned amongst
+ those that fall into poverty over the period covered by the panel.
 \end_layout
 
 \begin_layout Standard
@@ -13852,7 +13908,7 @@ drought
 \uwave off
 \noun off
 \color none
-0.314
+0.302
 \end_layout
 
 \end_inset
@@ -13873,7 +13929,7 @@ drought
 \uwave off
 \noun off
 \color none
-0.435
+0.383
 \end_layout
 
 \end_inset
@@ -13894,7 +13950,7 @@ drought
 \uwave off
 \noun off
 \color none
-0.368
+0.369
 \end_layout
 
 \end_inset
@@ -13915,7 +13971,7 @@ drought
 \uwave off
 \noun off
 \color none
-0.342
+0.350
 \end_layout
 
 \end_inset
@@ -13936,7 +13992,7 @@ drought
 \uwave off
 \noun off
 \color none
-0.390
+0.388
 \end_layout
 
 \end_inset
@@ -13954,6 +14010,18 @@ drought
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
 0.350
 \end_layout
 
@@ -13998,7 +14066,7 @@ floods/hailstorm
 \uwave off
 \noun off
 \color none
-0.122
+0.125
 \end_layout
 
 \end_inset
@@ -14019,7 +14087,7 @@ floods/hailstorm
 \uwave off
 \noun off
 \color none
-0.157
+0.135
 \end_layout
 
 \end_inset
@@ -14040,7 +14108,7 @@ floods/hailstorm
 \uwave off
 \noun off
 \color none
-0.123
+0.136
 \end_layout
 
 \end_inset
@@ -14061,7 +14129,7 @@ floods/hailstorm
 \uwave off
 \noun off
 \color none
-0.141
+0.114
 \end_layout
 
 \end_inset
@@ -14082,7 +14150,7 @@ floods/hailstorm
 \uwave off
 \noun off
 \color none
-0.133
+0.129
 \end_layout
 
 \end_inset
@@ -14100,7 +14168,19 @@ floods/hailstorm
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.130
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.129
 \end_layout
 
 \end_inset
@@ -14144,7 +14224,7 @@ pest attacks
 \uwave off
 \noun off
 \color none
-0.096
+0.098
 \end_layout
 
 \end_inset
@@ -14165,7 +14245,7 @@ pest attacks
 \uwave off
 \noun off
 \color none
-0.094
+0.086
 \end_layout
 
 \end_inset
@@ -14186,7 +14266,7 @@ pest attacks
 \uwave off
 \noun off
 \color none
-0.090
+0.084
 \end_layout
 
 \end_inset
@@ -14207,7 +14287,7 @@ pest attacks
 \uwave off
 \noun off
 \color none
-0.091
+0.098
 \end_layout
 
 \end_inset
@@ -14228,7 +14308,7 @@ pest attacks
 \uwave off
 \noun off
 \color none
-0.055
+0.082
 \end_layout
 
 \end_inset
@@ -14246,6 +14326,18 @@ pest attacks
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
 0.090
 \end_layout
 
@@ -14290,7 +14382,7 @@ bad seeds quality
 \uwave off
 \noun off
 \color none
-0.031
+0.035
 \end_layout
 
 \end_inset
@@ -14311,7 +14403,7 @@ bad seeds quality
 \uwave off
 \noun off
 \color none
-0.007
+0.011
 \end_layout
 
 \end_inset
@@ -14353,7 +14445,7 @@ bad seeds quality
 \uwave off
 \noun off
 \color none
-0.020
+0.021
 \end_layout
 
 \end_inset
@@ -14374,7 +14466,7 @@ bad seeds quality
 \uwave off
 \noun off
 \color none
-0.020
+0.018
 \end_layout
 
 \end_inset
@@ -14392,6 +14484,18 @@ bad seeds quality
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
 0.024
 \end_layout
 
@@ -14436,6 +14540,27 @@ livestock epidemic
 \uwave off
 \noun off
 \color none
+0.065
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
 0.067
 \end_layout
 
@@ -14457,7 +14582,7 @@ livestock epidemic
 \uwave off
 \noun off
 \color none
-0.043
+0.042
 \end_layout
 
 \end_inset
@@ -14478,7 +14603,7 @@ livestock epidemic
 \uwave off
 \noun off
 \color none
-0.050
+0.047
 \end_layout
 
 \end_inset
@@ -14499,7 +14624,16 @@ livestock epidemic
 \uwave off
 \noun off
 \color none
-0.051
+0.061
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
 \end_layout
 
 \end_inset
@@ -14520,25 +14654,7 @@ livestock epidemic
 \uwave off
 \noun off
 \color none
-0.049
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.056
+0.057
 \end_layout
 
 \end_inset
@@ -14603,7 +14719,7 @@ fire accident
 \uwave off
 \noun off
 \color none
-0.017
+0.021
 \end_layout
 
 \end_inset
@@ -14624,7 +14740,7 @@ fire accident
 \uwave off
 \noun off
 \color none
-0.040
+0.036
 \end_layout
 
 \end_inset
@@ -14645,7 +14761,7 @@ fire accident
 \uwave off
 \noun off
 \color none
-0.033
+0.024
 \end_layout
 
 \end_inset
@@ -14666,7 +14782,7 @@ fire accident
 \uwave off
 \noun off
 \color none
-0.041
+0.038
 \end_layout
 
 \end_inset
@@ -14684,7 +14800,19 @@ fire accident
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.026
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.027
 \end_layout
 
 \end_inset
@@ -14728,7 +14856,7 @@ civil strife
 \uwave off
 \noun off
 \color none
-0.031
+0.037
 \end_layout
 
 \end_inset
@@ -14749,7 +14877,7 @@ civil strife
 \uwave off
 \noun off
 \color none
-0.073
+0.059
 \end_layout
 
 \end_inset
@@ -14770,7 +14898,7 @@ civil strife
 \uwave off
 \noun off
 \color none
-0.090
+0.074
 \end_layout
 
 \end_inset
@@ -14791,7 +14919,7 @@ civil strife
 \uwave off
 \noun off
 \color none
-0.060
+0.051
 \end_layout
 
 \end_inset
@@ -14812,7 +14940,7 @@ civil strife
 \uwave off
 \noun off
 \color none
-0.157
+0.123
 \end_layout
 
 \end_inset
@@ -14830,6 +14958,18 @@ civil strife
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
 0.064
 \end_layout
 
@@ -14874,7 +15014,7 @@ robbery/theft
 \uwave off
 \noun off
 \color none
-0.097
+0.102
 \end_layout
 
 \end_inset
@@ -14895,7 +15035,49 @@ robbery/theft
 \uwave off
 \noun off
 \color none
-0.042
+0.055
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.075
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.098
 \end_layout
 
 \end_inset
@@ -14926,18 +15108,6 @@ robbery/theft
 
 \begin_layout Plain Layout
 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
-0.091
 \end_layout
 
 \end_inset
@@ -14958,24 +15128,6 @@ robbery/theft
 \uwave off
 \noun off
 \color none
-0.080
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
 0.081
 \end_layout
 
@@ -15020,90 +15172,6 @@ death of the head of the household
 \uwave off
 \noun off
 \color none
-0.026
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
-0.029
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
-0.033
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
-0.016
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
 0.022
 \end_layout
 
@@ -15114,6 +15182,18 @@ death of the head of the household
 
 \begin_layout Plain Layout
 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.041
 \end_layout
 
 \end_inset
@@ -15122,6 +15202,90 @@ death of the head of the household
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.023
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.028
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.023
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
 0.026
 \end_layout
 
@@ -15166,7 +15330,7 @@ death of other family member
 \uwave off
 \noun off
 \color none
-0.140
+0.139
 \end_layout
 
 \end_inset
@@ -15187,7 +15351,7 @@ death of other family member
 \uwave off
 \noun off
 \color none
-0.063
+0.097
 \end_layout
 
 \end_inset
@@ -15208,7 +15372,7 @@ death of other family member
 \uwave off
 \noun off
 \color none
-0.089
+0.107
 \end_layout
 
 \end_inset
@@ -15250,7 +15414,7 @@ death of other family member
 \uwave off
 \noun off
 \color none
-0.031
+0.038
 \end_layout
 
 \end_inset
@@ -15268,7 +15432,19 @@ death of other family member
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.107
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.108
 \end_layout
 
 \end_inset
@@ -15312,7 +15488,7 @@ injury from accidents
 \uwave off
 \noun off
 \color none
-0.029
+0.033
 \end_layout
 
 \end_inset
@@ -15333,7 +15509,7 @@ injury from accidents
 \uwave off
 \noun off
 \color none
-0.013
+0.011
 \end_layout
 
 \end_inset
@@ -15354,7 +15530,7 @@ injury from accidents
 \uwave off
 \noun off
 \color none
-0.008
+0.010
 \end_layout
 
 \end_inset
@@ -15375,7 +15551,7 @@ injury from accidents
 \uwave off
 \noun off
 \color none
-0.019
+0.024
 \end_layout
 
 \end_inset
@@ -15396,7 +15572,7 @@ injury from accidents
 \uwave off
 \noun off
 \color none
-0.004
+0.010
 \end_layout
 
 \end_inset
@@ -15414,6 +15590,18 @@ injury from accidents
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
 0.019
 \end_layout
 
@@ -15458,48 +15646,6 @@ other
 \uwave off
 \noun off
 \color none
-0.028
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" bottomline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
-0.026
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" bottomline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
 0.024
 \end_layout
 
@@ -15521,7 +15667,7 @@ other
 \uwave off
 \noun off
 \color none
-0.011
+0.032
 \end_layout
 
 \end_inset
@@ -15542,7 +15688,49 @@ other
 \uwave off
 \noun off
 \color none
-0.019
+0.020
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.021
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.025
 \end_layout
 
 \end_inset
@@ -15560,6 +15748,18 @@ other
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
 0.024
 \end_layout
 
@@ -15598,6 +15798,9 @@ reference "fig:Coping-with-Adverse"
  all simply have no choice but to reduce consumption.
  The graph also shows the importance of social capital to deal with shocks
  for vulnerable households.
+ There is also some indication that informal borrowing during the first
+ round of our panel is associated to an increase in the chance that households
+ descend into poverty.
 \end_layout
 
 \begin_layout Standard
@@ -15818,6 +16021,7 @@ Appendix
 
 \begin_layout Standard
 \begin_inset Float table
+placement H
 wide false
 sideways false
 status open
@@ -17013,6 +17217,7 @@ Other Urban
 
 \begin_layout Standard
 \begin_inset Float table
+placement H
 wide false
 sideways false
 status open
@@ -19089,6 +19294,7 @@ Western
 
 \begin_layout Standard
 \begin_inset Float table
+placement H
 wide false
 sideways false
 status open
