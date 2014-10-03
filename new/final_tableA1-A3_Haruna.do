@@ -134,20 +134,19 @@ tab regurb
 ** thus we only separated the central region into rural/urban and others were aggregated for northern, eastern and western to have 5 spatial domains
 *gen spdomain = 1 if rural==1
 *replace spdomain = 2 if rural ==0
-*gen spdomain = 1 if regurb==11 & district==102
+gen spdomain = 1 if regurb==11 & district==102
 
-*replace spdomain = 2 if regurb==10
+replace spdomain = 2 if regurb==10
 
-*replace spdomain = 3 if regurb==20
+replace spdomain = 3 if regurb==20
+replace spdomain = 4 if regurb==30
 
-*replace spdomain = 4 if regurb==30
+replace spdomain = 5 if regurb==40
 
-*replace spdomain = 5 if regurb==40
-
-*replace spdomain = 6 if (regurb==11 | regurb==21 | regurb==31 | regurb==41)  & district!=102
-*label define lspdomain 1 "Kampala"  2 "Central Rural" 3  "Eastern Rural" 4 "Northern Rural" 5 "Western Rural" 6 "Other Urban" 
+replace spdomain = 6 if (regurb==11 | regurb==21 | regurb==31 | regurb==41)  & district!=102
+label define lspdomain 1 "Kampala"  2 "Central Rural" 3  "Eastern Rural" 4 "Northern Rural" 5 "Western Rural" 6 "Other Urban" 
 *gen spdomain=1
-clonevar spdomain =  region
+*clonevar spdomain =  region
 
 ***-----News; another way to specify variables, is the traditional Uganda regions, North east central and western, represented in region
 tab region

@@ -19,8 +19,8 @@ SETS
 $include /home/bjvca/data/data/GAP/Haruna/UNHS_2012/work/product_flex.inc
 /
 
- reg        1 spatial domains /1*1/
- r(reg)     all included spatial regions /1*1/
+ reg        6 spatial domains /1*6/
+ r(reg)     all included spatial regions /1*6/
 
  ptit       price table titles
 /

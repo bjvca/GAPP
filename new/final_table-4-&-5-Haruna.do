@@ -49,7 +49,7 @@ la var quantity "quantity of food consumed by the household including purchases,
 gen quantityd = quantity/7
 drop quantity h10aq10 h10aq8 h10aq6 h10aq4
 la var quantityd "daily household food consumption"
-egen value=rowtotal ( h10aq5 h10aq7 h10aq9 h10aq11 )
+egen value=rowtotal( h10aq5 h10aq7 h10aq9 h10aq11 )
 la var value "household food consumption in seven days"
 gen valuez = value/7
 la var valuez "daily value of food consumed by the household"
