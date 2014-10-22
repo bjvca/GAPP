@@ -334,6 +334,7 @@ while `pass' <= `maxit' {;
                 lab var f_share_w`pass' "average food share for the 13 spatial domains";
 
         save `foodshares', replace;
+     
 		
 				* Number of spatials domains a food product appears ;
                 gen numreg=1;
@@ -377,7 +378,7 @@ use "$path/in/cons_cod_trans.dta", clear;
 *drop value   ;
 *drop quantity;
 
-keep hhid product food_cat valuez quantity unit;
+keep hhid product food_cat valuez quantityz unit quantity;
 
 rename valuez    value;
 *rename quantityz quantity;
@@ -406,9 +407,10 @@ drop if quantity==0 ;
                 drop if quantity==0;
         
                 append using `dd_acsort';
-*/
 
-                *CA modified to insert work/hhdata.dta for bootstrap;
+
+
+*/
                 sort hhid;
                 merge hhid using "$path/work/hhdata.dta";
                 tab _m; 
@@ -419,7 +421,7 @@ drop if quantity==0 ;
 		gen count=1;
 
         save `dd_acsort', replace;
-        
+
 **************************************************************************;
 * Merge the basket codes with the dd  and own data sets.
 * Drop all codes not a part of the flexible food basket
@@ -451,6 +453,8 @@ drop if quantity==0 ;
 * relatively poor households.
 **************************************************************************;
                 preserve;
+						
+						
 						* Temporally adjusted expenditure ;
                         use `contpi', clear;
                                 keep hhid hhweight spdomain reg_tpi survquar tpi_trim cons_pc_tpi ;
@@ -503,6 +507,7 @@ drop if quantity==0 ;
 
                 *Generate weighted price per gram ;
                 gen price_uw`pass'=value_r/(quantity*1000);
+
                 drop value_r quantity;
 
                 sort spdomain product;
@@ -559,7 +564,7 @@ drop if quantity==0 ;
                 drop _merge;
                 sort product;
         
-                merge product using "/home/bjvca/data/data/GAP/Haruna/calperg_joint.dta";
+                merge product using "$path/work/calperg.dta";
                 tab _merge;
 				
                 * This tells where we are lacking calorie info or are lacking quantity info due to 
@@ -576,6 +581,7 @@ drop if quantity==0 ;
 				sum bswt;
 				
                 drop if round(bswt) < 10;
+
 				
 				* Total food share in spatial domain ;
                 by spdomain: egen baskshr=sum(f_share_w`pass');

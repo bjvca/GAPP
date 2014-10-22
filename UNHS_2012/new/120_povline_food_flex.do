@@ -59,7 +59,7 @@ use "$path/work/food_basket_flex.dta";
 
         * determine if any quantity has fewer than 10 price observations;
         by spdomain: count if round(bswt)<10;
-        drop if round(bswt) < 10;
+       * drop if round(bswt) < 10;
 
         by spdomain: egen baskshr=sum(f_share_w);
         by spdomain: gen cumshr1=sum(f_share_w);
