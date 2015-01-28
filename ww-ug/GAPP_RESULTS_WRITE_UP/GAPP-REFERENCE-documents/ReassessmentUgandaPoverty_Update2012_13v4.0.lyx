@@ -108,6 +108,8 @@ Official poverty figures in Uganda are flawed by the fact that the underlying
  This enables us to explore the characteristics of households that, for
  instance, grow out of poverty and how they differ from households that
  appear to be trapped in poverty.
+ Our approach generates poverty measures that are more credible from a theoretic
+al point of view and are more in line with what other researchers find.
 \end_layout
 
 \begin_layout Description
@@ -2592,10 +2594,11 @@ key "RePEc:ucp:ecdecc:v:51:y:2002:i:1:p:77-108"
 
 .
  While differences in prices in different locations are usually incorporated
- in poverty measurement by adjusting local prices to the prices used in
- the construction of the poverty line, it becomes more and more common to
- also account for spatial heterogeneity in consumption bundles in an effort
- to increase the 
+ in poverty measurement by adjusting the welfare indicator to reflect prices
+ used in the construction of the poverty lines (or by adjusting the poverty
+ lines to reflect prices used in the construction of the welfare indicator),
+ it becomes more and more common to also account for spatial heterogeneity
+ in consumption bundles in an effort to increase the 
 \emph on
 specificity
 \emph default
@@ -2619,17 +2622,19 @@ key "RePEc:eee:wdevel:v:31:y:2003:i:2:p:339-358"
 
 \begin_layout Standard
 While differences in consumption baskets are interesting in its own right,
- they only become relevant in the context of poverty measurement and analysis
- when we evaluate the cost of these basic needs.
- Indeed, what matters for poverty comparisons is that different diets may
- provide the same basic needs (usually a given amount of kilo-calories per
- day) at significantly different costs.
+ they only become relevant in the context of poverty measurement and analysis,
+ as we relate a welfare indicator to the cost of these basic needs.
+ Indeed, different diets may provide the same basic needs (usually a given
+ amount of kilo-calories per day) at significantly different costs, which
+ complicates poverty comparisons between units (regions, households, individuals
+,...) with different diets.
  It is especially in this regard that Uganda is an interesting case.
  Matooke, the main ingredient in the diet of households in the West may
  be more or less expensive per energy unit than for example sorghum that
- is consumed in the North.
- As such, to compare the West to the North on the basis of the same daily
- nutritional requirements would be wrong.
+ is the main staple in the North.
+ As such, it would be misleading to compare the West to the North on the
+ basis of a single food poverty line, even after allowing for spatial price
+ heterogeneity.
 \end_layout
 
 \begin_layout Standard
@@ -2662,16 +2667,17 @@ A poverty measure is consistent if two individuals at the same welfare level
  Different CBN poverty lines will be utility consistent if the underlying
  bundles of goods are on the Hicksian utility-compensated demand functions
  and hence yield the same level of utility.
- But this only passes the question down.
- How can we be sure the underlying bundles yield the same utility? As 
+ In other words, two bundles of goods are consistent if they yield the same
+ utility.
+ As 
 \begin_inset CommandInset citation
 LatexCommand citet
 key "RePEc:bla:revinw:v:52:y:2006:i:3:p:399-421"
 
 \end_inset
 
- argue, the theory of revealed preferences provides a framework for countering
- these difficulties.
+ argue, the theory of revealed preferences provides a framework for answering
+ these questions.
  
 \end_layout
 
@@ -2733,7 +2739,7 @@ r
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-\sum p_{i,r}q_{ir'}\geq\sum p_{i,r}q_{i,r}\;\forall r,r'\label{eq:revpref}
+\sum p_{i,r}q_{i,r'}\geq\sum p_{i,r}q_{i,r}\;\forall r,r'\label{eq:revpref}
 \end{equation}
 
 \end_inset
@@ -2755,12 +2761,8 @@ r'
 ) should be equally or more expensive than the chosen bundle.
  There can be no bundle that costs less than the chosen one yet yields that
  same utility, because then the rational consumer should have chosen that
- one
-\begin_inset Foot
-status collapsed
-
-\begin_layout Plain Layout
-Or, as in 
+ one.
+ Or, as in 
 \begin_inset CommandInset citation
 LatexCommand citet
 key "RePEc:ucp:ecdecc:y:2003:v:52:i:1:p:159-85"
@@ -2768,15 +2770,9 @@ key "RePEc:ucp:ecdecc:y:2003:v:52:i:1:p:159-85"
 \end_inset
 
 , if the cost of a bundle from another domain would be cheaper if bought
- in a specific domain, this means it must have lower utility then the bundle
+ in a specific domain, this means it must have lower utility than the bundle
  in that specific domain, as otherwise the rational consumer would have
  picked the bundle from the other domain.
- 
-\end_layout
-
-\end_inset
-
-.
  The above condition 
 \begin_inset CommandInset ref
 LatexCommand eqref
@@ -2791,8 +2787,16 @@ reference "eq:revpref"
 In practice, however, it will be hard to construct a set of poverty lines
  that meet revealed preference conditions for all possible pairs of spatial
  domains.
- We use a minimum cross-entropy approach to adjust expenditure shares such
- that they meet revealed preference conditions.
+ One approach, which we will use in this paper, uses a minimum cross-entropy
+ approach to adjust expenditure shares such that they meet revealed preference
+ conditions 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "RePEc:ucp:ecdecc:v:58:y:2010:i:3:p:449-474"
+
+\end_inset
+
+.
  This approach uses the expenditure shares of the original bundles as prior
  information (in the form of probabilities that an arbitrarily small amount
  of money will be devoted to the purchase of the particular good) and the
@@ -2801,14 +2805,7 @@ In practice, however, it will be hard to construct a set of poverty lines
  The end result will be a set of adjusted expenditure shares that are as
  closely as possible to the original shares, yet that obey a minimal set
  of conditions such that the estimated bundles are consistent with some
- arbitrary unknown preference set 
-\begin_inset CommandInset citation
-LatexCommand citep
-key "RePEc:ucp:ecdecc:v:58:y:2010:i:3:p:449-474"
-
-\end_inset
-
-.
+ arbitrary unknown preference set.
  
 \end_layout
 
@@ -2822,9 +2819,10 @@ In this reassessment of poverty in Uganda, we will mainly work with the
  The UNPS is a multi-topic panel household survey started by UBOS in 2009/10.
  However, the 2009/10 sample was essentially a subset of 3,123 households
  that were interviewed as part of the 2005/06 Uganda National Household
- Survey, a nationally representative survey that covered 6,775 households.
- As such, the first wave of the panel comprises of the UNHS data of this
- subsample of 3,123 households.
+ Survey (UNHS 2005/06), a nationally representative survey that covered
+ 6,775 households.
+ As such, the first wave of the panel comprises of the UNHS 2005/06 data
+ of this subsample of 3,123 households.
  After the second wave of 2009/10, the survey was repeated annually.
  Currently data is available for a third round, covering the 2010/11 agricultura
 l year and a fourth round covering the 2011/12 agricultural year
@@ -2840,8 +2838,6 @@ No UNPS survey has been done in 2012/13.
 .
  The UNPS is conducted in two visits in order to better capture agricultural
  outcomes associated with the two cropping seasons of the country.
- The UNPS will therefore interview each household twice each year, in visits
- six months apart.
  More information about the UNPS can be found in 
 \begin_inset CommandInset citation
 LatexCommand citet
@@ -2853,11 +2849,14 @@ key "UBOSBID"
 \end_layout
 
 \begin_layout Standard
-For the construction of the utility consistent poverty thresholds, however,
- we will use the 2012/13 Uganda National Household Survey.
- This is because the construction of utility consistent poverty lines requires
- a sufficiently large sample, with sufficient observations in each spatial
- domain.
+For the construction of the utility consistent poverty thresholds elaborated
+ on in the previous section, we will use the 2012/13 Uganda National Household
+ Survey (UNHS 2012/13).
+ Just as the UNHS 2005/06, the UNHS 2012/13 is nationally representative,
+ this time covering 6,888 households.
+ We choose this survey because it is the most recent one available, and
+ the construction of utility consistent poverty lines requires a sufficiently
+ large sample, with sufficient observations in each spatial domain.
  The larger dataset allows us to experiment with different degrees of spatial
  disaggregated for the domains.
  It also allows us to define poverty lines at a more disaggregated level
@@ -2867,17 +2866,19 @@ tive
 status collapsed
 
 \begin_layout Plain Layout
-The UNPS is representative up to the regional level.
+The UNPS is only representative up to the regional level.
  There are four regions in Uganda: Central, East, West and North.
 \end_layout
 
 \end_inset
 
 .
- We will look at poverty based on a national poverty line using a single
- spatial domain.
- Our most disaggregated case consists of 6 separate spatial domains (Kampala,
- Rural Central, Rural East, Rural North, Rural West and Other Urban).
+ Our baseline case will look at poverty measures based on a singe national
+ poverty line using a single spatial domain, as this would be close to simply
+ updating the current official poverty line.
+ This will then be compared to an analysis based on 6 separate spatial domains
+ (Kampala, Rural Central, Rural East, Rural North, Rural West and Other
+ Urban).
 \end_layout
 
 \begin_layout Standard
@@ -2889,15 +2890,15 @@ key "RePEc:ucp:ecdecc:v:58:y:2010:i:3:p:449-474"
 \end_inset
 
 , we start by constructing food bundles in each spatial domain.
- in each domain, a basket of food products that satisfied basic calorie
- needs was identified using information on the age and sex composition of
+ In each domain, a basket of food products that satisfies basic calorie
+ needs is identified using information on the age and sex composition of
  the households and the recorded consumption patterns of poorer households
 \begin_inset Foot
 status collapsed
 
 \begin_layout Plain Layout
-The demographic structure of each region was mapped to an average basic
- calorie requirement in each region using 
+The demographic structure of each region is mapped to an average basic calorie
+ requirement in each region using 
 \begin_inset CommandInset citation
 LatexCommand citet
 key "WHO1985"
@@ -2906,7 +2907,7 @@ key "WHO1985"
 
 .
  The mapping from these basic caloric needs into basic needs consumption
- bundles was based on 
+ bundles is based on 
 \begin_inset CommandInset citation
 LatexCommand citet
 key "FAO1968"
@@ -2923,7 +2924,7 @@ key "FAO1968"
  The cost of this basket, valued at prices prevailing within each spatial
  domain, results in a set of food poverty lines, one in each spatial domain.
  Nonfood poverty lines are obtained by calculating the share of food expenditure
-s for households whose total food and nonfood consumption per capita was
+s for households whose total food and nonfood consumption per capita is
  near the food poverty line.
  Total poverty lines are obtained as the sum of the food and the nonfood
  poverty lines.
@@ -2961,14 +2962,32 @@ reference "tab:Utility-consist"
 \end_inset
 
  reports the utility consistent poverty lines we estimate using the 2012/13
- UNHS
+ UNHS based on the six different spatial domains
 \begin_inset Foot
 status collapsed
 
 \begin_layout Plain Layout
-It is not possible to compare the utility consistent poverty lines we estimate
- to the official poverty lines, since spatial price differences are not
- reflected in the poverty lines.
+The poverty lines in table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Utility-consist"
+
+\end_inset
+
+ are aggregated to different spatial domains for the sake of comparison
+ to official statistics.
+ The underlying poverty lines for the six spatial domains are presented
+ in table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Utility-Consistent-Poverty"
+
+\end_inset
+
+ in the appendix.
+ It is not possible to directly compare the utility consistent poverty lines
+ we estimate to the official poverty lines, since spatial price differences
+ are not reflected in the poverty lines.
  Instead, the official poverty measures incorporate spatial price difference
  by adjusting the welfare indicator.
 \end_layout
@@ -2993,13 +3012,14 @@ key "New1"
 \end_inset
 
 , and is caused by the low energy content and relative high price of matooke,
- a staple mostly grown and consumed in the West.
+ a staple mostly grown and consumed in the West and Central regions.
  Households in the East, on the other hand, consume a lot of cassava, mostly
  in dried/flour form, which is only three times as costly, but more than
  8 times as nutritious.
  While the 2012/13 poverty lines are directly derived from the 2012/13 UNHS,
  the poverty lines for the other years are simply deflated using the Consumer
  Price Index.
+ Poverty lines are expressed in Ugandan shillings per person per day.
 \end_layout
 
 \begin_layout Standard
@@ -5426,14 +5446,30 @@ reference "tab:Poverty-headcounts-1spdomain"
 
 , uses only one spatial domain.
  In other words, we estimate a single national poverty line based on a single
- national food basket.
- We do this because, in a way, this would be the basis of updating the official
- poverty line, that is based on one single national consumption basket.
+ national food basket
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+This national poverty line was estimated to be 1233.42, see table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Utility-Consistent-Poverty"
+
+\end_inset
+
+ in the appendix.
+\end_layout
+
+\end_inset
+
+.
+ We do this because, in a way, this would be the closest to simply updating
+ the official poverty line, that is based on one single national consumption
+ basket.
  Secondly, we will present results for an analysis that uses the six spatial
  domains mentioned above (Kampala, Rural Central, Rural East, Rural North,
  Rural West and Other Urban).
- This last analysis is, in our view, the furthest we can go in terms of
- specificity without stretching the limits of the data.
  The results are reported in table 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -7536,18 +7572,18 @@ reference "tab:Official-poverty-headcount00s"
 \end_inset
 
 .
- For instance, the national estimate is only about half the official in
- 2005/06.
- However, the reduction in poverty between 2005/06 and 2009/10 is much smaller
- than in the official figures.
- There is a substantial increase in poverty in 2010/11, but poverty returns
- to about 15 percent in 2011/12
+ For instance, the national estimate in 2005/06 is about 10 percentage points
+ lower than the official estimates.
+ However, the reduction in poverty between 2005/06 and 2009/10 (7.4 percent)
+ is much smaller than in the official figures (more than 20 percent).
+ There is a slight increase in poverty in 2010/11, but national headcount
+ poverty falls to about 16 percent in 2011/12
 \begin_inset Foot
 status collapsed
 
 \begin_layout Plain Layout
-While part of this increase is likely caused by the increase in food prices,
- data problems provide an additional explanation.
+While part of the increase in 2010/11 is likely caused by the increase in
+ food prices, data problems provide an additional explanation.
  For instance, simple counts of how many households report consuming a particula
 r commodity point to some severe problems.
  In 2010/11 only about 300 household report consuming sweet potatoes, while
@@ -7559,7 +7595,15 @@ r commodity point to some severe problems.
 \end_inset
 
 .
- The national poverty headcounts are much closer to the official ones if
+ Overall, the reduction in poverty between 2005/06 and 20012/13 was about
+ the same then in the official figures at around 37 percent, most of this
+ coming about in the two last years of the panel.
+ The spatial patterns are the same, as both these and the official estimates
+ are based on a single poverty line.
+\end_layout
+
+\begin_layout Standard
+The national poverty headcounts are much higher than the official ones if
  we use six spatial domains (table 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -7567,55 +7611,7 @@ reference "tab:Poverty-headcounts-6spdomains"
 
 \end_inset
 
-), but the pattern, with a very modest decline between 2005/06 and 2009/10,
- and a sharp increase in headcount poverty in 2010/11 is similar to the
- pattern in table 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "tab:Poverty-headcounts-1spdomain"
-
-\end_inset
-
-.
- While the depth of poverty follows the same trend (table 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "tab:Poverty-gap-2002-2012"
-
-\end_inset
-
-), it seems the severity of poverty does not decline over time (table 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "tab:Poverty-severity-2002-2012"
-
-\end_inset
-
 ).
-\end_layout
-
-\begin_layout Standard
-Looking at urban versus rural disaggregation, the official figures show
- a much smaller difference in poverty between the two spatial domains than
- the ones calculated using a single national poverty line.
- For instance, poverty in rural areas is about 2.5 times the poverty in urban
- areas using official figures.
- Using a single poverty line, we now find that rural areas have a poverty
- headcount that is more than five times that of urban areas.
- This was to be expected, as a single poverty line that is between the rural
- and the urban poverty line will underestimate urban poverty and overestimate
- urban poverty.
- Over time, however, the urban-rural inequality also becomes more important
- in the official data, due to substantial poverty reductions in urban areas,
- even between 2009/10 and 2010/11 when rural poverty is rising.
- 
-\end_layout
-
-\begin_layout Standard
-Going one step down on the spatial aggregation scale, we see a sharp increase
- in the absolute poverty figures of around 40 percent.
- This adds another possible explanation why official poverty figures might
- be too low.
  While 
 \begin_inset CommandInset citation
 LatexCommand citet
@@ -7626,73 +7622,98 @@ key "New10"
  argue that the original 1993 poverty lines may have increased too little
  to keep pace with inflation and that differences in the measurement of
  consumption have may contribute to the underestimation of poverty, we find
- that consumption bundle aggregation may also depress poverty figures.
-\end_layout
-
-\begin_layout Standard
-What is more interesting is the change in the spatial pattern of poverty.
- Regionally disaggregated poverty figures preserve the same order if we
- compare the official poverty headcounts in table
+ that consumption bundle aggregation also seems to depress poverty figures.
+ The reductions in poverty also seem more modest then the official ones,
+ with an overall reduction in poverty between 2005/06 and 20012/13 of about
+ one quarter.
+ We also see that the largest reduction the number of people living below
+ the poverty line happened between 2011/12 and 2012/13.
+ However, if we look at the evolution of the poverty gap (as reported in
+ table 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "tab:Official-poverty-headcount00s"
+reference "tab:Poverty-gap-2002-2012"
 
 \end_inset
 
- to the poverty headcounts using one spatial domain in table 
+ in the appendix), the largest reduction is between 2010/11 and 2011/12.
+ This suggests quite some mobility below the poverty line between 2010/11
+ and 2011/12.
+\end_layout
+
+\begin_layout Standard
+If we disaggregate between rural and urban poverty, we see that most of
+ the poverty reduction has been happening in rural areas.
+ Over the years, poverty in rural areas has steadily fallen from almost
+ 50 percent to 36 percent.
+ This is different from what has been happening in urban areas.
+ While between 2005/06 and 2010/11 urban poverty was on the decline, it
+ started rising again afterwards.
+ A marked acceleration in urban poverty between 2011/12 and 2012/13 together
+ with a steady decline in rural poverty reduced the contribution of rural
+ poverty to overall poverty from about 94 percent to 88 percent in 2012/13.
+ The evolution of official figures are in line with our findings, except
+ that we find a much stronger rebound of urban poverty.
+\end_layout
+
+\begin_layout Standard
+Finally, we disaggregate poverty by region.
+ We find that in the Northern region, which is the poorest, poverty has
+ by 15 percent over the entire period.
+ However, the evolution was far form linear.
+ Especially between 2009/10 and 2010/11, there was a strong reduction in
+ poverty.
+ But since then, poverty in the North has been rising again.
+ The tables in the appendix show that, especially in 2012/13, not only headcount
+ poverty, but also the poverty gap and the severity of poverty has been
+ increasing.
+ Official poverty figures report a reduction of 28 percent between 2005/06
+ and 2012/13 in headcount poverty, very close to what we find using only
+ one spatial domain (figure 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "tab:Poverty-headcounts-1spdomain"
 
 \end_inset
 
-.
- However, taking into account differences in consumption patterns, we now
- find that, while the North remains by far the poorest region, the Western
- region now seems to be considerably poorer than the East.
- In terms of contribution to national poverty, the densely populated Western
- region now contributes almost as much as the Northern region.
+).
+ The Western region is, just as in the official estimates, the second richest
+ region.
+ However, it is now 55 percent poorer than the richest region.
+ This gap between the Western and Central region is significantly larger
+ than in the official statistics, where poverty rates in the West are 33
+ percent higher than in the East.
+ Thus, while we do not observe the changes in the rankings observed by 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "RePEc:oup:jafrec:v:12:y:2003:i:4:p:598-624"
+
+\end_inset
+
+, our results are consistent with the finding that the West is poorer than
+ official figures suggest.
 \end_layout
 
 \begin_layout Standard
-This finding mirrors, to some extent, what 
-\begin_inset CommandInset citation
-LatexCommand citet
-key "New1"
-
-\end_inset
-
- and 
-\begin_inset CommandInset citation
-LatexCommand citet
-key "RePEc:oup:jafrec:v:12:y:2003:i:4:p:598-624"
-
-\end_inset
-
- find.
- They also find that, using a single poverty line, the East is poorer than
- the West.
- This ordering turns around when they start using regional food basket poverty
- lines.
+The Central region, already the least poor region at the start of the panel,
+ reduced headcount poverty by half between 2005/06 and 2012/13 according
+ to our estimates using 6 spatial domains.
+ Again, official estimates record higher poverty reductions (almost 70 percent),
+ which is again similar to what we find in our estimates using only one
+ spatial domain.
+ Inequality in poverty headcount has also increased over time.
+ While the North initially contributed 27 percent to overall poverty, this
+ has increased to 37 percent in 2012/2013.
+ The contribution of the East also has increased substantially.
+ And while severity of poverty has reduced in the North, in 2012/13, almost
+ 60 percent of the national severity of poverty measure was contributed
+ by the North.
+ If we disaggregate the 2012/13 data further, we find that most poverty
+ is found in the North East, where over 80 percent of the individuals live
+ in poverty.
+ This is followed by West Nile, a distant second with 60 percent of the
+ population living in poverty.
  
-\begin_inset CommandInset citation
-LatexCommand citet
-key "RePEc:oup:jafrec:v:12:y:2003:i:4:p:598-624"
-
-\end_inset
-
- goes even further and devises income adjusted regional food baskets.
- When these are used, it seems that the West is on average even poorer than
- the North.
- Our results are also more credible in the light of persistently low nutritional
- outcomes in the West 
-\begin_inset CommandInset citation
-LatexCommand citep
-key "New7"
-
-\end_inset
-
-.
 \end_layout
 
 \begin_layout Standard
@@ -9747,13 +9768,31 @@ Western
 
 \end_layout
 
+\begin_layout Standard
+To summarize, we feel that the poverty measures and the evolution of poverty
+ over time are much more credible, both from a theoretical and empirical
+ point of view.
+ The continued use of outdated poverty lines based on a single food basket
+ is likely to lead to inconsistent poverty estimates, especially in a country
+ where different regions have widely varying diets.
+ Indeed, most of the staples in these diets are effectively non-tradables,
+ deriving their price from local demand and supply conditions.
+ The result is that the cost of basic needs, even though anchored in a single
+ caloric requirement, may vary significantly.
+ We also feel that the poverty levels, as well as the estimated reduction
+ is poverty, are closer to what other researchers have deemed more realistic.
+ 
+\end_layout
+
 \begin_layout Section*
 A Profile Based on Poverty Dynamics
 \end_layout
 
 \begin_layout Standard
-In this section, we will construct a profile for different categories of
- household based on the evolution of their poverty status over time.
+Now that we developed a new set of poverty lines above, in this section,
+ we will use the Uganda National Panel to construct profiles for different
+ categories of household based on the evolution of their poverty status
+ over time.
  We will start by defining 5 different categories.
  The first category consist of households that are identified as being poor
  in all of the four waves of the UNPS.
@@ -9820,20 +9859,21 @@ vulnerable
 \end_layout
 
 \begin_layout Standard
-Looking at poverty transitions, we find that only about 257 of the 2195
+Looking at poverty transitions using the above typology, we find that only
+ about 257 of the 2195
 \emph on
  
 \emph default
 households that appear in all four waves are poor in each wave.
  This amounts to only 11.7 percent of the households being chronic poor.
  However, if we weigh these households by population weights, the number
- of chronic poor individuals increases to 12.2 percent.
- This suggests that the chronic poor are on average larger households.
+ of chronic poor individuals increases to 12.3 percent.
+ This suggests that the chronic poor tend to live in larger households.
  At the other extreme, we find that 833 households or 37.9 percent of the
- households are never poor, corresponding to about 35.7 percent when using
+ households are never poor, corresponding to about 35.8 percent when using
  weights.
  387 households have escaped poverty and 198 have fallen into poverty, correspon
-ding to 20.0 and 7.3 percent of the population, respectively.
+ding to 19.0 and 8.2 percent of the population, respectively.
  Finally, there is a sizable class of about 520 vulnerable households, or
  almost a quarter of the population, that moves in or out of poverty, possibly
  multiple times, over the 4 waves.
@@ -9842,7 +9882,8 @@ ding to 20.0 and 7.3 percent of the population, respectively.
 
 \begin_layout Standard
 We will now relate these four categories of households to various household
- characteristics, to come up with a profile.
+ characteristics, to come up with a profile, similar to poverty profiles
+ in a static analysis of poverty.
  Since we are interested in the likely causes of poverty transitions (as
  opposed to the likely consequences of poverty transitions), we will look
  at characteristics of the household at the first wave of the panel, i.e.
@@ -9861,10 +9902,54 @@ Location
 \end_layout
 
 \begin_layout Standard
+Location and well-being are often found to be correlated.
+ In virtually all cases, poverty is found to be higher in rural areas than
+ in urban.
+ More in general, remote areas tend to be poorer for a myriad of reasons.
+ For instance, one prominent economic reason is that in sparsely populated
+ areas with a thin road network that is often in a bad shape, transaction
+ costs are high, affecting economic activity 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "AGEC:AGEC310"
+
+\end_inset
+
+.
+ 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "doi:10.1080/00220388.2011.625410"
+
+\end_inset
+
+ find that chronic poverty in Ethiopia is significantly correlated to 
+\begin_inset Quotes eld
+\end_inset
+
+remoteness
+\begin_inset Quotes erd
+\end_inset
+
+ in terms of distance to town or poor roads.
+ But 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "bird2010isolation"
+
+\end_inset
+
+ note that agro-ecology; institutional, political and governance failures;
+ service delivery; stigma and exclusion; crime and insecurity; and communication
+, media and information and communication technologies are all factors that
+ are mediated by remoteness as such likely to contribute to special poverty
+ traps.
+ 
+\end_layout
+
+\begin_layout Standard
 We first look at the location of households in the 5 classes in terms of
  being in urban or rural areas.
- It is well known that poverty is predominantly rural, and Uganda is no
- exception.
  Of all the chronic poor, 97.7 percent live in rural areas.
  Of all the non-poor, this is only 71.9 percent.
  For Uganda as a whole, 86.7 percent reports to be living in rural areas.
@@ -9879,12 +9964,13 @@ reference "fig:Regional-Poverty-Dynamics"
 .
  The figure clearly shows that chronic poverty is concentrated in the North.
  Here, 45.5 percent of all the chronic poor can be found.
- On the other end, the households that never experienced poverty our disproporti
+ On the other end, the households that never experienced poverty are disproporti
 onately located in the central region: more than 44 percent of the people
- that are always above the poverty threshold live here.
+ that are always above the poverty threshold live there.
  If one lives in the Eastern region, one has a relatively higher chance
- of falling into poverty.People living in the Western region seem to be moving
- in and out of poverty more than people living in other regions.
+ of falling into poverty.
+ People living in the Western region seem to be moving in and out of poverty
+ more than people living in other regions.
  While the North has a large group of chronic poor, the good news is that
  the relative share of people escaping poverty is larger than the share
  that fall into poverty.
@@ -9900,7 +9986,7 @@ onately located in the central region: more than 44 percent of the people
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -9937,18 +10023,141 @@ name "fig:Regional-Poverty-Dynamics"
 
 \end_layout
 
+\begin_layout Standard
+As mentioned above, location also affects access to services, such as safe
+ drinking water.
+ Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Time-to-fetch"
+
+\end_inset
+
+ provides kernel density plots for time reported to fetch drinking water
+ including waiting time.
+ You can see that respondents cluster their answers around 2 hours and 4
+ hours.
+ We find that in general, the non-poor need to spend less time fetching
+ water, except maybe for some non-poor that spend about 2 hours.
+ The median for the non-poor is about 50 minutes, as opposed to about 60
+ minutes for the chronic poor.
+ The respective means are 63 minutes for the non-poor and 77 for the poor.
+ This is also illustrated by the fact that the chronic poor have higher
+ densities at the extreme right of the distribution, for instance around
+ 4 hours or 240 minutes.
+ The vulnerable have a high density around 2 hours.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Time to fetch water
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Time-to-fetch"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/bjvca/data/data/GAP/Haruna/watertime.pdf
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsubsection*
 Household demographics
 \end_layout
 
 \begin_layout Standard
-An indicator that is often central in poverty analysis and household demographic
- characteristics is female headedness.
- In general, female headed households are poorer and more vulnerable.
- This is what we also find in our data: chronic poor households are more
- likely to be headed by a female.
+The size and composition of the household are also variables that often
+ feature in poverty regressions.
+ For instance, many studies find that household size is a good poverty indicator.
+ It is thought that increased competition for a given food stock reduces
+ consumption.
+ However, 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "RePEc:ecj:econjl:v:105:y:1995:i:433:p:1415-34"
+
+\end_inset
+
+ argue that the negative correlation disappears as one takes economies of
+ scale in household food consumption into account.
+ In terms of production, a larger household may mean more and cheaper labour
+ is available, but Van Campenhout (2014) finds that especially mothers in
+ larger households devote a significant amount of time to non-productive
+ activities.
+ This last feature may be captured better when using relating the different
+ types of household in terms of poverty dynamics to dependency ratios.
+\end_layout
+
+\begin_layout Standard
+Female headedness is also often found to be a good predictor of poverty.
+ The underlying reasons should be sought in differences between male headed
+ and female headed households in terms of access to secure land tenure,
+ labour, credit, technology and extension services (eg.
+\begin_inset CommandInset citation
+LatexCommand citealp
+key "Quisumbing2010581"
+
+\end_inset
+
+).
+ One of the consequences is that female headed households employ less inputs,
+ such as improved seeds and fertilizer, which has been shown to reduce productiv
+ity (eg.
+ 
+\begin_inset CommandInset citation
+LatexCommand citealp
+key "Udry1995407"
+
+\end_inset
+
+).
+ We will also look at marital status as an alternative way to look at gender
+ based agricultural gaps.
+ This will enable us to see if, for instance, widowhood is associated with
+ chronic poverty 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "vandeWalle20131"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+We find that indeed, chronic poor households are more likely to be headed
+ by a female.
  In addition, household that were never poor in our panel, as well as households
- that are escaping poverty are more likely to be headed by a male.
+ that are escaping poverty over time are more likely to be headed by a male.
  For the other categories, we do not find big differences between male and
  female headed households.
  We also looked at the age of the household head.
@@ -9971,34 +10180,14 @@ reference "fig:Poverty-Dynamics-and"
  conditional on what poverty dynamics group the households are in.
  In the left panel (1), we plot boxplots for household size for each of
  the 5 poverty dynamics classes.
- While many studies find that household size is a good poverty indicator,
- the case is not clear cut in for the case of poverty dynamics.
- It is thought that increased competition for a given food stock reduces
- consumption.
- However, 
-\begin_inset CommandInset citation
-LatexCommand citet
-key "RePEc:ecj:econjl:v:105:y:1995:i:433:p:1415-34"
-
-\end_inset
-
- argue that the negative correlation disappears as one takes economies of
- scale in household food consumption into account.
- In terms of production, a larger household may mean more and cheaper labour.
- There is weak evidence that chronic poor households are slightly larger,
- as are households that escaped poverty.
- 
-\end_layout
-
-\begin_layout Standard
-In the right panel (2) we do the same for child dependency ratios.
+ In the right panel (2) we do the same for child dependency ratios.
  For each household we calculate the share of children under the age of
  15 within the total household and use this to plot boxplots by poverty
  dynamics category.
  We find that higher child dependency is associated with chronic poverty,
  while the non-poor have the lowest median child dependency ratio.
- Looking at both of the charts together, the chronic poor have large households
- and high dependency rations.
+ Looking at both of the charts together, the chronic poor have relatively
+ large households and high dependency rations.
  Those that are never poor have small households and low dependency rations.
  Households that slide below the poverty threshold and those that are vulnerable
  have a surprisingly high dependency ratio given the relatively smaller
@@ -10057,11 +10246,9 @@ name "fig:Poverty-Dynamics-and"
 \end_layout
 
 \begin_layout Standard
-Another interesting household characteristic is the marital status of the
- household head.
- Respondents could choose out of 5 mutually exclusive types of marriage:
- married monogamously, married polygamously, divorced, widow/widower and
- never married.
+For marital status of the household head, respondents could choose out of
+ 5 mutually exclusive types of marriage: married monogamously, married polygamou
+sly, divorced, widow/widower and never married.
  The results are presented as a table of proportions where the rows sum
  to 1 (table 
 \begin_inset CommandInset ref
@@ -12360,85 +12547,45 @@ Ugandans engaged in non-agricultural enterprises are also likely to fall
 \end_layout
 
 \begin_layout Subsubsection*
-Access to services
-\end_layout
-
-\begin_layout Standard
-Figure 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:Time-to-fetch"
-
-\end_inset
-
- provides kernel density plots for time reported to fetch drinking water
- including waiting time.
- You can see that respondents cluster their answers around 2 hours and 4
- hours.
- We find that in general, the non-poor need to spend less time fetching
- water, except maybe for some non-poor that spend about 2 hours.
- The median for the non-poor is about 50 minutes, as opposed to about 60
- minutes for the chronic poor.
- The respective means are 63 minutes for the non-poor and 77 for the poor.
- This is also illustrated by the fact that the chronic poor have higher
- densities at the extreme right of the distribution, for instance around
- 4 hours or 240 minutes.
- The vulnerable have a high density around 2 hours.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Float figure
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-Time to fetch water
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:Time-to-fetch"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename /home/bjvca/data/data/GAP/Haruna/watertime.pdf
-	scale 70
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsubsection*
 Education
 \end_layout
 
 \begin_layout Standard
-We next turn to education.
- One important variable in a poverty profile is the education level of the
- household head.
+In traditional poverty profiles, the education level of the household head
+ is often significant.
+ Indeed, skills are important for the self-employed, and schooled labor
+ is likely to be better rewarded.
+ It is less obvious how schooling affects poverty dynamics in the short
+ run.
+ Lack of education has been linked to intergenerational poverty 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Harper2003535"
+
+\end_inset
+
+.
+ Education is also among the initial characteristics associated with chronic
+ poverty in rural communities in Ethiopia 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "doi:10.1080/00220388.2011.625410"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:eduhead"
+
+\end_inset
+
+ looks at the highest education level reported by the household head.
  We see that 17.6 percent of all Ugandan household heads have never attended
  school.
  However, within the group of individuals in households that have always
@@ -13532,7 +13679,34 @@ Health
 \end_layout
 
 \begin_layout Standard
-Figure 
+Illness and health shocks have been reported to affect poverty dynamics.
+ For instance, 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "doi:10.1080/00220380500405394"
+
+\end_inset
+
+ note that serious human health shocks causing permanent injury or illness
+ or death were amongst the most frequently cited reasons for households
+ falling into poverty in quantitative data from Madagascar and Kenya.
+ But the bidirectional nature of the poverty relationship between poverty
+ and health may trap households in persistent poverty, as ill-health can
+ be a catalyst for poverty spirals and in turn poverty can create and perpetuate
+ poor health status 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "grant"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Health status is likely to be a function of the distance the nearest health
+ facility.
+ Figure 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:Distance-to-health"
@@ -13607,9 +13781,10 @@ reference "fig:Days-inactive"
  8.5 days.
  We see that people that have lost relatively few days due to illness are
  more likely to be in the sub-group that subsequently escapes poverty.
- At the other extreme, the households that report the highest number of
- days lost by the household head due to illness are those that are in the
- sub-group of households that eventually fall into poverty.
+ On the other hand, the households that report the highest number of days
+ lost by the household head due to illness are those that are in the sub-group
+ of households that eventually fall into poverty or are living in chronic
+ poverty.
 \end_layout
 
 \begin_layout Standard
@@ -13658,22 +13833,49 @@ Shocks and Coping
 \end_layout
 
 \begin_layout Standard
-Finally, we have a look at shocks reported at the onset of the panel.
- In table 
+The poor are know to be more vulnerable to shocks, due to their lower ability
+ to insure 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "RePEc:oxp:obooks:9780199276837"
+
+\end_inset
+
+.
+ Shocks can have lasting effects if they destroy productive assets, such
+ as when droughts reduce livestock, or health shocks that destroy human
+ capital.
+ If households are left with too few productive assets to replenish the
+ gap left by shocks, they are likely to fall into an asset based poverty
+ trap 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "doi:10.1080/00220380500405261"
+
+\end_inset
+
+.
+ We also look at how the households deal with shocks ex-post conditional
+ on their wealth dynamics category.
+\end_layout
+
+\begin_layout Standard
+Table 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "tab:shocks"
 
 \end_inset
 
-, we are again reporting column percentages.
+ look at shocks reported at the onset of the panel.
+ We again report column percentages.
  Hence, while 35 percent of all shocks are drought related, this increases
  to almost 40 percent in the group of the chronic poor.
  Still, drought also features prominently in the group that subsequently
  escapes poverty.
- While there is still a substantial share of the non-poor that report to
- have been exposed to shocks, the share is about 5 percentage points lower
- than the overall share that reports drought related shocks.
+ While there is a substantial share of the non-poor that report to have
+ been exposed to drought shocks, the share is about 5 percentage points
+ lower than the overall share that reports drought related shocks.
  Floods, hailstorms and also pest reports do not seem to differ too much
  between the different groups.
 \end_layout
@@ -13681,16 +13883,21 @@ reference "tab:shocks"
 \begin_layout Standard
 Bad seed quality is reported more amongst the non-poor than average.
  This may be because especially farmers that are always above the poverty
- line are more commercially oriented and buy seeds.
+ line are more commercially oriented and buy seeds, instead of recycling
+ seeds.
  As such, they are also more prone to counterfeit seeds.
  But probably the most significant result in this table is the disproportionate
  number of people within chronically poor households that report being affected
  by civil strife.
- Poverty that is associated to civil war seems to be very persistent.
-\end_layout
+ Poverty that is associated to civil war seems to be very persistent 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "RePEc:eee:wdevel:v:31:y:2003:i:3:p:629-646"
 
-\begin_layout Standard
-The non-poor clearly faced different shocks.
+\end_inset
+
+.
+ The non-poor clearly faced different shocks.
  They report more than average losses related to robbery and theft.
  This category also shows up relatively more in the category of households
  that slide into poverty.
@@ -15977,7 +16184,7 @@ If we look at the main source of income at the start of the panel, we find
 \end_layout
 
 \begin_layout Standard
-We then look at access to services, education and health.
+We then look at education and health.
  We find that households that live in chronic poverty reported highest median
  distance to health facilities.
  Distance to health facilities likely reflects location, as we have seen
@@ -16031,6 +16238,13 @@ status open
 
 \begin_layout Plain Layout
 Utility Consistent Poverty Lines 
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Utility-Consistent-Poverty"
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -17810,7 +18024,7 @@ national
 \begin_inset Text
 
 \begin_layout Plain Layout
-urban
+rural
 \end_layout
 
 \end_inset
@@ -18031,7 +18245,7 @@ urban
 \begin_inset Text
 
 \begin_layout Plain Layout
-rural
+urban
 \end_layout
 
 \end_inset
@@ -19863,7 +20077,7 @@ national
 \begin_inset Text
 
 \begin_layout Plain Layout
-urban
+rural
 \end_layout
 
 \end_inset
@@ -20084,7 +20298,7 @@ urban
 \begin_inset Text
 
 \begin_layout Plain Layout
-rural
+urban
 \end_layout
 
 \end_inset

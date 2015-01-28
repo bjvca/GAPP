@@ -2973,7 +2973,7 @@ reference "tab:Utility-consist"
  reports the utility-consistent poverty lines we estimate using the 2012/2013
  UNHS based on the six different spatial domains.
 \begin_inset Foot
-status collapsed
+status open
 
 \begin_layout Plain Layout
 The poverty lines in table 
@@ -2985,8 +2985,9 @@ reference "tab:Utility-consist"
 
  are aggregated to different spatial domains for the sake of comparison
  to official statistics.
- The underlying poverty lines for the six spatial domains are presented
- in table 
+ The underlying poverty lines for the six spatial domains, in addition to
+ a poverty line using only one (national) spatial domain for comparison,
+ are presented in table 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "tab:Utility-Consistent-Poverty"
@@ -5462,10 +5463,11 @@ reference "tab:Poverty-headcounts-1spdomain"
  In other words, we estimate a single national poverty line based on a single
  national food basket.
 \begin_inset Foot
-status collapsed
+status open
 
 \begin_layout Plain Layout
-This national poverty line was estimated to be 1233.42, see table 
+This national poverty line was estimated to be 1233.42, see first row in
+ table 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "tab:Utility-Consistent-Poverty"
@@ -5473,6 +5475,21 @@ reference "tab:Utility-Consistent-Poverty"
 \end_inset
 
  in the appendix.
+ One may be surprised that the poverty line based on a single spatial domain
+ is so low, and below all of the other poverty lines estimated in the six
+ regions, instead of somewhere in between.
+ This is because, using only one spatial domain essentially means that a
+ single poverty line is constructed based on the lowest cost and lowest
+ consuming rural zones.
+ This leads to a low poverty line, closer to the lowest poverty line using
+ different spatial domains (Eastern region) than to the highest poverty
+ line (Kampala).
+ The fact that the poverty line using one spatial domain is actually below
+ the lowest poverty line when different spatial domains are used is due
+ to the utility consistency adjustments.
+ Poverty lines for the Central and Eastern regions are significantly adjusted
+ upward, lifting them above the poverty line using a single spatial domain.
+ 
 \end_layout
 
 \end_inset
