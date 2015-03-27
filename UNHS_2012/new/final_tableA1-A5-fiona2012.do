@@ -507,9 +507,10 @@ sort product untcd
 
 *rename untcd untcd
 replace product=100 if product==101  | product==102  | product==103  | product==104
-merge m:1 product untcd using  "$path/conversionfactors_corrected_onlyUNPS.dta"
+merge m:1 product untcd using  "/home/bjvca/data/data/GAP/Haruna/conversions_all_march2015.dta"
 
-*merge m:1 product untcd using  "$path\in\conversionfactors.dta"
+
+*merge m:1 product untcd using  "/home/bjvca/data/data/GAP/Haruna/conversionfactors.dta"
 
 tab _m
 drop _m

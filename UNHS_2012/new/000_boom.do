@@ -147,7 +147,9 @@ $no_temp_rev	do "$path/new/160_food_basket_fix.do"	/* Fixed food basket */
 $no_temp_rev	do "$path/new/180_povline_food_fix.do"	/* Inflating year t1's poverty lines to year t2 */
 
 *** execute as super user:
-shell /usr/GAMS/gams24.1_linux_x64_64_sfx/gams "/home/bjvca/data/data/GAP/Haruna/UNHS_2012/new/190a_revpref13_r_bjorn.gms" o="/home/bjvca/data/data/GAP/Haruna/UNHS_2012/new/list.lst"
+// shell /usr/GAMS/gams24.1_linux_x64_64_sfx/gams "/home/bjvca/data/data/GAP/Haruna/UNHS_2012/new/190a_revpref13_r_bjorn.gms" o="/home/bjvca/data/data/GAP/Haruna/UNHS_2012/new/list.lst"
+
+shell /usr/GAMS/gams24.1_linux_x64_64_sfx/gams "/home/bjvca/data/data/GAP/Haruna/UNHS_2012/new/250a_spat_consistent_mod.gms" o="/home/bjvca/data/data/GAP/Haruna/UNHS_2012/new/list.lst"
 
 
 /* Adjusting flexible basket: inside pref. constraints */
