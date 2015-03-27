@@ -1,0 +1,147 @@
+#LyX 2.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 474
+\begin_document
+\begin_header
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_math auto
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Consumption Bundle Aggregation in Poverty Measurement: Implications for
+ Poverty and its Dynamics in Uganda
+\end_layout
+
+\begin_layout Author
+Bjorn Van Campenhout
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+International Food Policy Research Institute (IFPRI) - Kampala, b.vancampenhout@c
+giar.org
+\end_layout
+
+\end_inset
+
+, Haruna Sekabira
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Department for Agricultural Economics and Rural Development, Goettingen
+ University
+\end_layout
+
+\end_inset
+
+, and Dede H.
+ Aduayom
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+International Food Policy Research Institute (IFPRI) - Kampala
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Abstract
+Official poverty figures in Uganda are flawed by the fact that the underlying
+ poverty lines are based on a single national food basket that was constructed
+ in the early 1990s.
+ In this paper, we estimate a new set of poverty lines that accounts for
+ the widely divergent diets throughout the country using the latest available
+ household survey.
+ Using these updated poverty lines, we then look at poverty dynamics using
+ four waves of the Uganda National Panel Survey.
+ We classify households into categories depending on their change in poverty
+ status over time and relate this to characteristics that are likely to
+ change only slowly.
+ This enables us to explore the characteristics of households that, for
+ instance, grow out of poverty and how they differ from households that
+ appear to be trapped in poverty.
+ Our approach generates poverty measures that are more credible from a theoretic
+al point of view and are more in line with what other researchers find.
+\end_layout
+
+\begin_layout Description
+JEL: O12, D31, O55
+\end_layout
+
+\begin_layout Description
+Keywords: poverty, cost of basic needs, revealed preferences, Uganda
+\end_layout
+
+\begin_layout Description
+note: This project is under revision control.
+ All source code to replicate the analysis can be found on  : https://bitbucket.o
+rg/bjvca/wider/
+\end_layout
+
+\end_body
+\end_document
