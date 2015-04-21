@@ -5,16 +5,18 @@
 #y = 2005/06: poverty - contribution ,2009/10 poverty - contribution,2010/11 poverty - contribution,2011/12 poverty - contribution.
 #z = (p0,p1,p2) with one poverty line,  (p0,p1,p2) with utility consistent poverty lines
 
+path <- getwd()
+
 
 library(foreign)
 resmat <- array(NA, c(15, 10, 6))
 
 
-unhs1213 <- read.dta("/home/bjvca/data/data/GAP/Haruna/UNHS_2012/work/conpc.dta")
-dta0506 <- read.dta("/home/bjvca/data/data/GAP/Haruna/UNPS_2005_06/work/conpc.dta")
-dta0910 <- read.dta("/home/bjvca/data/data/GAP/Haruna/UNPS_2009_10/work/conpc.dta")
-dta1011 <- read.dta("/home/bjvca/data/data/GAP/Haruna/UNPS_2010_11/work/conpc.dta")
-dta1112 <- read.dta("/home/bjvca/data/data/GAP/Haruna/UNPS_2011_12/work/conpc.dta")
+unhs1213 <- read.dta(paste(path,"/UNHS_2012/work/conpc.dta", sep=""))
+dta0506 <- read.dta(paste(path,"/UNPS_2005_06/work/conpc.dta", sep=""))
+dta0910 <- read.dta(paste(path,"/UNPS_2009_10/work/conpc.dta", sep=""))
+dta1011 <- read.dta(paste(path,"/UNPS_2010_11/work/conpc.dta", sep=""))
+dta1112 <- read.dta(paste(path,"/UNPS_2011_12/work/conpc.dta", sep=""))
 beginp <- 500
 endp <- 1000
 
@@ -27,9 +29,9 @@ lines(ecdf(dta1112$cons_pc_nom/189.48*100), xlim=c(beginp,endp), col="green")
 #merge in weights
 
 
-unhs1213hhdata <- read.dta("/home/bjvca/data/data/GAP/Haruna/UNHS_2012/work/hhdata.dta")
-unhs1213tpi <- read.dta("/home/bjvca/data/data/GAP/Haruna/UNHS_2012/work/temp_index_reg_tpi.dta")
-unhs1213w <-  merge(unhs0910hhdata, unhs0910tpi, by.x=c("reg_tpi","survquar"), by.y=c("reg_tpi","survquar"))
+unhs1213hhdata <-  read.dta(paste(path,"/UNHS_2012/work/hhdata.dta", sep=""))
+unhs1213tpi <-  read.dta(paste(path,"/UNHS_2012/work/temp_index_reg_tpi.dta", sep=""))
+unhs1213w <-  merge(unhs1213hhdata, unhs1213tpi, by.x=c("reg_tpi","survquar"), by.y=c("reg_tpi","survquar"))
 
 
 #merge in splines
@@ -73,8 +75,8 @@ unhs0910w$z <-  unhs0910w$cr2 < unhs0910w$ucpline
  by(unhs0910w, unhs0910w$strata, function(unhs0910w) weighted.mean(unhs0910w$z, unhs0910w$hmult,na.rm=T))
   
  ############################ UNPS 2005/06 ##############################
-unps0506hhdata <- read.dta("/home/bjvca/data/data/GAP/Haruna/UNPS_2005_06/work/hhdata.dta")
-unps0506tpi <- read.dta("/home/bjvca/data/data/GAP/Haruna/UNPS_2005_06/work/temp_index_reg_tpi.dta")
+unps0506hhdata <- read.dta(paste(path,"/UNPS_2005_06/work/hhdata.dta", sep=""))
+unps0506tpi <- read.dta(paste(path,"/UNPS_2005_06/work/temp_index_reg_tpi.dta", sep=""))
 unps0506w <-  merge(merge(unps0506hhdata, unps0506tpi, by.x=c("reg_tpi","survquar"), by.y=c("reg_tpi","survquar")),dta0506,by.x="hhid", by.y="hhid")
 
 
@@ -156,8 +158,8 @@ resmat[8:15,2,alpha+4] <- (resmat[8:15,1,alpha+4] * as.vector( by(unps0506w, unp
 
   
   ############################ UNPS 2009/10 ##############################
-unps0910hhdata <- read.dta("/home/bjvca/data/data/GAP/Haruna/UNPS_2009_10/work/hhdata.dta")
-unps0910tpi <- read.dta("/home/bjvca/data/data/GAP/Haruna/UNPS_2009_10/work/temp_index_reg_tpi.dta")
+unps0910hhdata <- read.dta(paste(path,"/UNPS_2009_10/work/hhdata.dta", sep=""))
+unps0910tpi <- read.dta(paste(path,"/UNPS_2009_10/work/temp_index_reg_tpi.dta", sep=""))
 unps0910w <-  merge(merge(unps0910hhdata, unps0910tpi, by.x=c("reg_tpi","survquar"), by.y=c("reg_tpi","survquar")),dta0910,by.x="hhid", by.y="hhid")
 unps0910w$strata[unps0910w$strata==" Kampala"] <- "Central urban"
 unps0910w$regurb <- factor(unps0910w$strata)
@@ -245,8 +247,8 @@ resmat[8:15,4,alpha+4] <- (resmat[8:15,3,alpha+4] * as.vector( by(unps0910w, unp
   
    
 ############################ 2010/11 ##############################
-unps1011hhdata <- read.dta("/home/bjvca/data/data/GAP/Haruna/UNPS_2010_11/work/hhdata.dta")
-unps1011tpi <- read.dta("/home/bjvca/data/data/GAP/Haruna/UNPS_2010_11/work/temp_index_reg_tpi.dta")
+unps1011hhdata <- read.dta(paste(path,"/UNPS_2010_11/work/hhdata.dta", sep=""))
+unps1011tpi <- read.dta(paste(path,"/UNPS_2010_11/work/temp_index_reg_tpi.dta", sep=""))
 unps1011w <-  merge(merge(unps1011hhdata, unps1011tpi, by.x=c("reg_tpi","survquar"), by.y=c("reg_tpi","survquar")),dta1011,by.x="hhid", by.y="hhid")
 unps1011w$region[unps1011w$region=="Kampala"] <- "Central"
 unps1011w$region <- factor(unps1011w$region)
@@ -332,8 +334,8 @@ resmat[8:15,6,alpha+4] <- (resmat[8:15,5,alpha+4] * as.vector( by(unps1011w, unp
 }
  
 ############################ 2011/12 ##############################
-unps1112hhdata <- read.dta("/home/bjvca/data/data/GAP/Haruna/UNPS_2011_12/work/hhdata.dta")
-unps1112tpi <- read.dta("/home/bjvca/data/data/GAP/Haruna/UNPS_2011_12/work/temp_index_reg_tpi.dta")
+unps1112hhdata <- read.dta(paste(path,"/UNPS_2011_12/work/hhdata.dta", sep=""))
+unps1112tpi <- read.dta(paste(path,"/UNPS_2011_12/work/temp_index_reg_tpi.dta", sep=""))
 unps1112w <-  merge(merge(unps1112hhdata, unps1112tpi, by.x=c("reg_tpi","survquar"), by.y=c("reg_tpi","survquar")),dta1112,by.x="hhid", by.y="hhid")
 
 unps1112w$regurb  <- factor(unps1112w$regurb ,levels(unps1112w$regurb)[c(2,1,4,3,6,5,8,7)])
@@ -465,13 +467,13 @@ sum(merged$wgt09[merged$categories=="chronic"]*merged$hhsize.x[merged$categories
 
 merged$categories <- factor( merged$categories,levels(factor(merged$categories))[c(4,2,5,3,1)])
 
-pdf("/home/bjvca/data/data/GAP/Haruna/regionalprof.pdf")
+pdf(paste(path,"/regionalprof.pdf",  sep="")
 plot(prop.table(xtabs(merged$wgt09*merged$hhsize.x~merged$categories+merged$region.x),1), main="", xlab="categories", ylab="region")
 dev.off()
 
 ### dem
 
-pdf("/home/bjvca/data/data/GAP/Haruna/hhsize.pdf")
+pdf(paste(path,"/hhsize.pdf", sep=""))
 
 barplot(by(mergedse, mergedse$categories, function(mergedse) weighted.mean(mergedse$h5q13, mergedse$hhweight.x*mergedse$hhsize.x,na.rm=T)))
 
@@ -480,7 +482,7 @@ dev.off()
 pairwise.t.test(merged$hhsize.x,merged$categories)
 
 
-gsec2 <- read.dta("/home/bjvca/data/data/GAP/Haruna/UNPS_2005_06/in/GSEC2.dta")
+gsec2 <- read.dta(paste(path,"/UNPS_2005_06/in/GSEC2.dta",sep=""))
 
 merged_r <- merged
 
@@ -505,10 +507,10 @@ temp$ch_dep <- temp$child/temp$hhsize
 merged <- merge(merged_r, temp, by="hhid")
 
 
-pdf("/home/bjvca/data/data/GAP/Haruna/dependency.pdf")
+pdf(paste(path,"/dependency.pdf", sep=""))
 par(mfrow=c(1,2))
-boxplot(merged$hhsize.x[merged$hhsize.x<10]~merged$categories[merged$hhsize.x<10],horizontal=TRUE, col="grey", main="(1)")
-boxplot(merged$ch_dep~merged$categories, horizontal=TRUE, col="grey",main="(2)")
+boxplot(merged$hhsize.x[merged$hhsize.x<10]~merged$categories[merged$hhsize.x<10],horizontal=TRUE, col="grey", main="HH size")
+boxplot(merged$ch_dep~merged$categories, horizontal=TRUE, col="grey",main="dependency ratio")
 dev.off()
 
 
@@ -522,7 +524,7 @@ tapply(mergeds$h2q9,mergeds$categories, mean)
 prop.table(xtabs(mergeds$hhweight.x*mergeds$hhsize.x~mergeds$h2q10+mergeds$categories),1)
 xtabs(mergeds$hhweight.x*mergeds$hhsize.x~mergeds$categories,1)/sum(merged$hhweight.x*merged$hhsize.x)
 
-mergedse <-  merge(gsec2,read.dta("/home/bjvca/data/data/GAP/Haruna/UNPS_2005_06/in/GSEC4.dta"), by.x=c("HHID","PID"), by.y=c("HHID","PID"))
+mergedse <-  merge(gsec2,read.dta(paste(path,"/UNPS_2005_06/in/GSEC4.dta", sep="")), by.x=c("HHID","PID"), by.y=c("HHID","PID"))
 mergedse <- subset(mergedse, mergedse$h2q5 == "head")
 mergedse <- merge(merged_r, mergedse, by.x="hhid", by.y="HHID")
 mergedse$edhuead[is.na(mergedse$h4q4)] <- "none"
@@ -542,11 +544,11 @@ prop.table(xtabs(mergedse$hhweight.x*mergedse$hhsize.x~mergedse$edhuead+mergedse
 
  
  ##section 11 time to get drinkingwater
- mergedse <-  merge(merged_r,read.dta("/home/bjvca/data/data/GAP/Haruna/UNPS_2005_06/in/GSEC11.dta"), by.x="hhid", by.y="HHID")
+ mergedse <-  merge(merged_r,read.dta(paste(path,"/UNPS_2005_06/in/GSEC11.dta",sep="")), by.x="hhid", by.y="HHID")
 mergedse$totime <- mergedse$h11q8a1n + mergedse$h11q8b1n
 
-pdf("/home/bjvca/data/data/GAP/Haruna/watertime.pdf")
-plot(density(mergedse$totime[merged$categories=="non-poor"], na.rm=T, bw=20), ylim = c(0,0.01),xlim=c(0,300), main="", xlab="time (incl waiting time) to fetch water" )
+pdf(paste(path,"/watertime.pdf", sep=""))
+plot(density(mergedse$totime[merged$categories=="non-poor"], na.rm=T, bw=20), ylim = c(0,0.01),xlim=c(0,300), main="", xlab="time (incl waiting time) in minutes to fetch water" )
 lines(density(mergedse$totime[merged$categories=="chronic"], na.rm=T, bw=20) , col="red")
 #lines(density(mergedse$totime[merged$categories=="fall"], na.rm=T, bw=20) , col="blue")
 #lines(density(mergedse$totime[merged$categories=="escape"], na.rm=T, bw=20) , col="green")
@@ -555,7 +557,7 @@ legend("topright", c("non-poor", "chronic", "vulnerable"),lty=c(1,1,1), col=c("b
 
 dev.off()
 
-mergedse <-  merge(merged_r,read.dta("/home/bjvca/data/data/GAP/Haruna/UNPS_2005_06/in/GSEC16.dta"), by.x="hhid", by.y="HHID")
+mergedse <-  merge(merged_r,read.dta(paste(path,"/UNPS_2005_06/in/GSEC16.dta",sep="")), by.x="hhid", by.y="HHID")
 
 mergedse  <- subset(mergedse ,mergedse$h16q3=="yes")
 
@@ -565,7 +567,7 @@ prop.table(xtabs(mergedse$hhweight.x*mergedse$hhsize.x~mergedse$h16q2+mergedse$c
 
 dta <- prop.table(xtabs(mergedse$hhweight.x*mergedse$hhsize.x~as.factor(mergedse$h16q7a)+mergedse$categories ),2)
 library(lattice)
-pdf("/home/bjvca/data/data/GAP/Haruna/coping.pdf")
+pdf(paste(path,"/coping.pdf",sep=""))
 plot.new()
 dotplot(dta[order(dta[,1]),],col = c("black", "blue", "red","green", "orange"),xlab="")
 
@@ -578,45 +580,45 @@ dev.off()
 xtabs(mergedse$hhweight.x*mergedse$hhsize.x~mergedse$h16q2) / sum(xtabs(mergedse$hhweight.x*mergedse$hhsize.x~mergedse$h16q2))
 
 
-mergedse <-  merge(merged_r,read.dta("/home/bjvca/data/data/GAP/Haruna/UNPS_2005_06/in/GSEC4.dta"), by.x="hhid", by.y="HHID")
+mergedse <-  merge(merged_r,read.dta(paste(path,"/UNPS_2005_06/in/GSEC4.dta",sep="")), by.x="hhid", by.y="HHID")
 
 
-gsec4 <- read.dta("/home/bjvca/data/data/GAP/Haruna/UNPS_2005_06/in/GSEC4.dta")
+gsec4 <- read.dta(paste(path,"/UNPS_2005_06/in/GSEC4.dta",sep=""))
 gsec4 <- subset(gsec4,as.numeric(gsec4$h4q6)<=8)
 
 gsec4 <- aggregate(gsec4$h4q9, list(gsec4$HHID), FUN=mean, na.rm=T)
 names(gsec4) <- c("HHID","schdistance")
 mergedse <-  merge(merged_r,gsec4, by.x="hhid", by.y="HHID")
 
-pdf("/home/bjvca/data/data/GAP/Haruna/distance_school.pdf")
+pdf(paste(path,"/distance_school.pdf",sep=""))
  boxplot(mergedse$schdistance[mergedse$schdistance<5]~mergedse$categories[mergedse$schdistance<5],col="grey")
  dev.off()
 
- gsec5 <- read.dta("/home/bjvca/data/data/GAP/Haruna/UNPS_2005_06/in/GSEC5.dta")
+ gsec5 <- read.dta(paste(path,"/UNPS_2005_06/in/GSEC5.dta",sep=""))
 gsec5 <- subset(gsec5,as.numeric(gsec5$h5q8)>=7 & as.numeric(gsec5$h5q8)<=11)
 
 gsec5 <- aggregate(gsec5$h5q9, list(gsec5$HHID), FUN=mean, na.rm=T)
 names(gsec5) <- c("HHID","healthdistance")
 mergedse <-  merge(merged_r,gsec5, by.x="hhid", by.y="HHID")
 #mergedse$categories <- factor( mergedse$categories,levels(factor(mergedse$categories))[c(4,2,5,3,1)])
-pdf("/home/bjvca/data/data/GAP/Haruna/distance_health.pdf")
+pdf(paste(path,"/distance_health.pdf",sep=""))
 boxplot(mergedse$healthdistance[mergedse$healthdistance<20]~mergedse$categories[mergedse$healthdistance<20],col="grey")
 dev.off()
 
 
 #section 15: most important source of earnings
- mergedse <-  merge(merged_r,read.dta("/home/bjvca/data/data/GAP/Haruna/UNPS_2005_06/in/GSEC15.dta"), by.x="hhid", by.y="HHID")
+ mergedse <-  merge(merged_r,read.dta(paste(path,"/UNPS_2005_06/in/GSEC15.dta", sep="")), by.x="hhid", by.y="HHID")
  #mergedse$categories <- factor( mergedse$categories,levels(factor(mergedse$categories))[c(4,2,5,3,1)])
 prop.table(xtabs(mergedse$hhweight.x*mergedse$hhsize.x~mergedse$h15q3+mergedse$categories ),1)
 xtabs(mergedse$hhweight.x*mergedse$hhsize.x~mergedse$categories )/sum(mergedse$hhweight.x*mergedse$hhsize.x)
  
 
-mergedse <-  merge(gsec2,read.dta("/home/bjvca/data/data/GAP/Haruna/UNPS_2005_06/in/GSEC5.dta"), by.x=c("HHID","PID"), by.y=c("HHID","PID"))
+mergedse <-  merge(gsec2,read.dta(paste(path,"/UNPS_2005_06/in/GSEC5.dta",sep="")), by.x=c("HHID","PID"), by.y=c("HHID","PID"))
 mergedse <- subset(mergedse, mergedse$h2q5 == "head")
 mergedse <- merge(merged_r, mergedse, by.x="hhid", by.y="HHID")
 
 mergedse$h5q13[is.na(mergedse$h5q13)] <- 0
 #mergedse$categories <- factor( mergedse$categories,levels(factor(mergedse$categories))[c(4,2,5,3,1)])
-pdf("/home/bjvca/data/data/GAP/Haruna/days_inactive.pdf")
+pdf(paste(path,"/days_inactive.pdf",sep=""))
 barplot( by(mergedse, mergedse$categories, function(mergedse) weighted.mean(mergedse$h5q13, mergedse$hhweight.x*mergedse$hhsize.x,na.rm=T)))
 dev.off()
