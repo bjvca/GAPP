@@ -549,11 +549,11 @@ mergedse$totime <- mergedse$h11q8a1n + mergedse$h11q8b1n
 
 pdf(paste(path,"/watertime.pdf", sep=""))
 plot(density(mergedse$totime[merged$categories=="non-poor"], na.rm=T, bw=20), ylim = c(0,0.01),xlim=c(0,300), main="", xlab="time (incl waiting time) in minutes to fetch water" )
-lines(density(mergedse$totime[merged$categories=="chronic"], na.rm=T, bw=20) , col="red")
-#lines(density(mergedse$totime[merged$categories=="fall"], na.rm=T, bw=20) , col="blue")
+lines(density(mergedse$totime[merged$categories=="chronic"], na.rm=T, bw=20) , lty=2)
+#lines(density(mergedse$totime[merged$categories=="fall"], na.rm=T, bw=20) , lty=2)
 #lines(density(mergedse$totime[merged$categories=="escape"], na.rm=T, bw=20) , col="green")
-lines(density(mergedse$totime[merged$categories=="vulnerable"], na.rm=T, bw=20) , col="blue")
-legend("topright", c("non-poor", "chronic", "vulnerable"),lty=c(1,1,1), col=c("black","red","blue"))
+lines(density(mergedse$totime[merged$categories=="vulnerable"], na.rm=T, bw=20) , lty=3)
+legend("topright", c("non-poor", "chronic", "vulnerable"),lty=c(1,2,3))
 
 dev.off()
 
@@ -569,9 +569,11 @@ dta <- prop.table(xtabs(mergedse$hhweight.x*mergedse$hhsize.x~as.factor(mergedse
 library(lattice)
 pdf(paste(path,"/coping.pdf",sep=""))
 plot.new()
-dotplot(dta[order(dta[,1]),],col = c("black", "blue", "red","green", "orange"),xlab="")
+#dotplot(dta[order(dta[,1]),],col = c("black", "blue", "red","green", "orange"),xlab="")
+dotplot(dta[order(dta[,1]),],pch = c(1,2,3,4,5),xlab="", col="black")
 
-legend(x="bottomright", legend = c("non-poor", "escape","vulnerable","fall", "chronic"),  col = c("black", "blue", "red","green", "orange"), pch = 1, cex=0.8)
+
+legend(x="bottomright", legend = c("non-poor", "escape","vulnerable","fall", "chronic"),  , pch =c(1,2,3,4,5), cex=0.8)
 
 ## note: this produces a pdf with the first page a blank, which is difficult to import in lyx. I used a linux tool called pfdtk to remove the first page: pdftk coping.pdf cat 2 output coping_fin.pdf
 
