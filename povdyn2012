@@ -548,13 +548,13 @@ prop.table(xtabs(mergedse$hhweight.x*mergedse$hhsize.x~mergedse$edhuead+mergedse
 mergedse$totime <- mergedse$h11q8a1n + mergedse$h11q8b1n
 
 pdf(paste(path,"/watertime.pdf", sep=""))
-plot(density(mergedse$totime[merged$categories=="non-poor"], na.rm=T, bw=20), ylim = c(0,0.01),xlim=c(0,300), main="", xlab="time (incl waiting time) in minutes to fetch water" )
-lines(density(mergedse$totime[merged$categories=="chronic"], na.rm=T, bw=20) , lty=2)
+
+plot(density(mergedse$totime[merged$categories=="non-poor"], na.rm=T, bw=20), lwd=3,ylim = c(0,0.01),xlim=c(0,300), main="", xlab="time (incl waiting time) in minutes to fetch water" )
+lines(density(mergedse$totime[merged$categories=="chronic"], na.rm=T, bw=20) , lty=2,lwd=3)
 #lines(density(mergedse$totime[merged$categories=="fall"], na.rm=T, bw=20) , lty=2)
 #lines(density(mergedse$totime[merged$categories=="escape"], na.rm=T, bw=20) , col="green")
-lines(density(mergedse$totime[merged$categories=="vulnerable"], na.rm=T, bw=20) , lty=3)
-legend("topright", c("non-poor", "chronic", "vulnerable"),lty=c(1,2,3))
-
+lines(density(mergedse$totime[merged$categories=="vulnerable"], na.rm=T, bw=20) , lty=3,lwd=3)
+legend("topright", c("non-poor", "chronic", "vulnerable"),lty=c(1,2,3),lwd=c(3,3,3))
 dev.off()
 
 mergedse <-  merge(merged_r,read.dta(paste(path,"/UNPS_2005_06/in/GSEC16.dta",sep="")), by.x="hhid", by.y="HHID")
