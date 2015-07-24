@@ -467,9 +467,23 @@ sum(merged$wgt09[merged$categories=="chronic"]*merged$hhsize.x[merged$categories
 
 merged$categories <- factor( merged$categories,levels(factor(merged$categories))[c(4,2,5,3,1)])
 
-pdf(paste(path,"/regionalprof.pdf",  sep="")
+pdf(paste(path,"/fig1.pdf",  sep=""))
 plot(prop.table(xtabs(merged$wgt09*merged$hhsize.x~merged$categories+merged$region.x),1), main="", xlab="categories", ylab="region")
 dev.off()
+
+postscript(paste(path,"/fig1.eps",  sep=""))
+plot(prop.table(xtabs(merged$wgt09*merged$hhsize.x~merged$categories+merged$region.x),1), main="", xlab="categories", ylab="region")
+dev.off()
+
+tiff(paste(path,"/fig1.tiff",  sep=""))
+plot(prop.table(xtabs(merged$wgt09*merged$hhsize.x~merged$categories+merged$region.x),1), main="", xlab="categories", ylab="region")
+dev.off()
+
+jpeg(paste(path,"/fig1.jpeg",  sep=""))
+plot(prop.table(xtabs(merged$wgt09*merged$hhsize.x~merged$categories+merged$region.x),1), main="", xlab="categories", ylab="region")
+dev.off()
+
+
 
 ### dem
 
@@ -507,12 +521,29 @@ temp$ch_dep <- temp$child/temp$hhsize
 merged <- merge(merged_r, temp, by="hhid")
 
 
-pdf(paste(path,"/dependency.pdf", sep=""))
+pdf(paste(path,"/fig3.pdf", sep=""))
 par(mfrow=c(1,2))
 boxplot(merged$hhsize.x[merged$hhsize.x<10]~merged$categories[merged$hhsize.x<10],horizontal=TRUE, col="grey", main="HH size")
 boxplot(merged$ch_dep~merged$categories, horizontal=TRUE, col="grey",main="dependency ratio")
 dev.off()
 
+postscript(paste(path,"/fig3.eps", sep=""))
+par(mfrow=c(1,2))
+boxplot(merged$hhsize.x[merged$hhsize.x<10]~merged$categories[merged$hhsize.x<10],horizontal=TRUE, col="grey", main="HH size")
+boxplot(merged$ch_dep~merged$categories, horizontal=TRUE, col="grey",main="dependency ratio")
+dev.off()
+
+tiff(paste(path,"/fig3.tiff", sep=""))
+par(mfrow=c(1,2))
+boxplot(merged$hhsize.x[merged$hhsize.x<10]~merged$categories[merged$hhsize.x<10],horizontal=TRUE, col="grey", main="HH size")
+boxplot(merged$ch_dep~merged$categories, horizontal=TRUE, col="grey",main="dependency ratio")
+dev.off()
+
+jpeg(paste(path,"/fig3.jpeg", sep=""))
+par(mfrow=c(1,2))
+boxplot(merged$hhsize.x[merged$hhsize.x<10]~merged$categories[merged$hhsize.x<10],horizontal=TRUE, col="grey", main="HH size")
+boxplot(merged$ch_dep~merged$categories, horizontal=TRUE, col="grey",main="dependency ratio")
+dev.off()
 
 
 heads <- subset(gsec2, gsec2$h2q5 == "head")
@@ -547,8 +578,35 @@ prop.table(xtabs(mergedse$hhweight.x*mergedse$hhsize.x~mergedse$edhuead+mergedse
  mergedse <-  merge(merged_r,read.dta(paste(path,"/UNPS_2005_06/in/GSEC11.dta",sep="")), by.x="hhid", by.y="HHID")
 mergedse$totime <- mergedse$h11q8a1n + mergedse$h11q8b1n
 
-pdf(paste(path,"/watertime.pdf", sep=""))
+pdf(paste(path,"/fig2.pdf", sep=""))
+plot(density(mergedse$totime[merged$categories=="non-poor"], na.rm=T, bw=20), lwd=3,ylim = c(0,0.01),xlim=c(0,300), main="", xlab="time (incl waiting time) in minutes to fetch water" )
+lines(density(mergedse$totime[merged$categories=="chronic"], na.rm=T, bw=20) , lty=2,lwd=3)
+#lines(density(mergedse$totime[merged$categories=="fall"], na.rm=T, bw=20) , lty=2)
+#lines(density(mergedse$totime[merged$categories=="escape"], na.rm=T, bw=20) , col="green")
+lines(density(mergedse$totime[merged$categories=="vulnerable"], na.rm=T, bw=20) , lty=3,lwd=3)
+legend("topright", c("non-poor", "chronic", "vulnerable"),lty=c(1,2,3),lwd=c(3,3,3))
+dev.off()
 
+
+postscript(paste(path,"/fig2.eps", sep=""))
+plot(density(mergedse$totime[merged$categories=="non-poor"], na.rm=T, bw=20), lwd=3,ylim = c(0,0.01),xlim=c(0,300), main="", xlab="time (incl waiting time) in minutes to fetch water" )
+lines(density(mergedse$totime[merged$categories=="chronic"], na.rm=T, bw=20) , lty=2,lwd=3)
+#lines(density(mergedse$totime[merged$categories=="fall"], na.rm=T, bw=20) , lty=2)
+#lines(density(mergedse$totime[merged$categories=="escape"], na.rm=T, bw=20) , col="green")
+lines(density(mergedse$totime[merged$categories=="vulnerable"], na.rm=T, bw=20) , lty=3,lwd=3)
+legend("topright", c("non-poor", "chronic", "vulnerable"),lty=c(1,2,3),lwd=c(3,3,3))
+dev.off()
+
+tiff(paste(path,"/fig2.tiff", sep=""))
+plot(density(mergedse$totime[merged$categories=="non-poor"], na.rm=T, bw=20), lwd=3,ylim = c(0,0.01),xlim=c(0,300), main="", xlab="time (incl waiting time) in minutes to fetch water" )
+lines(density(mergedse$totime[merged$categories=="chronic"], na.rm=T, bw=20) , lty=2,lwd=3)
+#lines(density(mergedse$totime[merged$categories=="fall"], na.rm=T, bw=20) , lty=2)
+#lines(density(mergedse$totime[merged$categories=="escape"], na.rm=T, bw=20) , col="green")
+lines(density(mergedse$totime[merged$categories=="vulnerable"], na.rm=T, bw=20) , lty=3,lwd=3)
+legend("topright", c("non-poor", "chronic", "vulnerable"),lty=c(1,2,3),lwd=c(3,3,3))
+dev.off()
+
+jpeg(paste(path,"/fig2.jpeg", sep=""))
 plot(density(mergedse$totime[merged$categories=="non-poor"], na.rm=T, bw=20), lwd=3,ylim = c(0,0.01),xlim=c(0,300), main="", xlab="time (incl waiting time) in minutes to fetch water" )
 lines(density(mergedse$totime[merged$categories=="chronic"], na.rm=T, bw=20) , lty=2,lwd=3)
 #lines(density(mergedse$totime[merged$categories=="fall"], na.rm=T, bw=20) , lty=2)
@@ -567,7 +625,7 @@ prop.table(xtabs(mergedse$hhweight.x*mergedse$hhsize.x~mergedse$h16q2+mergedse$c
 
 dta <- prop.table(xtabs(mergedse$hhweight.x*mergedse$hhsize.x~as.factor(mergedse$h16q7a)+mergedse$categories ),2)
 library(lattice)
-pdf(paste(path,"/coping.pdf",sep=""))
+pdf(paste(path,"/fig6.pdf",sep=""))
 plot.new()
 #dotplot(dta[order(dta[,1]),],col = c("black", "blue", "red","green", "orange"),xlab="")
 dotplot(dta[order(dta[,1]),],pch = c(1,2,3,4,5),xlab="", col="black")
@@ -578,6 +636,43 @@ legend(x="bottomright", legend = c("non-poor", "escape","vulnerable","fall", "ch
 ## note: this produces a pdf with the first page a blank, which is difficult to import in lyx. I used a linux tool called pfdtk to remove the first page: pdftk coping.pdf cat 2 output coping_fin.pdf
 
 dev.off()
+
+postscript(paste(path,"/fig6.eps",sep=""))
+plot.new()
+#dotplot(dta[order(dta[,1]),],col = c("black", "blue", "red","green", "orange"),xlab="")
+dotplot(dta[order(dta[,1]),],pch = c(1,2,3,4,5),xlab="", col="black")
+
+
+legend(x="bottomright", legend = c("non-poor", "escape","vulnerable","fall", "chronic"),  , pch =c(1,2,3,4,5), cex=0.8)
+
+## note: this produces a pdf with the first page a blank, which is difficult to import in lyx. I used a linux tool called pfdtk to remove the first page: pdftk coping.pdf cat 2 output coping_fin.pdf
+
+dev.off()
+
+tiff(paste(path,"/fig6.tiff",sep=""))
+plot.new()
+#dotplot(dta[order(dta[,1]),],col = c("black", "blue", "red","green", "orange"),xlab="")
+dotplot(dta[order(dta[,1]),],pch = c(1,2,3,4,5),xlab="", col="black")
+
+
+legend(x="bottomright", legend = c("non-poor", "escape","vulnerable","fall", "chronic"),  , pch =c(1,2,3,4,5), cex=0.8)
+
+## note: this produces a pdf with the first page a blank, which is difficult to import in lyx. I used a linux tool called pfdtk to remove the first page: pdftk coping.pdf cat 2 output coping_fin.pdf
+
+dev.off()
+
+jpeg(paste(path,"/fig6.jpeg",sep=""))
+plot.new()
+#dotplot(dta[order(dta[,1]),],col = c("black", "blue", "red","green", "orange"),xlab="")
+dotplot(dta[order(dta[,1]),],pch = c(1,2,3,4,5),xlab="", col="black")
+
+
+legend(x="bottomright", legend = c("non-poor", "escape","vulnerable","fall", "chronic"),  , pch =c(1,2,3,4,5), cex=0.8)
+
+## note: this produces a pdf with the first page a blank, which is difficult to import in lyx. I used a linux tool called pfdtk to remove the first page: pdftk coping.pdf cat 2 output coping_fin.pdf
+
+dev.off()
+
 
 xtabs(mergedse$hhweight.x*mergedse$hhsize.x~mergedse$h16q2) / sum(xtabs(mergedse$hhweight.x*mergedse$hhsize.x~mergedse$h16q2))
 
@@ -603,9 +698,24 @@ gsec5 <- aggregate(gsec5$h5q9, list(gsec5$HHID), FUN=mean, na.rm=T)
 names(gsec5) <- c("HHID","healthdistance")
 mergedse <-  merge(merged_r,gsec5, by.x="hhid", by.y="HHID")
 #mergedse$categories <- factor( mergedse$categories,levels(factor(mergedse$categories))[c(4,2,5,3,1)])
-pdf(paste(path,"/distance_health.pdf",sep=""))
+pdf(paste(path,"/fig4.pdf",sep=""))
 boxplot(mergedse$healthdistance[mergedse$healthdistance<20]~mergedse$categories[mergedse$healthdistance<20],col="grey")
 dev.off()
+
+postscript(paste(path,"/fig4.eps",sep=""))
+boxplot(mergedse$healthdistance[mergedse$healthdistance<20]~mergedse$categories[mergedse$healthdistance<20],col="grey")
+dev.off()
+
+tiff(paste(path,"/fig4.tiff",sep=""))
+boxplot(mergedse$healthdistance[mergedse$healthdistance<20]~mergedse$categories[mergedse$healthdistance<20],col="grey")
+dev.off()
+
+jpeg(paste(path,"/fig4.jpeg",sep=""))
+boxplot(mergedse$healthdistance[mergedse$healthdistance<20]~mergedse$categories[mergedse$healthdistance<20],col="grey")
+dev.off()
+
+
+
 
 
 #section 15: most important source of earnings
@@ -621,6 +731,18 @@ mergedse <- merge(merged_r, mergedse, by.x="hhid", by.y="HHID")
 
 mergedse$h5q13[is.na(mergedse$h5q13)] <- 0
 #mergedse$categories <- factor( mergedse$categories,levels(factor(mergedse$categories))[c(4,2,5,3,1)])
-pdf(paste(path,"/days_inactive.pdf",sep=""))
+pdf(paste(path,"/fig5.pdf",sep=""))
+barplot( by(mergedse, mergedse$categories, function(mergedse) weighted.mean(mergedse$h5q13, mergedse$hhweight.x*mergedse$hhsize.x,na.rm=T)))
+dev.off()
+
+postscript(paste(path,"/fig5.eps",sep=""))
+barplot( by(mergedse, mergedse$categories, function(mergedse) weighted.mean(mergedse$h5q13, mergedse$hhweight.x*mergedse$hhsize.x,na.rm=T)))
+dev.off()
+
+tiff(paste(path,"/fig5.tiff",sep=""))
+barplot( by(mergedse, mergedse$categories, function(mergedse) weighted.mean(mergedse$h5q13, mergedse$hhweight.x*mergedse$hhsize.x,na.rm=T)))
+dev.off()
+
+jpeg(paste(path,"/fig5.jpeg",sep=""))
 barplot( by(mergedse, mergedse$categories, function(mergedse) weighted.mean(mergedse$h5q13, mergedse$hhweight.x*mergedse$hhsize.x,na.rm=T)))
 dev.off()
