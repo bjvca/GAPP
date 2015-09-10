@@ -104,24 +104,6 @@ rename HHID hhid
 label variable hhid "Household ID"
 
 
-***------- Household Size
-**HHsize modified by Fiona
-preserve
-use "$path/in/GSEC2.dta" , clear
-ta r04
-drop if r04>=2 
-gen qhmember=1
-collapse(count) qhmember, by(HHID)
-sum qhmember 
-ren HHID hhid 
-rename qhmember hhsize
-label variable hhsize "Household Size"
-	tempfile hhsize
-	save `hhsize', replace
-restore
-
-mmerge hhid using `hhsize', type(1:1)
-drop _m
 ***------- Geographical Stratification during sampling
 * this was not there as was with 2009, therefore we shall generate "strata" from the distict and region variables here. the 2009 UBOS 
 ** has explanations for what districts belong to which sub regions, so we shall use that to build our strata variable. UBOS 2009/10 report had described them
@@ -220,7 +202,7 @@ gen float bswt=1
 label variable bswt "bootstrap weights; and all equal to 1 for all households, as a toolkit requirement"
  
 
-drop hhsize 
+
 sort hhid
 save "$path/out/hhdata_hhsize.dta",replace
 save "$path/in/hhdata_hhsize.dta",replace
@@ -230,7 +212,8 @@ clear
 use "$path/in/GSEC2.dta" 
 
 *REVISIONS TO HH SIZE BY FIONA
-drop if r04==2
+drop if r04>4
+** turn around sexhead: 0 is male, 1 is female
 replace r02=r02==1
 gen counter=1
 rename HHID hhid
@@ -328,11 +311,9 @@ sort HHID
  
 * For the purposes of the calculation of a poverty line we'll exclude from the household the members who have left 
 * the household permanently or died
-*  We'll keep the members away for more than 6 months but present on the day of the interview
-
 
 rename  r04 resident
-drop if resident==7
+drop if resident>4
 
 ta resident
 ta resident, nol
@@ -349,7 +330,7 @@ egen indid=concat(hhid id)
 order hhid indid
 duplicates report indid
 codebook indid
-	* There are 36,154 different values, and there are 36,154 observations in the dataset so indid uniquely identifies
+	* There are 34766 different values, and there are 34788 observations in the dataset so indid uniquely identifies
 		* the individuals
 label variable indid "Individual ID"
 
@@ -561,7 +542,7 @@ replace totexp=e20g if totexp==. & noDetailsnumber==6 & e20g!=. & e20g!=0
 sort hhid
  ** since total education expenses were clooected in totexp and since is at yearly basis, we divided it by 365 to get daily expenses on education
 gen educationd = totexp/365
-*replace educationd=0 
+replace educationd=0 
 *** already included in nonfood expenses
 la var educationd "daily household expense on education"
 drop totexp
@@ -703,7 +684,7 @@ rename HHID hhid
 
 gen hhdnonconsumpexp = cee03/365
 
-replace hhdnonconsumpexp = 0
+*replace hhdnonconsumpexp = 0
 la var hhdnonconsumpexp "hh daily expenditure on taxes, contributions, donations, duties, etc"
 sort hhid
 save "$path/out/hhdnonconsumpexp.dta", replace
