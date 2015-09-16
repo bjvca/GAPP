@@ -1,0 +1,41 @@
+library(foreign)
+concpc <- read.dta("/home/bjvca/data/data/GAP/Haruna/UNHS_2012/work/conpc.dta")
+pov <- read.dta("/home/bjvca/data/data/UGANDA/UNHS/UNHS2012_13/Poverty2012.dta")
+
+
+pov$welfare_cap <- ((pov$welfare*pov$equiv/30)/pov$hsize)*1.85
+
+
+plot(density((pov$welfare_cap[pov$welfare_cap<5000])),lwd=3, xlab="",main="")
+
+
+concpc <- subset(concpc, !is.na(concpc$cons_pc_nom))
+
+lines(density((concpc$cons_pc_nom[concpc$cons_pc_nom<5000])),lwd=3,lty=2)
+
+
+quan <- read.dta("/home/bjvca/data/data/GAP/Haruna/UNHS_2012/work/quan_flex_it5.dta")
+quan$kcal <- quan$calperg*quan$quan5
+topfive <- do.call(rbind, by(quan, quan$spdomain, function(x)  x[order(x$kcal, decreasing=TRUE),][1:5,]))
+topfive <- topfive[c("product","spdomain","kcal")]
+topfive <- reshape(topfive,idvar="product",timevar="spdomain", direction="wide")
+rownames(topfive) <- topfive$product
+
+topfive <-topfive[c("kcal.2",   "kcal.3",   "kcal.4",   "kcal.5")]
+names(topfive) <- c("Centre",   "East",   "North",   "West")
+
+topfive <- topfive[c("116","107","105","113","100"),]
+rownames(topfive) <- c("Sorghum","Cassava","Sweet Pot", "Maize", "Matooke")
+pdf("fig2.pdf")
+dotchart(as.matrix(topfive),pch=1,xlab="kcal")
+dev.off()
+
+
+### price per kcal
+pricecal <- tapply(quan$price_uw5/quan$calperg, quan$product, FUN=mean, na.rm=T)[c("100","105","107","113","116")]
+pricecal <- sort(pricecal)
+
+names(pricecal) <- c("Sorghum","Cassava","Maize","Sweet Pot","Matooke")
+pdf("fig3.pdf")
+barplot(pricecal, horiz=T, xlab="price per kcal")
+dev.off()

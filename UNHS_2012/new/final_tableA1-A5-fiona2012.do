@@ -384,6 +384,12 @@ tab _merge
 	* is administered only to usual and regular household members, as is confirmed by the cross tab below
 	tab resident _merge, m
 	* We leave the variable as is, with additional missing values for the variable "motherhh".
+	*BVC: no, it is in fact the other way round: there are about 1000 observations coming only from the master data
+	*this is because instructions were not followed, and also guests were recorded in sec3
+	*we can safely drop non-merged
+drop if _merge != 3	
+	
+	
 drop _merge
 
 keep hhid indid sex age motherhh

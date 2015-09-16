@@ -239,7 +239,7 @@ display "this is with maputo dropped";
 tab pref_r;
 
 *further drop Nampula rural and urban;
-drop if spdomain==3 | spdomain==4;
+*drop if spdomain==3 | spdomain==4;
 display "this is with maputo and nampula dropped (MAH: Actually not - experimenting with 6 spatial domains)";
 tab pref_r;
 
