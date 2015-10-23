@@ -28,6 +28,36 @@ topfive <- topfive[c("116","107","105","113","100"),]
 rownames(topfive) <- c("Sorghum","Cassava","Sweet Pot", "Maize", "Matooke")
 pdf("fig2.pdf")
 dotchart(as.matrix(topfive),pch=1,xlab="kcal")
+dev.off()library(foreign)
+concpc <- read.dta("/home/bjvca/data/data/GAP/Haruna/UNHS_2012/work/conpc.dta")
+pov <- read.dta("/home/bjvca/data/data/UGANDA/UNHS/UNHS2012_13/Poverty2012.dta")
+
+
+pov$welfare_cap <- ((pov$welfare*pov$equiv/30)/pov$hsize)*1.85
+
+pdf("fig1.pdf")
+plot(density((pov$welfare_cap[pov$welfare_cap<5000])),lwd=3, xlab="",main="")
+
+
+concpc <- subset(concpc, !is.na(concpc$cons_pc_nom))
+
+lines(density((concpc$cons_pc_nom[concpc$cons_pc_nom<5000])),lwd=3,lty=2)
+dev.off()
+
+quan <- read.dta("/home/bjvca/data/data/GAP/Haruna/UNHS_2012/work/quan_flex_it5.dta")
+quan$kcal <- quan$calperg*quan$quan5
+topfive <- do.call(rbind, by(quan, quan$spdomain, function(x)  x[order(x$kcal, decreasing=TRUE),][1:5,]))
+topfive <- topfive[c("product","spdomain","kcal")]
+topfive <- reshape(topfive,idvar="product",timevar="spdomain", direction="wide")
+rownames(topfive) <- topfive$product
+
+topfive <-topfive[c("kcal.2",   "kcal.3",   "kcal.4",   "kcal.5")]
+names(topfive) <- c("Centre",   "East",   "North",   "West")
+
+topfive <- topfive[c("116","107","105","113","100"),]
+rownames(topfive) <- c("Sorghum","Cassava","Sweet Pot", "Maize", "Matooke")
+pdf("fig2.pdf")
+dotchart(as.matrix(topfive),pch=1,xlab="kcal")
 dev.off()
 
 
@@ -39,3 +69,111 @@ names(pricecal) <- c("Sorghum","Cassava","Maize","Sweet Pot","Matooke")
 pdf("fig3.pdf")
 barplot(pricecal, horiz=T, xlab="price per kcal")
 dev.off()
+
+## converst official poverty lines (they are by regurb)
+
+pov <- read.dta("/home/bjvca/data/data/UGANDA/UNHS/UNHS2012_13/Poverty2012.dta")
+
+
+pov$welfare_cap <- ((pov$welfare*pov$equiv/30)/pov$hsize)*1.85
+
+pov$spline <- pov$spline*1.85
+## get average adult equivalents per region*urban
+spline <- data.frame(tapply(pov$spline, pov$regurb, FUN=max)*tapply(pov$equiv, pov$regurb, FUN=mean)/tapply(pov$hsize, pov$regurb, FUN=mean)*1.85/30)
+
+
+### price per kcal
+pricecal <- tapply(quan$price_uw5/quan$calperg, quan$product, FUN=mean, na.rm=T)[c("100","105","107","113","116")]
+pricecal <- sort(pricecal)
+
+names(pricecal) <- c("Sorghum","Cassava","Maize","Sweet Pot","Matooke")
+pdf("fig3.pdf")
+barplot(pricecal, horiz=T, xlab="price per kcal")
+dev.off()
+
+## converst official poverty lines (they are by regurb)
+
+pov <- read.dta("/home/bjvca/data/data/UGANDA/UNHS/UNHS2012_13/Poverty2012.dta")
+
+
+
+## get average adult equivalents per region*urban
+spline <- data.frame(tapply(pov$spline, pov$regurb, FUN=max)*tapply(pov$equiv, pov$regurb, FUN=mean)/tapply(pov$hsize, pov$regurb, FUN=mean)*1.85/30)
+
+spline$regurb <- rownames(spline)
+names(spline) <- c("spline","regurb")
+## can we merge into concpc? ID needed
+pov$hhid <- as.numeric(pov$HHID)
+concpcID <- merge(concpc,pov, by.x="hhid",by.y="hhid")
+concpcID$spline <- NULL
+finmerge <- merge(concpcID,spline,by.x="regurb", by.y="regurb")
+finmerge$poor <- finmerge$cons_pc_nom < finmerge$spline
+sum(finmerge$poor*finmerge$hmult)/sum(finmerge$hmult)*100
+
+for (region in levels(finmerge$region)) {
+print(sum(finmerge$poor[finmerge$region==region]*finmerge$hmult[finmerge$region==region])/sum(finmerge$hmult[finmerge$region==region])*100)
+}
+
+for (sregion in levels(finmerge$sregion)) {
+print(sum(finmerge$poor[finmerge$sregion==sregion]*finmerge$hmult[finmerge$sregion==sregion])/sum(finmerge$hmult[finmerge$sregion==sregion])*100)
+}
+
+tapply()
+
+### official stats
+sum((pov$welfare<pov$spline)*pov$hmult)/sum(pov$hmult)
+
+for (region in levels(finmerge$region)) {
+print(sum((pov$welfare[pov$region==region]<pov$spline[pov$region==region])*pov$hmult[pov$region==region])/sum(pov$hmult[pov$region==region])*100)
+}
+
+for (sregion in levels(finmerge$sregion)) {
+print(sum((pov$welfare[pov$sregion==sregion]<pov$spline[pov$sregion==sregion])*pov$hmult[pov$sregion==sregion])/sum(pov$hmult[pov$sregion==sregion]))
+}
+
+
+### merge in UC poverty lines
+
+pov$ucpov <- NA
+pov$ucpov[pov$sregion=="Kampala"] <- 2336.05
+pov$ucpov[pov$region=="Central" & pov$urban=="Rural"] <- 2114.369
+
+
+
+pov$ucpov[pov$region=="Eastern" & pov$urban=="Rural"] <- 1622.067
+pov$ucpov[pov$region=="Northern" & pov$urban=="Rural"] <- 1596.226
+pov$ucpov[pov$region=="Western" & pov$urban=="Rural"] <- 2003.313
+pov$ucpov[pov$sregion!="Kampala" & pov$urban=="Urban"] <- 1933.099
+
+pov$welfare_cap <- ((pov$welfare*pov$equiv/30)/pov$hsize)*1.85
+
+sum((pov$welfare_cap<pov$ucpov)*pov$hmult)/sum(pov$hmult)*100
+
+for (region in levels(finmerge$region)) {
+print(sum((pov$welfare_cap[pov$region==region]<pov$ucpov[pov$region==region])*pov$hmult[pov$region==region])/sum(pov$hmult[pov$region==region])*100)
+}
+
+for (sregion in levels(finmerge$sregion)) {
+print(sum((pov$welfare_cap[pov$sregion==sregion]<pov$ucpov[pov$sregion==sregion])*pov$hmult[pov$sregion==sregion])/sum(pov$hmult[pov$sregion==sregion])*100)
+}
+
+sum((finmerge$spline * finmerge$hmult))/sum(finmerge$hmult)
+
+for (region in levels(finmerge$region)) {
+print(sum((finmerge$spline[finmerge$region==region] * finmerge$hmult[finmerge$region==region]))/sum(finmerge$hmult[finmerge$region==region]))
+}
+
+for (sregion in levels(finmerge$sregion)) {
+print(sum((finmerge$spline[finmerge$sregion==sregion] * finmerge$hmult[finmerge$sregion==sregion]))/sum(finmerge$hmult[finmerge$sregion==sregion]))
+}
+
+print(sum((pov$ucpov * pov$hmult))/sum(pov$hmult))
+
+for (region in levels(pov$region)) {
+print(sum((pov$ucpov[pov$region==region] * pov$hmult[pov$region==region]))/sum(pov$hmult[pov$region==region]))
+}
+
+for (sregion in levels(pov$sregion)) {
+print(sum((pov$ucpov[pov$sregion==sregion] * pov$hmult[pov$sregion==sregion]))/sum(pov$hmult[pov$sregion==sregion]))
+}
+
